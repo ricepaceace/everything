@@ -3,12 +3,11 @@
 function [peak_indices peak_types] = one_chamber_peak_finder(detection,data)
 peak_indices = [];
 peak_types = [];
-d = sum(data,2);
-above_v = d>detection.v_thresh;
-above_a = (d>detection.a_thresh).*(d<detection.v_thresh);
+above_v = data>detection.v_thresh;
+above_a = (data>detection.a_thresh).*(data<detection.v_thresh);
 num_ones_v = 0;
 num_ones_a = 0;
-for i=1:length(d)
+for i=1:length(data)
     if above_v(i)
         num_ones_v = num_ones_v+1;
         if num_ones_v == detection.v_length
