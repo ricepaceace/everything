@@ -1,20 +1,20 @@
-function [ vc, ac ] = GuessParameters2( data )
+function [ vc, ac , samplesHB ] = GuessParameters2( data )
 %GUESSPARAMETERS2 Summary of this function goes here
 %   Detailed explanation goes here
     heartbeats = FindHeartRate(data);
-  
+    samplesHB = floor(length(data)/heartbeats);
     
     v_cutoffs = [0,0];
     v_cutoffs(1) = BinarySearch(data, heartbeats+2, 1);
     v_cutoffs(2) = BinarySearch(data, heartbeats-2, 0);
     
-    vc = sum([.3, .7] .* v_cutoffs);
+    vc = sum([.5, .5] .* v_cutoffs);
  
     
     ndata = data;
     
-    t_blank = 10;
-    l_blank = 10;
+    t_blank = 30;
+    l_blank = 30;
     [~, rising_edges, falling_edges] = CountPeaks(data > vc);
     rising_edges = find(rising_edges);
     falling_edges = find(falling_edges);

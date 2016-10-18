@@ -45,7 +45,7 @@ detection.v_length = ceil(0.005*sampling_rate);
 detection.a_thresh = 1300;
 detection.a_length = ceil(0.02*sampling_rate);
 
-[peak_indices peak_types] = one_chamber_peak_finder(detection,sum(data,2))
+[peak_indices peak_types] = one_chamber_peak_finder(detection,sum(data,2));
 hold on
 plot(peak_indices/sampling_rate, (peak_types=='v')*detection.v_thresh+(peak_types=='a')*detection.a_thresh,'*')
 
