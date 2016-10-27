@@ -1,2 +1,3 @@
 data from https://www.physionet.org/physiobank/database/iafdb/
 patients with intracardiac atrial fibrillation
+phisiobank2struct.m takes data from website and converts to .mat files that store structs.
