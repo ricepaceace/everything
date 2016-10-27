@@ -1,3 +1,4 @@
+#include "data.h"
 
 static short v_thresh;
 static short a_thresh;
