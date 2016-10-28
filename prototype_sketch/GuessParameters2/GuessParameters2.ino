@@ -24,13 +24,13 @@ void loop() {
 
 }
 
-void GuessParameters2 { 
+void GuessParameters2() { 
   short heartbeats = FindHeartRate();
   guessed_param.samplesHB = floor((sizeof(fht_input)/sizeof(short))/heartbeats);
 
   short v_cutoffs[] = {0, 0};
-  v_cutoffs[1] = BinarySearch(fht_input, heartbeats+2, 1);
-  v_cutoffs[2] = BinarySearch(fht_input, heartbeats-2, 0);
+  v_cutoffs[0] = BinarySearch(fht_input, heartbeats+2, 1);
+  v_cutoffs[1] = BinarySearch(fht_input, heartbeats-2, 0);
   
   guessed_param.vc = v_cutoffs[1] >> 1 + v_cutoffs[2] >> 1; //.5*v_cutoffs[1] + .5*v_cutoffs[2] 
 
@@ -39,9 +39,113 @@ void GuessParameters2 {
 
   short t_blank = 30;
   short l_blank = 30;
-  //CONTINUE HERE
+  short rising_edges = CountPeaks(); //Change this line
+  //    rising_edges = find(rising_edges);
+  //  falling_edges = find(falling_edges);
+  //  for i = 1:length(rising_edges)
+  //      ndata((rising_edges(i)-t_blank):(falling_edges(i)+l_blank)) = 0;
+  //  end
+
+  short a_cutoffs[] = {0, 0};
+  a_cutoffs[0] = BinarySearch(ndata, heartbeats+2, 1);
+  a_cutoffs[1] = BinarySearch(ndata, heartbeats-2, 0);
+  guessed_param.ac = .7*a_cutoffs[0] + .3*a_cutoffs[1];
+  return;
 }
 
+short BinarySearch(short data, short expected, short hh) {
+  short low = min(data);
+  short high = max(data);
+  short mid;
+  short count;
+  //Assuming 10 s of data
+  bool above_th[10000];
+  
+  for(short i = 0; i <= 9; i++){
+    mid = (low+high) >> 1; //(Low + High) / 2
+    for(short i = 0; i < (sizeof(fht_input)/sizeof(short)); i++) {
+      if (fht_input > mid){
+        above_th[i] = true;
+      } else {
+        above_th[i] = false;
+      }
+    }
+    count = CountPeaks(); //NEED TO CHANGE THIS LINE
+
+    if(count > expected) || ((count == expected) && (hh == 0)){
+      low = mid;
+    } else if (count < expected) || ((count == expected) && (hh == 1)) {
+      high = mid;
+      continue;
+    }
+  }
+  return mid;
+}
+
+#define RISING_EDGE 1
+#define FALLING_EDGE 2
+
+#define FILTER_LENGTH 21
+// TH_CUTOFF was .005 in Matlab (chose mostly arbitrarily), but the filter coefficients are scaled by 2^20
+#define TH_CUTOFF 5243
+
+// Used to punish when the threshold is too low so large blocks of the data are above the threshold
+// This is sample-rate dependent. It was 150 in the Matlab code, but dividing by 128 can be done with
+// a bitshift instead of a division
+#define SAMPLES_PER_ADDTL_HEARTBEAT 128
+
+// TODO: Optimize coefficients for integers and different sampling rate
+const short filter[] = {3480, 3481, 3482, 3483, 3484, 3485, 3486, 3486, 3486, 3487, 3487, 
+  3487, 3486, 3486, 3486, 3485, 3484, 3483, 3482, 3481, 3480};
+// th_data: 1 if data[i] > current threshold
+// fills in edges[i] with a 1 if i is a rising edge, 2 if i is a falling edge 
+// all arrays should be allocated and of size length
+// TODO: really we want to return the indices of the peaks, which is less data, but is variable sized
+short CountPeaks(bool* th_data, char* edges, short length_data)
+{
+  for(short i = 0; i < length_data; i++)
+  {
+    short acc = 0;
+    // Definitely need to break if we exceed the cutoff or we risk overflowing
+    for(short j = 0; j < FILTER_LENGTH && i-j >= 0 && acc < TH_CUTOFF; j++)
+    {
+      acc += filter[j] * th_data[i-j];
+    }
+    // Temporarily store in falling_edges so we don't need more RAM
+    edges[i] = acc >= TH_CUTOFF;
+  }
+  for(short i = 0; i < length_data; i++)
+  {
+    th_data[i] = edges[i];
+    edges[i] = 0;
+  }
+  bool high = false;
+  short rising_count = 0;
+  short last_rising_index = 0;
+  for(short i = 0; i < length_data; i++)
+  {
+    if (th_data[i] && !high)
+    {
+      rising_count++;
+      last_rising_index = i;
+      high = true;
+      edges[i] = RISING_EDGE;
+    }
+    else if (!th_data[i] && high)
+    {
+      high = false;
+      rising_count += (i - last_rising_index)/SAMPLES_PER_ADDTL_HEARTBEAT;
+      edges[i] = FALLING_EDGE;
+    }
+  }
+  // Handle the case where the data ends while high:
+  if (high)
+  {
+    rising_count += (length_data - last_rising_index)/SAMPLES_PER_ADDTL_HEARTBEAT;
+    high = false;
+  }
+  return rising_count;
+}
 
 
 short FindHeartRate() {
