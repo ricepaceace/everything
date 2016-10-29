@@ -24,11 +24,11 @@ short rising_edges[MAX_EDGES];
 short falling_edges[MAX_EDGES];
 
 //Struct that holds vc, ac, and SamplesHB
-struct guessed_param {
+struct  {
   short ac;
   short vc;
   short samplesHB;
-};
+} guessed_param;
 
 void setup() {
   // put your setup code here, to run once:
@@ -45,8 +45,8 @@ void GuessParameters2() {
   guessed_param.samplesHB = PARAM_LEARN_SIZE/heartbeats;
 
   short v_cutoffs[] = {0, 0};
-  v_cutoffs[0] = BinarySearch(fht_input, heartbeats+2, 1);
-  v_cutoffs[1] = BinarySearch(fht_input, heartbeats-2, 0);
+  v_cutoffs[0] = BinarySearch(data, PARAM_LEARN_SIZE, heartbeats+2, 1);
+  v_cutoffs[1] = BinarySearch(data, PARAM_LEARN_SIZE, heartbeats-2, 0);
   
   guessed_param.vc = v_cutoffs[1] >> 1 + v_cutoffs[2] >> 1; //.5*v_cutoffs[1] + .5*v_cutoffs[2] 
 
@@ -58,7 +58,7 @@ void GuessParameters2() {
   	thresholded[i] = data[i] > guessed_param.vc;
 
   short n_edges = CountPeaks(thresholded, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES);
-  for (short peak = 0; peak < n_edges; peak++)
+  for (short peak = 0; peak < n_edges && rising_edges[peak] != -1; peak++)
   {
   	short start_idx = max(rising_edges[peak] - t_blank, 0);
 	short end_idx = min(falling_edges[peak] + l_blank, PARAM_LEARN_SIZE - 1);
@@ -67,16 +67,17 @@ void GuessParameters2() {
   }
 
   short a_cutoffs[] = {0, 0};
-  a_cutoffs[0] = BinarySearch(data, heartbeats+2, 1);
-  a_cutoffs[1] = BinarySearch(data, heartbeats-2, 0);
+  a_cutoffs[0] = BinarySearch(data, PARAM_LEARN_SIZE, heartbeats+2, 1);
+  a_cutoffs[1] = BinarySearch(data, PARAM_LEARN_SIZE, heartbeats-2, 0);
   guessed_param.ac = (7*a_cutoffs[0] + 3*a_cutoffs[1])/10;
   return;
 }
 // above_th is basically scratch memory used by this function
 // both data and above_th should be of the specified length 
-short BinarySearch(short* data, short length, bool* above_th, short expected, short hh) {
-  short low = 0;
-  short high = 0;
+short BinarySearch(short* data, short length, short expected, short hh) {
+	bool* above_th = thresholded;	
+	short low = 0;
+	short high = 0;
 
 	for (int i = 0; i < length; i++)
 	{
@@ -88,20 +89,20 @@ short BinarySearch(short* data, short length, bool* above_th, short expected, sh
   short mid;
   short count;
   
-  for(short i = 0; i <= 9; i++){
+  for(short j = 0; j <= 9; j++){
     mid = (low+high) >> 1; //(Low + High) / 2
     for(short i = 0; i < length; i++) {
-      if (fht_input > mid){
+      if (data[i] > mid){
         above_th[i] = true;
       } else {
         above_th[i] = false;
       }
     }
-    count = CountPeaks(above_th, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES); //NEED TO CHANGE THIS LINE
+    count = CountPeaks(above_th, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES); 
 
-    if(count > expected) || ((count == expected) && (hh == 0)){
+    if((count > expected) || ((count == expected) && (hh == 0))){
       low = mid;
-    } else if (count < expected) || ((count == expected) && (hh == 1)) {
+    } else if ((count < expected) || ((count == expected) && (hh == 1))) {
       high = mid;
       continue;
     }
@@ -113,7 +114,7 @@ short BinarySearch(short* data, short length, bool* above_th, short expected, sh
 #define FALLING_EDGE 2
 
 #define FILTER_LENGTH 21
-// TH_CUTOFF was .005 in Matlab (chose mostly arbitrarily), but the filter coefficients are scaled by 2^20
+// TH_CUTOFF was .005 in Matlab (chosen mostly arbitrarily), but the filter coefficients are scaled by 2^20
 #define TH_CUTOFF 5243
 
 // Used to punish when the threshold is too low so large blocks of the data are above the threshold
@@ -125,9 +126,10 @@ short BinarySearch(short* data, short length, bool* above_th, short expected, sh
 const short filter[] = {3480, 3481, 3482, 3483, 3484, 3485, 3486, 3486, 3486, 3487, 3487, 
   3487, 3486, 3486, 3486, 3485, 3484, 3483, 3482, 3481, 3480};
 // th_data: 1 if data[i] > current threshold
-// fills in edges[i] with a 1 if i is a rising edge, 2 if i is a falling edge 
+// fills in rising_edges and falling_edges with the indices of the edge
+// The same number of elements should be set in both arrays, and it should be the value that is returned unless there are some peaks that are way too big.
+// Unset elements will have value -1.
 // all arrays should be allocated and of size length
-// TODO: really we want to return the indices of the peaks, which is less data, but is variable sized
 short CountPeaks(bool* th_data, short* rising_edges, short* falling_edges, short length_data, short max_edges)
 {
   for(short i = 0; i < length_data; i++)
@@ -151,6 +153,10 @@ short CountPeaks(bool* th_data, short* rising_edges, short* falling_edges, short
   short last_rising_index = 0;
 
 	short ri = 0, fi = 0; // current positions in rising and falling edges arrays
+	for (short i = 0; i < max_edges; i++)
+	{
+		rising_edges[i] = falling_edges[i] = -1;
+	}
 
 	for(short i = 0; i < length_data; i++)
 	{
