@@ -1,0 +1,3 @@
+Each subfolder contains data from a different source. 
+Its contents consist of all the relevant documentation and code necessary to convert original data into a .mat file that, when loaded,
+has two fields: data, a Num_samples x Num_channels array of the waveforms; and Fs, the sampling rate of the data
