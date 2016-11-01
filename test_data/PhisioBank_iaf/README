@@ -1,6 +1,3 @@
 data from https://www.physionet.org/physiobank/database/iafdb/
 patients with intracardiac atrial fibrillation
-phisiobank2struct.m takes data from website and converts to .mat files that, 
-when loaded, are structs with fields for data (Num_samples x Num_channels) and Fs (sampling rate)
-
-using code in the wfdb toolbox (instructions for download at https://physionet.org/physiotools/matlab/wfdb-app-matlab/).
+phisiobank2struct.m takes data from website and converts to .mat files that store structs.
