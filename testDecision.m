@@ -1,6 +1,8 @@
-data = sum(NormalSinusRhythm_struct.data,2); %Data to be analyzed
-Fs = NormalSinusRhythm_struct.sampling_rate; %Sampling rate of data to be analyzed
+%data = sum(NormalSinusRhythm_struct.data,2); %Data to be analyzed
+%Fs = NormalSinusRhythm_struct.sampling_rate; %Sampling rate of data to be analyzed
+%Use the above lines when analyzing 
 
+data = data(:,1);
 %This block of code calculates parameters for the dataset that will have
 %ideally been calculated beforehand when actually implementing this
 %algorithm on the micocontroller or FPGA. 
@@ -90,7 +92,10 @@ for i = 1:length(data)
     end
     
     %Checking for a ventricular peak.  
-    if(data(i) > detection.v_thresh)
+    %If above the threshold and its been .1 ms since the last peak, detect
+    %a peak.  
+    %The delayVV > 100 added so a peak is not over counted.  
+    if(data(i) > detection.v_thresh  && delayVV > 100) 
         vCount = vCount + 1;
         if(vCount == detection.v_length)
             delayVV = 0;
@@ -102,7 +107,10 @@ for i = 1:length(data)
     end
     
     %Checking for an atrial peak.  
-    if(data(i) < detection.v_thresh && data(i) > detection.a_thresh)
+    %If above the threshold and its been .1 ms since the last peak, detect
+    %a peak.  
+    %The delayAA > 100 added so a peak is not over counted. 
+    if(data(i) < detection.v_thresh && data(i) > detection.a_thresh && delayAA > 100)
         aCount = aCount + 1;
         if(aCount == detection.a_length)
             delayAA = 0;
@@ -118,8 +126,8 @@ figure; hold on;
 plot(data,'b');
 plot(aPeakInd,  detection.a_thresh, 'xg');
 plot(vPeakInd,  detection.v_thresh, 'or');
-plot(vStimInd, 1e4,'p');
-plot(aStimInd, .5e4,'o');
+plot(vStimInd, 0,'p');
+plot(aStimInd, 0,'o');
 title('sum')
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
