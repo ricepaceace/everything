@@ -56,6 +56,16 @@ aCount = 0;
 delayVV = 0; %Keeps a running counter of time past since the last ventricular beat 
 delayAA = 0; %Keeps a running counter of time past since the last atrial beat 
 
+aPeakInd = [];
+vPeakInd = [];
+%Keeps track of where peaks are being detected, just to make sure
+%algorithm is functioning properly.
+
+aStimInd = [];
+vStimInd = [];
+%Keeps track of where the algorithm decides that a stimulation is
+%necessary.
+
 %This loop models reading data from a channel, one sample at a time, and
 %making a decision about whether a pacing stimulation is needed, based on
 %information coming from the channel.  
@@ -67,11 +77,15 @@ for i = 1:length(data)
      %In actual implementation, we could potentially say when the delay is
      %x samples more than the avg delay, then deliver a stimulation.  
     if(delayVV > avgVVDelay)
+        vStimInd = [vStimInd i];
+        delayVV = 0;%If stimulated in Ventricle, reset the time sense last ventricle beat. 
         disp('Deliver Stimulation to ventricle')
     end
     
     %Deciding whether you need to deliver an atrial stimulation.
     if(delayAA > avgAADelay)
+        aStimInd = [aStimInd i];
+        delayAA = 0; %If stimulated in Atrium, reset the time sense last atrial beat.  
         disp('Deliver Stimulation to atrium')
     end
     
@@ -81,6 +95,7 @@ for i = 1:length(data)
         if(vCount == detection.v_length)
             delayVV = 0;
             vCount = 0;
+            vPeakInd = [vPeakInd i];
         end
     else
         vCount = 0;
@@ -92,6 +107,7 @@ for i = 1:length(data)
         if(aCount == detection.a_length)
             delayAA = 0;
             aCount = 0;
+            aPeakInd = [aPeakInd i];
         end
     else
         aCount = 0;
@@ -102,6 +118,8 @@ figure; hold on;
 plot(data,'b');
 plot(aPeakInd,  detection.a_thresh, 'xg');
 plot(vPeakInd,  detection.v_thresh, 'or');
+plot(vStimInd, 1e4,'p');
+plot(aStimInd, .5e4,'o');
 title('sum')
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
