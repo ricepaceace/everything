@@ -1,27 +1,24 @@
+%Inputs:
+%detection - struct representing the preset/learned detection paramters
+%   .v_thresh - magnitude threshold for ventricular beats
+%   .v_length - min_length of a ventricular beat (in samples)
+%   .a_thresh - magnitude threshold for atrial beats
+%   .a_length - min_length of an atrial beat (in samples)
+%data - vector data from a single channel
 
-
+%Outputs
+%v_indices - vector containing the indices of all the ventricular beats
+%a_indices - vector containing the indices of all the atrial beats
 function [v_indices, a_indices] = one_chamber_peak_finder(detection,data)
-v_indices = [];
-a_indices = [];
-above_v = data>detection.v_thresh;
-above_a = (data>detection.a_thresh).*(data<detection.v_thresh);
-num_ones_v = 0;
-num_ones_a = 0;
-for i=1:length(data)
-    if above_v(i)
-        num_ones_v = num_ones_v+1;
-        if num_ones_v == detection.v_length
-            v_indices = [v_indices i];
-        end
-    else 
-        num_ones_v = 0;
-    end
-    if above_a(i)
-        num_ones_a = num_ones_a+1;
-        if num_ones_a == detection.a_length
-            a_indices = [a_indices i];
-        end
-    else 
-        num_ones_a = 0;
-    end
+v_bool = data>detection.v_thresh;
+[~,v_indices_r, v_indices_f] = CountPeaks(v_bool,detection.v_length);
+
+t_blank = 30;
+l_blank = 30;
+for i = 1:length(v_indices_r)
+    data((v_indices_r(i)-t_blank):(v_indices_f(i)+l_blank)) = min(data);
 end
+v_indices = v_indices_r;
+
+a_bool = (data>detection.a_thresh).*(data<detection.v_thresh);
+[~,a_indices,~] = CountPeaks(a_bool,detection.a_length);
