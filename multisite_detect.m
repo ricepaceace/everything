@@ -22,24 +22,7 @@ begin_time = 0.0;
 end_time = 25; %second
 data = data(begin_time*Fs+1:end_time*Fs+1,:);
 
-b = fir1(1000,2.5/Fs,'high');
-
-% run on sum of all channels
-% [a,v,samplesHB]=GuessParameters2(sum(data,2));
-% %figure; hold on; plot(data,'b'); plot(a*(data>a), 'or');plot(v*(data>v).*(data<a), 'xp');
-% 
-% detection.v_thresh = a;
-% detection.v_length = 3;
-% detection.a_thresh = v;
-% detection.a_length = 8;
-% [vind, aind] = one_chamber_peak_finder(detection, sum(data,2));
-% 
-% figure; hold on;
-% plot(data,'b');
-% plot(aind,  detection.a_thresh, 'xg');
-% plot(vind,  detection.v_thresh, 'or');
-% title('sum')
-
+b = fir1(1000,2.5/Fs,'high'); %filter to remove DC bias
 
 %%% run on each channel individually
 ainds = zeros(17, 1);
