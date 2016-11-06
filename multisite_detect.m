@@ -47,7 +47,7 @@ vinds = zeros(17, 1);
 for i=1:size(data,2)
     channel_data=data(:,i);
     channel_data = filter(b,1,channel_data);
-    [v,a,samplesHB]=GuessParameters2(channel_data);
+    [v,a]=GuessParameters2(channel_data);
     %figure; hold on; plot(data,'b'); plot(a*(data>a), 'or');plot(v*(data>v).*(data<a), 'xg');
 
     detection.v_thresh = v;

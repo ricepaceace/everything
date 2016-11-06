@@ -1,85 +1,129 @@
-function [ vc, ac , samplesHB ] = GuessParameters2( data )
+function [ vc, ac ] = GuessParameters2( data )
 %GUESSPARAMETERS2 Summary of this function goes here
 %   Detailed explanation goes here
-    heartbeats = FindHeartRate(data);
-    samplesHB = floor(length(data)/heartbeats);
-    
-     % BINARY SEARCH VISUALIZATION
-    figure(99)
-    hold on
-    xs = linspace(min(data), max(data), 200);
-    ys=zeros(200,1);
-    for i = 1:200
-        [beats, ~, ~] = CountPeaks(data > xs(i));
-        ys(i) = beats;
+ 
+    %samplesHB = floor(length(data)/heartbeats);
+    visualize_bs = true;% BINARY SEARCH VISUALIZATION
+     
+    if visualize_bs
+        figure(99)
+        hold on
+        xs = linspace(min(data), max(data), 200);
+        ys=zeros(200,1);
+        for i = 1:200
+            [beats, ~, ~] = CountPeaks(data > xs(i), 21);
+            ys(i) = beats;
+        end
+        plot(xs, ys);
     end
-    plot(xs, ys);
-    
-    v_cutoffs = [0,0];
-    v_cutoffs(1) = BinarySearch(data, heartbeats+2, 1);
-    v_cutoffs(2) = BinarySearch(data, heartbeats-2, 0);
-    
-    plot(v_cutoffs, [heartbeats, heartbeats], 'bx');
     
     
+    
+    v_cutoffs = BinarySearch(data, 21);
     vc = sum([.5, .5] .* v_cutoffs);
+    
+    if visualize_bs
+        heartbeats = FindHeartRate(data);
+        plot(v_cutoffs, [heartbeats, heartbeats], 'bx');
+    end
+    
+  
  
     
     ndata = data;
     
     t_blank = 30;
     l_blank = 30;
-    [~, rising_edges, falling_edges] = CountPeaks(data > vc);
-    rising_edges = find(rising_edges);
-    falling_edges = find(falling_edges);
+    [~, rising_edges, falling_edges] = CountPeaks(data > vc, 21);
     for i = 1:length(rising_edges)
-        ndata((rising_edges(i)-t_blank):(falling_edges(i)+l_blank)) = 0;
+        ndata((rising_edges(i)-t_blank):(falling_edges(i)+l_blank)) = min(data(rising_edges(i)-t_blank):(falling_edges(i)+l_blank));
     end
    
-    xs = linspace(min(ndata), max(ndata), 200);
-    ys=zeros(200,1);
-    for i = 1:200
-        [beats, ~, ~] = CountPeaks(ndata > xs(i));
-        ys(i) = beats;
+    if visualize_bs
+        xs = linspace(min(ndata), max(ndata), 200);
+        ys=zeros(200,1);
+        for i = 1:200
+            [beats, ~, ~] = CountPeaks(ndata > xs(i), 31);
+            ys(i) = beats;
+        end
+         plot(xs, ys, 'y');
     end
-     plot(xs, ys, 'y');
+     
+    a_cutoffs =  BinarySearch(ndata, 31, 0, max(ndata));
     
-    a_cutoffs = [0,0];
-    a_cutoffs(1) = BinarySearch(ndata, heartbeats+2, 1);
-    a_cutoffs(2) = BinarySearch(ndata, heartbeats-2, 0);
     ac = sum([.7, .3] .* a_cutoffs);
     
-     plot(a_cutoffs, [heartbeats, heartbeats], 'ro');
-    
+     if visualize_bs
+        plot(a_cutoffs, [heartbeats, heartbeats], 'ro');
+     end
 end
 
-function [mid] = BinarySearch(data, expected, hh)
-    low = min(data);
-    high = max(data);
-    for i=1:10
-        mid = (low+high)/2;
-        count = CountPeaks(data>mid);
-    
-        if (count > expected) || ((count == expected) && (hh == 0))
-            low = mid;
-        elseif (count < expected) || ((count == expected) && (hh == 1))
-            high = mid;
-            continue;
-        end
+function [flatcutoffs] = BinarySearch(data, minlength, startmin, endmin)
+    npts = 12;
+    sample_rate = 1000;
+    minbeats = length(data) / sample_rate * 40 / 60;
+    if nargin == 2
+        ths = linspace(min(data), max(data), npts);
+        beats = zeros(1,npts);
+        beats(1) = length(data)/150;
+        beats(end) = 0;
+    else
+        ths = linspace(startmin, endmin, npts);
+        beats = zeros(1,npts);
+        beats(1) = CountPeaks(data > ths(1), minlength);
+        beats(end) = CountPeaks(data > ths(end), minlength);
     end
-end
-
-function [count, rising_edges, falling_edges] = CountPeaks(bools)
-    % Todo: this is sample-rate and heart-rate dependent
-    filt = [0.00331877528131886,0.00331999841461628,0.00332109305985185,0.00332205912946198,0.00332289654616099,0.00332360524295000,0.00332418516312464,0.00332463626028153,0.00332495849832360,0.00332515185146431,0.00332521630423051,0.00332515185146431,0.00332495849832360,0.00332463626028153,0.00332418516312464,0.00332360524295000,0.00332289654616099,0.00332205912946198,0.00332109305985185,0.00331999841461628,0.00331877528131886];
-    filtBool = filter(filt, 1, bools);
-    o1=[0; filtBool > .005; 0];
-    o2=[1; filtBool <= .005; 1];
-    rising_edges=o1(2:end) & o2(1:end-1); 
-    falling_edges=o1(1:end-1) & o2(2:end); % falling edges
-    peakLengths = find(falling_edges)-find(rising_edges);
-    
-    count = sum(rising_edges) + sum(floor(peakLengths/150));
+   
+    for i=1:3
+        for j = 2:length(beats)-1
+            % We can assume the function is monotonic, so if beats(j) =
+            % beats(k), we don't need to compute anything else between j
+            % and k.
+            beats(j) = CountPeaks(data > ths(j), minlength);
+        end
+        last_valid = find(beats > minbeats, 1, 'last');
+        
+        derivs = abs(beats(2:last_valid)-beats(1:(last_valid-1)));
+        [minder, idx] = min(derivs);
+        if minder == 0
+            % longest strech of zeros
+            flats = derivs == 0;
+            iidx = -1;
+            currentBest = -1;
+            cbStart = -1;
+            cbEnd = -1;
+            for j = 1:length(derivs)
+                if flats(j) && iidx  == -1
+                    iidx = j;
+                end
+                if flats(j) && j - iidx > currentBest
+                    currentBest = j - iidx;
+                    cbStart = iidx;
+                    cbEnd = j;
+                end
+                if ~flats(j)
+                    iidx = -1;
+                end 
+            end
+            idx = cbStart;
+            endidx = cbEnd;
+        else
+            endidx = idx+1;
+        end
+        nmin = ths(idx);
+        nmax = ths(endidx+1);
+        ths = linspace(nmin, nmax, npts);
+        
+        beats1 = beats(idx);
+        beats2 = beats(endidx);
+        if beats1 == beats2
+            break
+        end
+        beats(1) = beats1;
+        beats(end) = beats2;
+    end
+    % TODO? expand the region more
+    flatcutoffs = [ths(1), ths(end)];
 end
 
 function [heartbeats] = FindHeartRate(data)
