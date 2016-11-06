@@ -22,6 +22,8 @@ begin_time = 0.0;
 end_time = 25; %second
 data = data(begin_time*Fs+1:end_time*Fs+1,:);
 
+b = fir1(1000,2.5/Fs,'high');
+
 % run on sum of all channels
 % [a,v,samplesHB]=GuessParameters2(sum(data,2));
 % %figure; hold on; plot(data,'b'); plot(a*(data>a), 'or');plot(v*(data>v).*(data<a), 'xp');
@@ -38,18 +40,20 @@ data = data(begin_time*Fs+1:end_time*Fs+1,:);
 % plot(vind,  detection.v_thresh, 'or');
 % title('sum')
 
+
 %%% run on each channel individually
 ainds = zeros(17, 1);
 vinds = zeros(17, 1);
 for i=1:size(data,2)
     channel_data=data(:,i);
-    [a,v,samplesHB]=GuessParameters2(channel_data);
+    channel_data = filter(b,1,channel_data);
+    [v,a,samplesHB]=GuessParameters2(channel_data);
     %figure; hold on; plot(data,'b'); plot(a*(data>a), 'or');plot(v*(data>v).*(data<a), 'xg');
 
-    detection.v_thresh = a;
-    detection.v_length = 3;
-    detection.a_thresh = v;
-    detection.a_length = 8;
+    detection.v_thresh = v;
+    detection.v_length = 8;
+    detection.a_thresh = a;
+    detection.a_length = 26;
     [vind, aind] = one_chamber_peak_finder(detection, channel_data);
     
     figure; hold on;
