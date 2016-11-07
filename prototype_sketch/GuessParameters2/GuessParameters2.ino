@@ -19,13 +19,14 @@
 #include "data.h"
 
 short ldata[PARAM_LEARN_SIZE];
-bool thresholded[PARAM_LEARN_SIZE];
+char thresholded[PARAM_LEARN_SIZE];
 short rising_edges[MAX_EDGES];
 short falling_edges[MAX_EDGES];
 short FindHeartRate();
 short BinarySearch(short* data, short len, short expected, short hh);
-short CountPeaks(bool* th_data, short* rising_edges, short* falling_edges, short length_data, short max_edges);
+short CountPeaks(char* th_data, short* rising_edges, short* falling_edges, short length_data, short max_edges);
 void GuessParameters2();
+char one_chamber_peak_finder(short data);
 
 //Struct that holds vc, ac, and SamplesHB
 struct  {
@@ -39,15 +40,58 @@ void setup() {
   Serial.begin(9600);
   pinMode(13, OUTPUT);
 }
-
+bool runn = true;
 void loop() {
-  Serial.println("Starting");
-  digitalWrite(13, HIGH);
-  GuessParameters2();
-  digitalWrite(13, LOW);
-  Serial.println(guessed_param.ac);
-  Serial.println(guessed_param.vc);
+  if (runn) {
+    Serial.println("Starting");
+    digitalWrite(13, HIGH);
+    GuessParameters2();
+    digitalWrite(13, LOW);
+    Serial.println(guessed_param.ac);
+    Serial.println(guessed_param.vc);
+  
+    for (int i = 0; i < 60000; i++) {
+      short val = pgm_read_word_near(data + i);
+      char c = one_chamber_peak_finder(val);
+      if (c != 0) {
+        Serial.print(i);
+        Serial.print(" ");
+        Serial.println(c);
+      }
+    }
+    Serial.println("AYYY LMAO");
+  }
+  runn = false;
 }
+
+static short v_thresh;
+static short a_thresh;
+static short v_length;
+static short a_length;
+static short num_v;
+static short num_a;
+
+char one_chamber_peak_finder(short data)
+{
+  if(data > guessed_param.vc)
+  {
+    num_a = 0;
+    return ((++num_v == 8) ? 'v' : 0);
+  }
+  else if (data > guessed_param.ac)
+  {
+    num_v = 0;
+    return ((++num_a == 12) ? 'a' : 0);
+
+  }
+  else
+  {
+    num_v = 0;
+    num_a = 0;
+    return 0;
+  } 
+}
+
 
 void GuessParameters2() { 
   for (int i = 0; i < PARAM_LEARN_SIZE; i++) {
@@ -88,7 +132,7 @@ void GuessParameters2() {
 // above_th is basically scratch memory used by this function
 // both data and above_th should be of the specified length 
 short BinarySearch(short* data, short len, short expected, short hh) {
-	bool* above_th = thresholded;	
+	char* above_th = thresholded;	
 	short low = 0;
 	short high = 0;
 
@@ -112,7 +156,10 @@ short BinarySearch(short* data, short len, short expected, short hh) {
       }
     }
     count = CountPeaks(above_th, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES); 
-
+    Serial.print("Using threshold ");
+    Serial.println(mid);
+    Serial.print("Counted peaks: ");
+    Serial.println(count);
     if((count > expected) || ((count == expected) && (hh == 0))){
       low = mid;
     } else if ((count < expected) || ((count == expected) && (hh == 1))) {
@@ -143,7 +190,7 @@ const short filter[] = {3480, 3481, 3482, 3483, 3484, 3485, 3486, 3486, 3486, 34
 // The same number of elements should be set in both arrays, and it should be the value that is returned unless there are some peaks that are way too big.
 // Unset elements will have value -1.
 // all arrays should be allocated and of size length
-short CountPeaks(bool* th_data, short* rising_edges, short* falling_edges, short length_data, short max_edges)
+short CountPeaks(char* th_data, short* rising_edges, short* falling_edges, short length_data, short max_edges)
 {
   for(short i = 0; i < length_data; i++)
   {
@@ -154,8 +201,9 @@ short CountPeaks(bool* th_data, short* rising_edges, short* falling_edges, short
 	  if (th_data[i-j] & 1)
 		  acc += filter[j] * th_data[i-j];
     }
+   
     // Temporarily store in higher bits of th_data so we don't need more RAM
-    th_data[i] |= (acc >= TH_CUTOFF) << 1;
+    th_data[i] |= (acc >= TH_CUTOFF ? 2 : 0);
   }
   for(short i = 0; i < length_data; i++)
   {
@@ -193,6 +241,8 @@ short CountPeaks(bool* th_data, short* rising_edges, short* falling_edges, short
 				falling_edges[fi++] = i;
 		}
 	}
+ Serial.print("Ended the edge counting loop. Is it still high? ");
+ Serial.println(high);
 	// Handle the case where the data ends while high:
 	if (high)
 	{
