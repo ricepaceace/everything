@@ -18,10 +18,14 @@
 
 #include "data.h"
 
-short data[PARAM_LEARN_SIZE];
+short ldata[PARAM_LEARN_SIZE];
 bool thresholded[PARAM_LEARN_SIZE];
 short rising_edges[MAX_EDGES];
 short falling_edges[MAX_EDGES];
+short FindHeartRate();
+short BinarySearch(short* data, short len, short expected, short hh);
+short CountPeaks(bool* th_data, short* rising_edges, short* falling_edges, short length_data, short max_edges);
+void GuessParameters2();
 
 //Struct that holds vc, ac, and SamplesHB
 struct  {
@@ -32,21 +36,30 @@ struct  {
 
 void setup() {
   // put your setup code here, to run once:
-
+  Serial.begin(9600);
+  pinMode(13, OUTPUT);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
+  Serial.println("Starting");
+  digitalWrite(13, HIGH);
+  GuessParameters2();
+  digitalWrite(13, LOW);
+  Serial.println(guessed_param.ac);
+  Serial.println(guessed_param.vc);
 }
 
 void GuessParameters2() { 
+  for (int i = 0; i < PARAM_LEARN_SIZE; i++) {
+    ldata[i] = pgm_read_word_near(data + i);
+  }
+  
   short heartbeats = FindHeartRate();
   guessed_param.samplesHB = PARAM_LEARN_SIZE/heartbeats;
 
   short v_cutoffs[] = {0, 0};
-  v_cutoffs[0] = BinarySearch(data, PARAM_LEARN_SIZE, heartbeats+2, 1);
-  v_cutoffs[1] = BinarySearch(data, PARAM_LEARN_SIZE, heartbeats-2, 0);
+  v_cutoffs[0] = BinarySearch(ldata, PARAM_LEARN_SIZE, heartbeats+2, 1);
+  v_cutoffs[1] = BinarySearch(ldata, PARAM_LEARN_SIZE, heartbeats-2, 0);
   
   guessed_param.vc = v_cutoffs[1] >> 1 + v_cutoffs[2] >> 1; //.5*v_cutoffs[1] + .5*v_cutoffs[2] 
 
@@ -55,31 +68,31 @@ void GuessParameters2() {
   short l_blank = 30;
 
   for (short i = 0; i < PARAM_LEARN_SIZE; i++)
-  	thresholded[i] = data[i] > guessed_param.vc;
+  	thresholded[i] = ldata[i] > guessed_param.vc;
 
   short n_edges = CountPeaks(thresholded, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES);
   for (short peak = 0; peak < n_edges && rising_edges[peak] != -1; peak++)
   {
   	short start_idx = max(rising_edges[peak] - t_blank, 0);
-	short end_idx = min(falling_edges[peak] + l_blank, PARAM_LEARN_SIZE - 1);
-	for (short j = start_idx; j < end_idx; j++)
-		data[j] = 0;
+	  short end_idx = min(falling_edges[peak] + l_blank, PARAM_LEARN_SIZE - 1);
+	  for (short j = start_idx; j < end_idx; j++)
+		  ldata[j] = 0;
   }
 
   short a_cutoffs[] = {0, 0};
-  a_cutoffs[0] = BinarySearch(data, PARAM_LEARN_SIZE, heartbeats+2, 1);
-  a_cutoffs[1] = BinarySearch(data, PARAM_LEARN_SIZE, heartbeats-2, 0);
+  a_cutoffs[0] = BinarySearch(ldata, PARAM_LEARN_SIZE, heartbeats+2, 1);
+  a_cutoffs[1] = BinarySearch(ldata, PARAM_LEARN_SIZE, heartbeats-2, 0);
   guessed_param.ac = (7*a_cutoffs[0] + 3*a_cutoffs[1])/10;
   return;
 }
 // above_th is basically scratch memory used by this function
 // both data and above_th should be of the specified length 
-short BinarySearch(short* data, short length, short expected, short hh) {
+short BinarySearch(short* data, short len, short expected, short hh) {
 	bool* above_th = thresholded;	
 	short low = 0;
 	short high = 0;
 
-	for (int i = 0; i < length; i++)
+	for (int i = 0; i < len; i++)
 	{
 		low = min(low, data[i]);
 		high = max(high, data[i]);
@@ -91,7 +104,7 @@ short BinarySearch(short* data, short length, short expected, short hh) {
   
   for(short j = 0; j <= 9; j++){
     mid = (low+high) >> 1; //(Low + High) / 2
-    for(short i = 0; i < length; i++) {
+    for(short i = 0; i < len; i++) {
       if (data[i] > mid){
         above_th[i] = true;
       } else {
