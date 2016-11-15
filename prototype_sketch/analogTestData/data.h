@@ -1,6 +1,6 @@
 
 #include <avr/pgmspace.h>
 
-const short data[] = {
+const short data[] = PROGMEM {
 #include "good-ch1.h"
 };
