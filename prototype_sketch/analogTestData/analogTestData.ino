@@ -33,6 +33,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  Serial.print("Program has started");
   int start = millis();
   int mapped_val;
   for (int i=0; i < (sizeof(data)/sizeof(short)); i++){
@@ -40,7 +41,7 @@ void loop() {
     analogWrite(PWM_OUT, mapped_val);
     int finish = millis();
     int elapsed = finish - start;
-    Serial.print(elapsed);
+    Serial.println(elapsed);
     Serial.println(" milliseconds elapsed");
   }
 }
