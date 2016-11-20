@@ -11,9 +11,10 @@
 function [count, rising_indices, falling_indices] = CountPeaks(bools,min_length)
     % Denoise boolean vector with LPF and threshold in order to only count
     % (smoothed) peaks longer than min_length
+    
     filt = ones(1,min_length)/min_length;
     filtBool = filter(filt, 1, bools);
-    above=[0; filtBool > 1/min_length; 0];
+    above=[0; filtBool > 1/2; 0];
     below = ~above;
     
     %detect rising and falling edges in denoised boolean function

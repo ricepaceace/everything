@@ -10,10 +10,10 @@ addpath('test_data/PhisioBank_iaf/')
 %       represents a time point
 
 
-%s = load('NormalSinusRhythm_struct.mat');
+s = load('NormalSinusRhythm_struct.mat');
 %s = load('Pacingfromchipapprox120bpmxmA_struct.mat');
 %s = load('PacingfromMedtronic120bpm2mA_struct.mat');
-s = load('iaf1_struct.mat'); %number ranges from 1-8 for different patients
+%s = load('iaf1_struct.mat'); %number ranges from 1-8 for different patients
 
 Fs = s.Fs; %sampling rate
 data = s.data;
@@ -21,12 +21,13 @@ begin_time = 0.0;
 end_time = 25; %second
 data = data(begin_time*Fs+1:end_time*Fs+1,:);
 [numSamples, numChannels] = size(data);
-
 numChannels = 1;
+
 VENT = 1;
 ATRIAL = 2;
 
 b = fir1(1000,2.5/Fs,'high'); %filter to remove DC bias
+b2 = fir1(500,150/Fs);
 
 %Learn parameters for all 4 channels individually
 %In the actual microcontroller code, this will be done on different data,
@@ -39,12 +40,14 @@ b = fir1(1000,2.5/Fs,'high'); %filter to remove DC bias
 
 detections = [];
 for channel = 1:numChannels
+    data(:,channel) = abs(data(:,channel));
     data(:,channel) = filter(b,1,data(:,channel));
-    [v,a]=GuessParameters2(data(:,channel));
-    detection.v_thresh = v;
-    detection.v_length = 8;
+    data(:,channel) = filter(b2,1,data(:,channel));
+    detection.v_length = 21;
+    detection.a_length = 41; %Defining the Thresholds
+    [v,a]=GuessParameters2(data(:,channel),detection.v_length,detection.a_length);
     detection.a_thresh = a;
-    detection.a_length = 50; %Defining the Thresholds 
+    detection.v_thresh = v;
     detection.vCount = 0;
     detection.aCount = 0;
     detection.lastPeak = 0;
@@ -153,12 +156,9 @@ end
 for i = 1:numChannels
     figure; hold on;
     plot(data(:,i),'b');
-    plot(detections(i).vPeakInd, detections(i).v_thresh, 'xr')
-    plot(detections(i).aPeakInd, detections(i).a_thresh, 'xg')
+    plot(detections(i).vPeakInd, detections(i).v_thresh, 'or')
+    plot(detections(i).aPeakInd, detections(i).a_thresh, 'or')
     plot(detections(i).aStimInd, detections(i).a_thresh, 'xb')
-    plot(detections(i).vStimInd, detections(i).v_thresh, 'xbl')
+    plot(detections(i).vStimInd, detections(i).v_thresh, 'xb')
     title(['Channel ' num2str(i)])
 end
-    
-    
-

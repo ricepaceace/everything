@@ -13,41 +13,43 @@ addpath('test_data/PhisioBank_iaf/')
 %s = load('NormalSinusRhythm_struct.mat');
 %s = load('Pacingfromchipapprox120bpmxmA_struct.mat');
 %s = load('PacingfromMedtronic120bpm2mA_struct.mat');
-s = load('iaf1_struct.mat'); %number ranges from 1-8 for different patients
+s = load('iaf2_struct.mat'); %number ranges from 1-8 for different patients
 
 Fs = s.Fs; %sampling rate
 data = s.data;
-numChannels = size(data,1);
+numChannels = size(data,2);
 begin_time = 0.0;
 end_time = 25; %second
 data = data(begin_time*Fs+1:end_time*Fs+1,:);
 
-b = fir1(1000,2.5/Fs,'high'); %filter to remove DC bias
+b = fir1(500,2.5/Fs,'high'); %filter to remove DC bias
+b2 = fir1(500,150/Fs);
 
 %%% run on each channel individually
-ainds = zeros(17, 1);
-vinds = zeros(17, 1);
-for i=1:size(data,2)
+ainds = zeros(numChannels, 1);
+vinds = zeros(numChannels, 1);
+for i=1:numChannels
     channel_data=data(:,i);
+    channel_data = abs(channel_data);
     channel_data = filter(b,1,channel_data);
-    [v,a]=GuessParameters2(channel_data);
-    %figure; hold on; plot(data,'b'); plot(a*(data>a), 'or');plot(v*(data>v).*(data<a), 'xg');
-
-    detection.v_thresh = v;
-    detection.v_length = 8;
+    channel_data = filter(b2,1,channel_data);
+    detection.a_length = 41;
+    detection.v_length = 21;
+    [v,a] = GuessParameters2(channel_data,detection.v_length,detection.a_length);
     detection.a_thresh = a;
-    detection.a_length = 26;
+    detection.v_thresh = v;
     [vind, aind] = one_chamber_peak_finder(detection, channel_data);
     
     figure; hold on;
     plot(channel_data,'b');
-    plot(aind, detection.a_thresh, 'xg');
+    plot(aind, detection.a_thresh, 'xk');
     plot(vind, detection.v_thresh, 'or');
     title(['Channel' num2str(i)])
     
     ainds(i) = length(aind);
     vinds(i) = length(vind);
 end
+a=2;
 % ainds
 % vinds
 
