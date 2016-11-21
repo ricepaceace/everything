@@ -105,7 +105,7 @@ void GuessParameters2() {
   v_cutoffs[0] = BinarySearch(ldata, PARAM_LEARN_SIZE, heartbeats+2, 1);
   v_cutoffs[1] = BinarySearch(ldata, PARAM_LEARN_SIZE, heartbeats-2, 0);
   
-  guessed_param.vc = v_cutoffs[1] >> 1 + v_cutoffs[2] >> 1; //.5*v_cutoffs[1] + .5*v_cutoffs[2] 
+  guessed_param.vc = v_cutoffs[0]/2 + v_cutoffs[1]/2; //.5*v_cutoffs[1] + .5*v_cutoffs[2] 
 
 
   short t_blank = 30;
