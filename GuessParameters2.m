@@ -52,6 +52,9 @@ function [ vc, ac ] = GuessParameters2( data ,v_length, a_length)
     a_cutoffs =  BinarySearch(ndata, a_length, 0, max(ndata));
     
     ac = sum([.7, .3] .* a_cutoffs);
+    if ac==0
+        vc = 0;
+    end
     
      if visualize_bs
         plot(a_cutoffs, [heartbeats, heartbeats], 'ro');
@@ -59,10 +62,10 @@ function [ vc, ac ] = GuessParameters2( data ,v_length, a_length)
 end
 
 function [flatcutoffs] = BinarySearch(data, minlength, startmin, endmin)
-    npts = 12;
+    npts = 20;
     sample_rate = 1000;
     minbeats = length(data) / sample_rate * 10 / 60; %10 bpm
-    maxbeats = length(data) / sample_rate * 200 / 60; %200bpm
+    maxbeats = length(data) / sample_rate * 150 / 60; %200bpm
     if nargin == 2
         ths = linspace(min(data), max(data), npts);
         beats = zeros(1,npts);
@@ -85,6 +88,10 @@ function [flatcutoffs] = BinarySearch(data, minlength, startmin, endmin)
         end
         last_valid = find(beats > minbeats, 1, 'last');
         first_valid = find(beats < maxbeats, 1, 'first');
+        if (last_valid<=first_valid)
+            flatcutoffs = [0 0];
+            return
+        end
         
         beats = beats(first_valid:last_valid);
         ths = ths(first_valid:last_valid);

@@ -14,7 +14,7 @@ function [count, rising_indices, falling_indices] = CountPeaks(bools,min_length)
     
     filt = ones(1,min_length)/min_length;
     filtBool = filter(filt, 1, bools);
-    above=[0; filtBool > 1/2; 0];
+    above=[0; filtBool > 1/4; 0];
     below = ~above;
     
     %detect rising and falling edges in denoised boolean function
