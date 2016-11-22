@@ -33,9 +33,12 @@ function [ vc, ac ] = GuessParameters2( data ,v_length, a_length)
     l_blank = 20;
     [~, rising_edges, falling_edges] = CountPeaks(data > vc, v_length);
     for i = 1:length(rising_edges)
-        ndata((rising_edges(i)-t_blank):(falling_edges(i)+l_blank)) = min(data(rising_edges(i)-t_blank):(falling_edges(i)+l_blank));
+        ndata((rising_edges(i)-t_blank):(falling_edges(i)+l_blank)) = min(data);
     end
-   
+%     ndata = abs(ndata);
+%     figure
+%     plot(ndata)
+    
     if visualize_bs
         xs = linspace(min(ndata), max(ndata), 200);
         ys=zeros(200,1);
@@ -58,8 +61,8 @@ end
 function [flatcutoffs] = BinarySearch(data, minlength, startmin, endmin)
     npts = 12;
     sample_rate = 1000;
-    minbeats = length(data) / sample_rate * 20 / 60; %10 bpm
-    maxbeats = length(data) / sample_rate * 250 / 60; %150bpm
+    minbeats = length(data) / sample_rate * 10 / 60; %10 bpm
+    maxbeats = length(data) / sample_rate * 200 / 60; %200bpm
     if nargin == 2
         ths = linspace(min(data), max(data), npts);
         beats = zeros(1,npts);
@@ -113,8 +116,8 @@ function [flatcutoffs] = BinarySearch(data, minlength, startmin, endmin)
         else
             endidx = idx+1;
         end
-        nmin = ths(idx);
-        nmax = ths(endidx);
+        nmin = min(ths(idx),ths(endidx));
+        nmax = max(ths(idx),ths(endidx));
         ths = linspace(nmin, nmax, npts);
         
         beats1 = beats(idx);
