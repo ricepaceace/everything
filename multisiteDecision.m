@@ -1,4 +1,4 @@
-% main script for running detection algorithms on test data
+% main script for running d algorithms on test data
 close all
 addpath('test_data/sept29_2016_test/')
 addpath('test_data/PhisioBank_iaf/')
@@ -40,41 +40,39 @@ b2 = fir1(500,150/Fs);
 
 detections = [];
 for channel = 1:numChannels
-    data(:,channel) = abs(data(:,channel));
+    %data(:,channel) = abs(data(:,channel));
     data(:,channel) = filter(b,1,data(:,channel));
     data(:,channel) = filter(b2,1,data(:,channel));
-    detection.v_length = 21;
-    detection.a_length = 41; %Defining the Thresholds
-    [v,a]=GuessParameters2(data(:,channel),detection.v_length,detection.a_length);
-    detection.a_thresh = a;
-    detection.v_thresh = v;
-    detection.AbeatDelay = 0;
-    detection.VbeatDelay = 0;
-    detection.VbeatFallDelay = 0;
-    detection.AstimDelay = 0;
-    detection.VstimDelay = 0;
-    detection.AVDelayThresh = 200;
-    detection.AADelayThresh = 1000;
-    detection.ACaptureThresh = detection.a_length;
-    detection.VCaptureThresh = detection.v_length;
+    d.v_length = 11;
+    d.a_length = 30; %Defining the Thresholds
+    [d.v_thresh,d.a_thresh,d.vflip,d.aflip]=GuessParameters2(data(:,channel),d.v_length,d.a_length);
+    d.AbeatDelay = 0;
+    d.VbeatDelay = 0;
+    d.VbeatFallDelay = 0;
+    d.AstimDelay = 0;
+    d.VstimDelay = 0;
+    d.AVDelayThresh = 200;
+    d.AADelayThresh = 1000;
+    d.ACaptureThresh = d.a_length;
+    d.VCaptureThresh = d.v_length;
     
-    %these are used for doing real time detection
-    detection.recentVBools = zeros(1,detection.v_length); %all the recent samples needed to do real time filtering
-    detection.recentABools = zeros(1,detection.a_length); %all the recent samples needed to do real time filtering
-    detection.last_sample_is_V = false;
-    detection.last_sample_is_A = false;
-    detection.PostVARP = 250;
-    detection.PreVARP = 20;
-    detection.recentdatapoints = zeros(1,detection.PreVARP);
+    %these are used for doing real time d
+    d.recentVBools = zeros(1,d.v_length); %all the recent samples needed to do real time filtering
+    d.recentABools = zeros(1,d.a_length); %all the recent samples needed to do real time filtering
+    d.last_sample_is_V = false;
+    d.last_sample_is_A = false;
+    d.PostVARP = 250;
+    d.PreVARP = 20;
+    d.recentdatapoints = zeros(1,d.PreVARP);
     
     %These variables are just used for testing and visualization, not actually
     %used in the algorithm. 
-    detection.vPeakInd = [];
-    detection.aPeakInd = [];
-    detection.aStimInd = [];
-    detection.vStimInd = [];
+    d.vPeakInd = [];
+    d.aPeakInd = [];
+    d.aStimInd = [];
+    d.vStimInd = [];
 
-    detections = [detections detection];
+    detections = [detections d];
     
 
 end
@@ -83,9 +81,9 @@ end
 for i = 1:numSamples
     
         %~~~~~~~~~~~~~~~~~~~~~~~~~
-    %Detection for all channels
+    %d for all channels
     %~~~~~~~~~~~~~~~~~~~~~~~~~
-    %Increment time since last atrial beat detection.
+    %Increment time since last atrial beat d.
     for k = 1:numChannels
         detections(k).recentdatapoints = [detections(k).recentdatapoints(2:end) data(i,k)]; %get next datapoint and add to buffer
         
@@ -114,9 +112,9 @@ for i = 1:numSamples
         d = detections(k);
         if (d.AbeatDelay > d.AADelayThresh && d.AstimDelay > d.ACaptureThresh)
             if (d.AstimDelay == d.ACaptureThresh+1)
-                disp('Failed Atrial Capture - increase stim')
+                %disp('Failed Atrial Capture - increase stim')
             end
-            disp('Deliver Atrial Stimulation due to AA Delay')
+            %disp('Deliver Atrial Stimulation due to AA Delay')
             for j = 1:numChannels
                 detections(j).aStimInd = [detections(j).aStimInd i];
                 detections(j).AstimDelay = 0;
@@ -130,9 +128,9 @@ for i = 1:numSamples
         d = detections(k);
         if (d.VbeatDelay > d.AbeatDelay && d.AbeatDelay > d.AVDelayThresh && d.VstimDelay > d.VCaptureThresh)
             if (d.VstimDelay == d.VCaptureThresh+1)
-                disp('Failed Ventricular Capture - increase stim')
+                %disp('Failed Ventricular Capture - increase stim')
             end
-            disp('Deliver Ventricular Stimulation due to AV Delay')
+            %disp('Deliver Ventricular Stimulation due to AV Delay')
             for j = 1:numChannels
                 detections(j).vStimInd = [detections(j).vStimInd i];
                 detections(j).VstimDelay = 0;
@@ -144,11 +142,12 @@ for i = 1:numSamples
 end
 
 for i = 1:numChannels
+    d = detections(i);
     figure; hold on;
     plot(data(:,i),'b');
-    plot(detections(i).vPeakInd, detections(i).v_thresh, 'or')
-    plot(detections(i).aPeakInd, detections(i).a_thresh, 'or')
-%     plot(detections(i).aStimInd, detections(i).a_thresh, 'xb')
-%     plot(detections(i).vStimInd, detections(i).v_thresh, 'xb')
+    plot(d.vPeakInd, d.v_thresh*d.vflip, 'or')
+    plot(d.aPeakInd, d.a_thresh*d.aflip, 'or')
+    plot(d.aStimInd, d.a_thresh*d.aflip*1.2, 'xb')
+    plot(d.vStimInd, d.v_thresh*d.vflip*1.2, 'xb')
     title(['Channel ' num2str(i)])
 end

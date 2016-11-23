@@ -2,7 +2,7 @@ function d = yamPeakFinder(i,d)
     
     %At beginning of function call, assume that no peak has been found.
     datapointV = d.recentdatapoints(end);
-    d.recentVBools = [d.recentVBools(2:end) (datapointV>d.v_thresh)];
+    d.recentVBools = [d.recentVBools(2:end) (d.vflip*datapointV>d.v_thresh)];
     
     %Only start looking for ventricular beats when the current data point
     %is greater than the threshold and it has been 30 samples since the
@@ -24,7 +24,7 @@ function d = yamPeakFinder(i,d)
     %is greater than the threshold and it has been 30 samples since the
     %last ventricle or atrial beat. 
     datapointA = d.recentdatapoints(1);
-    d.recentABools = [d.recentABools(2:end) (datapointA>d.a_thresh)];
+    d.recentABools = [d.recentABools(2:end) (d.aflip*datapointA>d.a_thresh)];
     
     %&& d.VbeatDelay > d.VbeatFallDelay && d.VbeatFallDelay > 2*d.t_blank
     if(sum(d.recentABools)>d.a_length/2 && d.VbeatDelay > d.VbeatFallDelay && d.VbeatFallDelay > d.PreVARP+d.PostVARP) 
