@@ -61,7 +61,7 @@ function [ vc, ac, vflip, aflip ] = GuessParameters2( data, v_length, a_length)
 
     a_cutoffs =  BinarySearch(ndata, a_length);
     a_cutoffs_neg =  BinarySearch(-ndata, a_length);
-    if (a_cutoffs_neg(2)-a_cutoffs_neg(1)<a_cutoffs(2)+a_cutoffs(1))
+    if (a_cutoffs_neg(2)-a_cutoffs_neg(1)<a_cutoffs(2)-a_cutoffs(1))
         aflip = 1;
     else
         a_cutoffs = a_cutoffs_neg;
@@ -75,23 +75,24 @@ function [ vc, ac, vflip, aflip ] = GuessParameters2( data, v_length, a_length)
 end
 
 function [flatcutoffs] = BinarySearch(data, minlength)
-    npts = 50;
+    npts = 20;
     sample_rate = 1000;
     minbeats = length(data) / sample_rate * 10 / 60; %10 bpm
     maxbeats = length(data) / sample_rate * 150 / 60; %200bpm
-    
-    if nargin == 2
-        ths = linspace(min(data), max(data), npts);
-        beats = zeros(1,npts);
-        beats(1) = length(data)/150;
-        beats(end) = 0;
-    else
-        ths = linspace(startmin, endmin, npts);
-        beats = zeros(1,npts);
-        beats(1) = CountPeaks(data > ths(1), minlength);
-        beats(end) = CountPeaks(data > ths(end), minlength);
+
+    max_th = max(data);
+    for th = [max(data)/4 max(data)/2]
+         beat = CountPeaks(data > th, minlength);
+         if beat<minbeats
+             max_th = th;
+         end
     end
-   
+    
+    ths = linspace(0, max_th, npts);
+    beats = zeros(1,npts);
+    beats(1) = length(data)/150;
+    beats(end) = 0;
+    
    
     for i=1:3
         beats = zeros(1,npts);
@@ -100,6 +101,9 @@ function [flatcutoffs] = BinarySearch(data, minlength)
             % beats(k), we don't need to compute anything else between j
             % and k.
             beats(j) = CountPeaks(data > ths(j), minlength);
+            if beats(j)<minbeats
+                break
+            end
         end
         last_valid = find(beats > minbeats, 1, 'last');
         first_valid = find(beats < maxbeats, 1, 'first');
@@ -110,7 +114,7 @@ function [flatcutoffs] = BinarySearch(data, minlength)
         
         beats = beats(first_valid:last_valid);
         ths = ths(first_valid:last_valid);
-        derivs = abs(beats(2:end)-beats(1:(end-1))./ths(2:end)-ths(1:(end-1)));
+        derivs = abs(beats(2:end)-beats(1:(end-1)));
         %derivs = abs(beats(2:last_valid)-beats(1:(last_valid-1)));
         [minder, idx] = min(derivs);
         if minder == 0

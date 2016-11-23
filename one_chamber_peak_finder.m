@@ -10,17 +10,17 @@
 %v_indices - vector containing the indices of all the ventricular beats
 %a_indices - vector containing the indices of all the atrial beats
 function [v_indices, a_indices] = one_chamber_peak_finder(detection,data)
-v_bool = data>detection.v_thresh;
+v_bool = detection.vflip*data>detection.v_thresh;
 [~,v_indices_r, v_indices_f] = CountPeaks(v_bool,detection.v_length);
 
-t_blank = 20;
-l_blank = 20;
+t_blank = 50;
+l_blank = 50;
 %data = abs(data);
 for i = 1:length(v_indices_r)
-    data((v_indices_r(i)-t_blank):(v_indices_f(i)+l_blank)) = min(data);
+    data((v_indices_r(i)-t_blank):(v_indices_f(i)+l_blank)) = 0;
 end
 
 v_indices = v_indices_r;
 
-a_bool = (data>detection.a_thresh);
+a_bool = detection.aflip*data>detection.a_thresh;
 [~,a_indices,~] = CountPeaks(a_bool,detection.a_length);
