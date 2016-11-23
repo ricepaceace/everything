@@ -2,8 +2,8 @@
 
 
 #define SAMPLE_RATE 1000
-#define MIN_HEARTRATE 50 //BPM
-#define MAX_HEARTRATE 150 //BPM
+#define MIN_HEARTRATE 20 //BPM
+#define MAX_HEARTRATE 250 //BPM
 
 // The we expect two rising, falling edges per beat, but the 3 gives us padding
 #define MAX_EDGES (PARAM_LEARN_SIZE * 3 * MAX_HEARTRATE) / (SAMPLE_RATE * 60)
@@ -129,17 +129,121 @@ void GuessParameters2() {
   guessed_param.ac = (7*a_cutoffs[0] + 3*a_cutoffs[1])/10;
   return;
 }
+#define N_BS_PTS 12
+short ths[N_BS_PTS];
+short beats[N_BS_PTS];
+short derivs[N_BS_PTS-1];
+
+#define NUM_RECURSIVE_SUBDIV 3
+#define NO_TH_FOUND  (-1)
+
+struct flat { short start_index; short length;};
+
 // above_th is basically scratch memory used by this function
 // both data and above_th should be of the specified length 
-short BinarySearch(short* data, short len, short expected, short hh) {
-	char* above_th = thresholded;	
-	short low = 0;
-	short high = 0;
+static short BinarySearch(short* data, short length, short minlen, short startmin, short endmin) {
+	short min_beats = length * MIN_HEARTRATE / (SAMPLE_RATE * 60);
+	short max_beats = lengnth * MAX_HEARTRATE / (SAMPLE_RATE * 60);
 
-	for (int i = 0; i < len; i++)
+
+	for (byte i = 0; i < NUM_RECURSIVE_SUBDIV; i++)
 	{
-		low = min(low, data[i]);
-		high = max(high, data[i]);
+
+		// ths = linspace(startmin, endmin, npts);
+		short delta = (endmin - startmin)/(N_BS_PTS - 1);
+		short last = startmin;
+		// rounding??
+		for (int i = 0; i < N_BS_PTS; i++)
+		{
+			ths[i] = last;
+			last += delta;
+		}
+
+		for (short j = 0; j < N_BS_PTS; j++)
+		{
+			for (short k = 0; k < N_PTS; k++)
+			{
+				thresholded[k] = data[k] > ths[j];
+			}
+			beats[j] = CountPeaks(above_th, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES);
+		}
+		// both indices are inclusive
+		short first_valid = 0;
+		while (first_valid < N_BS_PTS && ths[first_valid] < min_beats)
+			first_valid++;
+		short last_valid = N_BS_PTS - 1;
+		while (last_valid >= 0 && ths[last_valid] > max_beats)
+			last_valid++;
+
+		if (first_valid > last_valid)
+			return NO_TH_FOUND;
+
+
+		short minderiv = -1;
+		short minderiv_idx = -1;
+
+		if (first_valid == last_valid)
+			minderiv_idx = first_valid;
+
+		for (short j = first_valid; j < last_valid; j++)
+		{
+			derivs[j] = abs(beats[j+1] - beats[j]);
+			if (minderiv_idx == -1 || derivs[j] < minderiv)
+			{
+				minderiv = derivs[j];
+				minderiv_idx = j;
+			}
+		}
+		#if DEBUG
+		Serial.print("On recursive iteration ");
+		Serial.print((int)i);
+		Serial.print(". Min derivative was ");
+		Serial.println(minderiv);
+		#endif
+
+		short nmin, nmax; // The index of the new min, max thresholds (inclusive)
+		if (minderiv == 0)
+		{
+			struct flat current = {-1, -1};
+			struct flat best = {-1, -1};
+			for (short j = first_valid; j < last_valid; j++)
+			{
+				if (derivs[j] == 0)
+				{
+					if (current.start_index == -1)
+					{
+						current.start_index = j;
+						current.length = 0;
+					}
+					current.length++;
+					if (current.length > best.length)
+						current = best;
+				}
+				else
+				{
+					current = {-1, -1};
+				}
+			}
+			nmin = best.start_index - 1;
+			nmax = best.start_index + best.length;
+		}
+		else
+		{
+			nmin = minderiv_idx - 1;
+			nmax = minderiv_idx + 1;
+		}
+		// make sure they are in bounds
+		if (nmin < 0)
+			nmin = 0;
+		if (nmax > N_BS_PTS - 1)
+			nmax = N_BS_PTS - 1;
+
+		startmin = ths[nmin];
+		endmin = ths[nmax];
+
+		if (beats[nmin] == beats[nmax])
+			break;
+
 	}
 
 
