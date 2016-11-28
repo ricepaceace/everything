@@ -4,7 +4,7 @@
 void yamPeakFinder(int ind, detections * d)
 {
 	//VENTRICAL
-	datapointV = d->recentdatapoints[PREVARP - 1];
+	int datapointV = d->recentdatapoints[PREVARP - 1];
 	int i;
 	int sum = 0;
 	for(i = 0; i < V_LENGTH-1; i++)
@@ -14,7 +14,7 @@ void yamPeakFinder(int ind, detections * d)
 	}
 	
 	d->recentVBools[V_LENGTH-1] = (d->vflip *datapointV) > d->v_thresh;
-	sum += d->recentVbools[V_LENGTH-1];
+	sum += d->recentVBools[V_LENGTH-1];
 	
 	if(sum > V_LENGTH/2)
 	{
@@ -31,7 +31,7 @@ void yamPeakFinder(int ind, detections * d)
 	}
 	
 	// ATRIAL
-	datapointA = d->recentdatapoints(0);
+	int datapointA = d->recentdatapoints[0];
 	sum = 0;
 	for(i = 0; i < A_LENGTH-1; i++)
 	{
@@ -40,9 +40,9 @@ void yamPeakFinder(int ind, detections * d)
 	}
 	
 	d->recentABools[A_LENGTH-1] = (d->aflip *datapointA) > d->a_thresh;
-	sum += d->recentAbools[A_LENGTH-1];
+	sum += d->recentABools[A_LENGTH-1];
 	
-	if(sum > A_LENGTH/2 && d->VbeatDelay > d->VbeatFallDealy && d-VbeatFallDealy > PREVARP+POSTVARP)
+	if(sum > A_LENGTH/2 && d->VbeatDelay > d->VbeatFallDelay && d->VbeatFallDelay > PREVARP+POSTVARP)
 	{
 		if(!d->last_sample_is_A)
 		{
@@ -52,5 +52,5 @@ void yamPeakFinder(int ind, detections * d)
 	}
 	
 	else if(d->last_sample_is_A)
-		d->last_sample_is-A = 0;
+		d->last_sample_is_A = 0;
 }
