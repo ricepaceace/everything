@@ -1,0 +1,6 @@
+#define V_LENGTH 11
+#define A_LENGTH 30
+#define AV_DELAY_THRESH 200
+#define AA_DELAY_THRESH 1000
+#define POSTVARP 250
+#define PREVARP 20
