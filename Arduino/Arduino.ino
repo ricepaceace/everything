@@ -21,6 +21,8 @@
 #endif
 
 #include "data.h"
+#include "constants.h"
+#include "detections.h"
 
 short ldata[PARAM_LEARN_SIZE];
 char thresholded[PARAM_LEARN_SIZE];
@@ -75,8 +77,6 @@ void loop() {
 
 static short v_thresh;
 static short a_thresh;
-static short V_LENGTH;
-static short A_LENGTH;
 static short num_v;
 static short num_a;
 
