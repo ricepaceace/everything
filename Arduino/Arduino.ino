@@ -1,5 +1,9 @@
 #define PARAM_LEARN_SIZE 8192 //The number of points to use in parameter learning
 
+#ifdef NO_ARDUINO
+#include "arduinocompat.h"
+#endif
+
 
 #define SAMPLE_RATE 1000
 #define MIN_HEARTRATE 20 //BPM
@@ -22,11 +26,16 @@ short ldata[PARAM_LEARN_SIZE];
 char thresholded[PARAM_LEARN_SIZE];
 short rising_edges[MAX_EDGES];
 short falling_edges[MAX_EDGES];
+
 short FindHeartRate();
-short BinarySearch(short* data, short len, short expected, short hh);
 short CountPeaks(char* th_data, short* rising_edges, short* falling_edges, short length_data, short max_edges);
 void GuessParameters2();
 char one_chamber_peak_finder(short data);
+
+struct thresholds { short low_threshold; short high_threshold;};
+// Runs Binary Search on both data and -data.
+static struct thresholds TryPlusMinus(short v_or_a_length, byte* multiplier) ;
+static struct thresholds BinarySearch(short* data, short length, short minlen);
 
 //Struct that holds vc, ac, and SamplesHB
 struct  {
@@ -66,8 +75,8 @@ void loop() {
 
 static short v_thresh;
 static short a_thresh;
-static short v_length;
-static short a_length;
+static short V_LENGTH;
+static short A_LENGTH;
 static short num_v;
 static short num_a;
 
@@ -92,6 +101,27 @@ char one_chamber_peak_finder(short data)
   } 
 }
 
+// When it returns, the data is negated or not to match the thresholds it returns
+static struct thresholds TryPlusMinus(short v_or_a_length, byte* multiplier) { // return whether or not we multiplied it as well
+  struct thresholds o_cutoffs = BinarySearch(ldata, PARAM_LEARN_SIZE, v_or_a_length);
+
+  for (short i = 0; i < PARAM_LEARN_SIZE; i++)
+  	ldata[i] *= -1;
+  struct thresholds o_cutoffs_neg = BinarySearch(ldata, PARAM_LEARN_SIZE, v_or_a_length);
+
+  if (o_cutoffs_neg.high_threshold - o_cutoffs_neg.low_threshold < o_cutoffs.high_threshold - o_cutoffs.low_threshold) {
+	// original data was correct, so un-negate the data
+	  for (short i = 0; i < PARAM_LEARN_SIZE; i++)
+		ldata[i] *= -1;
+  	*multiplier = 1;
+	return o_cutoffs;
+  }
+  else {
+    *multiplier = -1;
+	return o_cutoffs_neg;
+  }
+}
+
 
 void GuessParameters2() { 
   for (int i = 0; i < PARAM_LEARN_SIZE; i++) {
@@ -101,16 +131,17 @@ void GuessParameters2() {
   short heartbeats = FindHeartRate();
   guessed_param.samplesHB = PARAM_LEARN_SIZE/heartbeats;
 
-  short v_cutoffs[] = {0, 0};
-  v_cutoffs[0] = BinarySearch(ldata, PARAM_LEARN_SIZE, heartbeats+2, 1);
-  v_cutoffs[1] = BinarySearch(ldata, PARAM_LEARN_SIZE, heartbeats-2, 0);
-  
-  guessed_param.vc = v_cutoffs[0]/2 + v_cutoffs[1]/2; //.5*v_cutoffs[1] + .5*v_cutoffs[2] 
+
+  byte v_flip;
+  struct thresholds v_cutoffs = TryPlusMinus(V_LENGTH, &v_flip);
+
+  guessed_param.vc = v_cutoffs.low_threshold/2 + v_cutoffs.high_threshold/2; //.5*v_cutoffs[1] + .5*v_cutoffs[2] 
 
 
-  short t_blank = 30;
-  short l_blank = 30;
+  short t_blank = 50;
+  short l_blank = 50;
 
+  // ldata already has the vflip multiplied in at this point
   for (short i = 0; i < PARAM_LEARN_SIZE; i++)
   	thresholded[i] = ldata[i] > guessed_param.vc;
 
@@ -123,35 +154,58 @@ void GuessParameters2() {
 		  ldata[j] = 0;
   }
 
-  short a_cutoffs[] = {0, 0};
-  a_cutoffs[0] = BinarySearch(ldata, PARAM_LEARN_SIZE, heartbeats+2, 1);
-  a_cutoffs[1] = BinarySearch(ldata, PARAM_LEARN_SIZE, heartbeats-2, 0);
-  guessed_param.ac = (7*a_cutoffs[0] + 3*a_cutoffs[1])/10;
-  return;
+
+  byte a_flip;
+  struct thresholds a_cutoffs = TryPlusMinus(A_LENGTH, &a_flip);
+  // a_flip is relative to v_flip at this point. Make it absolute
+  a_flip *= v_flip;
+  guessed_param.ac = (a_cutoffs.low_threshold * 7 + a_cutoffs.high_threshold * 3)/10;
 }
+// Number of points to use in each round of flat finding
 #define N_BS_PTS 12
 short ths[N_BS_PTS];
 short beats[N_BS_PTS];
 short derivs[N_BS_PTS-1];
 
 #define NUM_RECURSIVE_SUBDIV 3
-#define NO_TH_FOUND  (-1)
+struct thresholds NO_TH_FOUND = {-1, -1};
 
 struct flat { short start_index; short length;};
 
 // above_th is basically scratch memory used by this function
 // both data and above_th should be of the specified length 
-static short BinarySearch(short* data, short length, short minlen, short startmin, short endmin) {
+static struct thresholds BinarySearch(short* data, short length, short minlen) {
 	short min_beats = length * MIN_HEARTRATE / (SAMPLE_RATE * 60);
-	short max_beats = lengnth * MAX_HEARTRATE / (SAMPLE_RATE * 60);
+	short max_beats = length * MAX_HEARTRATE / (SAMPLE_RATE * 60);
+
+	short min_th = 0, max_th = 0;
+	for (short k = 0; k < length; k++)
+	{
+		max_th = max(max_th, data[k]);
+	}
+	short next_max_th = max_th;
+	for (byte i = 4; i >= 2; i /= 2)
+	{
+		short th = max_th / i;
+		for (short k = 0; k < length; k++)
+		{
+			thresholded[k] = data[k] > th;
+		}
+
+		short beats = CountPeaks(thresholded, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES);
+		if (beats < min_beats)
+			next_max_th = max_th;
+	}
+	max_th = next_max_th;
+
 
 
 	for (byte i = 0; i < NUM_RECURSIVE_SUBDIV; i++)
 	{
 
-		// ths = linspace(startmin, endmin, npts);
-		short delta = (endmin - startmin)/(N_BS_PTS - 1);
-		short last = startmin;
+		// ths = linspace(min_th, max_th, npts);
+		short delta = (max_th - min_th)/(N_BS_PTS - 1);
+		short last = min_th;
 		// rounding??
 		for (int i = 0; i < N_BS_PTS; i++)
 		{
@@ -161,11 +215,11 @@ static short BinarySearch(short* data, short length, short minlen, short startmi
 
 		for (short j = 0; j < N_BS_PTS; j++)
 		{
-			for (short k = 0; k < N_PTS; k++)
+			for (short k = 0; k < length; k++)
 			{
 				thresholded[k] = data[k] > ths[j];
 			}
-			beats[j] = CountPeaks(above_th, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES);
+			beats[j] = CountPeaks(thresholded, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES);
 		}
 		// both indices are inclusive
 		short first_valid = 0;
@@ -221,7 +275,8 @@ static short BinarySearch(short* data, short length, short minlen, short startmi
 				}
 				else
 				{
-					current = {-1, -1};
+					current.start_index = -1;
+					current.length = -1;
 				}
 			}
 			nmin = best.start_index - 1;
@@ -238,41 +293,18 @@ static short BinarySearch(short* data, short length, short minlen, short startmi
 		if (nmax > N_BS_PTS - 1)
 			nmax = N_BS_PTS - 1;
 
-		startmin = ths[nmin];
-		endmin = ths[nmax];
+		min_th = ths[nmin];
+		max_th = ths[nmax];
 
 		if (beats[nmin] == beats[nmax])
 			break;
 
 	}
-
-
-  short mid;
-  short count;
-  
-  for(short j = 0; j <= 9; j++){
-    mid = (low+high) >> 1; //(Low + High) / 2
-    for(short i = 0; i < len; i++) {
-      if (data[i] > mid){
-        above_th[i] = true;
-      } else {
-        above_th[i] = false;
-      }
-    }
-    count = CountPeaks(above_th, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES); 
-    Serial.print("Using threshold ");
-    Serial.println(mid);
-    Serial.print("Counted peaks: ");
-    Serial.println(count);
-    if((count > expected) || ((count == expected) && (hh == 0))){
-      low = mid;
-    } else if ((count < expected) || ((count == expected) && (hh == 1))) {
-      high = mid;
-      continue;
-    }
-  }
-  return mid;
+	struct thresholds toreturn =  {min_th, max_th};
+	return toreturn;
 }
+
+
 
 #define RISING_EDGE 1
 #define FALLING_EDGE 2
