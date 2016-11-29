@@ -30,7 +30,7 @@ short rising_edges[MAX_EDGES];
 short falling_edges[MAX_EDGES];
 
 short FindHeartRate();
-short CountPeaks(char* th_data, short* rising_edges, short* falling_edges, short length_data, short max_edges);
+short CountPeaks(char* th_data, short min_length, short* rising_edges, short* falling_edges, short length_data, short max_edges);
 void GuessParameters2();
 char one_chamber_peak_finder(short data);
 
@@ -145,7 +145,7 @@ void GuessParameters2() {
   for (short i = 0; i < PARAM_LEARN_SIZE; i++)
   	thresholded[i] = ldata[i] > guessed_param.vc;
 
-  short n_edges = CountPeaks(thresholded, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES);
+  short n_edges = CountPeaks(thresholded, V_LENGTH, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES);
   for (short peak = 0; peak < n_edges && rising_edges[peak] != -1; peak++)
   {
   	short start_idx = max(rising_edges[peak] - t_blank, 0);
@@ -192,7 +192,7 @@ static struct thresholds BinarySearch(short* data, short length, short minlen) {
 			thresholded[k] = data[k] > th;
 		}
 
-		short beats = CountPeaks(thresholded, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES);
+		short beats = CountPeaks(thresholded, minlen, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES);
 		if (beats < min_beats)
 			next_max_th = max_th;
 	}
@@ -219,7 +219,7 @@ static struct thresholds BinarySearch(short* data, short length, short minlen) {
 			{
 				thresholded[k] = data[k] > ths[j];
 			}
-			beats[j] = CountPeaks(thresholded, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES);
+			beats[j] = CountPeaks(thresholded, minlen, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES);
 		}
 		// both indices are inclusive
 		short first_valid = 0;
@@ -309,84 +309,45 @@ static struct thresholds BinarySearch(short* data, short length, short minlen) {
 #define RISING_EDGE 1
 #define FALLING_EDGE 2
 
-#define FILTER_LENGTH 21
-// TH_CUTOFF was .005 in Matlab (chosen mostly arbitrarily), but the filter coefficients are scaled by 2^20
-#define TH_CUTOFF 5243
 
 // Used to punish when the threshold is too low so large blocks of the data are above the threshold
 // This is sample-rate dependent. It was 150 in the Matlab code, but dividing by 128 can be done with
 // a bitshift instead of a division
 #define SAMPLES_PER_ADDTL_HEARTBEAT 128
+// over 1/inverse_filter_threshold samples in min_length need to be high for it to count as a peak
+#define INVERSE_FILTER_THRESHOLD 4
 
-// TODO: Optimize coefficients for integers and different sampling rate
-const short filter[] = {3480, 3481, 3482, 3483, 3484, 3485, 3486, 3486, 3486, 3487, 3487, 
-  3487, 3486, 3486, 3486, 3485, 3484, 3483, 3482, 3481, 3480};
 // th_data: 1 if data[i] > current threshold
 // fills in rising_edges and falling_edges with the indices of the edge
 // The same number of elements should be set in both arrays, and it should be the value that is returned unless there are some peaks that are way too big.
 // Unset elements will have value -1.
 // all arrays should be allocated and of size length
-short CountPeaks(char* th_data, short* rising_edges, short* falling_edges, short length_data, short max_edges)
+short CountPeaks(char* th_data, short min_length, short* rising_edges, short* falling_edges, short length_data, short max_edges)
 {
+  bool currentState = false;
+  short risingIndex = 0;
+  short fallingIndex = 0;
+  short peaks = 0;
   for(short i = 0; i < length_data; i++)
   {
-    short acc = 0;
-    // Definitely need to break if we exceed the cutoff or we risk overflowing
-    for(short j = 0; j < FILTER_LENGTH && i-j >= 0 && acc < TH_CUTOFF; j++)
-    {
-	  if (th_data[i-j] & 1)
-		  acc += filter[j] * th_data[i-j];
-    }
-   
-    // Temporarily store in higher bits of th_data so we don't need more RAM
-    th_data[i] |= (acc >= TH_CUTOFF ? 2 : 0);
+	short acc = 0;
+  	for (short j = max(0, i - length_data); j <= i && acc <= min_length/ INVERSE_FILTER_THRESHOLD; j++)
+		acc += th_data[j] ? 1 : 0;
+	bool isHigh = acc > min_length/INVERSE_FILTER_THRESHOLD;
+	if (isHigh && !currentState && risingIndex < MAX_EDGES)
+		//rising edge
+		rising_edges[risingIndex++] = i;
+	if (!isHigh && currentState && fallingIndex < MAX_EDGES) {
+		// falling edge
+		falling_edges[fallingIndex++] = i;
+		peaks++;
+		peaks += (falling_edges[fallingIndex - 1] - rising_edges[risingIndex - 1])/SAMPLES_PER_ADDTL_HEARTBEAT;
+	}
+	
+	currentState = isHigh;
+
   }
-  for(short i = 0; i < length_data; i++)
-  {
-    th_data[i] >>= 1; // Now move that higher bit back to bit 0
-  }
-  bool high = false;
-  short rising_count = 0;
-  short last_rising_index = 0;
-
-	short ri = 0, fi = 0; // current positions in rising and falling edges arrays
-	for (short i = 0; i < max_edges; i++)
-	{
-		rising_edges[i] = falling_edges[i] = -1;
-	}
-
-	for(short i = 0; i < length_data; i++)
-	{
-		if (th_data[i] && !high)
-		{
-			rising_count++;
-			last_rising_index = i;
-			high = true;
-
-			if (ri < max_edges) 
-			{
-				rising_edges[ri++] = i;
-			}
-		}
-		else if (!th_data[i] && high)
-		{
-			high = false;
-			rising_count += (i - last_rising_index)/SAMPLES_PER_ADDTL_HEARTBEAT;
-			
-			if (fi < max_edges)
-				falling_edges[fi++] = i;
-		}
-	}
- Serial.print("Ended the edge counting loop. Is it still high? ");
- Serial.println(high);
-	// Handle the case where the data ends while high:
-	if (high)
-	{
-		rising_count += (length_data - last_rising_index)/SAMPLES_PER_ADDTL_HEARTBEAT;
-		high = false;
-		falling_edges[fi] = length_data - 1;
-	}
-	return rising_count;
+  return peaks;
 }
 
 // Returns the expected number of beats in data
