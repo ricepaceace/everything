@@ -23,5 +23,9 @@
 #define N_BS_PTS 12
 // Max number of rounds of recursive flat finding to do
 #define NUM_RECURSIVE_SUBDIV 3
+#define SAMPLE_RATE = 1000
+#define MIN_HEARTRATE = 10
+#define MAX_HEARTRATE = 150
+//The above two constants are used to help the binary search find minimum and maximum heart rates that thresholding can return.
 
 #define NUM_PARAMS 4
