@@ -23,3 +23,5 @@
 #define N_BS_PTS 12
 // Max number of rounds of recursive flat finding to do
 #define NUM_RECURSIVE_SUBDIV 3
+
+#define NUM_PARAMS 4

@@ -19,6 +19,11 @@ typedef struct
 	int last_sample_is_A;
 	int recentdatapoints[PREVARP];
 } detections;
-// Now declare the actual detections structs
-//Struct that holds vc, ac, etc.
-detections learned_params[N_CHANNELS];
+
+typedef struct
+{
+	int v_thresh;
+	int a_thresh;
+	int v_flip;
+	int a_flip;
+} params;

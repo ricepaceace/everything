@@ -1,7 +1,7 @@
 #include "detections.h"
 #include "constants.h"
 
-void yamPeakFinder(int ind, detections * d)
+void yamPeakFinder(detections * d)
 {
 	//VENTRICAL
 	int datapointV = d->recentdatapoints[PREVARP - 1];
