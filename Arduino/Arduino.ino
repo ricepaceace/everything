@@ -1,6 +1,3 @@
-#define PARAM_LEARN_SIZE 8192 //The number of points to use in parameter learning
-
-
 #include "arduinocompat.h"
 
 
@@ -18,6 +15,7 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   pinMode(13, OUTPUT);
+  Serial.println("STart Pls");
 }
 bool runn = true;
 void loop() {

@@ -3,7 +3,7 @@
 #include "guessparameters.h"
 #include "yamPeakFinder.c"
 #include "data.h"
-#define NUM_CHANNELS 4
+#define NUM_CHANNELS 1
 
 #define VENT 1
 #define ATRIAL 2
@@ -14,6 +14,7 @@ int multisiteDecision(void)
 	for(i = 0;i < NUM_CHANNELS; i++)
 	{
 		params lp = GuessParameters2(data);
+    Serial.println("We have learned parameters");
 		detects[i].v_thresh = lp.v_thresh;
 		detects[i].a_thresh= lp.a_thresh;
 		detects[i].aflip = lp.a_flip;
@@ -33,12 +34,17 @@ int multisiteDecision(void)
 		detects[i].last_sample_is_A = 0;
 		for(j = 0; j< PREVARP; j++)
 			detects[i].recentdatapoints[j] = 0;
+    Serial.println("Ventricle Threshold");
+    Serial.println(detects[i].v_thresh);
+    Serial.println("Atrial Threshold");
+    Serial.println(detects[i].a_thresh);
 	}
 
+  return 0;
 	/* MAIN LOOP */
 	while(1)
 	{
-		for(i = 0; i< NUM_CHANNELS;i++)\
+		for(i = 0; i< NUM_CHANNELS;i++)
 		{
 			for(j = 0; j < PREVARP -1; j++)
 			{

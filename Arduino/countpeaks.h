@@ -7,6 +7,7 @@
 // Unset elements will have value -1.
 short CountPeaks(char* th_data, short min_length, short* rising_edges, short* falling_edges, short length_data, short max_edges)
 {
+  Serial.println("In Countpeaks, printing");
   short currentState = 0;
   short risingIndex = 0;
   short fallingIndex = 0;
@@ -16,13 +17,15 @@ short CountPeaks(char* th_data, short min_length, short* rising_edges, short* fa
     falling_edges[k] = -1;
   }
 
+  short filter_thresh =  min_length/ INVERSE_FILTER_THRESHOLD;
   for(short i = 0; i < length_data; i++)
   {
     short acc = 0;
-    
-    for ( short j=max(0, i - length_data); j <= i && acc <= min_length/ INVERSE_FILTER_THRESHOLD; j++)
+
+
+    for ( short j=max(0, i - min_length); j <= i && acc <= filter_thresh; j++)
       acc += th_data[j] ? 1 : 0;
-    boolean isHigh = acc > min_length/INVERSE_FILTER_THRESHOLD;
+    boolean isHigh = acc > filter_thresh;
     if (isHigh && !currentState && risingIndex < MAX_EDGES)
       //rising edge
       rising_edges[risingIndex++] = i;

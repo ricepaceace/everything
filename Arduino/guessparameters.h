@@ -14,7 +14,7 @@ struct thresholds
 	short high_threshold;
 };
 
-static struct thresholds BinarySearch(short* data, short length, short minlen);
+static struct thresholds BinarySearch(short* data, short data_len, short minlen);
 
 // When it returns, the data is negated or not to match the thresholds it returns
 static struct thresholds TryPlusMinus(short v_or_a_length, char *multiplier) // return whether or not we multiplied it as well
@@ -53,11 +53,14 @@ params GuessParameters2(const short* data)
   	{
     	ldata[i] = pgm_read_word_near(data + i);
   	}
+   Serial.println("Finished Reading Data");
 
 
   	char v_flip;
   	struct thresholds v_cutoffs = TryPlusMinus(V_LENGTH, &v_flip);
 
+    Serial.println("Finsihed Plus Minus");
+    
   	learned_params.v_thresh = (int)(v_cutoffs.low_threshold/2 + v_cutoffs.high_threshold/2); //.5*v_cutoffs[1] + .5*v_cutoffs[2]
   	learned_params.v_flip = v_flip;
 
@@ -90,17 +93,28 @@ short derivs[N_BS_PTS-1];
 
 struct thresholds NO_TH_FOUND = {-1, -1};
 
-struct flat { short start_index; short length;};
+struct flat { short start_index; short data_len;};
 
 // Computes the thresholds that correspond to a flat piece on the graph of threshold and counted peaks
 // data should be of the specified length 
 // minlen is the minimum length to call a peak (where this notion is a bit fuzzy and you should see CountPeaks for the exact definition)
-static struct thresholds BinarySearch(short* data, short length, short minlen) {
-  short min_beats = length / MINHEARTRATE_DIV_SAMPLRATE60;
-  short max_beats = length / MAXHEARTRATE_DIV_SAMPLERATE60;
 
+static struct thresholds BinarySearch(short* data, short data_len, short minlen) {
+  short min_beats = data_len / MINHEARTRATE_DIV_SAMPLRATE60;
+  short max_beats = data_len / MAXHEARTRATE_DIV_SAMPLERATE60;
+
+  Serial.println("Data Length");
+  Serial.println(data_len);
+  Serial.println("MINHEARTRATE_DIV_SAMPLRATE60");
+  Serial.println(MINHEARTRATE_DIV_SAMPLRATE60);
+  Serial.println("minbeats");
+  Serial.println(min_beats);
+  Serial.println("maxbeats");
+  Serial.println(max_beats);
+  
 	short min_th = 0, max_th = 0, k, i,j;
-	for (k = 0; k < length; k++)
+ 
+	for (k = 0; k < data_len; k++)
 	{
 		max_th = max(max_th, data[k]);
 	}
@@ -108,7 +122,7 @@ static struct thresholds BinarySearch(short* data, short length, short minlen) {
 	for (i = 4; i >= 2; i /= 2)
 	{
 		short th = max_th / i;
-		for (k = 0; k < length; k++)
+		for (k = 0; k < data_len; k++)
 		{
 			thresholded[k] = data[k] > th;
 		}
@@ -119,6 +133,7 @@ static struct thresholds BinarySearch(short* data, short length, short minlen) {
 			next_max_th = max_th;
 		}
 	}
+ Serial.println("Finished 1st for loop with count peaks");
 	max_th = next_max_th;
 
   	for (i = 0; i < NUM_RECURSIVE_SUBDIV; i++)
@@ -131,25 +146,28 @@ static struct thresholds BinarySearch(short* data, short length, short minlen) {
     	for (k = 0; k < N_BS_PTS; k++)
     	{
     	  	ths[k] = last;
+          Serial.print("last ");
+          Serial.println(last);
       		last += delta;
     	}
 
 		for (j = 0; j < N_BS_PTS; j++)
 		{
-			for (k = 0; k < length; k++)
+			for (k = 0; k < data_len; k++)
 			{
 				thresholded[k] = data[k] > ths[j];
 			}
 			beats[j] = CountPeaks(thresholded, minlen, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES);
 		}
+   Serial.println("Gets past 2nd count peaks");
 		// both indices are inclusive
 		short first_valid = 0;
 		while (first_valid < N_BS_PTS && ths[first_valid] < min_beats)
 			first_valid++;
 		short last_valid = N_BS_PTS - 1;
 		while (last_valid >= 0 && ths[last_valid] > max_beats)
-			last_valid++;
-
+			last_valid--;
+    Serial.println("Gets past double while loop");
 		if (first_valid > last_valid)
 			return NO_TH_FOUND;
 
@@ -188,20 +206,20 @@ static struct thresholds BinarySearch(short* data, short length, short minlen) {
           			if (current.start_index == -1)
           			{
             			current.start_index = j;
-            			current.length = 0;
+            			current.data_len = 0;
           			}
-          			current.length++;
-          			if (current.length > best.length)
+          			current.data_len++;
+          			if (current.data_len > best.data_len)
             			current = best;
     			}
         		else
         		{
          	 		current.start_index = -1;
-          			current.length = -1;
+          			current.data_len = -1;
     			}
   			}
       		nmin = best.start_index - 1;
-      		nmax = best.start_index + best.length;
+      		nmax = best.start_index + best.data_len;
     	}
 		else
     	{
