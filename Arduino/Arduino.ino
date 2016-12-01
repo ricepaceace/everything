@@ -10,9 +10,7 @@
 #include "detections.h"
 
 #include "guessparameters.h"
-
-
-char one_chamber_peak_finder(short data);
+#include "multisiteDecision.h"
 
 
 
@@ -47,33 +45,14 @@ void loop() {
         */
     
       
-    }
+    
     Serial.println("AYYY LMAO");
   }
   runn = false;
 }
 
 
-char one_chamber_peak_finder(short data)
-{
-  if(data > guessed_param.vc)
-  {
-    num_a = 0;
-    return ((++num_v == 8) ? 'v' : 0);
-  }
-  else if (data > guessed_param.ac)
-  {
-    num_v = 0;
-    return ((++num_a == 12) ? 'a' : 0);
 
-  }
-  else
-  {
-    num_v = 0;
-    num_a = 0;
-    return 0;
-  } 
-}
 
 
 

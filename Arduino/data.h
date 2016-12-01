@@ -1,4 +1,4 @@
-
+#pragma once
 #ifndef NO_ARDUINO
 	#include <avr/pgmspace.h>
 #endif

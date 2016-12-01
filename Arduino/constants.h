@@ -1,3 +1,4 @@
+#pragma once
 #define V_LENGTH 11
 #define A_LENGTH 30
 #define AV_DELAY_THRESH 200

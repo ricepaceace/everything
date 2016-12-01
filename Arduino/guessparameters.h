@@ -1,3 +1,4 @@
+#pragma once
 #include "constants.h"
 #include "detections.h"
 #include "countpeaks.h"
@@ -44,7 +45,7 @@ static struct thresholds TryPlusMinus(short v_or_a_length, char *multiplier) // 
   	}
 }
 
-params GuessParameters2(short* data)
+params GuessParameters2(const short* data)
 { 
 	params learned_params;
 	int i, j;

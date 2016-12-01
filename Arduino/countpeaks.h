@@ -1,4 +1,4 @@
-
+#pragma once
 
 
 // th_data: 1 if data[i] > current threshold
@@ -19,13 +19,8 @@ short CountPeaks(char* th_data, short min_length, short* rising_edges, short* fa
   for(short i = 0; i < length_data; i++)
   {
     short acc = 0;
-    short j = 0;
-
-    if(i-length_data >= 0)
-      j = i-length_data;
-      
-    //short j=max(0, i - length_data);
-    for ( ; j <= i && acc <= min_length/ INVERSE_FILTER_THRESHOLD; j++)
+    
+    for ( short j=max(0, i - length_data); j <= i && acc <= min_length/ INVERSE_FILTER_THRESHOLD; j++)
       acc += th_data[j] ? 1 : 0;
     boolean isHigh = acc > min_length/INVERSE_FILTER_THRESHOLD;
     if (isHigh && !currentState && risingIndex < MAX_EDGES)

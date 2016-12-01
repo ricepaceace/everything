@@ -1,4 +1,4 @@
-
+#pragma once
 #ifdef NO_ARDUINO
 #define PROGMEM
 #define pgm_read_word_near(x) (*(x))

@@ -1,3 +1,4 @@
+#pragma once
 /*
 %Inputs:
 %detection - struct representing the preset/learned detection paramters

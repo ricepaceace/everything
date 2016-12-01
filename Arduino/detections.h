@@ -1,3 +1,4 @@
+#pragma once
 #include "constants.h"
 
 typedef struct

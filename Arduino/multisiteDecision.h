@@ -1,3 +1,4 @@
+#pragma once
 #include "constants.h"
 #include "guessparameters.h"
 #include "yamPeakFinder.c"
@@ -6,7 +7,7 @@
 
 #define VENT 1
 #define ATRIAL 2
-int main(void)
+int multisiteDecision(void)
 {
 	detections detects[NUM_CHANNELS];
 	int i,j;
