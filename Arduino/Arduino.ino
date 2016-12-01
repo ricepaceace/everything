@@ -1,24 +1,14 @@
 #define PARAM_LEARN_SIZE 8192 //The number of points to use in parameter learning
 
-#ifdef NO_ARDUINO
+
 #include "arduinocompat.h"
-#endif
 
-
-#define SAMPLE_RATE 1000
-#define MIN_HEARTRATE 20 //BPM
-#define MAX_HEARTRATE 250 //BPM
-
-// The we expect two rising, falling edges per beat, but the 3 gives us padding
-#define MAX_EDGES (PARAM_LEARN_SIZE * 3 * MAX_HEARTRATE) / (SAMPLE_RATE * 60)
 
 
 #include "data.h"
 #include "constants.h"
 #include "detections.h"
 
-
-#include "countpeaks.h"
 #include "guessparameters.h"
 
 
@@ -34,7 +24,12 @@ void setup() {
 bool runn = true;
 void loop() {
   if (runn) {
-    Serial.println("Starting");
+
+
+    multisiteDecision();
+    
+    /*
+    //Serial.println("Starting");
     digitalWrite(13, HIGH);
     GuessParameters2();
     digitalWrite(13, LOW);
@@ -48,7 +43,10 @@ void loop() {
         Serial.print(i);
         Serial.print(" ");
         Serial.println(c);
-      }
+        }
+        */
+    
+      
     }
     Serial.println("AYYY LMAO");
   }

@@ -1,7 +1,7 @@
 #include "constants.h"
-#include "detections.h"
 #include "guessparameters.h"
-
+#include "yamPeakFinder.c"
+#include "data.h"
 #define NUM_CHANNELS 4
 
 #define VENT 1
@@ -12,7 +12,7 @@ int main(void)
 	int i,j;
 	for(i = 0;i < NUM_CHANNELS; i++)
 	{
-		params lp = GuessParameters2();
+		params lp = GuessParameters2(data);
 		detects[i].v_thresh = lp.v_thresh;
 		detects[i].a_thresh= lp.a_thresh;
 		detects[i].aflip = lp.a_flip;

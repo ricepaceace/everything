@@ -26,6 +26,12 @@
 #define SAMPLE_RATE 1000
 #define MIN_HEARTRATE 10
 #define MAX_HEARTRATE 150
+#define PARAM_LEARN_SIZE SAMPLE_RATE*10
+#define MINHEARTRATE_DIV_SAMPLRATE60 6000 //Defined as SampleRate*60/MinHeartRate
+#define MAXHEARTRATE_DIV_SAMPLERATE60 400 //Defined as SampleRate*60/MaxHeartRate
+
+#define MAX_EDGES (PARAM_LEARN_SIZE * 3) /MAXHEARTRATE_DIV_SAMPLERATE60 // The we expect two rising, falling edges per beat, but the 3 gives us padding
+
 //The above two constants are used to help the binary search find minimum and maximum heart rates that thresholding can return.
 
 #define NUM_PARAMS 4

@@ -1,5 +1,6 @@
 #include "constants.h"
 #include "detections.h"
+#include "countpeaks.h"
 
 short ldata[PARAM_LEARN_SIZE];
 char thresholded[PARAM_LEARN_SIZE];
@@ -43,7 +44,7 @@ static struct thresholds TryPlusMinus(short v_or_a_length, char *multiplier) // 
   	}
 }
 
-params GuessParameters2()
+params GuessParameters2(short* data)
 { 
 	params learned_params;
 	int i, j;
@@ -94,8 +95,8 @@ struct flat { short start_index; short length;};
 // data should be of the specified length 
 // minlen is the minimum length to call a peak (where this notion is a bit fuzzy and you should see CountPeaks for the exact definition)
 static struct thresholds BinarySearch(short* data, short length, short minlen) {
-  short min_beats = length * MIN_HEARTRATE / (SAMPLE_RATE * 60);
-  short max_beats = length * MAX_HEARTRATE / (SAMPLE_RATE * 60);
+  short min_beats = length / MINHEARTRATE_DIV_SAMPLRATE60;
+  short max_beats = length / MAXHEARTRATE_DIV_SAMPLERATE60;
 
 	short min_th = 0, max_th = 0, k, i,j;
 	for (k = 0; k < length; k++)
