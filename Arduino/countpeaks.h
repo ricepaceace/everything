@@ -7,7 +7,7 @@
 // Unset elements will have value -1.
 short CountPeaks(char* th_data, short min_length, short* rising_edges, short* falling_edges, short length_data, short max_edges)
 {
-  Serial.println("In Countpeaks, printing");
+
   short currentState = 0;
   short risingIndex = 0;
   short fallingIndex = 0;

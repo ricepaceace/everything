@@ -14,7 +14,6 @@ int multisiteDecision(void)
 	for(i = 0;i < NUM_CHANNELS; i++)
 	{
 		params lp = GuessParameters2(data);
-    Serial.println("We have learned parameters");
 		detects[i].v_thresh = lp.v_thresh;
 		detects[i].a_thresh= lp.a_thresh;
 		detects[i].aflip = lp.a_flip;
@@ -53,7 +52,7 @@ int multisiteDecision(void)
 			// TODO: Add new data point to end of detects[i].recentdatapoints
 		
 			detects[i].AbeatDelay++;
-		   	detects[i].VbeatDelay++;
+		  detects[i].VbeatDelay++;
 			detects[i].VbeatFallDelay++;
 			detects[i].AstimDelay++;
 			detects[i].VstimDelay++;
