@@ -29,8 +29,8 @@ void loop();
 int main(int argc, char** argv)
 {
 	setup();
-	while (true)
-		loop();
+	// we already know loop doesn't do anything after the first time it runs
+	loop();
 }
 #endif
 

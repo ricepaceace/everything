@@ -7,10 +7,19 @@
 
 #define VENT 1
 #define ATRIAL 2
+
+#define STATUS_PRINT(x) do { \
+	Serial.print("t="); \
+	Serial.print(sampleId); \
+	Serial.print(" ch="); \
+	Serial.print(i); \
+	Serial.print(": "); \
+	Serial.println(x); \
+}while(0)
 int multisiteDecision(void)
 {
 	detections detects[NUM_CHANNELS];
-	int i,j;
+	int i, j;
 	for(i = 0;i < NUM_CHANNELS; i++)
 	{
 		params lp = GuessParameters2(data);
@@ -44,15 +53,31 @@ int multisiteDecision(void)
 	}
 
 	/* MAIN LOOP */
+#ifdef ANALOG
 	while(1)
+#else
+		for(int si = 0; si < LEN_ALLDATA; si++)
+#endif
 	{
-		for(i = 0; i< NUM_CHANNELS;i++)
+		unsigned long sampleId;
+#ifdef ANALOG
+		sampleId = millis();
+#else
+		sampleId = si;
+#endif
+		for(i = 0; i < NUM_CHANNELS;i++)
 		{
 			for(j = 0; j < PREVARP -1; j++)
 			{
 				detects[i].recentdatapoints[j] = detects[i].recentdatapoints[j+1];
 			}
-			// TODO: Add new data point to end of detects[i].recentdatapoints
+			short next_sample;
+#if ANALOG
+			next_sample = analogRead(i); // TODO: Set right analog pin
+#else
+			next_sample = pgm_read_word_near(data + si);
+#endif
+			detects[i].recentdatapoints[PREVARP-1] = next_sample;
 		
 			detects[i].AbeatDelay++;
 		  detects[i].VbeatDelay++;
@@ -66,10 +91,12 @@ int multisiteDecision(void)
 		{
 			if (detects[i].AbeatDelay > AA_DELAY_THRESH && detects[i].AstimDelay > detects[i].ACaptureThresh)
 			{
-				if (detects[i].VstimDelay == detects[i].VCaptureThresh+1)
+				if (detects[i].AstimDelay == detects[i].ACaptureThresh+1)
 				{
 					//TODO: Increse Atrial Stimulation voltage
+					STATUS_PRINT("Increasing atrial stimulation voltage");
 				}
+				STATUS_PRINT("Stimulating atria");
 				//TODO: Stimulate atria here
 				for(j = 0; j< NUM_CHANNELS; j++)
 				{
@@ -85,8 +112,10 @@ int multisiteDecision(void)
 			{
 				if (detects[i].VstimDelay == detects[i].VCaptureThresh+1)
 				{
+					STATUS_PRINT("Increasing ventricular stimulation voltage");
 					//TODO: increase ventricular stim voltage
 				}
+				STATUS_PRINT("Stimulating ventricle");
 				//TODO: Stimulate Ventricle here
 				for(j = 0; j < NUM_CHANNELS; j++)
 				{

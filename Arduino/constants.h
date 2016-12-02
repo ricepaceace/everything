@@ -36,3 +36,7 @@
 //The above two constants are used to help the binary search find minimum and maximum heart rates that thresholding can return.
 
 #define NUM_PARAMS 4
+
+#ifndef ANALOG
+#define LEN_ALLDATA 60000
+#endif
