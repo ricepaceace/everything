@@ -19,6 +19,7 @@ class _Serial {
 	void print(int g) { printf("%d", g); } 
 	void println(const char* c) { printf("%s\n", c);}
 	void println(int g) { printf("%d\n", g); } 
+	void println() {  printf("\n");} 
 };
 _Serial Serial;
 

@@ -33,13 +33,16 @@ int multisiteDecision(void)
 		detects[i].last_sample_is_A = 0;
 		for(j = 0; j< PREVARP; j++)
 			detects[i].recentdatapoints[j] = 0;
+
+		Serial.println();
+		Serial.println();
+		Serial.println();
     Serial.println("Ventricle Threshold");
     Serial.println(detects[i].v_thresh);
     Serial.println("Atrial Threshold");
     Serial.println(detects[i].a_thresh);
 	}
 
-  return 0;
 	/* MAIN LOOP */
 	while(1)
 	{

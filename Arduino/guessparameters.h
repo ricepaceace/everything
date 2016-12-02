@@ -110,10 +110,11 @@ static struct thresholds BinarySearch(short* data, short data_len, short minlen)
   short min_beats = data_len / MINHEARTRATE_DIV_SAMPLRATE60;
   short max_beats = data_len / MAXHEARTRATE_DIV_SAMPLERATE60;
 
-  Serial.println("min_beats");
-  Serial.println(min_beats);
-  Serial.println("max_beatS");
-  Serial.println(max_beats);
+  Serial.print("valid beat counts: [");
+  Serial.print(min_beats);
+  Serial.print(", ");
+  Serial.print(max_beats);
+  Serial.println("]");
   
 	short min_th = 0, max_th = 0, k, i,j;
  
@@ -159,8 +160,6 @@ static struct thresholds BinarySearch(short* data, short data_len, short minlen)
     	for (k = 0; k < N_BS_PTS; k++)
     	{
     	  	ths[k] = last;
-          Serial.print("last ");
-          Serial.println(last);
       		last += delta;
     	}
 
@@ -171,14 +170,14 @@ static struct thresholds BinarySearch(short* data, short data_len, short minlen)
 				thresholded[k] = data[k] > ths[j];
 			}
 			beats[j] = CountPeaks(thresholded, minlen, rising_edges, falling_edges, PARAM_LEARN_SIZE, MAX_EDGES); 
+			Serial.print(j);
+			Serial.print(": Trying threshold ");
+			Serial.print(ths[j]);
+			Serial.print(". Got beats: ");
+			Serial.println(beats[j]);
       
 		}
 
-    
-    for(j=0; j <N_BS_PTS;j++)
-      Serial.println(beats[j]);
-    Serial.println("beats");
-    
 		// both indices are inclusive
 		short first_valid = 0;
 		while (first_valid < N_BS_PTS && beats[first_valid] > max_beats)
@@ -215,12 +214,12 @@ static struct thresholds BinarySearch(short* data, short data_len, short minlen)
 		  	}
 		}
 
+#if DEBUG
    for(j = first_valid; j < last_valid; j++)
    {
         Serial.println(derivs[j]);
    }
    Serial.println("derivs");
-#if DEBUG
 		Serial.print("On recursive iteration ");
 		Serial.print((int)i);
 		Serial.print(". Min derivative was ");
@@ -251,11 +250,13 @@ static struct thresholds BinarySearch(short* data, short data_len, short minlen)
           	  current.data_len = -1;
     			  }
   			  }
-          Serial.println("best start_index");
-          Serial.println(best.start_index);
+          Serial.print("best indices: ");
+          Serial.print(best.start_index);
 
-          Serial.println("best data_len");
-          Serial.println(best.data_len);
+          Serial.print(" to ");
+		  // Technically, the end of the best index is start + len - 1, but since these are derivative indices,
+		  // it makes more sense to print start + len
+          Serial.println(best.start_index + best.data_len);
           
       		nmin = best.start_index - 1;
       		nmax = best.start_index + best.data_len;
