@@ -1,3 +1,4 @@
+#define ANALOG
 #include "arduinocompat.h"
 
 
