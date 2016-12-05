@@ -16,6 +16,9 @@ int analogPins[NUM_CHANNELS] = {0};
 int analogPins[NUM_CHANNELS] = {A0};
 #endif
 
+unsigned long startSample, endSample,elapsedTime;
+
+
 #define VENT 1
 #define ATRIAL 2
 
@@ -88,6 +91,7 @@ int multisiteDecision(void)
 #ifdef ANALOG
 			next_sample = analogRead(analogPins[i]); 
      Serial.println((int) next_sample);
+     startSample = micros();
 #else
 			next_sample = pgm_read_word_near(data + si);
 #endif
@@ -143,6 +147,9 @@ int multisiteDecision(void)
 				break;
 			 }
 		}
+  endSample = micros();
+  elapsedTime = endSample - startSample;
+  delayMicroseconds(1000-elapsedTime);
 	}
 	return 0;
 }
