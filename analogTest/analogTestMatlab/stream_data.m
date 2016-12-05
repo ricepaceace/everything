@@ -3,9 +3,9 @@ clc;
 clear all;
 %Reset all ports so you can open the USB port that's connected to the
 %arduino
-delete(instrfindall);
-s = serial('/dev/cu.usbmodem1411'); %Change this line based on computer USB port.
-fopen(s);
+%delete(instrfindall);
+%s = serial('/dev/cu.usbmodem1411'); %Change this line based on computer USB port.
+%fopen(s);
 
 %Import data
 data = importdata('good-ch1.h');
@@ -13,8 +13,8 @@ data = importdata('good-ch1.h');
 %Find the minimum and maximum value of data
 %in_min = min(data);
 %in_max = max(data);
-in_min = -400;
-in_max = 400;
+in_min = -2000;
+in_max = 2000;
 %Set min and max for arduino PWM values
 out_min = 0;
 out_max = 255;
@@ -32,7 +32,8 @@ for i = 1:sizedata(1,2)
         val_out(i) = 255;
     end
     %Send to arduino
-    fwrite(s, val_out(i), 'int8');
-    pause(.001);
+    %fwrite(s, val_out(i), 'int8');
+    %pause(.001);
 end
-fclose(s);
+%fclose(s);
+vv = round(val_out);
