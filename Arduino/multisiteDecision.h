@@ -4,16 +4,20 @@
 #include "yamPeakFinder.c"
 #define NUM_CHANNELS 1
 
-/*#ifdef ANALOG
+#ifdef ANALOG
 #include "bufferdata.h"
 #else
 #include "data.h"
 #endif
-*/
-#include "data.h"
 
+#ifdef NO_ARDUINO
+int analogPins[NUM_CHANNELS] = {0};
+#else
 int analogPins[NUM_CHANNELS] = {A0};
+#endif
+
 unsigned long startSample, endSample,elapsedTime;
+
 
 #define VENT 1
 #define ATRIAL 2
@@ -32,6 +36,8 @@ int multisiteDecision(void)
 	int i, j;
 	for(i = 0;i < NUM_CHANNELS; i++)
 	{
+		prepareData(analogPins[i]);
+
 		params lp = GuessParameters2(data);
 		detects[i].v_thresh = lp.v_thresh;
 		detects[i].a_thresh= lp.a_thresh;
@@ -98,10 +104,10 @@ int multisiteDecision(void)
 			detects[i].VstimDelay++;
 
 			yamPeakFinder(&detects[i]);
-			//if (detects[i].VbeatDelay == 0 && detects[i].last_sample_is_V)
-				//STATUS_PRINT("Found V beat");
-			//if (detects[i].AbeatDelay == 0 && detects[i].last_sample_is_A)
-				//STATUS_PRINT("Found A beat");
+			if (detects[i].VbeatDelay == 0 && detects[i].last_sample_is_V)
+				STATUS_PRINT("Found V beat");
+			if (detects[i].AbeatDelay == 0 && detects[i].last_sample_is_A)
+				STATUS_PRINT("Found A beat");
 
 		}
 		for(i = 0; i < NUM_CHANNELS; i++)
@@ -111,9 +117,9 @@ int multisiteDecision(void)
 				if (detects[i].AstimDelay == detects[i].ACaptureThresh+1)
 				{
 					//TODO: Increse Atrial Stimulation voltage
-					//STATUS_PRINT("Increasing atrial stimulation voltage");
+					STATUS_PRINT("Increasing atrial stimulation voltage");
 				}
-				//STATUS_PRINT("Stimulating atria");
+				STATUS_PRINT("Stimulating atria");
 				//TODO: Stimulate atria here
 				for(j = 0; j< NUM_CHANNELS; j++)
 				{
@@ -129,10 +135,10 @@ int multisiteDecision(void)
 			{
 				if (detects[i].VstimDelay == detects[i].VCaptureThresh+1)
 				{
-					//STATUS_PRINT("Increasing ventricular stimulation voltage");
+					STATUS_PRINT("Increasing ventricular stimulation voltage");
 					//TODO: increase ventricular stim voltage
 				}
-				//STATUS_PRINT("Stimulating ventricle");
+				STATUS_PRINT("Stimulating ventricle");
 				//TODO: Stimulate Ventricle here
 				for(j = 0; j < NUM_CHANNELS; j++)
 				{

@@ -33,6 +33,8 @@
 
 #define MAX_EDGES (PARAM_LEARN_SIZE * 3) /MAXHEARTRATE_DIV_SAMPLERATE60 // The we expect two rising, falling edges per beat, but the 3 gives us padding
 
+#define BUFFER_SIZE 128
+
 //The above two constants are used to help the binary search find minimum and maximum heart rates that thresholding can return.
 
 #define NUM_PARAMS 4

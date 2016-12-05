@@ -12,9 +12,7 @@ void setup() {
 }
 
 
-int start;
-int finish;
-int elapsed;
+unsigned long start, finish, elapsed;
 int incomingVal;
 int i = 0;
 
@@ -25,10 +23,10 @@ void loop() {
   }*/
   start = micros();
   // incomingVal = Serial.read();
-  if (i < 30000)
-    incomingVal = pgm_read_byte_near(&(data[i++]));
-  else
-    incomingVal = 0;
+  if (i == 30000){
+    i = 0;
+  }
+  incomingVal = pgm_read_byte_near(&(data[i++]));
   Serial.println(incomingVal);
   analogWrite(PWM_OUT, incomingVal);
   finish = micros();
