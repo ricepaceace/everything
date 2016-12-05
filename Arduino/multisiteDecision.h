@@ -4,15 +4,17 @@
 #include "yamPeakFinder.c"
 #define NUM_CHANNELS 1
 
-/*#ifdef ANALOG
+#ifdef ANALOG
 #include "bufferdata.h"
 #else
 #include "data.h"
 #endif
-*/
-#include "data.h"
 
+#ifdef NO_ARDUINO
+int analogPins[NUM_CHANNELS] = {0};
+#else
 int analogPins[NUM_CHANNELS] = {A0};
+#endif
 
 #define VENT 1
 #define ATRIAL 2
@@ -31,6 +33,8 @@ int multisiteDecision(void)
 	int i, j;
 	for(i = 0;i < NUM_CHANNELS; i++)
 	{
+		prepareData(analogPins[i]);
+
 		params lp = GuessParameters2(data);
 		detects[i].v_thresh = lp.v_thresh;
 		detects[i].a_thresh= lp.a_thresh;
