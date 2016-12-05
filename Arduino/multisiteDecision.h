@@ -86,6 +86,11 @@ int multisiteDecision(void)
 			detects[i].VstimDelay++;
 
 			yamPeakFinder(&detects[i]);
+			if (detects[i].VbeatDelay == 0 && detects[i].last_sample_is_V)
+				STATUS_PRINT("Found V beat");
+			if (detects[i].AbeatDelay == 0 && detects[i].last_sample_is_A)
+				STATUS_PRINT("Found A beat");
+
 		}
 		for(i = 0; i < NUM_CHANNELS; i++)
 		{
