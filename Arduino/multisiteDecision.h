@@ -2,8 +2,19 @@
 #include "constants.h"
 #include "guessparameters.h"
 #include "yamPeakFinder.c"
-#include "data.h"
 #define NUM_CHANNELS 1
+
+#ifdef ANALOG
+#include "bufferdata.h"
+#else
+#include "data.h"
+#endif
+
+#ifdef NO_ARDUINO
+int analogPins[NUM_CHANNELS] = {0};
+#else
+int analogPins[NUM_CHANNELS] = {A0};
+#endif
 
 #define VENT 1
 #define ATRIAL 2
@@ -22,6 +33,8 @@ int multisiteDecision(void)
 	int i, j;
 	for(i = 0;i < NUM_CHANNELS; i++)
 	{
+		prepareData(analogPins[i]);
+
 		params lp = GuessParameters2(data);
 		detects[i].v_thresh = lp.v_thresh;
 		detects[i].a_thresh= lp.a_thresh;
@@ -72,8 +85,9 @@ int multisiteDecision(void)
 				detects[i].recentdatapoints[j] = detects[i].recentdatapoints[j+1];
 			}
 			short next_sample;
-#if ANALOG
-			next_sample = analogRead(i); // TODO: Set right analog pin
+#ifdef ANALOG
+			next_sample = analogRead(analogPins[i]); 
+     Serial.println((int) next_sample);
 #else
 			next_sample = pgm_read_word_near(data + si);
 #endif

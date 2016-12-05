@@ -1,9 +1,8 @@
+#ifndef NO_ARDUINO
 #define ANALOG
+#endif
 #include "arduinocompat.h"
 
-
-
-#include "data.h"
 #include "constants.h"
 #include "detections.h"
 
