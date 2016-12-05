@@ -13,6 +13,7 @@
 #include "data.h"
 
 int analogPins[NUM_CHANNELS] = {A0};
+unsigned long startSample, endSample,elapsedTime;
 
 #define VENT 1
 #define ATRIAL 2
@@ -84,6 +85,7 @@ int multisiteDecision(void)
 #ifdef ANALOG
 			next_sample = analogRead(analogPins[i]); 
      Serial.println((int) next_sample);
+     startSample = micros();
 #else
 			next_sample = pgm_read_word_near(data + si);
 #endif
@@ -96,10 +98,10 @@ int multisiteDecision(void)
 			detects[i].VstimDelay++;
 
 			yamPeakFinder(&detects[i]);
-			if (detects[i].VbeatDelay == 0 && detects[i].last_sample_is_V)
-				STATUS_PRINT("Found V beat");
-			if (detects[i].AbeatDelay == 0 && detects[i].last_sample_is_A)
-				STATUS_PRINT("Found A beat");
+			//if (detects[i].VbeatDelay == 0 && detects[i].last_sample_is_V)
+				//STATUS_PRINT("Found V beat");
+			//if (detects[i].AbeatDelay == 0 && detects[i].last_sample_is_A)
+				//STATUS_PRINT("Found A beat");
 
 		}
 		for(i = 0; i < NUM_CHANNELS; i++)
@@ -109,9 +111,9 @@ int multisiteDecision(void)
 				if (detects[i].AstimDelay == detects[i].ACaptureThresh+1)
 				{
 					//TODO: Increse Atrial Stimulation voltage
-					STATUS_PRINT("Increasing atrial stimulation voltage");
+					//STATUS_PRINT("Increasing atrial stimulation voltage");
 				}
-				STATUS_PRINT("Stimulating atria");
+				//STATUS_PRINT("Stimulating atria");
 				//TODO: Stimulate atria here
 				for(j = 0; j< NUM_CHANNELS; j++)
 				{
@@ -127,10 +129,10 @@ int multisiteDecision(void)
 			{
 				if (detects[i].VstimDelay == detects[i].VCaptureThresh+1)
 				{
-					STATUS_PRINT("Increasing ventricular stimulation voltage");
+					//STATUS_PRINT("Increasing ventricular stimulation voltage");
 					//TODO: increase ventricular stim voltage
 				}
-				STATUS_PRINT("Stimulating ventricle");
+				//STATUS_PRINT("Stimulating ventricle");
 				//TODO: Stimulate Ventricle here
 				for(j = 0; j < NUM_CHANNELS; j++)
 				{
@@ -139,6 +141,9 @@ int multisiteDecision(void)
 				break;
 			 }
 		}
+  endSample = micros();
+  elapsedTime = endSample - startSample;
+  delayMicroseconds(1000-elapsedTime);
 	}
 	return 0;
 }
