@@ -3,9 +3,10 @@
 #include "FlashStorage.h"
 
 const PROGMEM short data[PARAM_LEARN_SIZE] = {};
-short buffer[BUFFER_SIZE];
+volatile short* vdata = (volatile short *) data;
+short bbuffer[BUFFER_SIZE];
 
-  FlashClass flashData((const short*) data, PARAM_LEARN_SIZE * sizeof(short));
+  FlashClass flashData((const short*) vdata, PARAM_LEARN_SIZE * sizeof(short));
 
 int i, j;
 void prepareData(int pin)
@@ -15,15 +16,11 @@ void prepareData(int pin)
 		int samplesToRead = min(BUFFER_SIZE, PARAM_LEARN_SIZE - i);
 		for (j = 0; j < samplesToRead; j++, i++) {
       unsigned long start = micros();
-			buffer[j] = analogRead(pin) - 300;
+			bbuffer[j] = analogRead(pin);
       delayMicroseconds(1000 + start - micros());
 		}
-		flashData.write(&data[i], buffer, samplesToRead * sizeof(short));
-		Serial.print("Wrote ");
-		Serial.print(samplesToRead);
-		Serial.println(" samples to flash.");
+		flashData.write(&vdata[i], bbuffer, samplesToRead * sizeof(short));
 	}
-	Serial.println("Done writing to flash");
 }
 
 
