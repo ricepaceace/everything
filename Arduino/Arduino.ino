@@ -13,7 +13,7 @@
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
+  Serial.begin(250000);
   pinMode(13, OUTPUT);
   Serial.println("STart Pls");
 }

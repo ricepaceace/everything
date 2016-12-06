@@ -40,5 +40,5 @@
 #define NUM_PARAMS 4
 
 #ifndef ANALOG
-#define LEN_ALLDATA 60000
+#define LEN_ALLDATA 10000
 #endif

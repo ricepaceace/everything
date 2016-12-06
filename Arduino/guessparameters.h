@@ -17,8 +17,9 @@ struct thresholds
 static struct thresholds BinarySearch(short* data, short data_len, short minlen);
 
 // When it returns, the data is negated or not to match the thresholds it returns
-static struct thresholds TryPlusMinus(short v_or_a_length, char *multiplier) // return whether or not we multiplied it as well
+static struct thresholds TryPlusMinus(short v_or_a_length, int *multiplier) // return whether or not we multiplied it as well
 { 
+  
 	struct thresholds o_cutoffs = BinarySearch(ldata, PARAM_LEARN_SIZE, v_or_a_length);
 	short i;
   	for (i = 0; i < PARAM_LEARN_SIZE; i++)
@@ -59,7 +60,7 @@ params GuessParameters2(const short* data)
   	}
 
 
-  	char v_flip;
+  	int v_flip;
   	struct thresholds v_cutoffs = TryPlusMinus(V_LENGTH, &v_flip);
 
   	learned_params.v_thresh = (int)(v_cutoffs.low_threshold/2 + v_cutoffs.high_threshold/2); //.5*v_cutoffs[1] + .5*v_cutoffs[2]
@@ -80,7 +81,7 @@ params GuessParameters2(const short* data)
   	}
 
 
-  	char a_flip;
+  	int a_flip;
  	struct thresholds a_cutoffs = TryPlusMinus(A_LENGTH, &a_flip);
   	// a_flip is relative to v_flip at this point. Make it absolute
   	a_flip *= v_flip;
@@ -109,7 +110,7 @@ struct flat { short start_index; short data_len;};
 static struct thresholds BinarySearch(short* data, short data_len, short minlen) {
   short min_beats = data_len / MINHEARTRATE_DIV_SAMPLRATE60;
   short max_beats = data_len / MAXHEARTRATE_DIV_SAMPLERATE60;
-
+  
   Serial.print("valid beat counts: [");
   Serial.print(min_beats);
   Serial.print(", ");

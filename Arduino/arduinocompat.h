@@ -1,7 +1,7 @@
 #pragma once
 #ifdef NO_ARDUINO
 #define PROGMEM
-#define pgm_read_word_near(x) (*(x))
+#define pgm_read_word_near(x) ( (*((short *)x)))
 #define byte unsigned char
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #define max(a, b) ((a) > (b) ? (a) : (b))
