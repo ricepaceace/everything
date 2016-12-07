@@ -58,14 +58,8 @@ int multisiteDecision(void)
 		detects[i].VstimDelay = 0;
 		detects[i].ACaptureThresh = A_LENGTH;
 		detects[i].VCaptureThresh = V_LENGTH;
-		for(j = 0; j< V_LENGTH; j++)
-			detects[i].recentVBools[j] = 0;
-		for(j = 0; j< A_LENGTH; j++)
-			detects[i].recentABools[j] = 0;
 		detects[i].last_sample_is_V = 0;
 		detects[i].last_sample_is_A = 0;
-		for(j = 0; j< PREVARP; j++)
-			detects[i].recentdatapoints[j] = 0;
 
 		Serial.println();
 		Serial.println();
@@ -87,9 +81,9 @@ int multisiteDecision(void)
 		for(int si = 0; si < LEN_ALLDATA; si++)
 #endif
 	{
-       startSample = micros();
 		unsigned long sampleId;
 #ifdef ANALOG
+       startSample = micros();
 		sampleId = millis();
 #else
 		sampleId = si;
@@ -101,19 +95,13 @@ int multisiteDecision(void)
       next_sample = analogRead(analogPins[i])-256; 
      //Serial.println(next_sample);
 #else
-      Serial.println(si);
       next_sample = pgm_read_word_near(data[i] + si);
 #endif
       samples[i] = next_sample;
     }
 		for(i = 0; i < NUM_CHANNELS;i++)
 		{
-			for(j = 0; j < PREVARP -1; j++)
-			{
-				detects[i].recentdatapoints[j] = detects[i].recentdatapoints[j+1];
-			}
-
-			detects[i].recentdatapoints[PREVARP-1] = samples[i];
+			detects[i].recentdatapoints.push(samples[i]);
 		
 			detects[i].AbeatDelay++;
 		  detects[i].VbeatDelay++;
@@ -170,13 +158,14 @@ int multisiteDecision(void)
   endSample = micros();
   elapsedTime = endSample - startSample;
   if(elapsedTime < 1000)
-    delayMicroseconds(1000-elapsedTime);
-    else
-      missedSamples++;
-   if ((missedSamples & 0xFF) == 0xFF) {
-      Serial.print("Missed samples: ");
-      Serial.println(missedSamples);
-   }
+	  delayMicroseconds(1000-elapsedTime);
+  else {
+	  missedSamples++;
+	  if ((missedSamples & 0xFF) == 0xFF) {
+		  Serial.print("Missed samples: ");
+		  Serial.println(missedSamples);
+	  }
+  }
      #endif
 	}
 

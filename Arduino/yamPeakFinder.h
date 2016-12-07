@@ -1,6 +1,6 @@
 #include "detections.h"
 #include "constants.h"
-#ifndef NO_ARDUINO
+#ifdef NO_ARDUINO
 #include "arduinocompat.h"
 #else
 #include "Arduino.h"
@@ -9,17 +9,11 @@
 void yamPeakFinder(detections * d)
 {
 	//VENTRICAL
-	int datapointV = d->recentdatapoints[PREVARP - 1];
+	int datapointV = d->recentdatapoints.head();
 	int i;
-	int sum = 0;
-	for(i = 0; i < V_LENGTH-1; i++)
-	{
-		sum += d->recentVBools[i];
-		d->recentVBools[i] = d->recentVBools[i+1];
-	}
-	
-	d->recentVBools[V_LENGTH-1] = (d->vflip * datapointV) > d->v_thresh;
-	sum += d->recentVBools[V_LENGTH-1];
+	int sum = d->recentVBools.sum;
+	d->recentVBools.push((d->vflip * datapointV) > d->v_thresh);
+	sum += d->recentVBools.head();
 	
 	if(sum > V_LENGTH/2)
 	{
@@ -36,16 +30,11 @@ void yamPeakFinder(detections * d)
 	}
 	
 	// ATRIAL
-	int datapointA = d->recentdatapoints[0];
-	sum = 0;
-	for(i = 0; i < A_LENGTH-1; i++)
-	{
-		sum += d->recentABools[i];
-		d->recentABools[i] = d->recentABools[i+1];
-	}
+	int datapointA = d->recentdatapoints.ftail();
+	sum = d->recentABools.sum;
 	
-	d->recentABools[A_LENGTH-1] = (d->aflip *datapointA) > d->a_thresh;
-	sum += d->recentABools[A_LENGTH-1];
+	d->recentABools.push((d->aflip * datapointA) > d->a_thresh);
+	sum += d->recentABools.head();
 
   //Serial.print("sum: ");
   //Serial.println(sum);

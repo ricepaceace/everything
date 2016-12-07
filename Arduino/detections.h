@@ -1,5 +1,6 @@
 #pragma once
 #include "constants.h"
+#include "circularBuffer.h"
 
 typedef struct
 {
@@ -14,11 +15,11 @@ typedef struct
 	int VstimDelay;
 	int ACaptureThresh;
 	int VCaptureThresh;
-	int recentVBools[V_LENGTH];
-	int recentABools[A_LENGTH];
+	CircularBuffer<int, V_LENGTH> recentVBools;
+	CircularBuffer<int, A_LENGTH> recentABools;
 	int last_sample_is_V;
 	int last_sample_is_A;
-	int recentdatapoints[PREVARP];
+	CircularBuffer<int, PREVARP> recentdatapoints;
 } detections;
 
 typedef struct
