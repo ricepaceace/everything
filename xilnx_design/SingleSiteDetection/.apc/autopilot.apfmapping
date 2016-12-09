@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<autopilotfilemapping:AutoPilotFileMapping xmlns:autopilotfilemapping="www.autoesl.com/autopilotfilemapping">
+  <source>
+    <originFiles name="circularBuffer.h" path="/home/greg/multisite_test_detection_algorithms/xilnx_design/circularBuffer.h"/>
+    <originFiles name="constants.h" path="/home/greg/multisite_test_detection_algorithms/xilnx_design/constants.h"/>
+    <originFiles name="singleChannelDecision.cpp" path="/home/greg/multisite_test_detection_algorithms/xilnx_design/singleChannelDecision.cpp"/>
+    <originFiles name="singleChannelDecision.h" path="/home/greg/multisite_test_detection_algorithms/xilnx_design/singleChannelDecision.h"/>
+  </source>
+  <testbench>
+    <originFiles name="good-ch2.h" path="/home/greg/multisite_test_detection_algorithms/xilnx_design/good-ch2.h"/>
+    <originFiles name="test.cpp" path="/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/test.cpp"/>
+  </testbench>
+</autopilotfilemapping:AutoPilotFileMapping>

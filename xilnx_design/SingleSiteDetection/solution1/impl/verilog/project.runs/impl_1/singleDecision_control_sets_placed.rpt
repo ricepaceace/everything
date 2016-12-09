@@ -1,0 +1,79 @@
+Copyright 1986-2014 Xilinx, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2014.2 (lin64) Build 932637 Wed Jun 11 13:08:52 MDT 2014
+| Date         : Thu Dec  8 22:30:57 2016
+| Host         : gregbox running 64-bit Ubuntu 16.04.1 LTS
+| Command      : report_control_sets -verbose -file singleDecision_control_sets_placed.rpt
+| Design       : singleDecision
+| Device       : xc7z020
+-------------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Flip-Flop Distribution
+3. Detailed Control Set Information
+
+1. Summary
+----------
+
++-------------------------------------------------------------------+-------+
+|                               Status                              | Count |
++-------------------------------------------------------------------+-------+
+| Number of unique control sets                                     |    26 |
+| Minimum Number of register sites lost to control set restrictions |    58 |
++-------------------------------------------------------------------+-------+
+
+
+2. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              43 |           15 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |              19 |            9 |
+| Yes          | No                    | No                     |             616 |          158 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |             128 |           35 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+3. Detailed Control Set Information
+-----------------------------------
+
++--------------+------------------------------------------------------------------------------------------------+--------------------------------------+------------------+----------------+
+| Clock Signal |                                          Enable Signal                                         |           Set/Reset Signal           | Slice Load Count | Bel Load Count |
++--------------+------------------------------------------------------------------------------------------------+--------------------------------------+------------------+----------------+
+|  ap_clk      | recentABools_data_U/singleDecision_recentABools_data_ram_U/n_6_ram_reg_0_15_0_0_i_5__1         |                                      |                1 |              1 |
+|  ap_clk      | recentABools_data_U/singleDecision_recentABools_data_ram_U/n_6_ram_reg_0_15_0_0__0_i_1__0      |                                      |                1 |              1 |
+|  ap_clk      | n_6_FSM_onehot_ap_CS_fsm[8]_i_1                                                                |                                      |                2 |              5 |
+|  ap_clk      | n_6_FSM_onehot_ap_CS_fsm[15]_i_1                                                               |                                      |                3 |              6 |
+|  ap_clk      | n_6_FSM_onehot_ap_CS_fsm[12]_i_1                                                               | n_6_datapointA_reg_1335[15]_i_1      |                3 |             16 |
+|  ap_clk      | recentdatapoints_data_U/singleDecision_recentdatapoints_data_ram_U/recentdatapoints_data_ce0   |                                      |                6 |             16 |
+|  ap_clk      | recentdatapoints_data_U/singleDecision_recentdatapoints_data_ram_U/n_6_ram_reg_0_15_0_0__0_i_1 |                                      |                4 |             16 |
+|  ap_clk      | n_6_FSM_onehot_ap_CS_fsm[5]_i_1                                                                | n_6_datapointV_reg_1238[15]_i_1      |                5 |             16 |
+|  ap_clk      | recentdatapoints_data_U/singleDecision_recentdatapoints_data_ram_U/n_6_ram_reg_0_15_0_0_i_5__0 |                                      |                4 |             16 |
+|  ap_clk      |                                                                                                | ap_rst                               |                9 |             19 |
+|  ap_clk      | recentdatapoints_data_U/singleDecision_recentdatapoints_data_ram_U/O1                          |                                      |                8 |             32 |
+|  ap_clk      | AbeatDelay_new_reg_3080                                                                        | n_6_AbeatDelay_new_reg_308[31]_i_1   |                9 |             32 |
+|  ap_clk      | VbeatFallDelay_new_1_reg_2750                                                                  | VbeatDelay_new_1_reg_2592            |                9 |             32 |
+|  ap_clk      | VbeatDelay_new_1_reg_25907_out                                                                 | n_6_VbeatDelay_new_1_reg_259[31]_i_1 |                9 |             32 |
+|  ap_clk      | ap_done                                                                                        |                                      |               10 |             32 |
+|  ap_clk      | n_6_FSM_onehot_ap_CS_fsm[5]_i_1                                                                |                                      |                8 |             32 |
+|  ap_clk      | icmp_reg_1397                                                                                  |                                      |                9 |             33 |
+|  ap_clk      | recentABools_data_U/singleDecision_recentABools_data_ram_U/O3                                  |                                      |                9 |             33 |
+|  ap_clk      | recentVBools_data_U/singleDecision_recentVBools_data_ram_U/p_0_in                              |                                      |               10 |             34 |
+|  ap_clk      | n_6_FSM_onehot_ap_CS_fsm[17]_i_1                                                               |                                      |               10 |             34 |
+|  ap_clk      | n_6_FSM_onehot_ap_CS_fsm[10]_i_1                                                               |                                      |                9 |             34 |
+|  ap_clk      |                                                                                                |                                      |               15 |             43 |
+|  ap_clk      | n_6_FSM_onehot_ap_CS_fsm[11]_i_1                                                               |                                      |               17 |             64 |
+|  ap_clk      | n_6_FSM_onehot_ap_CS_fsm[12]_i_1                                                               |                                      |               17 |             65 |
+|  ap_clk      | AstimDelay0                                                                                    |                                      |               19 |             69 |
+|  ap_clk      | aflip0                                                                                         |                                      |               22 |            128 |
++--------------+------------------------------------------------------------------------------------------------+--------------------------------------+------------------+----------------+
+
+

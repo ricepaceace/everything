@@ -1,0 +1,67 @@
+@I [SIM-47] Using XSIM for RTL simulation.
+@I [SIM-14] Instrumenting C test bench ...
+   Build using "/opt/Xilinx/Vivado_HLS/2014.2/lnx64/tools/gcc/bin/g++"
+   Compiling singleChannelDecision.cpp_pre.cpp.tb.cpp
+   Compiling test.cpp_pre.cpp.tb.cpp
+   Compiling apatb_singleDecision.cpp
+   Generating cosim.tv.exe
+@I [SIM-302] Generating test vectors ... 
+@I [SIM-333] Generating C post check test bench ...
+@I [SIM-12] Generating RTL test bench ...
+@I [SIM-323] Starting verilog simulation. 
+@I [SIM-15] Starting XSIM ...
+@I [SIM-316] Starting C post checking ...
+Vivado Simulator 2014.2
+Copyright 1986-1999, 2001-2014 Xilinx, Inc. All Rights Reserved.
+Running: /opt/Xilinx/Vivado/2014.2/bin/unwrapped/lnx64.o/xelab xil_defaultlib.apatb_singleDecision_top -prj singleDecision.prj --lib ieee_proposed=./ieee_proposed -s singleDecision 
+Multi-threading is on. Using 6 slave threads.
+Determining compilation order of HDL files.
+INFO: [VRFC 10-165] Analyzing Verilog file "singleDecision.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module singleDecision
+INFO: [VRFC 10-165] Analyzing Verilog file "singleDecision_recentdatapoints_data.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module singleDecision_recentdatapoints_data_ram
+INFO: [VRFC 10-311] analyzing module singleDecision_recentdatapoints_data
+INFO: [VRFC 10-165] Analyzing Verilog file "singleDecision_mul_32s_16s_32_3.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module singleDecision_mul_32s_16s_32_3_Mul3S_0
+INFO: [VRFC 10-311] analyzing module singleDecision_mul_32s_16s_32_3
+INFO: [VRFC 10-165] Analyzing Verilog file "singleDecision_recentABools_data.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module singleDecision_recentABools_data_ram
+INFO: [VRFC 10-311] analyzing module singleDecision_recentABools_data
+INFO: [VRFC 10-165] Analyzing Verilog file "singleDecision_recentVBools_data.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module singleDecision_recentVBools_data_ram
+INFO: [VRFC 10-311] analyzing module singleDecision_recentVBools_data
+INFO: [VRFC 10-165] Analyzing Verilog file "singleDecision.autotb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module apatb_singleDecision_top
+Starting static elaboration
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.singleDecision_recentdatapoints_...
+Compiling module xil_defaultlib.singleDecision_recentdatapoints_...
+Compiling module xil_defaultlib.singleDecision_recentVBools_data...
+Compiling module xil_defaultlib.singleDecision_recentVBools_data...
+Compiling module xil_defaultlib.singleDecision_recentABools_data...
+Compiling module xil_defaultlib.singleDecision_recentABools_data...
+Compiling module xil_defaultlib.singleDecision_mul_32s_16s_32_3_...
+Compiling module xil_defaultlib.singleDecision_mul_32s_16s_32_3(...
+Compiling module xil_defaultlib.singleDecision_mul_32s_16s_32_3(...
+Compiling module xil_defaultlib.singleDecision
+Compiling module xil_defaultlib.apatb_singleDecision_top
+Built simulation snapshot singleDecision
+
+****** xsim v2014.2 (64-bit)
+  **** SW Build 932637 on Wed Jun 11 13:08:52 MDT 2014
+  **** IP Build 924643 on Fri May 30 09:20:16 MDT 2014
+    ** Copyright 1986-2014 Xilinx, Inc. All Rights Reserved.
+
+source xsim.dir/singleDecision/xsim_script.tcl
+# xsim {singleDecision} -maxdeltaid 10000 -tclbatch {singleDecision.tcl} -noieeewarnings
+Vivado Simulator 2014.2
+Time resolution is 1 ps
+source singleDecision.tcl
+## run all
+$finish called at time : 1900145400 ps : File "singleDecision.autotb.v" Line 757
+## quit
+INFO: [Common 17-206] Exiting xsim at Thu Dec  8 21:52:35 2016...
+@I [SIM-1000] *** C/RTL co-simulation finished: PASS ***

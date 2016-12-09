@@ -1,0 +1,1200 @@
+#-----------------------------------------------------------
+# Vivado v2014.2 (64-bit)
+# SW Build 932637 on Wed Jun 11 13:08:52 MDT 2014
+# IP Build 924643 on Fri May 30 09:20:16 MDT 2014
+# Start of session at: Thu Dec  8 22:29:44 2016
+# Process ID: 19973
+# Log file: /home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/vivado.log
+# Journal file: /home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/vivado.jou
+#-----------------------------------------------------------
+source run_vivado.tcl -notrace
+WARNING: [filemgmt 20-1763] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentVBools_data.v]
+WARNING: [filemgmt 20-1763] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentdatapoints_data.v]
+WARNING: [filemgmt 20-1763] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentABools_data.v]
+WARNING: [filemgmt 20-1763] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_mul_32s_16s_32_3.v]
+WARNING: [filemgmt 20-1763] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.v]
+[Thu Dec  8 22:29:47 2016] Launched synth_1...
+Run output will be captured here: /home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/project.runs/synth_1/runme.log
+[Thu Dec  8 22:29:47 2016] Waiting for synth_1 to finish...
+
+*** Running vivado
+    with args -log singleDecision.vds -m64 -mode batch -messageDb vivado.pb -source singleDecision.tcl
+
+
+****** Vivado v2014.2 (64-bit)
+  **** SW Build 932637 on Wed Jun 11 13:08:52 MDT 2014
+  **** IP Build 924643 on Fri May 30 09:20:16 MDT 2014
+    ** Copyright 1986-2014 Xilinx, Inc. All Rights Reserved.
+
+source singleDecision.tcl
+# set_msg_config -id {HDL 9-1061} -limit 100000
+# set_msg_config -id {HDL 9-1654} -limit 100000
+# create_project -in_memory -part xc7z020clg484-1
+# set_property target_language Verilog [current_project]
+# set_param project.compositeFile.enableAutoGeneration 0
+# set_property default_lib xil_defaultlib [current_project]
+# read_verilog -library xil_defaultlib {
+#   /home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentVBools_data.v
+#   /home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentdatapoints_data.v
+#   /home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentABools_data.v
+#   /home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_mul_32s_16s_32_3.v
+#   /home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.v
+# }
+WARNING: [filemgmt 20-1763] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentVBools_data.v]
+WARNING: [filemgmt 20-1763] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentdatapoints_data.v]
+WARNING: [filemgmt 20-1763] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentABools_data.v]
+WARNING: [filemgmt 20-1763] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_mul_32s_16s_32_3.v]
+WARNING: [filemgmt 20-1763] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.v]
+# read_xdc /home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.xdc
+# set_property used_in_implementation false [get_files /home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.xdc]
+# set_param synth.vivado.isSynthRun true
+# set_property webtalk.parent_dir /home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/project.cache/wt [current_project]
+# set_property parent.project_dir /home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog [current_project]
+# catch { write_hwdef -file singleDecision.hwdef }
+INFO: [Vivado_Tcl 4-279] hardware handoff file cannot be generated as there is no block diagram instance in the design
+# synth_design -top singleDecision -part xc7z020clg484-1 -no_lc -no_iobuf -mode out_of_context
+Command: synth_design -top singleDecision -part xc7z020clg484-1 -no_lc -no_iobuf -mode out_of_context
+
+Starting synthesis...
+
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 796.844 ; gain = 156.125
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'singleDecision' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.v:12]
+	Parameter ap_const_logic_1 bound to: 1'b1 
+	Parameter ap_const_logic_0 bound to: 1'b0 
+	Parameter ap_ST_st1_fsm_0 bound to: 5'b00000 
+	Parameter ap_ST_st2_fsm_1 bound to: 5'b00001 
+	Parameter ap_ST_st3_fsm_2 bound to: 5'b00010 
+	Parameter ap_ST_st4_fsm_3 bound to: 5'b00011 
+	Parameter ap_ST_st5_fsm_4 bound to: 5'b00100 
+	Parameter ap_ST_st6_fsm_5 bound to: 5'b00101 
+	Parameter ap_ST_st7_fsm_6 bound to: 5'b00110 
+	Parameter ap_ST_st8_fsm_7 bound to: 5'b00111 
+	Parameter ap_ST_st9_fsm_8 bound to: 5'b01000 
+	Parameter ap_ST_st10_fsm_9 bound to: 5'b01001 
+	Parameter ap_ST_st11_fsm_10 bound to: 5'b01010 
+	Parameter ap_ST_st12_fsm_11 bound to: 5'b01011 
+	Parameter ap_ST_st13_fsm_12 bound to: 5'b01100 
+	Parameter ap_ST_st14_fsm_13 bound to: 5'b01101 
+	Parameter ap_ST_st15_fsm_14 bound to: 5'b01110 
+	Parameter ap_ST_st16_fsm_15 bound to: 5'b01111 
+	Parameter ap_ST_st17_fsm_16 bound to: 5'b10000 
+	Parameter ap_ST_st18_fsm_17 bound to: 5'b10001 
+	Parameter ap_ST_st19_fsm_18 bound to: 5'b10010 
+	Parameter ap_const_lv32_0 bound to: 0 - type: integer 
+	Parameter ap_const_lv32_1 bound to: 1 - type: integer 
+	Parameter ap_const_lv32_FFFFFFFF bound to: -1 - type: integer 
+	Parameter ap_const_lv1_0 bound to: 1'b0 
+	Parameter ap_const_lv1_1 bound to: 1'b1 
+	Parameter ap_const_lv16_0 bound to: 16'b0000000000000000 
+	Parameter ap_const_lv32_14 bound to: 20 - type: integer 
+	Parameter ap_const_lv32_1F bound to: 31 - type: integer 
+	Parameter ap_const_lv32_13 bound to: 19 - type: integer 
+	Parameter ap_const_lv32_B bound to: 11 - type: integer 
+	Parameter ap_const_lv32_A bound to: 10 - type: integer 
+	Parameter ap_const_lv32_5 bound to: 5 - type: integer 
+	Parameter ap_const_lv32_1E bound to: 30 - type: integer 
+	Parameter ap_const_lv32_1D bound to: 29 - type: integer 
+	Parameter ap_const_lv32_4 bound to: 4 - type: integer 
+	Parameter ap_const_lv28_0 bound to: 28'b0000000000000000000000000000 
+	Parameter ap_const_lv6_0 bound to: 6'b000000 
+	Parameter ap_const_lv6_21 bound to: 6'b100001 
+	Parameter ap_const_lv6_36 bound to: 6'b110110 
+	Parameter ap_const_lv32_3E8 bound to: 1000 - type: integer 
+	Parameter ap_const_lv32_384 bound to: 900 - type: integer 
+	Parameter ap_true bound to: 1'b1 
+INFO: [Synth 8-638] synthesizing module 'singleDecision_recentdatapoints_data' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentdatapoints_data.v:49]
+	Parameter DataWidth bound to: 16 - type: integer 
+	Parameter AddressRange bound to: 20 - type: integer 
+	Parameter AddressWidth bound to: 5 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'singleDecision_recentdatapoints_data_ram' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentdatapoints_data.v:9]
+	Parameter DWIDTH bound to: 16 - type: integer 
+	Parameter AWIDTH bound to: 5 - type: integer 
+	Parameter MEM_SIZE bound to: 20 - type: integer 
+INFO: [Synth 8-4472] Detected and applied attribute ram_style = distributed [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentdatapoints_data.v:22]
+INFO: [Synth 8-3876] $readmem data file './singleDecision_recentdatapoints_data_ram.dat' is read successfully [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentdatapoints_data.v:25]
+INFO: [Synth 8-256] done synthesizing module 'singleDecision_recentdatapoints_data_ram' (1#1) [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentdatapoints_data.v:9]
+INFO: [Synth 8-256] done synthesizing module 'singleDecision_recentdatapoints_data' (2#1) [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentdatapoints_data.v:49]
+INFO: [Synth 8-638] synthesizing module 'singleDecision_recentVBools_data' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentVBools_data.v:49]
+	Parameter DataWidth bound to: 1 - type: integer 
+	Parameter AddressRange bound to: 11 - type: integer 
+	Parameter AddressWidth bound to: 4 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'singleDecision_recentVBools_data_ram' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentVBools_data.v:9]
+	Parameter DWIDTH bound to: 1 - type: integer 
+	Parameter AWIDTH bound to: 4 - type: integer 
+	Parameter MEM_SIZE bound to: 11 - type: integer 
+INFO: [Synth 8-4472] Detected and applied attribute ram_style = distributed [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentVBools_data.v:22]
+INFO: [Synth 8-3876] $readmem data file './singleDecision_recentVBools_data_ram.dat' is read successfully [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentVBools_data.v:25]
+INFO: [Synth 8-256] done synthesizing module 'singleDecision_recentVBools_data_ram' (3#1) [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentVBools_data.v:9]
+INFO: [Synth 8-256] done synthesizing module 'singleDecision_recentVBools_data' (4#1) [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentVBools_data.v:49]
+INFO: [Synth 8-638] synthesizing module 'singleDecision_recentABools_data' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentABools_data.v:49]
+	Parameter DataWidth bound to: 1 - type: integer 
+	Parameter AddressRange bound to: 30 - type: integer 
+	Parameter AddressWidth bound to: 5 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'singleDecision_recentABools_data_ram' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentABools_data.v:9]
+	Parameter DWIDTH bound to: 1 - type: integer 
+	Parameter AWIDTH bound to: 5 - type: integer 
+	Parameter MEM_SIZE bound to: 30 - type: integer 
+INFO: [Synth 8-4472] Detected and applied attribute ram_style = distributed [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentABools_data.v:22]
+INFO: [Synth 8-3876] $readmem data file './singleDecision_recentABools_data_ram.dat' is read successfully [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentABools_data.v:25]
+INFO: [Synth 8-256] done synthesizing module 'singleDecision_recentABools_data_ram' (5#1) [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentABools_data.v:9]
+INFO: [Synth 8-256] done synthesizing module 'singleDecision_recentABools_data' (6#1) [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_recentABools_data.v:49]
+INFO: [Synth 8-638] synthesizing module 'singleDecision_mul_32s_16s_32_3' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_mul_32s_16s_32_3.v:34]
+	Parameter ID bound to: 1 - type: integer 
+	Parameter NUM_STAGE bound to: 3 - type: integer 
+	Parameter din0_WIDTH bound to: 32 - type: integer 
+	Parameter din1_WIDTH bound to: 16 - type: integer 
+	Parameter dout_WIDTH bound to: 32 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'singleDecision_mul_32s_16s_32_3_Mul3S_0' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_mul_32s_16s_32_3.v:11]
+INFO: [Synth 8-256] done synthesizing module 'singleDecision_mul_32s_16s_32_3_Mul3S_0' (7#1) [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_mul_32s_16s_32_3.v:11]
+INFO: [Synth 8-256] done synthesizing module 'singleDecision_mul_32s_16s_32_3' (8#1) [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_mul_32s_16s_32_3.v:34]
+INFO: [Synth 8-638] synthesizing module 'singleDecision_mul_32s_16s_32_3__parameterized0' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_mul_32s_16s_32_3.v:34]
+	Parameter ID bound to: 2 - type: integer 
+	Parameter NUM_STAGE bound to: 3 - type: integer 
+	Parameter din0_WIDTH bound to: 32 - type: integer 
+	Parameter din1_WIDTH bound to: 16 - type: integer 
+	Parameter dout_WIDTH bound to: 32 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'singleDecision_mul_32s_16s_32_3__parameterized0' (8#1) [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_mul_32s_16s_32_3.v:34]
+INFO: [Synth 8-256] done synthesizing module 'singleDecision' (9#1) [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.v:12]
+WARNING: [Synth 8-3917] design singleDecision has port out_r[15] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[14] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[13] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[12] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[11] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[10] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[9] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[8] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[7] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[15] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[14] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[13] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[12] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[11] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[10] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[9] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[8] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[7] driven by constant 0
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 831.719 ; gain = 191.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Optimization
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+Loading clock regions from /opt/Xilinx/Vivado/2014.2/data/parts/xilinx/zynq/zynq/xc7z020/ClockRegion.xml
+Loading clock buffers from /opt/Xilinx/Vivado/2014.2/data/parts/xilinx/zynq/zynq/xc7z020/ClockBuffers.xml
+Loading clock placement rules from /opt/Xilinx/Vivado/2014.2/data/parts/xilinx/zynq/ClockPlacerRules.xml
+Loading package pin functions from /opt/Xilinx/Vivado/2014.2/data/parts/xilinx/zynq/PinFunctions.xml...
+Loading package from /opt/Xilinx/Vivado/2014.2/data/parts/xilinx/zynq/zynq/xc7z020/clg484/Package.xml
+Loading io standards from /opt/Xilinx/Vivado/2014.2/data/./parts/xilinx/zynq/IOStandards.xml
+
+Processing XDC Constraints
+Parsing XDC File [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.xdc]
+Finished Parsing XDC File [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.xdc]
+Completed Processing XDC Constraints
+
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+---------------------------------------------------------------------------------
+Start RTL Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z020clg484-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1100.203 ; gain = 459.484
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1100.203 ; gain = 459.484
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1100.203 ; gain = 459.484
+---------------------------------------------------------------------------------
+INFO: [Synth 8-4471] merging register 'tmp_7_reg_1201_reg[31:0]' into 'AstimDelay_reg[31:0]' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.v:464]
+INFO: [Synth 8-4471] merging register 'tmp_8_reg_1206_reg[31:0]' into 'VstimDelay_reg[31:0]' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.v:465]
+INFO: [Synth 8-4471] merging register 'tmp_36_i_reg_1233_reg[31:0]' into 'recentdatapoints_len_reg[31:0]' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.v:498]
+INFO: [Synth 8-4471] merging register 'p_tmp_i1_reg_1274_reg[31:0]' into 'recentVBools_head_i_reg[31:0]' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.v:535]
+INFO: [Synth 8-4471] merging register 'p_tmp_i2_reg_1376_reg[31:0]' into 'recentABools_head_i_reg[31:0]' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.v:545]
+INFO: [Synth 8-4471] merging register 'recentdatapoints_head_i_reg[31:0]' into 'p_tmp_i_reg_1221_reg[31:0]' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.v:557]
+INFO: [Synth 8-802] inferred FSM for state register 'ap_CS_fsm_reg' in module 'singleDecision'
+INFO: [Synth 8-3354] encoded FSM with state register 'ap_CS_fsm_reg' using encoding 'one-hot' in module 'singleDecision'
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 14    
+	   3 Input     32 Bit       Adders := 2     
+	   2 Input      5 Bit       Adders := 2     
+	   2 Input      4 Bit       Adders := 1     
++---XORs : 
+	   2 Input      1 Bit         XORs := 2     
++---Registers : 
+	               48 Bit    Registers := 2     
+	               32 Bit    Registers := 13    
+	               16 Bit    Registers := 6     
+	                5 Bit    Registers := 2     
+	                4 Bit    Registers := 1     
+	                1 Bit    Registers := 17    
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 5     
+	  20 Input     20 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 2     
+	   2 Input      6 Bit        Muxes := 4     
+	  20 Input      5 Bit        Muxes := 1     
+	   4 Input      5 Bit        Muxes := 1     
+	   3 Input      5 Bit        Muxes := 1     
+	   2 Input      5 Bit        Muxes := 2     
+	   2 Input      4 Bit        Muxes := 1     
+	   3 Input      4 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 31    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module singleDecision 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 14    
+	   3 Input     32 Bit       Adders := 2     
+	   2 Input      5 Bit       Adders := 2     
+	   2 Input      4 Bit       Adders := 1     
++---XORs : 
+	   2 Input      1 Bit         XORs := 2     
++---Registers : 
+	               32 Bit    Registers := 13    
+	               16 Bit    Registers := 2     
+	                5 Bit    Registers := 2     
+	                4 Bit    Registers := 1     
+	                1 Bit    Registers := 17    
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 5     
+	  20 Input     20 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 1     
+	   2 Input      6 Bit        Muxes := 4     
+	   2 Input      5 Bit        Muxes := 2     
+	  20 Input      5 Bit        Muxes := 1     
+	   3 Input      5 Bit        Muxes := 1     
+	   4 Input      5 Bit        Muxes := 1     
+	   3 Input      4 Bit        Muxes := 1     
+	   2 Input      4 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 29    
+Module singleDecision_recentdatapoints_data_ram 
+Detailed RTL Component Info : 
++---Muxes : 
+	   2 Input     16 Bit        Muxes := 1     
+Module singleDecision_recentdatapoints_data 
+Detailed RTL Component Info : 
+Module singleDecision_recentVBools_data_ram 
+Detailed RTL Component Info : 
++---Muxes : 
+	   2 Input      1 Bit        Muxes := 1     
+Module singleDecision_recentVBools_data 
+Detailed RTL Component Info : 
+Module singleDecision_recentABools_data_ram 
+Detailed RTL Component Info : 
++---Muxes : 
+	   2 Input      1 Bit        Muxes := 1     
+Module singleDecision_recentABools_data 
+Detailed RTL Component Info : 
+Module singleDecision_mul_32s_16s_32_3_Mul3S_0 
+Detailed RTL Component Info : 
++---Registers : 
+	               48 Bit    Registers := 1     
+	               16 Bit    Registers := 2     
+Module singleDecision_mul_32s_16s_32_3 
+Detailed RTL Component Info : 
+Module singleDecision_mul_32s_16s_32_3__parameterized0 
+Detailed RTL Component Info : 
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 220 (col length:60)
+BRAMs: 280 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+Workers Ready, Starting Parallel Section  : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1100.203 ; gain = 459.484
+---------------------------------------------------------------------------------
+Start Cross Boundary Optimization
+---------------------------------------------------------------------------------
+INFO: [Synth 8-4471] merging register 'singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/b_reg_reg[15:0]' into 'singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/b_reg_reg[15:0]' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_mul_32s_16s_32_3.v:23]
+INFO: [Synth 8-4471] merging register 'singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/b_reg_reg[15:0]' into 'singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/b_reg_reg[15:0]' [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_mul_32s_16s_32_3.v:23]
+WARNING: [Synth 8-3936] Found unconnected internal register 'singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg' and it is trimmed from '48' to '15' bits. [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_mul_32s_16s_32_3.v:22]
+WARNING: [Synth 8-3936] Found unconnected internal register 'singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg' and it is trimmed from '48' to '17' bits. [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_mul_32s_16s_32_3.v:22]
+WARNING: [Synth 8-3936] Found unconnected internal register 'singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg' and it is trimmed from '48' to '15' bits. [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_mul_32s_16s_32_3.v:22]
+WARNING: [Synth 8-3936] Found unconnected internal register 'singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg' and it is trimmed from '48' to '17' bits. [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision_mul_32s_16s_32_3.v:22]
+DSP Report: Generating DSP singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product, operation Mode is: A2*B2.
+DSP Report: register singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/b_reg_reg is absorbed into DSP singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product.
+DSP Report: register A is absorbed into DSP singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product.
+DSP Report: operator singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product is absorbed into DSP singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product.
+DSP Report: operator singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product is absorbed into DSP singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product.
+DSP Report: Generating DSP singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg, operation Mode is: ((PCIN>>17)+A2*B2)'.
+DSP Report: register singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/b_reg_reg is absorbed into DSP singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg.
+DSP Report: register B is absorbed into DSP singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg.
+DSP Report: register singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg is absorbed into DSP singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg.
+DSP Report: operator singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product is absorbed into DSP singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg.
+DSP Report: operator singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product is absorbed into DSP singleDecision_mul_32s_16s_32_3_U1/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg.
+DSP Report: Generating DSP singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product, operation Mode is: A2*B2.
+DSP Report: register singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/b_reg_reg is absorbed into DSP singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product.
+DSP Report: register A is absorbed into DSP singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product.
+DSP Report: operator singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product is absorbed into DSP singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product.
+DSP Report: operator singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product is absorbed into DSP singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product.
+DSP Report: Generating DSP singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg, operation Mode is: ((PCIN>>17)+A2*B2)'.
+DSP Report: register singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/b_reg_reg is absorbed into DSP singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg.
+DSP Report: register B is absorbed into DSP singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg.
+DSP Report: register singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg is absorbed into DSP singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg.
+DSP Report: operator singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product is absorbed into DSP singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg.
+DSP Report: operator singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/tmp_product is absorbed into DSP singleDecision_mul_32s_16s_32_3_U2/singleDecision_mul_32s_16s_32_3_Mul3S_0_U/buff0_reg.
+WARNING: [Synth 8-3917] design singleDecision has port out_r[15] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[14] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[13] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[12] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[11] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[10] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[9] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[8] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[7] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port out_r[3] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[15] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[14] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[13] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[12] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[11] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[10] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[9] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[8] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[7] driven by constant 0
+WARNING: [Synth 8-3917] design singleDecision has port stim[3] driven by constant 0
+---------------------------------------------------------------------------------
+Finished Cross Boundary Optimization : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1100.203 ; gain = 459.484
+---------------------------------------------------------------------------------
+Finished Parallel Reinfer  : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1100.203 ; gain = 459.484
+---------------------------------------------------------------------------------
+Start RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Distributed RAM: 
++---------------+----------------------------------------------------------------------------+--------------------+----------------------+-----------------+------------------------+
+|Module Name    | RTL Object                                                                 | Inference Criteria | Size (depth X width) | Primitives      | Hierarchical Name      | 
++---------------+----------------------------------------------------------------------------+--------------------+----------------------+-----------------+------------------------+
+|singleDecision | recentdatapoints_data_U/singleDecision_recentdatapoints_data_ram_U/ram_reg | User Attribute     | 32 X 16              | RAM16X1S x 32   | singleDecision/ram__6  | 
+|singleDecision | recentVBools_data_U/singleDecision_recentVBools_data_ram_U/ram_reg         | User Attribute     | 16 X 1               | RAM16X1S x 1    | singleDecision/ram__8  | 
+|singleDecision | recentABools_data_U/singleDecision_recentABools_data_ram_U/ram_reg         | User Attribute     | 32 X 1               | RAM16X1S x 2    | singleDecision/ram__10 | 
++---------------+----------------------------------------------------------------------------+--------------------+----------------------+-----------------+------------------------+
+
+Note: The table shows RAMs generated at current stage. Some RAM generation could be reversed due to later optimizations. Mutiple instantiated RAMs are reported only once. "Hierarchical Name" reflects the hierarchical modules names of the RAM and only part of it is displayed.
+DSP:
++----------------------------------------+---------------------+--------------+------------------+--------+--------+--------+--------+------+------+------+------+------+
+|Module Name                             | OP MODE             | Neg Edge Clk | A Size (Signed?) | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | PREG | 
++----------------------------------------+---------------------+--------------+------------------+--------+--------+--------+--------+------+------+------+------+------+
+|singleDecision_mul_32s_16s_32_3_Mul3S_0 | A2*B2               | No           | 18 (N)           | 16 (Y) | 48 (N) | 25 (N) | 48 (Y) | 1    | 1    | 1    | 1    | 0    | 
+|singleDecision_mul_32s_16s_32_3_Mul3S_0 | ((PCIN>>17)+A2*B2)' | No           | 15 (Y)           | 15 (Y) | 15 (Y) | 25 (N) | 15 (Y) | 1    | 1    | 1    | 1    | 1    | 
+|singleDecision_mul_32s_16s_32_3_Mul3S_0 | A2*B2               | No           | 18 (N)           | 16 (Y) | 48 (N) | 25 (N) | 48 (Y) | 1    | 1    | 1    | 1    | 0    | 
+|singleDecision_mul_32s_16s_32_3_Mul3S_0 | ((PCIN>>17)+A2*B2)' | No           | 15 (Y)           | 15 (Y) | 15 (Y) | 25 (N) | 15 (Y) | 1    | 1    | 1    | 1    | 1    | 
++----------------------------------------+---------------------+--------------+------------------+--------+--------+--------+--------+------+------+------+------+------+
+
+Note: The table shows DSPs generated at current stage. Some DSP generation could be reversed due to later optimizations. Mutiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Area Optimization
+---------------------------------------------------------------------------------
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (i_6_32/\FSM_onehot_ap_CS_fsm_reg[0] )
+WARNING: [Synth 8-3332] Sequential element (\FSM_onehot_ap_CS_fsm_reg[0] ) is unused and will be removed from module singleDecision.
+---------------------------------------------------------------------------------
+Finished Area Optimization : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1100.219 ; gain = 459.500
+---------------------------------------------------------------------------------
+Finished Parallel Area Opt  : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1100.219 ; gain = 459.500
+Finished Parallel Section  : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1100.219 ; gain = 459.500
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1189.219 ; gain = 548.500
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:22 ; elapsed = 00:00:23 . Memory (MB): peak = 1191.219 ; gain = 550.500
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:23 ; elapsed = 00:00:23 . Memory (MB): peak = 1211.469 ; gain = 570.750
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1211.469 ; gain = 570.750
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1211.469 ; gain = 570.750
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1211.469 ; gain = 570.750
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+----------+------+
+|      |Cell      |Count |
++------+----------+------+
+|1     |CARRY4    |   232|
+|2     |DSP48E1   |     2|
+|3     |DSP48E1_1 |     2|
+|4     |LUT1      |   532|
+|5     |LUT2      |   369|
+|6     |LUT3      |    81|
+|7     |LUT4      |   142|
+|8     |LUT5      |    56|
+|9     |LUT6      |   120|
+|10    |RAM16X1S  |    35|
+|11    |FDRE      |   805|
+|12    |FDSE      |     1|
++------+----------+------+
+
+Report Instance Areas: 
++------+-----------------------------------------------+------------------------------------------------+------+
+|      |Instance                                       |Module                                          |Cells |
++------+-----------------------------------------------+------------------------------------------------+------+
+|1     |top                                            |                                                |  2377|
+|2     |  recentABools_data_U                          |singleDecision_recentABools_data                |    34|
+|3     |    singleDecision_recentABools_data_ram_U     |singleDecision_recentABools_data_ram            |    34|
+|4     |  recentVBools_data_U                          |singleDecision_recentVBools_data                |    29|
+|5     |    singleDecision_recentVBools_data_ram_U     |singleDecision_recentVBools_data_ram            |    29|
+|6     |  recentdatapoints_data_U                      |singleDecision_recentdatapoints_data            |    91|
+|7     |    singleDecision_recentdatapoints_data_ram_U |singleDecision_recentdatapoints_data_ram        |    91|
+|8     |  singleDecision_mul_32s_16s_32_3_U1           |singleDecision_mul_32s_16s_32_3                 |    55|
+|9     |    singleDecision_mul_32s_16s_32_3_Mul3S_0_U  |singleDecision_mul_32s_16s_32_3_Mul3S_0_0       |    55|
+|10    |  singleDecision_mul_32s_16s_32_3_U2           |singleDecision_mul_32s_16s_32_3__parameterized0 |    55|
+|11    |    singleDecision_mul_32s_16s_32_3_Mul3S_0_U  |singleDecision_mul_32s_16s_32_3_Mul3S_0         |    55|
++------+-----------------------------------------------+------------------------------------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1211.469 ; gain = 570.750
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 25 warnings.
+Synthesis Optimization Complete : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1211.469 ; gain = 570.750
+INFO: [Netlist 29-17] Analyzing 271 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-101] Netlist 'singleDecision' is not ideal for floorplanning, since the cellview 'singleDecision' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 35 instances were transformed.
+  RAM16X1S => RAM32X1S (RAMS32): 35 instances
+
+INFO: [Common 17-83] Releasing license: Synthesis
+44 Infos, 44 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1211.469 ; gain = 464.625
+# write_checkpoint singleDecision.dcp
+# report_utilization -file singleDecision_utilization_synth.rpt -pb singleDecision_utilization_synth.pb
+report_utilization: Time (s): cpu = 00:00:00.16 ; elapsed = 00:00:00.20 . Memory (MB): peak = 1211.469 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Thu Dec  8 22:30:16 2016...
+[Thu Dec  8 22:30:20 2016] synth_1 finished
+wait_on_run: Time (s): cpu = 00:00:00.24 ; elapsed = 00:00:32 . Memory (MB): peak = 759.840 ; gain = 8.000
+Design is defaulting to impl run constrset: constrs_1
+Design is defaulting to synth run part: xc7z020clg484-1
+INFO: [Netlist 29-17] Analyzing 271 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-43] Netlist 'singleDecision' is not ideal for floorplanning, since the cellview 'singleDecision' defined in file 'singleDecision.edf' contains large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+INFO: [Project 1-479] Netlist was created with Vivado 2014.2
+Loading clock regions from /opt/Xilinx/Vivado/2014.2/data/parts/xilinx/zynq/zynq/xc7z020/ClockRegion.xml
+Loading clock buffers from /opt/Xilinx/Vivado/2014.2/data/parts/xilinx/zynq/zynq/xc7z020/ClockBuffers.xml
+Loading clock placement rules from /opt/Xilinx/Vivado/2014.2/data/parts/xilinx/zynq/ClockPlacerRules.xml
+Loading package pin functions from /opt/Xilinx/Vivado/2014.2/data/parts/xilinx/zynq/PinFunctions.xml...
+Loading package from /opt/Xilinx/Vivado/2014.2/data/parts/xilinx/zynq/zynq/xc7z020/clg484/Package.xml
+Loading io standards from /opt/Xilinx/Vivado/2014.2/data/./parts/xilinx/zynq/IOStandards.xml
+Parsing XDC File [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.xdc]
+Finished Parsing XDC File [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/singleDecision.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 35 instances were transformed.
+  RAM16X1S => RAM32X1S (RAMS32): 35 instances
+
+report_utilization: Time (s): cpu = 00:00:00.16 ; elapsed = 00:00:00.17 . Memory (MB): peak = 1007.824 ; gain = 0.000
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: max, Constraints type: SDC.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 8 CPUs
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "ap_clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+INFO: [Timing 38-78] ReportTimingParams: -max_paths 1 -nworst 1 -delay_type max -sort_by slack.
+report_timing: Time (s): cpu = 00:00:09 ; elapsed = 00:00:08 . Memory (MB): peak = 1435.367 ; gain = 427.543
+[Thu Dec  8 22:30:33 2016] Launched impl_1...
+Run output will be captured here: /home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/project.runs/impl_1/runme.log
+[Thu Dec  8 22:30:33 2016] Waiting for impl_1 to finish...
+
+*** Running vivado
+    with args -log singleDecision.vdi -applog -m64 -messageDb vivado.pb -mode batch -source singleDecision.tcl -notrace
+
+
+****** Vivado v2014.2 (64-bit)
+  **** SW Build 932637 on Wed Jun 11 13:08:52 MDT 2014
+  **** IP Build 924643 on Fri May 30 09:20:16 MDT 2014
+    ** Copyright 1986-2014 Xilinx, Inc. All Rights Reserved.
+
+source singleDecision.tcl -notrace
+Command: open_checkpoint /home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/project.runs/impl_1/singleDecision.dcp
+INFO: [Netlist 29-17] Analyzing 271 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-43] Netlist 'singleDecision' is not ideal for floorplanning, since the cellview 'singleDecision' defined in file 'singleDecision.edf' contains large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+INFO: [Project 1-479] Netlist was created with Vivado 2014.2
+Loading clock regions from /opt/Xilinx/Vivado/2014.2/data/parts/xilinx/zynq/zynq/xc7z020/ClockRegion.xml
+Loading clock buffers from /opt/Xilinx/Vivado/2014.2/data/parts/xilinx/zynq/zynq/xc7z020/ClockBuffers.xml
+Loading clock placement rules from /opt/Xilinx/Vivado/2014.2/data/parts/xilinx/zynq/ClockPlacerRules.xml
+Loading package pin functions from /opt/Xilinx/Vivado/2014.2/data/parts/xilinx/zynq/PinFunctions.xml...
+Loading package from /opt/Xilinx/Vivado/2014.2/data/parts/xilinx/zynq/zynq/xc7z020/clg484/Package.xml
+Loading io standards from /opt/Xilinx/Vivado/2014.2/data/./parts/xilinx/zynq/IOStandards.xml
+Parsing XDC File [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/project.runs/impl_1/.Xil/Vivado-20891-gregbox/dcp/singleDecision.xdc]
+Finished Parsing XDC File [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/project.runs/impl_1/.Xil/Vivado-20891-gregbox/dcp/singleDecision.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 35 instances were transformed.
+  RAM16X1S => RAM32X1S (RAMS32): 35 instances
+
+INFO: [Project 1-484] Checkpoint was created with build 932637
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [Drc 23-27] Running DRC with 8 threads
+INFO: [Project 1-461] DRC finished with 0 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:00.17 ; elapsed = 00:00:00.17 . Memory (MB): peak = 1017.855 ; gain = 10.023
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+
+Starting Logic Optimization Task
+
+Phase 1 Retarget
+
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Opt 31-49] Retargeted 0 cell(s).
+Phase 1 Retarget | Checksum: 1719681fe
+
+Time (s): cpu = 00:00:00.05 ; elapsed = 00:00:00.06 . Memory (MB): peak = 1435.371 ; gain = 0.000
+
+Phase 2 Constant Propagation
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Opt 31-10] Eliminated 434 cells.
+Phase 2 Constant Propagation | Checksum: ebc076e9
+
+Time (s): cpu = 00:00:00.20 ; elapsed = 00:00:00.20 . Memory (MB): peak = 1435.371 ; gain = 0.000
+
+Phase 3 Sweep
+INFO: [Opt 31-12] Eliminated 1177 unconnected nets.
+INFO: [Opt 31-11] Eliminated 0 unconnected cells.
+Phase 3 Sweep | Checksum: c7c4af57
+
+Time (s): cpu = 00:00:00.35 ; elapsed = 00:00:00.36 . Memory (MB): peak = 1435.371 ; gain = 0.000
+Ending Logic Optimization Task | Checksum: c7c4af57
+
+Time (s): cpu = 00:00:00.36 ; elapsed = 00:00:00.36 . Memory (MB): peak = 1435.371 ; gain = 0.000
+Implement Debug Cores | Checksum: 11cb3c459
+Logic Optimization | Checksum: 11cb3c459
+
+Starting Power Optimization Task
+INFO: [Pwropt 34-132] Will skip clock gating for clocks with period < 3.12 ns.
+Ending Power Optimization Task | Checksum: c7c4af57
+
+Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1435.371 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+19 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+opt_design completed successfully
+opt_design: Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1435.371 ; gain = 428.543
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Command: place_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+Running DRC as a precondition to command place_design
+INFO: [Drc 23-27] Running DRC with 8 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+
+Starting Placer Task
+INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 8 CPUs
+
+Phase 1 Placer Runtime Estimator
+Phase 1 Placer Runtime Estimator | Checksum: a993cc1c
+
+Time (s): cpu = 00:00:00.07 ; elapsed = 00:00:00.08 . Memory (MB): peak = 1435.375 ; gain = 0.000
+
+Phase 2 Placer Initialization
+
+Phase 2.1 Placer Initialization Core
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1435.375 ; gain = 0.000
+
+Phase 2.1.1 Mandatory Logic Optimization
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1435.375 ; gain = 0.000
+Phase 2.1.1 Mandatory Logic Optimization | Checksum: 00000000
+
+Time (s): cpu = 00:00:00.08 ; elapsed = 00:00:00.08 . Memory (MB): peak = 1435.375 ; gain = 0.000
+
+Phase 2.1.2 Build Super Logic Region (SLR) Database
+Phase 2.1.2 Build Super Logic Region (SLR) Database | Checksum: 00000000
+
+Time (s): cpu = 00:00:00.10 ; elapsed = 00:00:00.10 . Memory (MB): peak = 1435.375 ; gain = 0.000
+
+Phase 2.1.3 Add Constraints
+Phase 2.1.3 Add Constraints | Checksum: 00000000
+
+Time (s): cpu = 00:00:00.10 ; elapsed = 00:00:00.10 . Memory (MB): peak = 1435.375 ; gain = 0.000
+
+Phase 2.1.4 Build Shapes/ HD Config
+
+Phase 2.1.4.1 Build Macros
+Phase 2.1.4.1 Build Macros | Checksum: 411bf482
+
+Time (s): cpu = 00:00:00.34 ; elapsed = 00:00:00.32 . Memory (MB): peak = 1491.398 ; gain = 56.023
+Phase 2.1.4 Build Shapes/ HD Config | Checksum: 411bf482
+
+Time (s): cpu = 00:00:00.34 ; elapsed = 00:00:00.32 . Memory (MB): peak = 1491.398 ; gain = 56.023
+
+Phase 2.1.5 IO Placement/ Clock Placement/ Build Placer Device
+
+Phase 2.1.5.1 Pre-Place Cells
+Phase 2.1.5.1 Pre-Place Cells | Checksum: 00000000
+
+Time (s): cpu = 00:00:00.36 ; elapsed = 00:00:00.33 . Memory (MB): peak = 1491.398 ; gain = 56.023
+
+Phase 2.1.5.2 IO & Clk Clean Up
+Phase 2.1.5.2 IO & Clk Clean Up | Checksum: 00000000
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1491.398 ; gain = 56.023
+
+Phase 2.1.5.3 Implementation Feasibility check On IDelay
+Phase 2.1.5.3 Implementation Feasibility check On IDelay | Checksum: 00000000
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1491.398 ; gain = 56.023
+
+Phase 2.1.5.4 Commit IO Placement
+Phase 2.1.5.4 Commit IO Placement | Checksum: 00000000
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1491.398 ; gain = 56.023
+Phase 2.1.5 IO Placement/ Clock Placement/ Build Placer Device | Checksum: 411bf482
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1491.398 ; gain = 56.023
+
+Phase 2.1.6 Build Placer Netlist Model
+
+Phase 2.1.6.1 Place Init Design
+
+Phase 2.1.6.1.1 Init Lut Pin Assignment
+Phase 2.1.6.1.1 Init Lut Pin Assignment | Checksum: 7067c2ff
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 1491.398 ; gain = 56.023
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "ap_clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+
+Phase 2.1.6.1.2 Build Clock Data
+Phase 2.1.6.1.2 Build Clock Data | Checksum: a11fffa4
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:01 . Memory (MB): peak = 1491.398 ; gain = 56.023
+
+Phase 2.1.6.1.3 setBudgets in placeInitDesign
+Phase 2.1.6.1.3 setBudgets in placeInitDesign | Checksum: 981ee2e7
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:01 . Memory (MB): peak = 1491.398 ; gain = 56.023
+Phase 2.1.6.1 Place Init Design | Checksum: 12eec3b5e
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:01 . Memory (MB): peak = 1491.398 ; gain = 56.023
+Phase 2.1.6 Build Placer Netlist Model | Checksum: 12eec3b5e
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:01 . Memory (MB): peak = 1491.398 ; gain = 56.023
+
+Phase 2.1.7 Constrain Clocks/Macros
+
+Phase 2.1.7.1 Constrain Global/Regional Clocks
+Phase 2.1.7.1 Constrain Global/Regional Clocks | Checksum: 12eec3b5e
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:01 . Memory (MB): peak = 1491.398 ; gain = 56.023
+Phase 2.1.7 Constrain Clocks/Macros | Checksum: 12eec3b5e
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:01 . Memory (MB): peak = 1491.398 ; gain = 56.023
+Phase 2.1 Placer Initialization Core | Checksum: 12eec3b5e
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:01 . Memory (MB): peak = 1491.398 ; gain = 56.023
+Phase 2 Placer Initialization | Checksum: 12eec3b5e
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:01 . Memory (MB): peak = 1491.398 ; gain = 56.023
+
+Phase 3 Global Placement
+Phase 3 Global Placement | Checksum: 174302bd3
+
+Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 1497.398 ; gain = 62.023
+
+Phase 4 Detail Placement
+
+Phase 4.1 Commit Multi Column Macros
+Phase 4.1 Commit Multi Column Macros | Checksum: 174302bd3
+
+Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 1497.398 ; gain = 62.023
+
+Phase 4.2 Commit Most Macros & LUTRAMs
+Phase 4.2 Commit Most Macros & LUTRAMs | Checksum: 1250bc772
+
+Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 1508.414 ; gain = 73.039
+
+Phase 4.3 Area Swap Optimization
+Phase 4.3 Area Swap Optimization | Checksum: 16310437e
+
+Time (s): cpu = 00:00:08 ; elapsed = 00:00:03 . Memory (MB): peak = 1508.414 ; gain = 73.039
+
+Phase 4.4 Timing Path Optimizer
+Phase 4.4 Timing Path Optimizer | Checksum: fc72e140
+
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 1509.414 ; gain = 74.039
+
+Phase 4.5 Commit Small Macros & Core Logic
+
+Phase 4.5.1 setBudgets
+Phase 4.5.1 setBudgets | Checksum: 11d3a0313
+
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 1509.414 ; gain = 74.039
+Phase 4.5 Commit Small Macros & Core Logic | Checksum: bdf5b2da
+
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 1543.355 ; gain = 107.980
+
+Phase 4.6 Re-assign LUT pins
+Phase 4.6 Re-assign LUT pins | Checksum: bdf5b2da
+
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 1543.355 ; gain = 107.980
+Phase 4 Detail Placement | Checksum: bdf5b2da
+
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 1543.355 ; gain = 107.980
+
+Phase 5 Post Placement Optimization and Clean-Up
+
+Phase 5.1 PCOPT Shape updates
+Phase 5.1 PCOPT Shape updates | Checksum: bdf5b2da
+
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:03 . Memory (MB): peak = 1543.355 ; gain = 107.980
+
+Phase 5.2 Post Placement Optimization
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "ap_clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+
+Phase 5.2.1 Post Placement Timing Optimization
+INFO: [Place 30-746] Post Placement Timing Summary WNS=2.133. For the most accurate timing information please run report_timing.
+Phase 5.2.1 Post Placement Timing Optimization | Checksum: c285f072
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:04 . Memory (MB): peak = 1543.355 ; gain = 107.980
+Phase 5.2 Post Placement Optimization | Checksum: c285f072
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:04 . Memory (MB): peak = 1543.355 ; gain = 107.980
+
+Phase 5.3 Post Placement Cleanup
+Phase 5.3 Post Placement Cleanup | Checksum: c285f072
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:04 . Memory (MB): peak = 1543.355 ; gain = 107.980
+
+Phase 5.4 Placer Reporting
+
+Phase 5.4.1 Restore STA
+Phase 5.4.1 Restore STA | Checksum: c285f072
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:04 . Memory (MB): peak = 1543.355 ; gain = 107.980
+Phase 5.4 Placer Reporting | Checksum: c285f072
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:04 . Memory (MB): peak = 1543.355 ; gain = 107.980
+
+Phase 5.5 Final Placement Cleanup
+Phase 5.5 Final Placement Cleanup | Checksum: 11827bc35
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:04 . Memory (MB): peak = 1543.355 ; gain = 107.980
+Phase 5 Post Placement Optimization and Clean-Up | Checksum: 11827bc35
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:04 . Memory (MB): peak = 1543.355 ; gain = 107.980
+Ending Placer Task | Checksum: ede16580
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:04 . Memory (MB): peak = 1543.355 ; gain = 107.980
+INFO: [Common 17-83] Releasing license: Implementation
+27 Infos, 3 Warnings, 0 Critical Warnings and 0 Errors encountered.
+place_design completed successfully
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:00.18 ; elapsed = 00:00:00.17 . Memory (MB): peak = 1543.355 ; gain = 0.000
+report_utilization: Time (s): cpu = 00:00:00.17 ; elapsed = 00:00:00.22 . Memory (MB): peak = 1543.355 ; gain = 0.000
+Command: phys_opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "ap_clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+INFO: [Vivado_Tcl 4-232] No setup violation found. The netlist was not modified.
+INFO: [Common 17-83] Releasing license: Implementation
+30 Infos, 4 Warnings, 0 Critical Warnings and 0 Errors encountered.
+phys_opt_design completed successfully
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:00.17 ; elapsed = 00:00:00.16 . Memory (MB): peak = 1543.359 ; gain = 0.000
+Command: route_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+Running DRC as a precondition to command route_design
+INFO: [Drc 23-27] Running DRC with 8 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+
+
+Starting Routing Task
+INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 8 CPUs
+
+Starting Route Task
+
+Phase 1 Build RT Design
+WARNING: [Route 35-197] Clock port "ap_clk" does not have an associated HD.CLK_SRC. Without this constraint, timing analysis may not be accurate and upstream checks cannot be done to ensure correct clock placement.
+WARNING: [Route 35-198] Port "datapoint[2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "datapoint[2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "datapoint[3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "datapoint[3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "datapoint[4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "datapoint[4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "datapoint[5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "datapoint[5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "datapoint[15]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "datapoint[15]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "datapoint[8]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "datapoint[8]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "datapoint[9]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "datapoint[9]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "datapoint[1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "datapoint[1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "datapoint[10]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "datapoint[10]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[17]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[17]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[18]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[18]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[19]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[19]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[20]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[20]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[10]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[10]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[11]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[11]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[25]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[25]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[26]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[26]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[27]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[27]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[28]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[28]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[31]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[31]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[8]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[8]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[12]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[12]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[13]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[13]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[14]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[14]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[15]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[15]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[15]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[15]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[8]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[8]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[10]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[10]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[12]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[12]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[11]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[11]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[13]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[13]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[9]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[9]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "V_stim_reset[14]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "V_stim_reset[14]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[15]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[15]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[8]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[8]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[10]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[10]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[12]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[12]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[11]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[11]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[13]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[13]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[9]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[9]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "A_stim_reset[14]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "A_stim_reset[14]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[21]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[21]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[22]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[22]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[23]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[23]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[24]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[24]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[12]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[12]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[13]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[13]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[16]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[16]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[29]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[29]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[30]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[30]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[9]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[9]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[21]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[21]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[22]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[22]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[23]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[23]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[24]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[24]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[4]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[4]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[5]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[5]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[16]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[16]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[29]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[29]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[30]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[30]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_flip[9]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_flip[9]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[17]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[17]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[18]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[18]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[19]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[19]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[20]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[20]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[2]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[2]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "v_flip[3]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "v_flip[3]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "datapoint[0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "datapoint[0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "datapoint[6]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "datapoint[6]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "datapoint[7]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "datapoint[7]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_thresh[0]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_thresh[0]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+WARNING: [Route 35-198] Port "a_thresh[1]" does not have an associated HD.PARTPIN_LOCS, which will prevent the partial routing of the signal "a_thresh[1]". Without this partial route, timing analysis to/from this port will not be accurate, and no routing information for this port can be exported.
+INFO: [Common 17-14] Message 'Route 35-198' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+Phase 1 Build RT Design | Checksum: c6e8193c
+
+Time (s): cpu = 00:00:18 ; elapsed = 00:00:15 . Memory (MB): peak = 1708.840 ; gain = 156.484
+
+Phase 2 Router Initialization
+
+Phase 2.1 Create Timer
+Phase 2.1 Create Timer | Checksum: c6e8193c
+
+Time (s): cpu = 00:00:18 ; elapsed = 00:00:15 . Memory (MB): peak = 1708.840 ; gain = 156.484
+ Number of Nodes with overlaps = 0
+
+Phase 2.2 Update Timing
+Phase 2.2 Update Timing | Checksum: 10f56e7ee
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:15 . Memory (MB): peak = 1720.883 ; gain = 168.527
+INFO: [Route 35-57] Estimated Timing Summary | WNS=2.27   | TNS=0      | WHS=0.132  | THS=0      |
+
+Phase 2 Router Initialization | Checksum: 10f56e7ee
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:15 . Memory (MB): peak = 1720.883 ; gain = 168.527
+
+Phase 3 Initial Routing
+Phase 3 Initial Routing | Checksum: c510278b
+
+Time (s): cpu = 00:00:20 ; elapsed = 00:00:15 . Memory (MB): peak = 1720.883 ; gain = 168.527
+
+Phase 4 Rip-up And Reroute
+
+Phase 4.1 Global Iteration 0
+ Number of Nodes with overlaps = 45
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 0
+
+Phase 4.1.1 Update Timing
+Phase 4.1.1 Update Timing | Checksum: 1d37da1a7
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 1720.883 ; gain = 168.527
+INFO: [Route 35-57] Estimated Timing Summary | WNS=1.69   | TNS=0      | WHS=N/A    | THS=N/A    |
+
+Phase 4.1 Global Iteration 0 | Checksum: 1d37da1a7
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 1720.883 ; gain = 168.527
+Phase 4 Rip-up And Reroute | Checksum: 1d37da1a7
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 1720.883 ; gain = 168.527
+
+Phase 5 Delay CleanUp
+
+Phase 5.1 Update Timing
+Phase 5.1 Update Timing | Checksum: 1d37da1a7
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 1720.883 ; gain = 168.527
+INFO: [Route 35-57] Estimated Timing Summary | WNS=1.69   | TNS=0      | WHS=N/A    | THS=N/A    |
+
+Phase 5 Delay CleanUp | Checksum: 1d37da1a7
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 1720.883 ; gain = 168.527
+
+Phase 6 Clock Skew Optimization
+Phase 6 Clock Skew Optimization | Checksum: 1d37da1a7
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 1720.883 ; gain = 168.527
+
+Phase 7 Post Hold Fix
+
+Phase 7.1 Update Timing
+Phase 7.1 Update Timing | Checksum: 1d37da1a7
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 1720.883 ; gain = 168.527
+INFO: [Route 35-57] Estimated Timing Summary | WNS=1.69   | TNS=0      | WHS=0.147  | THS=0      |
+
+Phase 7 Post Hold Fix | Checksum: 1d37da1a7
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 1720.883 ; gain = 168.527
+
+Phase 8 Route finalize
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 0.168013 %
+  Global Horizontal Routing Utilization  = 0.215771 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 0
+  Number of Unrouted Nets             = 0
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+Phase 8 Route finalize | Checksum: 1d37da1a7
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 1720.883 ; gain = 168.527
+
+Phase 9 Verifying routed nets
+
+ Verification completed successfully
+Phase 9 Verifying routed nets | Checksum: 1d37da1a7
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 1720.883 ; gain = 168.527
+
+Phase 10 Depositing Routes
+Phase 10 Depositing Routes | Checksum: 186b209ec
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 1720.883 ; gain = 168.527
+
+Phase 11 Post Router Timing
+INFO: [Route 35-57] Estimated Timing Summary | WNS=1.69   | TNS=0      | WHS=0.147  | THS=0      |
+
+INFO: [Route 35-327] The final timing numbers are based on the router estimated timing analysis. For a complete and accurate timing signoff, please run report_timing_summary.
+Phase 11 Post Router Timing | Checksum: 186b209ec
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 1720.883 ; gain = 168.527
+INFO: [Route 35-16] Router Completed Successfully
+Ending Route Task | Checksum: 186b209ec
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 1720.883 ; gain = 168.527
+
+Routing Is Done.
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 1720.883 ; gain = 168.527
+INFO: [Common 17-83] Releasing license: Implementation
+43 Infos, 105 Warnings, 0 Critical Warnings and 0 Errors encountered.
+route_design completed successfully
+route_design: Time (s): cpu = 00:00:22 ; elapsed = 00:00:17 . Memory (MB): peak = 1720.883 ; gain = 177.523
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:00.21 ; elapsed = 00:00:00.21 . Memory (MB): peak = 1720.883 ; gain = 0.000
+INFO: [Drc 23-27] Running DRC with 8 threads
+INFO: [Coretcl 2-168] The results of DRC are in file /home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/project.runs/impl_1/singleDecision_drc_routed.rpt.
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max, Constraints type: SDC.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 8 CPUs
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "ap_clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+INFO: [Common 17-206] Exiting Vivado at Thu Dec  8 22:31:18 2016...
+[Thu Dec  8 22:31:20 2016] impl_1 finished
+wait_on_run: Time (s): cpu = 00:00:00.28 ; elapsed = 00:00:47 . Memory (MB): peak = 1435.367 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 271 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-43] Netlist 'singleDecision' is not ideal for floorplanning, since the cellview 'singleDecision' defined in file 'singleDecision.edf' contains large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+INFO: [Project 1-479] Netlist was created with Vivado 2014.2
+Parsing XDC File [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/.Xil/Vivado-19973-gregbox/dcp/singleDecision.xdc]
+Finished Parsing XDC File [/home/greg/multisite_test_detection_algorithms/xilnx_design/SingleSiteDetection/solution1/impl/verilog/.Xil/Vivado-19973-gregbox/dcp/singleDecision.xdc]
+Reading XDEF placement.
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:00.05 ; elapsed = 00:00:00.06 . Memory (MB): peak = 1509.367 ; gain = 0.000
+Restoring placement.
+Restored 378 out of 378 XDEF sites from archive | CPU: 0.220000 secs | Memory: 3.110168 MB |
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 35 instances were transformed.
+  RAM16X1S => RAM32X1S (RAMS32): 35 instances
+
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max, Constraints type: SDC.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 8 CPUs
+WARNING: [Timing 38-242] The property HD.CLK_SRC of clock port "ap_clk" is not set. In out-of-context mode, this prevents timing estimation for clock delay/skew
+Resolution: Set the HD.CLK_SRC property of the out-of-context port to the location of the clock buffer instance in the top-level design
+report_utilization: Time (s): cpu = 00:00:00.15 ; elapsed = 00:00:00.18 . Memory (MB): peak = 1601.414 ; gain = 2.000
+
+
+Implementation tool: Xilinx Vivado v.2014.2
+Device target:       xc7z020clg484-1
+Report date:         Thu Dec 08 22:31:22 CST 2016
+
+#=== Resource usage ===
+SLICE:          374
+LUT:            742
+FF:             806
+DSP:              4
+BRAM:             0
+SRL:              0
+#=== Final timing ===
+CP required:    10.000
+CP achieved:    8.306
+Timing met
+INFO: [Common 17-206] Exiting Vivado at Thu Dec  8 22:31:22 2016...
