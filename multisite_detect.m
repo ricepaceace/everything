@@ -10,10 +10,10 @@ addpath('test_data/PhisioBank_iaf/')
 %       represents a time point
 
 
-%s = load('NormalSinusRhythm_struct.mat');
+s = load('NormalSinusRhythm_struct.mat');
 %s = load('Pacingfromchipapprox120bpmxmA_struct.mat');
 %s = load('PacingfromMedtronic120bpm2mA_struct.mat');
-s = load('iaf1_struct.mat'); %number ranges from 1-8 for different patients
+%s = load('iaf1_struct.mat'); %number ranges from 1-8 for different patients
 
 Fs = s.Fs; %sampling rate
 data = s.data;
