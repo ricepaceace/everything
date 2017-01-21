@@ -37,8 +37,10 @@ b2 = fir1(500,150/Fs);
 %~~~~~~~~~~~~~~~~~~~~~
 %Channel Parameters
 %~~~~~~~~~~~~~~~~~~~~~
-
+numChannels = 3;
 detections = repmat(struct(), numChannels, 1);
+aSumofVote = [];
+vSumofVote = [];
 for channel = 1:numChannels
     %data(:,channel) = abs(data(:,channel));
     data(:,channel) = filter(b,1,data(:,channel));
@@ -81,9 +83,10 @@ end
 %This loop models real time data acquisition in the arduino.
 for i = 1:numSamples
     
-        %~~~~~~~~~~~~~~~~~~~~~~~~~
+    %~~~~~~~~~~~~~~~~~~~~~~~~~
     %d for all channels
     %~~~~~~~~~~~~~~~~~~~~~~~~~
+   
     %Increment time since last atrial beat d.
     for k = 1:numChannels
         detections(k).recentdatapoints = [detections(k).recentdatapoints(2:end) data(i,k)]; %get next datapoint and add to buffer
@@ -119,6 +122,9 @@ for i = 1:numSamples
         end
         aPacingVoteCount = aPacingVoteCount + detections(k).aPacingNeeded;
     end
+    
+    aSumofVote = [aSumofVote aPacingVoteCount];
+    
     if aPacingVoteCount >= numChannels/2
         for k = 1:numChannels
             d = detections(k);
@@ -141,6 +147,9 @@ for i = 1:numSamples
         end
         vPacingVoteCount = vPacingVoteCount + detections(k).vPacingNeeded;
     end
+    
+    vSumofVote = [vSumofVote vPacingVoteCount];
+    
     if vPacingVoteCount >= numChannels/2
         for k = 1:numChannels
             d = detections(k);
@@ -159,8 +168,10 @@ for i = 1:numChannels
     figure; hold on;
     plot(data(:,i),'b');
     plot(d.vPeakInd, d.v_thresh*d.vflip, 'or')
-    plot(d.aPeakInd, d.a_thresh*d.aflip, 'or')
+    plot(d.aPeakInd, d.a_thresh*d.aflip, 'ob')
     plot(d.aStimInd, d.a_thresh*d.aflip*1.2, 'xb')
-    plot(d.vStimInd, d.v_thresh*d.vflip*1.2, 'xb')
+    plot(d.vStimInd, d.v_thresh*d.vflip*1.2, 'xr')
+    plot(vSumofVote.*d.v_thresh*d.vflip*1.0, 'r')
+    plot(aSumofVote.*d.a_thresh*d.aflip*1.0, 'b')
     title(['Channel ' num2str(i)])
 end
