@@ -29,11 +29,11 @@ b2 = fir1(1000,150/Fs);
 ainds = zeros(numChannels, 1);
 vinds = zeros(numChannels, 1);
 for i=1:numChannels
-    %data(:,i) = abs(data(:,i));
     data(:,i) = filter(b,1,data(:,i));
     data(:,i) = filter(b2,1,data(:,i));
-    detection.a_length = 30;
-    detection.v_length = 11;
+    [detection.v_length, detection.a_length] = LearnLengths(data(:,i));
+%     detection.a_length = 30;
+%     detection.v_length = 11;
     [detection.v_thresh,detection.a_thresh,detection.vflip,detection.aflip] = GuessParameters2(data(:,i),detection.v_length,detection.a_length);
     [vind, aind] = one_chamber_peak_finder(detection, data(:,i));
     
