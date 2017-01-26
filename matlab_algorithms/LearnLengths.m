@@ -36,20 +36,24 @@ for s = [1 -1]
         end
     end
 
-    [idx,C] = kmeans([peak_lengths/mean(peak_lengths) peak_heights/mean(peak_heights) peak_steeps/mean(peak_steeps)],2);
+    [idx,C] = kmeans([peak_lengths/mean(peak_lengths) peak_heights/mean(peak_heights)],2);% peak_steeps/mean(peak_steeps)],2);
     figure
-    plot3(peak_lengths(idx==1),peak_heights(idx==1),peak_steeps(idx==1),'r.','MarkerSize',12)
     hold on
-    plot3(peak_lengths(idx==2),peak_heights(idx==2),peak_steeps(idx==2),'b.','MarkerSize',12)
-    plot3(C(:,1)*mean(peak_lengths),C(:,2)*mean(peak_heights), C(:,3)*mean(peak_steeps),'kx','MarkerSize',15,'LineWidth',3)
+%     plot3(peak_lengths(idx==1),peak_heights(idx==1),peak_steeps(idx==1),'r.','MarkerSize',12)
+%     plot3(peak_lengths(idx==2),peak_heights(idx==2),peak_steeps(idx==2),'b.','MarkerSize',12)
+%     plot3(C(:,1)*mean(peak_lengths),C(:,2)*mean(peak_heights), C(:,3)*mean(peak_steeps),'kx','MarkerSize',15,'LineWidth',3)
+    plot(peak_lengths(idx==1),peak_heights(idx==1),'r.','MarkerSize',12)
+    plot(peak_lengths(idx==2),peak_heights(idx==2),'b.','MarkerSize',12)
+    plot(C(:,1)*mean(peak_lengths),C(:,2)*mean(peak_heights),'kx','MarkerSize',15,'LineWidth',3)
     grid
     
+    [~,vind] = max(C(:,2)./C(:,1));
     v_length = [v_length min(C(:,1)*mean(peak_lengths))];
     a_length = [a_length max(C(:,1)*mean(peak_lengths))];
 end
 v_length
 a_length
 
-v_length = mean(v_length);
-a_length = mean(a_length);
+v_length = floor(mean(v_length(1)));
+a_length = floor(mean(a_length(1)));
 end
