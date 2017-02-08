@@ -54,6 +54,4 @@ end
 v_length
 a_length
 
-v_length = floor(mean(v_length(1)));
-a_length = floor(mean(a_length(1)));
 end
