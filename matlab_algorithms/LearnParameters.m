@@ -1,85 +1,78 @@
-function [ vc, ac, vflip, aflip, v_length, a_length ] = LearnParameters( data )
+function [ v_length, a_length, vc, ac, vflip, aflip, v_first ] = LearnParameters(data)
 %GUESSPARAMETERS2 Summary of this function goes here
 %   Detailed explanation goes here
- 
-    [v_lengths, a_lengths] = LearnParameters(data)
+    [v_lengths, a_lengths, first] = LearnLengths(data);
+    lengths = [v_lengths; a_lengths]; %2x2 array: chamber, flip
     %samplesHB = floor(length(data)/heartbeats);
     visualize_bs = true;% BINARY SEARCH VISUALIZATION
     flip = [+1, -1];
+    
+    cutoffs = zeros(2,2,2); %chamber, flip, start-end
+    mid_finders = [0.5 0.5; 0.6 0.4]; %chamber, start-end
+    
     if visualize_bs
-        for f = 1:2
-            figure(99)
-            hold on
-            xs = linspace(0, max(vflip*data), 200);
+        figure
+        hold on
+    end
+    
+    for f = 1:2
+        cutoffs(first(f),f,:) = BinarySearch(flip(f)*data, lengths(first(f),f));
+        
+        ndata = data;
+        t_blank = 50;
+        l_blank = 50;
+        thresh = sum(reshape(cutoffs(first(f),f,:),[1,2]).*mid_finders(first(f),:));
+        [~, rising_edges, falling_edges] = CountPeaks(flip(f)*data > thresh, lengths(first(f),f));
+        for i = 1:length(rising_edges)
+            ndata((rising_edges(i)-t_blank):(falling_edges(i)+l_blank)) = 0;
+        end
+        
+        cutoffs(3-first(f),f,:) = BinarySearch(flip(f)*ndata, lengths(3-first(f),f));
+        
+        if visualize_bs
+            xs = linspace(0, max(flip(f)*data), 200);
             ys=zeros(200,1);
             for i = 1:200
-                [beats, ~, ~] = CountPeaks(flip(f)*data > xs(i), v_lengths(f));
+                [beats, ~, ~] = CountPeaks(flip(f)*data > xs(i), lengths(first(f),f));
                 ys(i) = beats;
             end
-            plot(flip(f)*xs, ys);
-        end
-    end
-    
-    v_cutoffs = BinarySearch(data, v_lengths(1));
-    v_cutoffs_neg = BinarySearch(-data, v_lengths(2));
-    if (v_cutoffs_neg(2)-v_cutoffs_neg(1)<v_cutoffs(2)-v_cutoffs(1))
-        vf = 1;
-    else
-        vf = 2;
-        v_cutoffs = v_cutoffs_neg;
-    end
-    vflip = flip(vf);
-    v_length = v_lengths(vf);
-    vc = sum([.5, .5] .* v_cutoffs);
-    
-    
-    if visualize_bs
-        heartbeats = FindHeartRate(data);
-        plot(vflip*v_cutoffs, [heartbeats, heartbeats], 'bx');
-    end
-
-    ndata = data;
-    
-    t_blank = 50;
-    l_blank = 50;
-    [~, rising_edges, falling_edges] = CountPeaks(vflip*data > vc, v_length(vf));
-    for i = 1:length(rising_edges)
-        ndata((rising_edges(i)-t_blank):(falling_edges(i)+l_blank)) = 0;
-    end
-%     ndata = abs(ndata);
-%     figure
-%     plot(ndata)
-    
-    if visualize_bs
-        for f = 1:2
+            plot(flip(f)*xs, ys,'k');
+            
             xs = linspace(0, max(flip(f)*ndata), 200);
             ys=zeros(200,1);
             for i = 1:200
-                [beats, ~, ~] = CountPeaks(flip(f)*ndata > xs(i), a_lengths(f));
+                [beats, ~, ~] = CountPeaks(flip(f)*ndata > xs(i), lengths(3-first(f),f));
                 ys(i) = beats;
             end
             plot(flip(f)*xs, ys, 'k');
         end
     end
-
-    a_cutoffs =  BinarySearch(ndata, a_lengths(1));
-    a_cutoffs_neg =  BinarySearch(-ndata, a_lengths(2));
-    if (a_cutoffs_neg(2)-a_cutoffs_neg(1)<a_cutoffs(2)-a_cutoffs(1))
-        af = 1;
-    else
-        a_cutoffs = a_cutoffs_neg;
-        af = 2;
-    end
-    ac = sum([.7, .3] .* a_cutoffs);
-    aflip = flip(af);
-    a_length = a_lengths(af);
     
+    [~,vf] = max(cutoffs(1,:,2)-cutoffs(1,:,1));
+    vc = sum(cutoffs(1,vf,:).*mid_finders(1,vf));
+    [~,af] = max(cutoffs(2,:,2)-cutoffs(2,:,1));
+    ac = sum(cutoffs(2,af,:).*mid_finders(2,af));
+    v_length = v_lengths(vf);
+    a_length = a_lengths(af);
+    vflip = flip(vf);
+    aflip = flip(af);
+    v_first = (first(af)==1 && first(vf)==1); 
+       
     if visualize_bs
-        plot(aflip*a_cutoffs, [heartbeats, heartbeats], 'ro');
+        heartbeats = FindHeartRate(data);
+        plot(vflip*reshape(cutoffs(1,vf,:),[1,2]), [heartbeats, heartbeats], 'ro');
+        plot(aflip*reshape(cutoffs(2,af,:),[1,2]), [heartbeats, heartbeats], 'bx');
     end
+    
+    a=1;
+  
 end
 
 function [flatcutoffs] = BinarySearch(data, minlength)
+    if (minlength==0)
+        flatcutoffs = [0 0];
+        return
+    end
     npts = 20;
     sample_rate = 1000;
     minbeats = length(data) / sample_rate * 10 / 60; %10 bpm

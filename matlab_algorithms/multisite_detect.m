@@ -10,10 +10,10 @@ addpath('test_data/PhisioBank_iaf/')
 %       represents a time point
 
 
-%s = load('NormalSinusRhythm_struct.mat');
+s = load('NormalSinusRhythm_struct.mat');
 %s = load('Pacingfromchipapprox120bpmxmA_struct.mat');
 %s = load('PacingfromMedtronic120bpm2mA_struct.mat');
-s = load('iaf1_struct.mat'); %number ranges from 1-8 for different patients
+%s = load('iaf1_struct.mat'); %number ranges from 1-8 for different patients
 
 Fs = s.Fs; %sampling rate
 data = s.data;
@@ -28,19 +28,19 @@ b2 = fir1(1000,150/Fs);
 %%% run on each channel individually
 ainds = zeros(numChannels, 1);
 vinds = zeros(numChannels, 1);
-for i=1:numChannels
+for i=9%1:numChannels
     data(:,i) = filter(b,1,data(:,i));
     data(:,i) = filter(b2,1,data(:,i));
 %     detection.a_length = 30;
 %     detection.v_length = 11;
-    [detection.v_thresh,detection.a_thresh,detection.vflip,detection.aflip,detection.v_length, detection.a_length] = LearnParameters(data(:,i));
-    [vind, aind] = one_chamber_peak_finder(detection, data(:,i));
+    [d.v_length, d.a_length, d.v_thresh, d.a_thresh, d.vflip, d.aflip, d.v_first] = LearnParameters(data(:,i));
+    [vind, aind] = one_chamber_peak_finder(d, data(:,i));
     
         
     figure; hold on;
     plot(data(:,i),'b');
-    plot(vind, detection.v_thresh*detection.vflip, 'or');
-    plot(aind, detection.a_thresh*detection.aflip, 'xk');
+    plot(vind, d.v_thresh*d.vflip, 'or');
+    plot(aind, d.a_thresh*d.aflip, 'xk');
     title(['Channel' num2str(i)])
     
     ainds(i) = length(aind);

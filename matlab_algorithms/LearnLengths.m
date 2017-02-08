@@ -1,11 +1,12 @@
-function [v_length, a_length] = LearnLengths(data)
+function [v_length, a_length, first] = LearnLengths(data)
 
 extreme_over = 100;
 ddatadt = [0; diff(data)].^5.*data.*sign(data);
 ddatadt = ddatadt * max(data)/max(ddatadt);
 a_length = [];
 v_length = [];
-for s = [1 -1]
+first = [];
+for s = [+1 -1]
     wall_times = [];
     wall_steeps = [];
     for i = 1:length(ddatadt)
@@ -15,43 +16,83 @@ for s = [1 -1]
             wall_steeps = [wall_steeps ddatadt(i)];
         end
     end
-
-    figure
-    plot(data)
-    hold on
-    stem(wall_times, wall_steeps)
-    plot(ddatadt)
+    
+    if (false)
+        figure
+        plot(data)
+        hold on
+        stem(wall_times, wall_steeps)
+        plot(ddatadt)
+    end
 
     peak_lengths = [];
     peak_steeps = [];
     peak_heights = [];
+    peak_highests = [];
     for i = 2:length(wall_times)
         len = wall_times(i)-wall_times(i-1);
-        height = sign(data(wall_times(i-1)))*max(abs(data(wall_times(i-1):wall_times(i))))-(data(wall_times(i-1))+data(wall_times(i)))/2;
+        highest = sign(data(wall_times(i-1)))*max(abs(data(wall_times(i-1):wall_times(i))));
+        height = highest - (data(wall_times(i-1))+data(wall_times(i)))/2;
         if ( wall_steeps(i-1)*wall_steeps(i) < 0 && s*data(wall_times(i-1))>0 && s*data(wall_times(i))>0 && s*wall_steeps(i-1)>0 && s*wall_steeps(i)< 0 && len < 75)% && s*height > abs(median(data)) )
             peak_lengths = [peak_lengths; len];
             peak_steeps = [peak_steeps; wall_steeps(i-1) - wall_steeps(i)];
-            %peak_heights = [peak_heights data(floor((wall_times(i-1)+wall_times(i))/2))-(data(wall_times(i-1))+data(wall_times(i)))/2];
             peak_heights = [peak_heights; height];
+            peak_highests = [peak_highests; highest];
         end
     end
-
-    [idx,C] = kmeans([peak_lengths/mean(peak_lengths) peak_heights/mean(peak_heights)],2);% peak_steeps/mean(peak_steeps)],2);
-    figure
-    hold on
-%     plot3(peak_lengths(idx==1),peak_heights(idx==1),peak_steeps(idx==1),'r.','MarkerSize',12)
-%     plot3(peak_lengths(idx==2),peak_heights(idx==2),peak_steeps(idx==2),'b.','MarkerSize',12)
-%     plot3(C(:,1)*mean(peak_lengths),C(:,2)*mean(peak_heights), C(:,3)*mean(peak_steeps),'kx','MarkerSize',15,'LineWidth',3)
-    plot(peak_lengths(idx==1),peak_heights(idx==1),'r.','MarkerSize',12)
-    plot(peak_lengths(idx==2),peak_heights(idx==2),'b.','MarkerSize',12)
-    plot(C(:,1)*mean(peak_lengths),C(:,2)*mean(peak_heights),'kx','MarkerSize',15,'LineWidth',3)
-    grid
     
-    [~,vind] = max(C(:,2)./C(:,1));
-    v_length = [v_length min(C(:,1)*mean(peak_lengths))];
-    a_length = [a_length max(C(:,1)*mean(peak_lengths))];
+    %remove outliers
+    outliers = abs(zscore([peak_lengths peak_heights peak_steeps]))>3;
+    to_removes = [];
+    for i=1:length(peak_lengths)
+        if any(outliers(i,:))
+            to_removes = [to_removes i];
+        end
+    end
+    if (length(to_removes)/length(peak_lengths)>1/10)
+        disp('Excluding a lot of outliers')
+    end
+    peak_lengths(to_removes) = [];
+    peak_steeps(to_removes) = [];
+    peak_heights(to_removes) = [];
+    peak_highests(to_removes) = [];
+    
+    if (length(peak_lengths)<=10)
+        v_length = [v_length 0];
+        a_length = [a_length 0];
+        first = [first 1];
+        continue
+    end
+    
+    [idx,C] = kmeans([peak_lengths/mean(peak_lengths) peak_heights/mean(peak_heights)],2);% peak_steeps/mean(peak_steeps)],2);
+    [~,vind] = max(abs(C(:,2))./C(:,1)); %figure out which is are the ventricles based on height/length ratio
+    
+    if (abs(C(1,1)-C(2,1))*mean(peak_lengths)<2.0)
+        v_length = [v_length round(mean(peak_lengths))];
+        a_length = [a_length 0];
+        first = [first 1];
+    else
+        v_length = [v_length round(C(vind,1)*mean(peak_lengths))];
+        a_length = [a_length round(C(3-vind,1)*mean(peak_lengths))];
+        first = [first 1+(abs(mean(peak_highests(idx==vind)))<abs(mean(peak_highests(idx==3-vind))))];
+    end
+        
+    if (true)
+        figure
+        hold on
+    %     plot3(peak_lengths(idx==vind),peak_heights(idx==vind),peak_steeps(idx==vind),'r.','MarkerSize',12)
+    %     plot3(peak_lengths(idx==3-vind),peak_heights(idx==3-vind),peak_steeps(idx==3-vind),'b.','MarkerSize',12)
+    %     plot3(C(:,1)*mean(peak_lengths),C(:,2)*mean(peak_heights), C(:,3)*mean(peak_steeps),'kx','MarkerSize',15,'LineWidth',3)
+        plot(peak_lengths(idx==vind),peak_heights(idx==vind),'r.','MarkerSize',12)
+        plot(peak_lengths(idx==3-vind),peak_heights(idx==3-vind),'b.','MarkerSize',12)
+        legend('ventricles','atria')
+        plot(C(:,1)*mean(peak_lengths),C(:,2)*mean(peak_heights),'kx','MarkerSize',15,'LineWidth',3)
+        ylabel('peak heights'); xlabel('peak lengths')
+        grid
+    end
 end
 v_length
 a_length
+first
 
 end
