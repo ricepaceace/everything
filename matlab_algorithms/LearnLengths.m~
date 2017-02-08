@@ -57,27 +57,14 @@ for s = [+1 -1]
     peak_heights(to_removes) = [];
     peak_highests(to_removes) = [];
     
-    if (length(peak_lengths)<=10)
-        v_length = [v_length 0];
-        a_length = [a_length 0];
-        first = [first 1];
-        continue
-    end
-    
     [idx,C] = kmeans([peak_lengths/mean(peak_lengths) peak_heights/mean(peak_heights)],2);% peak_steeps/mean(peak_steeps)],2);
-    [~,vind] = max(abs(C(:,2))./C(:,1)); %figure out which is are the ventricles based on height/length ratio
     
-    if (abs(C(1,1)-C(2,1))*mean(peak_lengths)<2.0)
-        v_length = [v_length round(mean(peak_lengths))];
-        a_length = [a_length 0];
-        first = [first 1];
-    else
-        v_length = [v_length round(C(vind,1)*mean(peak_lengths))];
-        a_length = [a_length round(C(3-vind,1)*mean(peak_lengths))];
-        first = [first 1+(abs(mean(peak_highests(idx==vind)))<abs(mean(peak_highests(idx==3-vind))))];
-    end
-        
-    if (true)
+    [~,vind] = max(abs(C(:,2))./C(:,1)); %figure out which is are the ventricles based on height/length ratio
+    v_length = [v_length floor(C(vind,1)*mean(peak_lengths))];
+    a_length = [a_length floor(C(3-vind,1)*mean(peak_lengths))];
+    first = [first 1+(abs(mean(peak_highests(idx==vind)))<abs(mean(peak_highests(idx==3-vind))))];
+    
+     if (true)
         figure
         hold on
     %     plot3(peak_lengths(idx==vind),peak_heights(idx==vind),peak_steeps(idx==vind),'r.','MarkerSize',12)
