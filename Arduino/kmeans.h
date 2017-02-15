@@ -1,10 +1,14 @@
-char cluster[MAX_EXTREMA]
+char cluster[MAX_EXTREMA];
 
 // squared dist between point #i and (cent_x, cent_y)
 #define P_DIST2(i, cent_x, cent_y) ((peak_lengths[i] - cent_x) * (peak_lengths[i] - cent_x) + (peak_heights[i] - cent_y) * (peak_heights[i] - cent_y))
 
+struct means {
+	int c1x, c1y;
+	int c2x, c2y;
+};
 
-struct peak_lengths kmeans(int npts) {
+struct means kmeans(int npts) {
 	int firstCenterIdx	= npts/2; // This should be a random int between 0 and npts-1 but this is close enough
 	int c1x = peak_lengths[firstCenterIdx];
 	int c1y = peak_heights[firstCenterIdx];
@@ -52,7 +56,12 @@ struct peak_lengths kmeans(int npts) {
 		c1y /= c1count;
 		c2x /= c2count;
 		c2y /= c2count;
-	}
 
+		printf("C1: (%d, %d); C2: (%d, %d)\n", c1x, c1y, c2x, c2y);
+
+
+	}
+	struct means toReturn = {c1x, c1y, c2x, c2y};
+	return toReturn;
 
 }

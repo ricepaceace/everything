@@ -21,6 +21,12 @@ struct CircularBuffer {
 		if (head_i == maxsize)
 			head_i = 0;
 	}
+	T pop() {
+		T toReturn = tail();
+		sum -= toReturn;
+		len--;
+		return toReturn;
+	}
 	// returns the most recently added element
 	T head() { 
 		if (len == 0)

@@ -8,6 +8,8 @@ char thresholded[PARAM_LEARN_SIZE];
 short rising_edges[MAX_EDGES];
 short falling_edges[MAX_EDGES];
 
+#include "LearnLengths.h"
+
 struct thresholds
 {
 	short low_threshold;
@@ -59,6 +61,11 @@ params GuessParameters2(const short* data)
     	ldata[i] = pgm_read_word_near(data + i);
   	}
 
+	struct peak_lengths lens = LearnLengths();
+	Serial.print("v length: ");
+	Serial.println(lens.v_length);
+	Serial.print("a length: ");
+	Serial.println(lens.a_length);
 
   	int v_flip;
   	struct thresholds v_cutoffs = TryPlusMinus(V_LENGTH, &v_flip);
