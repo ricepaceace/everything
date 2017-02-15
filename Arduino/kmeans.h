@@ -2,6 +2,8 @@ char cluster[MAX_EXTREMA];
 
 // squared dist between point #i and (cent_x, cent_y)
 #define P_DIST2(i, cent_x, cent_y) ((peak_lengths[i] - cent_x) * (peak_lengths[i] - cent_x) + (peak_heights[i] - cent_y) * (peak_heights[i] - cent_y))
+// Because we are using integers, k-means may not converge
+#define MAX_ITER 20
 
 struct means {
 	int c1x, c1y;
@@ -24,7 +26,8 @@ struct means kmeans(int npts) {
 	int c2x = peak_lengths[ii];
 	int c2y = peak_heights[ii];
 
-	while (true) {
+	int iter = 0;
+	while (iter++ < MAX_ITER) {
 		bool converged = true;
 		for (int i = 0; i < npts; i++) {
 			char closestCluster;
@@ -57,7 +60,7 @@ struct means kmeans(int npts) {
 		c2x /= c2count;
 		c2y /= c2count;
 
-		printf("C1: (%d, %d); C2: (%d, %d)\n", c1x, c1y, c2x, c2y);
+		printf("C1: (%d, %d) # = %d; C2: (%d, %d) # = %d\n", c1x, c1y, c1count, c2x, c2y, c2count);
 
 
 	}
