@@ -31,7 +31,7 @@ struct means kmeans(int npts) {
 		bool converged = true;
 		for (int i = 0; i < npts; i++) {
 			char closestCluster;
-			if (P_DIST2(i, c1x, c2x) < P_DIST2(i, c2x, c2y))
+			if (P_DIST2(i, c1x, c1y) < P_DIST2(i, c2x, c2y))
 				closestCluster = 1;
 			else
 				closestCluster = 2;
