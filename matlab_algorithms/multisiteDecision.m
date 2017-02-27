@@ -1,3 +1,5 @@
+function multisiteDecision
+
 % main script for running d algorithms on test data
 close all
 addpath('test_data/sept29_2016_test/')
@@ -10,10 +12,10 @@ addpath('test_data/PhisioBank_iaf/')
 %       represents a time point
 
 
-s = load('NormalSinusRhythm_struct.mat');
+%s = load('NormalSinusRhythm_struct.mat');
 %s = load('Pacingfromchipapprox120bpmxmA_struct.mat');
 %s = load('PacingfromMedtronic120bpm2mA_struct.mat');
-%s = load('iaf1_struct.mat'); %number ranges from 1-8 for different patients
+s = load('iaf1_struct.mat'); %number ranges from 1-8 for different patients
 
 Fs = s.Fs; %sampling rate
 data = s.data;
@@ -21,7 +23,6 @@ begin_time = 0.0;
 end_time = 25; %second
 data = data(begin_time*Fs+1:end_time*Fs+1,:);
 [numSamples, numChannels] = size(data);
-%numChannels = 2;
 
 VENT = 1;
 ATRIAL = 2;
@@ -37,63 +38,78 @@ b2 = fir1(500,150/Fs);
 %~~~~~~~~~~~~~~~~~~~~~
 %Channel Parameters
 %~~~~~~~~~~~~~~~~~~~~~
+numChannels = 4;
+ds = repmat(struct(), numChannels, 1);
+aSumofVote = [];
+vSumofVote = [];
 
-detections = [];
-for channel = 1:numChannels
-    %data(:,channel) = abs(data(:,channel));
-    data(:,channel) = filter(b,1,data(:,channel));
-    data(:,channel) = filter(b2,1,data(:,channel));
-    d.v_length = 11;
-    d.a_length = 30; %Defining the Thresholds
-    [d.v_thresh,d.a_thresh,d.vflip,d.aflip]=GuessParameters2(data(:,channel),d.v_length,d.a_length);
-    d.AbeatDelay = 0;
-    d.VbeatDelay = 0;
-    d.VbeatFallDelay = 0;
-    d.AstimDelay = 0;
-    d.VstimDelay = 0;
-    d.AVDelayThresh = 200;
-    d.AADelayThresh = 1000;
-    d.ACaptureThresh = d.a_length;
-    d.VCaptureThresh = d.v_length;
+
+AVDelayThresh = 300;
+AADelayThresh = 1000;
+AdjustWeightsLag = 100;
+aVoteThresh = 0.4;
+vVoteThresh = 0.4;
+maxWeight = 2/numChannels;
+
+for k = 1:numChannels
+    data(:,k) = filter(b,1,data(:,k));
+    data(:,k) = filter(b2,1,data(:,k));
+    [ds(k).v_thresh,ds(k).a_thresh,ds(k).vflip,ds(k).aflip,ds(k).v_length,ds(k).a_length]=LearnParameters(data(:,k));
+    ds(k).AbeatDelay = 0;
+    ds(k).VbeatDelay = 0;
+    ds(k).VbeatFallDelay = 0;
+    ds(k).AstimDelay = 0;
+    ds(k).VstimDelay = 0;
+    ds(k).ACaptureThresh = ds(k).a_length;
+    ds(k).VCaptureThresh = ds(k).v_length;
+    ds(k).PostVARP = 250;
+    ds(k).PreVARP = 20;
     
-    %these are used for doing real time d
-    d.recentVBools = zeros(1,d.v_length); %all the recent samples needed to do real time filtering
-    d.recentABools = zeros(1,d.a_length); %all the recent samples needed to do real time filtering
-    d.last_sample_is_V = false;
-    d.last_sample_is_A = false;
-    d.PostVARP = 250;
-    d.PreVARP = 20;
-    d.recentdatapoints = zeros(1,d.PreVARP);
+    %these are used for doing real time detection
+    ds(k).recentVBools = zeros(1,ds(k).v_length); %all the recent samples needed to do real time filtering
+    ds(k).recentABools = zeros(1,ds(k).a_length); %all the recent samples needed to do real time filtering
+    ds(k).last_sample_is_V = false;
+    ds(k).last_sample_is_A = false;
+    ds(k).recentdatapoints = zeros(1,ds(k).PreVARP);
+    ds(k).aWeight = 1/numChannels;
+    ds(k).vWeight = 1/numChannels;
+    ds(k).AbeatWeighted = false;
+    ds(k).VbeatWeighted = false;
     
     %These variables are just used for testing and visualization, not actually
     %used in the algorithm. 
-    d.vPeakInd = [];
-    d.aPeakInd = [];
-    d.aStimInd = [];
-    d.vStimInd = [];
-
-    detections = [detections d];
+    ds(k).vPeakInd = [];
+    ds(k).aPeakInd = [];
+    ds(k).aStimInd = [];
+    ds(k).vStimInd = [];
+    ds(k).aWeightTrace = zeros(1,numSamples);
+    ds(k).vWeightTrace = zeros(1,numSamples);
     
-
+    ds(k).aPacingNeeded = 0;
+    ds(k).vPacingNeeded = 0;
 end
+
+%data(floor(numSamples/10):floor(numSamples/3),1) = 0;
+%data(:,1) = data(:,1)+[normrnd(0,max(data(:,1))/2,[floor(numSamples/3),1]); zeros(numSamples-floor(numSamples/3),1)];%.*exp(-(1:numSamples)'/numSamples);
 
 %This loop models real time data acquisition in the arduino.
 for i = 1:numSamples
     
-        %~~~~~~~~~~~~~~~~~~~~~~~~~
-    %d for all channels
     %~~~~~~~~~~~~~~~~~~~~~~~~~
+    %detection for all channels
+    %~~~~~~~~~~~~~~~~~~~~~~~~~
+   
     %Increment time since last atrial beat d.
     for k = 1:numChannels
-        detections(k).recentdatapoints = [detections(k).recentdatapoints(2:end) data(i,k)]; %get next datapoint and add to buffer
+        ds(k).recentdatapoints = [ds(k).recentdatapoints(2:end) data(i,k)]; %get next datapoint and add to buffer
         
-        detections(k).AbeatDelay = detections(k).AbeatDelay + 1;
-        detections(k).VbeatDelay = detections(k).VbeatDelay + 1;
-        detections(k).VbeatFallDelay = detections(k).VbeatFallDelay + 1;
-        detections(k).AstimDelay = detections(k).AstimDelay + 1;
-        detections(k).VstimDelay = detections(k).VstimDelay + 1;
+        ds(k).AbeatDelay = ds(k).AbeatDelay + 1;
+        ds(k).VbeatDelay = ds(k).VbeatDelay + 1;
+        ds(k).VbeatFallDelay = ds(k).VbeatFallDelay + 1;
+        ds(k).AstimDelay = ds(k).AstimDelay + 1;
+        ds(k).VstimDelay = ds(k).VstimDelay + 1;
 
-        detections(k) = yamPeakFinder(i,detections(k));
+        ds(k) = yamPeakFinder(i,ds(k));
     end
     
     %~~~~~~~~~~~~~~~~~
@@ -102,52 +118,208 @@ for i = 1:numSamples
     %Want to organize code such that one channels need to stimulate will
     %dominate decision to stimulate. 
     
-    %If an atrial beat has not been detected fast enough, capture the heart
-    %and deliver a stimulation. 
+    %If an atrial beat has not been detected fast enough, deliver a stimulation. 
     %FIXME?: The code currently does not assume that a atrial beat will
     %be detected soon after stimulation, so the tracking parameters are
     %manually adjusted. 
+    aPacingVoteCount = 0;
     
     for k = 1:numChannels
-        d = detections(k);
-        if (d.AbeatDelay > d.AADelayThresh && d.AstimDelay > d.ACaptureThresh)
-            if (d.AstimDelay == d.ACaptureThresh+1)
-                %disp('Failed Atrial Capture - increase stim')
-            end
+        d = ds(k);
+        if (d.AbeatDelay > AADelayThresh)
+            ds(k).aPacingNeeded = 1;
+        else
+            ds(k).aPacingNeeded = 0;
+        end
+        aPacingVoteCount = aPacingVoteCount + ds(k).aWeight*ds(k).aPacingNeeded;
+    end
+    
+    aSumofVote = [aSumofVote aPacingVoteCount];
+    
+    if aPacingVoteCount >= aVoteThresh && ds(1).AstimDelay > 500
+        for k = 1:numChannels
+            d = ds(k);
             %disp('Deliver Atrial Stimulation due to AA Delay')
-            for j = 1:numChannels
-                detections(j).aStimInd = [detections(j).aStimInd i];
-                detections(j).AstimDelay = 0;
-            end
-            break
+            ds(k).aStimInd = [d.aStimInd i];
+            ds(k).AstimDelay = 0;
         end
     end
 
-
+    vPacingVoteCount = 0;
     for k = 1:numChannels
-        d = detections(k);
-        if (d.VbeatDelay > d.AbeatDelay && d.AbeatDelay > d.AVDelayThresh && d.VstimDelay > d.VCaptureThresh)
-            if (d.VstimDelay == d.VCaptureThresh+1)
-                %disp('Failed Ventricular Capture - increase stim')
-            end
-            %disp('Deliver Ventricular Stimulation due to AV Delay')
-            for j = 1:numChannels
-                detections(j).vStimInd = [detections(j).vStimInd i];
-                detections(j).VstimDelay = 0;
-            end
-            break
+        d = ds(k);
+        % if we've seen an A more recently than a V, and it's been long
+        % enough since the last A, and it's been long enough since we last
+        % stimulated
+        if (min(d.VstimDelay,d.VbeatDelay) > min(d.AstimDelay,d.AbeatDelay) && min(d.AstimDelay,d.AbeatDelay) > AVDelayThresh)
+            ds(k).vPacingNeeded = 1;
+        else 
+            ds(k).vPacingNeeded = 0;
         end
+        vPacingVoteCount = vPacingVoteCount + ds(k).vWeight*ds(k).vPacingNeeded;
+    end
+    
+    vSumofVote = [vSumofVote vPacingVoteCount];
+    
+    if vPacingVoteCount >= vVoteThresh && ds(1).VstimDelay > 500
+        for k = 1:numChannels
+            d = ds(k);
+            %disp('Deliver Ventricular Stimulation due to AV Delay')
+            ds(k).vStimInd = [ds(k).vStimInd i];
+            ds(k).VstimDelay = 0;
+        end
+    end
+    
+    %%% Adjust capture voltages if necessary
+    if (ds(1).AstimDelay == ds(1).ACaptureThresh+1) && aPacingVoteCount >= aVoteThresh
+        %disp('Failed Atrial Capture - increase stim')
+    end
+    
+    if (ds(1).VstimDelay == ds(1).VCaptureThresh+1) && vPacingVoteCount >= vVoteThresh
+        %disp('Failed Ventricular Capture - increase stim')
+    end
+    
+    %%% Adjust Weights
+    
+    %if any of the channels had a peak a fixed amount of time ago that we
+    %havent already taken into account...
+    for k = 1:numChannels
+        if (ds(k).AbeatDelay == AdjustWeightsLag) && ~ds(k).AbeatWeighted
+            
+            %determine whether there was a beat or not
+            weighted_sum = 0;
+            for kk = 1:numChannels
+                if ds(kk).AbeatDelay <= AdjustWeightsLag
+                    weighted_sum = weighted_sum + ds(kk).aWeight;
+                end
+            end
+            decision = weighted_sum>0.5;
+            
+            
+            % make actual weight adjustments
+            sumWeights = 0;
+            for kk = 1:numChannels
+                correct = (decision == (ds(kk).AbeatDelay <= AdjustWeightsLag));
+                ds(kk).aWeight = adjustWeightFn(ds(kk).aWeight,correct,numChannels);
+                ds(kk).AbeatWeighted = true;
+                sumWeights = sumWeights + ds(kk).aWeight;
+            end
+            
+            %normalize weights
+            for kk = 1:numChannels
+                ds(kk).aWeight = ds(kk).aWeight/sumWeights;
+            end
+            
+            %limit weights to maxWeight and re-normalize
+            sumLowWeights = 0;
+            numLowWeights = 0;
+            for kk = 1:numChannels
+                if ds(kk).aWeight < maxWeight
+                    sumLowWeights = sumLowWeights + ds(kk).aWeight;
+                    numLowWeights = numLowWeights + 1;
+                end
+            end
+            for kk = 1:numChannels
+                if ds(kk).aWeight < maxWeight
+                    ds(kk).aWeight = (ds(kk).aWeight/sumLowWeights)*(numLowWeights/numChannels);
+                else
+                    ds(kk).aWeight = maxWeight;
+                end
+            end
+            
+            break 
+        end
+    end
+    
+    %if any of the channels had a peak a fixed amount of time ago that we
+    %havent already taken into account...
+    for k = 1:numChannels
+        if (ds(k).VbeatDelay == AdjustWeightsLag) && ~ds(k).VbeatWeighted
+            
+            %determine whether there was a beat or not
+            weighted_sum = 0;
+            for kk = 1:numChannels
+                if ds(kk).VbeatDelay <= AdjustWeightsLag
+                    weighted_sum = weighted_sum + ds(kk).vWeight;
+                end
+            end
+            decision = weighted_sum>0.5;
+            
+            
+            % make actual weight adjustments
+            sumWeights = 0;
+            for kk = 1:numChannels
+                correct = (decision == (ds(kk).VbeatDelay <= AdjustWeightsLag));
+                ds(kk).vWeight = adjustWeightFn(ds(kk).vWeight,correct,numChannels);
+                ds(kk).VbeatWeighted = true;
+                sumWeights = sumWeights + ds(kk).vWeight;
+            end
+            
+            %normalize weights
+            for kk = 1:numChannels
+                ds(kk).vWeight = ds(kk).vWeight/sumWeights;
+            end
+            
+            %limit weights to maxWeight and re-normalize
+            sumLowWeights = 0;
+            numLowWeights = 0;
+            for kk = 1:numChannels
+                if ds(kk).vWeight < maxWeight
+                    sumLowWeights = sumLowWeights + ds(kk).vWeight;
+                    numLowWeights = numLowWeights + 1;
+                end
+            end
+            for kk = 1:numChannels
+                if ds(kk).vWeight < maxWeight
+                    ds(kk).vWeight = (ds(kk).vWeight/sumLowWeights)*(numLowWeights/numChannels);
+                else
+                    ds(kk).vWeight = maxWeight;
+                end
+            end
+            
+            break 
+        end
+    end
+    
+    for k = 1:numChannels
+        ds(k).aWeightTrace(i) = ds(k).aWeight;
+        ds(k).vWeightTrace(i) = ds(k).vWeight;
     end
     
 end
 
 for i = 1:numChannels
-    d = detections(i);
-    figure; hold on;
-    plot(data(:,i),'b');
-    plot(d.vPeakInd, d.v_thresh*d.vflip, 'or')
-    plot(d.aPeakInd, d.a_thresh*d.aflip, 'or')
-    plot(d.aStimInd, d.a_thresh*d.aflip*1.2, 'xb')
-    plot(d.vStimInd, d.v_thresh*d.vflip*1.2, 'xb')
-    title(['Channel ' num2str(i)])
+    d = ds(i);
+    subplot(numChannels,1,i)
+    %figure
+    scale = numChannels*10^floor(log10(max(data(:,i))));
+    hold on;
+    h=plot(data(:,i),'k');
+    a=plot([0 d.vPeakInd], d.v_thresh*d.vflip, 'or'); h=[h a(1)];
+    a=plot([0 d.aPeakInd], d.a_thresh*d.aflip, 'ob'); h=[h a(1)];
+    a=plot([0 d.vStimInd], d.v_thresh*d.vflip*vVoteThresh, 'xr'); h=[h a(1)];
+    a=plot([0 d.aStimInd], d.a_thresh*d.aflip*aVoteThresh, 'xb'); h=[h a(1)];
+    %a=plot(vSumofVote.*d.v_thresh*d.vflip, '--r'); h=[h a(1)];
+    %a=plot(aSumofVote.*d.a_thresh*d.aflip, '--b'); h=[h a(1)];
+    a=plot(d.vWeightTrace.*scale*d.vflip, 'r'); h=[h a(1)];
+    a=plot(d.aWeightTrace.*scale*d.aflip, 'b'); h=[h a(1)];
+    title(['Channel ' num2str(i)],'Fontsize',14)
+end
+legend(h,'data','ventricular peaks','atrial peaks','ventricular stimulation','atrial stimulation',...%'ventricular polling sum','atrial polling sum',...
+    'ventricular polling weight','atrial polling weight')
+
+end
+
+function y = sig(x)
+y = 1./(1+exp(-x));
+end
+
+function newW = adjustWeightFn(oldW,correct,numChannels)
+    if ~correct
+        %newW = sig(oldW-1/numChannels-1)*2/numChannels;
+        newW = oldW*0.9;
+    else
+        %newW = sig(oldW-1/numChannels+1)*2/numChannels;
+        newW = oldW+0.001;
+    end
 end
