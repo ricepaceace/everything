@@ -1,4 +1,5 @@
 #pragma once
+
 template<typename T, int maxsize>
 struct CircularBuffer {
 	int sum;

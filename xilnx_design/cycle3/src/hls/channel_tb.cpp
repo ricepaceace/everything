@@ -1,8 +1,6 @@
-#include <stdio.h>
 #include "constants.h"
 #include "channel.h"
 
-//#include "test.h"
 const short data[10000] = {
 #include "good-ch2.h"
 };
@@ -12,7 +10,6 @@ int check(void);
 int main()
 {
 	return check();
-
 }
 
 int check()
@@ -20,7 +17,7 @@ int check()
 	char apeaks =0;
 	char vpeaks = 0;
 	int result;
-	Decision(1, 1, 1, 161, 72, 1, -1, 18, 5, 0);
+	Decision(1, 1, 1, 72, 161, 1, -1, 18, 5, 0); // Values learned from running parameter learning algorithm on this data
 	int i;
 	for(i = 0; i < 10000; i++)
 	{

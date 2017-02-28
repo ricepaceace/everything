@@ -1,10 +1,22 @@
 #include "constants.h"
 #include "circularBuffer.h"
-#include "singleChannelDecision.h"
+#include "channel.h"
 
 
-short Decision(dbool reset_A, dbool reset_V, dbool reset_params, int vthresh, int athresh, char a_flip, char v_flip, unsigned int a_length, unsigned int v_length, short data)
+short Decision(dbool reset_A, dbool reset_V, dbool reset_params, int athresh, int vthresh, char a_flip, char v_flip, unsigned int a_length, unsigned int v_length, short data)
 {
+#pragma HLS INTERFACE s_axilite port=reset_V
+#pragma HLS INTERFACE s_axilite port=reset_A
+#pragma HLS INTERFACE s_axilite port=reset_params
+#pragma HLS INTERFACE s_axilite port=athresh
+#pragma HLS INTERFACE s_axilite port=vthresh
+#pragma HLS INTERFACE s_axilite port=a_flip
+#pragma HLS INTERFACE s_axilite port=v_flip
+#pragma HLS INTERFACE s_axilite port=a_length
+#pragma HLS INTERFACE s_axilite port=v_length
+#pragma HLS INTERFACE s_axilite port=data
+#pragma HLS INTERFACE s_axilite port=return
+
 	//STATE VARIABLES
 	static int v_thresh = 0;
 	static int a_thresh = 0;
