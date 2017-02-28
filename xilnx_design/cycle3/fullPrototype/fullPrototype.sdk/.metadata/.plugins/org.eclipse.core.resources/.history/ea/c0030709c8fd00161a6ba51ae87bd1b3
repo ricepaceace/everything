@@ -1,0 +1,9 @@
+#ifndef UTILITIES_H_
+#define UTILITIES_H_
+#include "xparameters.h"	/* EDK generated parameters */
+
+#define ABOUT_ONE_SECOND 74067512
+
+void delay(int nStopValue);
+
+#endif /* UTILITIES_H_ */

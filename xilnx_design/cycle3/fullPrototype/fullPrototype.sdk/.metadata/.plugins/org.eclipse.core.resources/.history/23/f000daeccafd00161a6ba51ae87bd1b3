@@ -1,0 +1,16 @@
+void continuous_sampling()
+{
+	u16 uSample[4];
+	int j;
+	xil_printf("taking samples\r\n");
+	uSample[0]=AXI_MAX11100_CONVERT(XPAR_AXI_MAX11100_0_BASEADDR);
+	uSample[1]=AXI_MAX11100_CONVERT(XPAR_AXI_MAX11100_1_BASEADDR);
+	uSample[2]=AXI_MAX11100_CONVERT(XPAR_AXI_MAX11100_2_BASEADDR);
+	uSample[3]=AXI_MAX11100_CONVERT(XPAR_AXI_MAX11100_3_BASEADDR);
+	for(j =0; j<4;j++)
+	{
+		xil_printf("%i\r\n", uSample[j]);
+		xil_printf("CODE: 0x%0.4X\r\n",uSample[j]);
+		printf("VOLTAGE:%7.4fV\r\n",(float)4.096*uSample[j]/65536);
+	}
+}
