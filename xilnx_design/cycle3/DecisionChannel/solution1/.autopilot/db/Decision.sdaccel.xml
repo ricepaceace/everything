@@ -1,0 +1,333 @@
+<profile>
+
+<section name = "Vivado HLS Report for 'Decision'" level="0">
+<item name = "Date">Tue Feb 28 07:19:28 2017
+</item>
+<item name = "Version">2016.2 (Build 1577090 on Thu Jun 02 16:59:10 MDT 2016)</item>
+<item name = "Project">DecisionChannel</item>
+<item name = "Solution">solution1</item>
+<item name = "Product family">zynq</item>
+<item name = "Target device">xc7z020clg484-1</item>
+</section>
+
+<section name = "Performance Estimates" level="0">
+<item name = "Timing (ns)">
+<section name = "" level="1">
+<item name = "Target clock period (ns)">10.00</item>
+<item name = "Clock uncertainty (ns)">1.25</item>
+<item name = "Estimated clock period (ns)">8.64</item>
+</section>
+</item>
+<item name = "Latency (clock cycles)">
+<section name = "" level="1">
+<item name = "Summary"><table name="" hasTotal="0">
+<keys size="6">, min, max, min, max, Type</keys>
+<column name="">9, 13, 10, 14, none</column>
+</table>
+</item>
+<item name = "Detail">
+<section name = "" level="1">
+<item name = "Instance"><table name="" hasTotal="0">
+<keys size="7">Instance, Module, min, max, min, max, Type</keys>
+</table>
+</item>
+<item name = "Loop"><table name="" hasTotal="0">
+<keys size="8">Loop Name, min, max, Latency, achieved, target, Count, Pipelined</keys>
+</table>
+</item>
+</section>
+</item>
+</section>
+</item>
+</section>
+
+<section name = "Utilization Estimates" level="0">
+<item name = "Summary"><table name="" hasTotal="1">
+<keys size="5">Name, BRAM_18K, DSP48E, FF, LUT</keys>
+<column name="DSP">-, -, -, -</column>
+<column name="Expression">-, -, 0, 2102</column>
+<column name="FIFO">-, -, -, -</column>
+<column name="Instance">0, -, 275, 398</column>
+<column name="Memory">0, -, 36, 7</column>
+<column name="Multiplexer">-, -, -, 439</column>
+<column name="Register">-, -, 1486, -</column>
+<specialColumn name="Available">280, 220, 106400, 53200</specialColumn>
+<specialColumn name="Utilization (%)">0, 0, 1, 5</specialColumn>
+</table>
+</item>
+<item name = "Detail">
+<section name = "" level="1">
+<item name = "Instance"><table name="" hasTotal="1">
+<keys size="6">Instance, Module, BRAM_18K, DSP48E, FF, LUT</keys>
+<column name="Decision_AXILiteS_s_axi_U">Decision_AXILiteS_s_axi, 0, 0, 275, 398</column>
+</table>
+</item>
+<item name = "DSP48"><table name="" hasTotal="0">
+<keys size="3">Instance, Module, Expression</keys>
+</table>
+</item>
+<item name = "Memory"><table name="" hasTotal="1">
+<keys size="9">Memory, Module, BRAM_18K, FF, LUT, Words, Bits, Banks, W*Bits*Banks</keys>
+<column name="recentVBools_data_U">Decision_recentVBools_data, 0, 2, 1, 30, 1, 1, 30</column>
+<column name="recentABools_data_U">Decision_recentVBools_data, 0, 2, 1, 30, 1, 1, 30</column>
+<column name="recentdatapoints_data_U">Decision_recentdatapoints_data, 0, 32, 5, 20, 16, 1, 320</column>
+</table>
+</item>
+<item name = "FIFO"><table name="" hasTotal="1">
+<keys size="7">Name, BRAM_18K, FF, LUT, Depth, Bits, Size:D*B</keys>
+</table>
+</item>
+<item name = "Expression"><table name="" hasTotal="1">
+<keys size="7">Variable Name, Operation, DSP48E, FF, LUT, Bitwidth P0, Bitwidth P1</keys>
+<column name="AstimDelay_load_op_fu_489_p2">+, 0, 0, 32, 32, 1</column>
+<column name="CircularBuffer_len_read_assign_2_fu_1095_p2">+, 0, 0, 32, 32, 1</column>
+<column name="CircularBuffer_len_read_assign_fu_782_p2">+, 0, 0, 32, 32, 1</column>
+<column name="CircularBuffer_len_write_assig_1_fu_934_p2">+, 0, 0, 32, 32, 3</column>
+<column name="CircularBuffer_len_write_assig_2_fu_1152_p2">+, 0, 0, 32, 32, 2</column>
+<column name="CircularBuffer_len_write_assig_3_fu_1260_p2">+, 0, 0, 32, 32, 3</column>
+<column name="CircularBuffer_len_write_assig_fu_827_p2">+, 0, 0, 32, 32, 2</column>
+<column name="CircularBuffer_sum_read_assign_1_fu_1089_p2">+, 0, 0, 32, 32, 32</column>
+<column name="CircularBuffer_sum_read_assign_fu_776_p2">+, 0, 0, 32, 32, 32</column>
+<column name="VstimDelay_load_op_fu_503_p2">+, 0, 0, 32, 32, 1</column>
+<column name="i_12_fu_1201_p2">+, 0, 0, 32, 32, 5</column>
+<column name="i_1_fu_630_p2">+, 0, 0, 32, 32, 5</column>
+<column name="i_3_fu_845_p2">+, 0, 0, 32, 32, 5</column>
+<column name="i_6_fu_876_p2">+, 0, 0, 32, 32, 5</column>
+<column name="i_9_fu_1170_p2">+, 0, 0, 32, 32, 5</column>
+<column name="i_fu_617_p2">+, 0, 0, 32, 32, 2</column>
+<column name="recentdatapoints_len_load_op_fu_566_p2">+, 0, 0, 32, 32, 1</column>
+<column name="tmp_32_i1_fu_1109_p2">+, 0, 0, 32, 32, 1</column>
+<column name="tmp_32_i_fu_796_p2">+, 0, 0, 32, 32, 1</column>
+<column name="tmp_36_i_fu_561_p2">+, 0, 0, 32, 32, 32</column>
+<column name="tmp_38_i_fu_586_p2">+, 0, 0, 32, 32, 1</column>
+<column name="tmp_3_fu_716_p2">+, 0, 0, 32, 32, 1</column>
+<column name="tmp_4_fu_726_p2">+, 0, 0, 32, 32, 1</column>
+<column name="tmp_5_fu_736_p2">+, 0, 0, 32, 32, 1</column>
+<column name="CircularBuffer_sum_write_assig_1_fu_927_p2">-, 0, 0, 16, 32, 32</column>
+<column name="CircularBuffer_sum_write_assig_2_fu_1240_p2">-, 0, 0, 16, 32, 32</column>
+<column name="CircularBuffer_sum_write_assig_3_fu_1254_p2">-, 0, 0, 16, 32, 32</column>
+<column name="CircularBuffer_sum_write_assig_fu_919_p2">-, 0, 0, 16, 32, 32</column>
+<column name="datapointA_1_fu_1027_p2">-, 0, 0, 17, 1, 17</column>
+<column name="datapointV_1_fu_684_p2">-, 0, 0, 17, 1, 17</column>
+<column name="i_11_fu_1189_p2">-, 0, 0, 32, 32, 32</column>
+<column name="i_2_fu_833_p2">-, 0, 0, 32, 32, 32</column>
+<column name="i_5_fu_864_p2">-, 0, 0, 32, 32, 32</column>
+<column name="i_8_fu_1158_p2">-, 0, 0, 32, 32, 32</column>
+<column name="tmp_28_i1_fu_1075_p2">-, 0, 0, 32, 32, 32</column>
+<column name="tmp_28_i_fu_762_p2">-, 0, 0, 32, 32, 32</column>
+<column name="tmp_34_i_fu_547_p2">-, 0, 0, 32, 32, 32</column>
+<column name="ap_sig_151">and, 0, 0, 1, 1, 1</column>
+<column name="ap_sig_363">and, 0, 0, 1, 1, 1</column>
+<column name="ap_sig_365">and, 0, 0, 1, 1, 1</column>
+<column name="ap_sig_396">and, 0, 0, 1, 1, 1</column>
+<column name="ap_sig_398">and, 0, 0, 1, 1, 1</column>
+<column name="or_cond1_fu_1308_p2">and, 0, 0, 1, 1, 1</column>
+<column name="or_cond_fu_1447_p2">and, 0, 0, 1, 1, 1</column>
+<column name="sel_tmp2_fu_1394_p2">and, 0, 0, 1, 1, 1</column>
+<column name="sel_tmp_fu_1374_p2">and, 0, 0, 1, 1, 1</column>
+<column name="toReturn_4_fu_905_p2">and, 0, 0, 1, 1, 1</column>
+<column name="toReturn_5_fu_911_p2">and, 0, 0, 1, 1, 1</column>
+<column name="toReturn_6_fu_1230_p2">and, 0, 0, 1, 1, 1</column>
+<column name="toReturn_7_fu_1245_p2">and, 0, 0, 1, 1, 1</column>
+<column name="not_tmp_i_i1_fu_1225_p2">icmp, 0, 0, 11, 32, 1</column>
+<column name="not_tmp_i_i2_fu_1220_p2">icmp, 0, 0, 11, 32, 1</column>
+<column name="not_tmp_i_i6_fu_895_p2">icmp, 0, 0, 11, 32, 1</column>
+<column name="not_tmp_i_i_fu_900_p2">icmp, 0, 0, 11, 32, 1</column>
+<column name="tmp_10_fu_954_p2">icmp, 0, 0, 11, 32, 32</column>
+<column name="tmp_11_fu_1021_p2">icmp, 0, 0, 3, 8, 2</column>
+<column name="tmp_12_fu_1049_p2">icmp, 0, 0, 11, 32, 32</column>
+<column name="tmp_13_fu_1134_p2">icmp, 0, 0, 11, 32, 32</column>
+<column name="tmp_16_fu_1280_p2">icmp, 0, 0, 11, 32, 32</column>
+<column name="tmp_17_fu_1302_p2">icmp, 0, 0, 11, 32, 32</column>
+<column name="tmp_19_fu_1360_p2">icmp, 0, 0, 11, 32, 1</column>
+<column name="tmp_20_fu_1408_p2">icmp, 0, 0, 11, 32, 10</column>
+<column name="tmp_20_not_fu_1342_p2">icmp, 0, 0, 11, 32, 1</column>
+<column name="tmp_21_fu_1326_p2">icmp, 0, 0, 11, 32, 32</column>
+<column name="tmp_22_fu_1435_p2">icmp, 0, 0, 11, 32, 32</column>
+<column name="tmp_23_fu_1441_p2">icmp, 0, 0, 11, 32, 10</column>
+<column name="tmp_24_fu_1331_p2">icmp, 0, 0, 11, 32, 32</column>
+<column name="tmp_33_i1_fu_1114_p2">icmp, 0, 0, 11, 32, 5</column>
+<column name="tmp_33_i_fu_801_p2">icmp, 0, 0, 11, 32, 5</column>
+<column name="tmp_39_i_fu_591_p2">icmp, 0, 0, 11, 32, 5</column>
+<column name="tmp_8_fu_821_p2">icmp, 0, 0, 11, 32, 32</column>
+<column name="tmp_9_fu_678_p2">icmp, 0, 0, 3, 8, 2</column>
+<column name="tmp_i1_fu_657_p2">icmp, 0, 0, 11, 32, 1</column>
+<column name="tmp_i2_fu_753_p2">icmp, 0, 0, 11, 32, 5</column>
+<column name="tmp_i3_fu_988_p2">icmp, 0, 0, 11, 32, 5</column>
+<column name="tmp_i4_fu_1066_p2">icmp, 0, 0, 11, 32, 5</column>
+<column name="tmp_i_fu_533_p2">icmp, 0, 0, 11, 32, 5</column>
+<column name="tmp_s_fu_706_p2">icmp, 0, 0, 11, 32, 32</column>
+<column name="brmerge_fu_1354_p2">or, 0, 0, 1, 1, 1</column>
+<column name="toReturn_3_fu_1453_p2">or, 0, 0, 16, 13, 4</column>
+<column name="toReturn_fu_1414_p2">or, 0, 0, 16, 13, 12</column>
+<column name="CircularBuffer_head_i_read_ass_1_fu_1120_p3">select, 0, 0, 32, 1, 1</column>
+<column name="CircularBuffer_head_i_read_ass_fu_807_p3">select, 0, 0, 32, 1, 1</column>
+<column name="CircularBuffer_int_30_sum_i1_fu_1081_p3">select, 0, 0, 32, 1, 32</column>
+<column name="CircularBuffer_int_30_sum_i_fu_768_p3">select, 0, 0, 32, 1, 32</column>
+<column name="CircularBuffer_len_read_assign_1_fu_788_p3">select, 0, 0, 32, 1, 5</column>
+<column name="CircularBuffer_len_read_assign_3_fu_1101_p3">select, 0, 0, 32, 1, 5</column>
+<column name="UnifiedRetVal_fu_1466_p3">select, 0, 0, 13, 1, 13</column>
+<column name="datapointA_fu_1006_p3">select, 0, 0, 16, 1, 16</column>
+<column name="datapointV_fu_662_p3">select, 0, 0, 16, 1, 1</column>
+<column name="i_10_fu_1176_p3">select, 0, 0, 32, 1, 32</column>
+<column name="i_13_fu_1207_p3">select, 0, 0, 32, 1, 32</column>
+<column name="i_4_fu_851_p3">select, 0, 0, 32, 1, 32</column>
+<column name="i_7_fu_882_p3">select, 0, 0, 32, 1, 32</column>
+<column name="p_1_fu_1033_p3">select, 0, 0, 17, 1, 17</column>
+<column name="p_2_fu_1366_p3">select, 0, 0, 14, 1, 14</column>
+<column name="p_i_fu_635_p3">select, 0, 0, 32, 1, 32</column>
+<column name="p_s_fu_690_p3">select, 0, 0, 17, 1, 17</column>
+<column name="p_tmp_i_fu_597_p3">select, 0, 0, 32, 1, 1</column>
+<column name="p_toReturn_1_fu_1420_p3">select, 0, 0, 13, 1, 13</column>
+<column name="p_toReturn_2_fu_1459_p3">select, 0, 0, 13, 1, 13</column>
+<column name="recentdatapoints_sum_loc_i_fu_553_p3">select, 0, 0, 32, 1, 32</column>
+<column name="sel_tmp1_fu_1380_p3">select, 0, 0, 13, 1, 13</column>
+<column name="tmp_37_i_fu_572_p3">select, 0, 0, 32, 1, 5</column>
+<column name="tmp_6_fu_495_p3">select, 0, 0, 32, 1, 1</column>
+<column name="tmp_7_fu_509_p3">select, 0, 0, 32, 1, 1</column>
+<column name="toReturn_1_fu_1400_p3">select, 0, 0, 13, 1, 8</column>
+<column name="toReturn_2_fu_1427_p3">select, 0, 0, 13, 1, 13</column>
+<column name="last_sample_is_V_V_loc_2_not_fu_1348_p2">xor, 0, 0, 2, 1, 2</column>
+<column name="tmp_20_not_not_fu_1388_p2">xor, 0, 0, 2, 1, 2</column>
+</table>
+</item>
+<item name = "Multiplexer"><table name="" hasTotal="1">
+<keys size="5">Name, LUT, Input Size, Bits, Total Bits</keys>
+<column name="ACaptureThresh_loc_reg_286">32, 2, 32, 64</column>
+<column name="AbeatDelay_new_reg_392">32, 2, 32, 64</column>
+<column name="VCaptureThresh_loc_reg_296">32, 2, 32, 64</column>
+<column name="VbeatDelay_new_1_reg_324">32, 2, 32, 64</column>
+<column name="VbeatFallDelay_new_1_reg_340">32, 2, 32, 64</column>
+<column name="ap_NS_fsm">6, 15, 1, 15</column>
+<column name="last_sample_is_V_V_loc_2_reg_356">1, 3, 1, 3</column>
+<column name="recentABools_data_address0">5, 4, 5, 20</column>
+<column name="recentABools_len_new_phi_fu_386_p4">32, 2, 32, 64</column>
+<column name="recentABools_len_new_reg_383">32, 2, 32, 64</column>
+<column name="recentVBools_data_address0">5, 4, 5, 20</column>
+<column name="recentVBools_len_new_phi_fu_318_p4">32, 2, 32, 64</column>
+<column name="recentVBools_len_new_reg_315">32, 2, 32, 64</column>
+<column name="recentdatapoints_data_address0">5, 5, 5, 25</column>
+<column name="sum_1_phi_fu_377_p4">32, 2, 32, 64</column>
+<column name="sum_1_reg_374">32, 2, 32, 64</column>
+<column name="sum_phi_fu_309_p4">32, 2, 32, 64</column>
+<column name="sum_reg_306">32, 2, 32, 64</column>
+<column name="tmp_18_reg_407">1, 3, 1, 3</column>
+</table>
+</item>
+<item name = "Register"><table name="" hasTotal="1">
+<keys size="5">Name, FF, LUT, Bits, Const Bits</keys>
+<column name="ACaptureThresh">32, 0, 32, 0</column>
+<column name="ACaptureThresh_loc_reg_286">32, 0, 32, 0</column>
+<column name="AbeatDelay">32, 0, 32, 0</column>
+<column name="AbeatDelay_new_reg_392">32, 0, 32, 0</column>
+<column name="AstimDelay">32, 0, 32, 0</column>
+<column name="CircularBuffer_head_i_read_ass_1_reg_1700">32, 0, 32, 0</column>
+<column name="CircularBuffer_head_i_read_ass_reg_1605">32, 0, 32, 0</column>
+<column name="CircularBuffer_len_read_assign_1_reg_1597">32, 0, 32, 0</column>
+<column name="CircularBuffer_len_read_assign_3_reg_1692">32, 0, 32, 0</column>
+<column name="CircularBuffer_len_write_assig_2_reg_1710">32, 0, 32, 0</column>
+<column name="CircularBuffer_len_write_assig_reg_1615">32, 0, 32, 0</column>
+<column name="CircularBuffer_sum_read_assign_1_reg_1686">32, 0, 32, 0</column>
+<column name="CircularBuffer_sum_read_assign_reg_1591">32, 0, 32, 0</column>
+<column name="CircularBuffer_sum_write_assig_3_reg_1731">32, 0, 32, 0</column>
+<column name="VCaptureThresh">32, 0, 32, 0</column>
+<column name="VCaptureThresh_loc_reg_296">32, 0, 32, 0</column>
+<column name="VbeatDelay">32, 0, 32, 0</column>
+<column name="VbeatDelay_new_1_reg_324">32, 0, 32, 0</column>
+<column name="VbeatFallDelay">32, 0, 32, 0</column>
+<column name="VbeatFallDelay_new_1_reg_340">32, 0, 32, 0</column>
+<column name="VstimDelay">32, 0, 32, 0</column>
+<column name="a_thresh">32, 0, 32, 0</column>
+<column name="aflip">8, 0, 8, 0</column>
+<column name="ap_CS_fsm">14, 0, 14, 0</column>
+<column name="data_read_reg_1478">16, 0, 16, 0</column>
+<column name="last_sample_is_A_V">1, 0, 1, 0</column>
+<column name="last_sample_is_V_V">1, 0, 1, 0</column>
+<column name="last_sample_is_V_V_loc_2_reg_356">1, 0, 1, 0</column>
+<column name="not_tmp_i_i2_reg_1726">1, 0, 1, 0</column>
+<column name="not_tmp_i_i6_reg_1631">1, 0, 1, 0</column>
+<column name="p_tmp_i_reg_1537">32, 0, 32, 0</column>
+<column name="recentABools_data_addr_reg_1670">5, 0, 5, 0</column>
+<column name="recentABools_data_load_reg_1681">1, 0, 1, 0</column>
+<column name="recentABools_head_i">32, 0, 32, 0</column>
+<column name="recentABools_len">32, 0, 32, 0</column>
+<column name="recentABools_len_new_reg_383">32, 0, 32, 0</column>
+<column name="recentABools_sum">32, 0, 32, 0</column>
+<column name="recentVBools_data_addr_reg_1554">5, 0, 5, 0</column>
+<column name="recentVBools_data_load_reg_1565">1, 0, 1, 0</column>
+<column name="recentVBools_head_i">32, 0, 32, 0</column>
+<column name="recentVBools_len">32, 0, 32, 0</column>
+<column name="recentVBools_len_new_reg_315">32, 0, 32, 0</column>
+<column name="recentVBools_sum">32, 0, 32, 0</column>
+<column name="recentdatapoints_data_addr_reg_1516">5, 0, 5, 0</column>
+<column name="recentdatapoints_head_i">32, 0, 32, 0</column>
+<column name="recentdatapoints_len">32, 0, 32, 0</column>
+<column name="recentdatapoints_sum">32, 0, 32, 0</column>
+<column name="sum_1_reg_374">32, 0, 32, 0</column>
+<column name="sum_reg_306">32, 0, 32, 0</column>
+<column name="tmp_12_reg_1675">1, 0, 1, 0</column>
+<column name="tmp_13_reg_1706">1, 0, 1, 0</column>
+<column name="tmp_18_reg_407">1, 0, 1, 0</column>
+<column name="tmp_21_reg_1745">1, 0, 1, 0</column>
+<column name="tmp_24_reg_1750">1, 0, 1, 0</column>
+<column name="tmp_37_i_reg_1531">32, 0, 32, 0</column>
+<column name="tmp_3_reg_1570">32, 0, 32, 0</column>
+<column name="tmp_4_reg_1577">32, 0, 32, 0</column>
+<column name="tmp_5_reg_1584">32, 0, 32, 0</column>
+<column name="tmp_6_reg_1521">32, 0, 32, 0</column>
+<column name="tmp_7_reg_1526">32, 0, 32, 0</column>
+<column name="tmp_8_reg_1611">1, 0, 1, 0</column>
+<column name="tmp_i3_reg_1655">1, 0, 1, 0</column>
+<column name="tmp_s_reg_1559">1, 0, 1, 0</column>
+<column name="toReturn_4_reg_1636">1, 0, 1, 0</column>
+<column name="toReturn_5_reg_1641">1, 0, 1, 0</column>
+<column name="v_thresh">32, 0, 32, 0</column>
+<column name="val_assign_reg_1496">32, 0, 32, 0</column>
+<column name="vflip">8, 0, 8, 0</column>
+</table>
+</item>
+</section>
+</item>
+</section>
+
+<section name = "Interface" level="0">
+<item name = "Summary"><table name="" hasTotal="0">
+<keys size="6">RTL Ports, Dir, Bits, Protocol, Source Object, C Type</keys>
+<column name="s_axi_AXILiteS_AWVALID">in, 1, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_AWREADY">out, 1, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_AWADDR">in, 7, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_WVALID">in, 1, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_WREADY">out, 1, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_WDATA">in, 32, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_WSTRB">in, 4, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_ARVALID">in, 1, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_ARREADY">out, 1, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_ARADDR">in, 7, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_RVALID">out, 1, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_RREADY">in, 1, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_RDATA">out, 32, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_RRESP">out, 2, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_BVALID">out, 1, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_BREADY">in, 1, s_axi, AXILiteS, scalar</column>
+<column name="s_axi_AXILiteS_BRESP">out, 2, s_axi, AXILiteS, scalar</column>
+<column name="ap_clk">in, 1, ap_ctrl_hs, Decision, return value</column>
+<column name="ap_rst_n">in, 1, ap_ctrl_hs, Decision, return value</column>
+<column name="interrupt">out, 1, ap_ctrl_hs, Decision, return value</column>
+</table>
+</item>
+</section>
+
+<section name = "Critical Path" level="0">
+<item name = "Max Delay">8.64</item>
+<item name = "Critical Path Table"><table name="Critical Path Table" hasTotal="0">
+<keys size="15">Name, Operator, Delay, Accumulated Delay, Store Source, Resource, Core, Interface, Type, Port, Array, Scope, Pointer, Callee, Phi Node</keys>
+<column name="'i', src/hls/circularBuffer.h:44->src/hls/circularBuffer.h:26->src/hls/channel.cpp:81">sub, 2.44, 2.44, -, -, -, -, -, -, -, -, -, -, -</column>
+<column name="'i', src/hls/circularBuffer.h:46->src/hls/circularBuffer.h:26->src/hls/channel.cpp:81">add, 2.44, 4.88, -, -, -, -, -, -, -, -, -, -, -</column>
+<column name="'i', src/hls/circularBuffer.h:45->src/hls/circularBuffer.h:26->src/hls/channel.cpp:81">select, 1.37, 6.25, -, -, -, -, -, -, -, -, -, -, -</column>
+<column name="'tmp_27_i_i', src/hls/circularBuffer.h:47->src/hls/circularBuffer.h:26->src/hls/channel.cpp:81">sext, 0.00, 6.25, -, -, -, -, -, -, -, -, -, -, -</column>
+<column name="'recentVBools_data_addr_1', src/hls/circularBuffer.h:47->src/hls/circularBuffer.h:26->src/hls/channel.cpp:81">getelementptr, 0.00, 6.25, -, -, -, -, -, -, -, -, -, -, -</column>
+<column name="'recentVBools_data_load_1', src/hls/circularBuffer.h:47->src/hls/circularBuffer.h:26->src/hls/channel.cpp:81">load, 2.39, 8.64, -, -, -, -, -, -, &apos;recentVBools_data&apos;, -, -, -, -</column>
+</table>
+</item>
+</section>
+</profile>
