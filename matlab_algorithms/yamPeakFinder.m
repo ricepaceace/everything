@@ -10,6 +10,7 @@ function d = yamPeakFinder(i,d)
     if(sum(d.recentVBools)>d.v_length/2) 
         if (~d.last_sample_is_V)
             d.VbeatDelay = 0;
+            d.VbeatWeighted = false;
             d.vPeakInd = [d.vPeakInd, i];
             d.last_sample_is_V = true;
         end
@@ -27,9 +28,10 @@ function d = yamPeakFinder(i,d)
     d.recentABools = [d.recentABools(2:end) (d.aflip*datapointA>d.a_thresh)];
     
     %&& d.VbeatDelay > d.VbeatFallDelay && d.VbeatFallDelay > 2*d.t_blank
-    if(sum(d.recentABools)>d.a_length/2 && d.VbeatDelay > d.VbeatFallDelay && d.VbeatFallDelay > d.PreVARP+d.PostVARP) 
+    if(sum(d.recentABools)>d.a_length/2 && d.VbeatDelay > d.VbeatFallDelay && d.VbeatFallDelay > d.PostVARP) 
         if (~d.last_sample_is_A)
             d.AbeatDelay = 0;
+            d.AbeatWeighted = false;
             d.aPeakInd = [d.aPeakInd, i];
             d.last_sample_is_A = true;
         end
