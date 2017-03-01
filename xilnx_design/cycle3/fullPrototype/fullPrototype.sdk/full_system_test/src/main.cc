@@ -251,13 +251,13 @@ static int channel_test()
 	int a = 0, b = 0, c = 0, d = 0 ;
 	for(i = 0;i < 10000; i++)
 	{
-		if(results[0][i] != 0)
+		if((results[0][i] & 0xf0f0) != 0)
 			a++;
-		if(results[1][i] != 0)
+		if(results[1][i] & 0xf0f0)
 			b++;
-		if(results[2][i] != 0)
+		if(results[2][i] & 0xf0f0)
 			c++;
-		if(results[3][i] != 0)
+		if(results[3][i] & 0xf0f0)
 			d++;
 	}
 

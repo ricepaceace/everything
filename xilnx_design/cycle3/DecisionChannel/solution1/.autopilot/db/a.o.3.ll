@@ -36,7 +36,7 @@ target triple = "x86_64-unknown-linux-gnu"
 ; [#uses=1]
 declare i32 @llvm.part.select.i32(i32, i32, i32) nounwind readnone
 
-; [#uses=77]
+; [#uses=79]
 declare void @llvm.dbg.value(metadata, i64, metadata) nounwind readnone
 
 ; [#uses=1]
@@ -156,7 +156,7 @@ codeRepl:
   %VstimDelay_load = load i32* @VstimDelay, align 4, !dbg !482 ; [#uses=1 type=i32] [debug line = 66:2]
   %ACaptureThresh_load = load i32* @ACaptureThresh, align 4, !dbg !483 ; [#uses=1 type=i32] [debug line = 110:2]
   %VCaptureThresh_load = load i32* @VCaptureThresh, align 4, !dbg !484 ; [#uses=1 type=i32] [debug line = 79:2]
-  br i1 %reset_params_V_read, label %0, label %._crit_edge47_ifconv, !dbg !485 ; [debug line = 50:5]
+  br i1 %reset_params_V_read, label %0, label %._crit_edge49_ifconv, !dbg !485 ; [debug line = 50:5]
 
 ; <label>:0                                       ; preds = %codeRepl
   store i32 %vthresh_read, i32* @v_thresh, align 4, !dbg !486 ; [debug line = 52:3]
@@ -165,9 +165,9 @@ codeRepl:
   store i8 %v_flip_read, i8* @vflip, align 1, !dbg !490 ; [debug line = 55:3]
   store i32 %a_length_read, i32* @ACaptureThresh, align 4, !dbg !491 ; [debug line = 56:3]
   store i32 %v_length_read, i32* @VCaptureThresh, align 4, !dbg !492 ; [debug line = 57:3]
-  br label %._crit_edge47_ifconv, !dbg !493       ; [debug line = 58:2]
+  br label %._crit_edge49_ifconv, !dbg !493       ; [debug line = 58:2]
 
-._crit_edge47_ifconv:                             ; preds = %0, %codeRepl
+._crit_edge49_ifconv:                             ; preds = %0, %codeRepl
   %ACaptureThresh_loc = phi i32 [ %a_length_read, %0 ], [ %ACaptureThresh_load, %codeRepl ] ; [#uses=3 type=i32]
   %VCaptureThresh_loc = phi i32 [ %v_length_read, %0 ], [ %VCaptureThresh_load, %codeRepl ] ; [#uses=3 type=i32]
   call void @llvm.dbg.value(metadata !{i32 %val_assign}, i64 0, metadata !494) nounwind, !dbg !523 ; [debug line = 13:14@61:2] [debug variable = val]
@@ -179,18 +179,18 @@ codeRepl:
   %recentdatapoints_data_addr = getelementptr [20 x i16]* @recentdatapoints_data, i64 0, i64 %tmp_i_7, !dbg !526 ; [#uses=2 type=i16*] [debug line = 15:4@61:2]
   %recentdatapoints_data_load = load i16* %recentdatapoints_data_addr, align 2 ; [#uses=1 type=i16]
   %extLd = sext i16 %recentdatapoints_data_load to i32 ; [#uses=1 type=i32]
-  %tmp_34_i = sub nsw i32 %recentdatapoints_sum_load, %extLd, !dbg !526 ; [#uses=1 type=i32] [debug line = 15:4@61:2]
-  %recentdatapoints_sum_loc_i = select i1 %tmp_i, i32 %tmp_34_i, i32 %recentdatapoints_sum_load ; [#uses=1 type=i32]
+  %tmp_35_i = sub nsw i32 %recentdatapoints_sum_load, %extLd, !dbg !526 ; [#uses=1 type=i32] [debug line = 15:4@61:2]
+  %recentdatapoints_sum_loc_i = select i1 %tmp_i, i32 %tmp_35_i, i32 %recentdatapoints_sum_load ; [#uses=1 type=i32]
   store i16 %data_read, i16* %recentdatapoints_data_addr, align 2, !dbg !528 ; [debug line = 18:3@61:2]
-  %tmp_36_i = add nsw i32 %recentdatapoints_sum_loc_i, %val_assign, !dbg !529 ; [#uses=1 type=i32] [debug line = 19:3@61:2]
+  %tmp_37_i = add nsw i32 %recentdatapoints_sum_loc_i, %val_assign, !dbg !529 ; [#uses=1 type=i32] [debug line = 19:3@61:2]
   %recentdatapoints_len_load_op = add i32 %recentdatapoints_len_load, 1, !dbg !530 ; [#uses=1 type=i32] [debug line = 20:3@61:2]
-  %tmp_37_i = select i1 %tmp_i, i32 20, i32 %recentdatapoints_len_load_op, !dbg !530 ; [#uses=3 type=i32] [debug line = 20:3@61:2]
-  store i32 %tmp_37_i, i32* @recentdatapoints_len, align 4, !dbg !530 ; [debug line = 20:3@61:2]
-  %tmp_38_i = add nsw i32 %recentdatapoints_head_i_load, 1, !dbg !531 ; [#uses=2 type=i32] [debug line = 21:3@61:2]
-  %tmp_39_i = icmp eq i32 %tmp_38_i, 20, !dbg !532 ; [#uses=1 type=i1] [debug line = 22:3@61:2]
-  %p_tmp_i = select i1 %tmp_39_i, i32 0, i32 %tmp_38_i, !dbg !532 ; [#uses=4 type=i32] [debug line = 22:3@61:2]
+  %tmp_38_i = select i1 %tmp_i, i32 20, i32 %recentdatapoints_len_load_op, !dbg !530 ; [#uses=3 type=i32] [debug line = 20:3@61:2]
+  store i32 %tmp_38_i, i32* @recentdatapoints_len, align 4, !dbg !530 ; [debug line = 20:3@61:2]
+  %tmp_39_i = add nsw i32 %recentdatapoints_head_i_load, 1, !dbg !531 ; [#uses=2 type=i32] [debug line = 21:3@61:2]
+  %tmp_40_i = icmp eq i32 %tmp_39_i, 20, !dbg !532 ; [#uses=1 type=i1] [debug line = 22:3@61:2]
+  %p_tmp_i = select i1 %tmp_40_i, i32 0, i32 %tmp_39_i, !dbg !532 ; [#uses=4 type=i32] [debug line = 22:3@61:2]
   store i32 %p_tmp_i, i32* @recentdatapoints_head_i, align 4, !dbg !531 ; [debug line = 21:3@61:2]
-  store i32 %tmp_36_i, i32* @recentdatapoints_sum, align 4, !dbg !526 ; [debug line = 15:4@61:2]
+  store i32 %tmp_37_i, i32* @recentdatapoints_sum, align 4, !dbg !526 ; [debug line = 15:4@61:2]
   %AbeatDelay_load = load i32* @AbeatDelay, align 4, !dbg !533 ; [#uses=1 type=i32] [debug line = 62:2]
   %tmp_3 = add nsw i32 %AbeatDelay_load, 1, !dbg !533 ; [#uses=3 type=i32] [debug line = 62:2]
   %VbeatDelay_load = load i32* @VbeatDelay, align 4, !dbg !534 ; [#uses=1 type=i32] [debug line = 63:2]
@@ -201,15 +201,15 @@ codeRepl:
   %tmp_6 = select i1 %reset_A_V_read, i32 1, i32 %AstimDelay_load_op, !dbg !481 ; [#uses=2 type=i32] [debug line = 65:2]
   %VstimDelay_load_op = add i32 %VstimDelay_load, 1, !dbg !482 ; [#uses=1 type=i32] [debug line = 66:2]
   %tmp_7 = select i1 %reset_V_V_read, i32 1, i32 %VstimDelay_load_op, !dbg !482 ; [#uses=2 type=i32] [debug line = 66:2]
-  %tmp_i1 = icmp eq i32 %tmp_37_i, 0, !dbg !536   ; [#uses=1 type=i1] [debug line = 33:3@71:19]
+  %tmp_i1 = icmp eq i32 %tmp_38_i, 0, !dbg !536   ; [#uses=1 type=i1] [debug line = 33:3@71:19]
   %i = add nsw i32 %p_tmp_i, -1, !dbg !540        ; [#uses=2 type=i32] [debug line = 35:21@71:19]
   call void @llvm.dbg.value(metadata !{i32 %i}, i64 0, metadata !541) nounwind, !dbg !540 ; [debug line = 35:21@71:19] [debug variable = i]
   %tmp = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i, i32 31), !dbg !542 ; [#uses=1 type=i1] [debug line = 36:3@71:19]
   %i_1 = add nsw i32 %p_tmp_i, 19, !dbg !543      ; [#uses=1 type=i32] [debug line = 37:4@71:19]
   call void @llvm.dbg.value(metadata !{i32 %i_1}, i64 0, metadata !541) nounwind, !dbg !543 ; [debug line = 37:4@71:19] [debug variable = i]
   %p_i = select i1 %tmp, i32 %i_1, i32 %i, !dbg !542 ; [#uses=1 type=i32] [debug line = 36:3@71:19]
-  %tmp_40_i = sext i32 %p_i to i64, !dbg !544     ; [#uses=1 type=i64] [debug line = 38:3@71:19]
-  %recentdatapoints_data_addr_1 = getelementptr [20 x i16]* @recentdatapoints_data, i64 0, i64 %tmp_40_i, !dbg !544 ; [#uses=1 type=i16*] [debug line = 38:3@71:19]
+  %tmp_41_i = sext i32 %p_i to i64, !dbg !544     ; [#uses=1 type=i64] [debug line = 38:3@71:19]
+  %recentdatapoints_data_addr_1 = getelementptr [20 x i16]* @recentdatapoints_data, i64 0, i64 %tmp_41_i, !dbg !544 ; [#uses=1 type=i16*] [debug line = 38:3@71:19]
   %recentdatapoints_data_load_1 = load i16* %recentdatapoints_data_addr_1, align 2 ; [#uses=1 type=i16]
   %datapointV = select i1 %tmp_i1, i16 0, i16 %recentdatapoints_data_load_1, !dbg !539 ; [#uses=1 type=i16] [debug line = 71:19]
   %datapointV_cast = sext i16 %datapointV to i17, !dbg !539 ; [#uses=2 type=i17] [debug line = 71:19]
@@ -235,250 +235,258 @@ codeRepl:
   %recentVBools_data_addr = getelementptr [30 x i1]* @recentVBools_data, i64 0, i64 %tmp_i2_8, !dbg !593 ; [#uses=2 type=i1*] [debug line = 15:4@77:2]
   %recentVBools_data_load = load i1* %recentVBools_data_addr, align 1 ; [#uses=1 type=i1]
   %extLd1 = zext i1 %recentVBools_data_load to i32 ; [#uses=1 type=i32]
-  %tmp_28_i = sub nsw i32 %recentVBools_sum_load, %extLd1, !dbg !593 ; [#uses=1 type=i32] [debug line = 15:4@77:2]
-  %CircularBuffer_int_30_sum_i = select i1 %tmp_i2, i32 %tmp_28_i, i32 %recentVBools_sum_load ; [#uses=1 type=i32]
+  %tmp_29_i = sub nsw i32 %recentVBools_sum_load, %extLd1, !dbg !593 ; [#uses=1 type=i32] [debug line = 15:4@77:2]
+  %CircularBuffer_int_30_sum_i = select i1 %tmp_i2, i32 %tmp_29_i, i32 %recentVBools_sum_load ; [#uses=1 type=i32]
   store i1 %tmp_s, i1* %recentVBools_data_addr, align 1, !dbg !595 ; [debug line = 18:3@77:2]
   %CircularBuffer_sum_read_assign = add nsw i32 %CircularBuffer_int_30_sum_i, %val_assign_1, !dbg !596 ; [#uses=2 type=i32] [debug line = 19:3@77:2]
   %CircularBuffer_len_read_assign = add i32 %recentVBools_len_load, 1, !dbg !597 ; [#uses=1 type=i32] [debug line = 20:3@77:2]
   %CircularBuffer_len_read_assign_1 = select i1 %tmp_i2, i32 30, i32 %CircularBuffer_len_read_assign, !dbg !597 ; [#uses=6 type=i32] [debug line = 20:3@77:2]
-  %tmp_32_i = add nsw i32 %recentVBools_head_i_load, 1, !dbg !598 ; [#uses=2 type=i32] [debug line = 21:3@77:2]
-  %tmp_33_i = icmp eq i32 %tmp_32_i, 30, !dbg !599 ; [#uses=1 type=i1] [debug line = 22:3@77:2]
-  %CircularBuffer_head_i_read_ass = select i1 %tmp_33_i, i32 0, i32 %tmp_32_i, !dbg !599 ; [#uses=3 type=i32] [debug line = 22:3@77:2]
+  %tmp_33_i = add nsw i32 %recentVBools_head_i_load, 1, !dbg !598 ; [#uses=2 type=i32] [debug line = 21:3@77:2]
+  %tmp_34_i = icmp eq i32 %tmp_33_i, 30, !dbg !599 ; [#uses=1 type=i1] [debug line = 22:3@77:2]
+  %CircularBuffer_head_i_read_ass = select i1 %tmp_34_i, i32 0, i32 %tmp_33_i, !dbg !599 ; [#uses=3 type=i32] [debug line = 22:3@77:2]
   store i32 %CircularBuffer_head_i_read_ass, i32* @recentVBools_head_i, align 4, !dbg !548 ; [debug line = 77:2]
   %tmp_8 = icmp sgt i32 %CircularBuffer_len_read_assign_1, %VCaptureThresh_loc, !dbg !484 ; [#uses=1 type=i1] [debug line = 79:2]
-  store i32 %tmp_7, i32* @VstimDelay, align 4, !dbg !600 ; [debug line = 47:3]
-  store i32 %tmp_6, i32* @AstimDelay, align 4, !dbg !602 ; [debug line = 42:3]
-  br i1 %tmp_8, label %1, label %._crit_edge48, !dbg !484 ; [debug line = 79:2]
+  br i1 %tmp_8, label %1, label %._crit_edge50, !dbg !484 ; [debug line = 79:2]
 
-; <label>:1                                       ; preds = %._crit_edge47_ifconv
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_read_assign}, i64 0, metadata !604), !dbg !609 ; [debug line = 25:4@81:3] [debug variable = CircularBuffer<int, 30>.sum]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass}, i64 0, metadata !610), !dbg !609 ; [debug line = 25:4@81:3] [debug variable = CircularBuffer<int, 30>.head_i]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_read_assign_1}, i64 0, metadata !611), !dbg !609 ; [debug line = 25:4@81:3] [debug variable = CircularBuffer<int, 30>.len]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass}, i64 0, metadata !612), !dbg !617 ; [debug line = 41:4@26:16@81:3] [debug variable = CircularBuffer<int, 30>.head_i]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_read_assign_1}, i64 0, metadata !618), !dbg !617 ; [debug line = 41:4@26:16@81:3] [debug variable = CircularBuffer<int, 30>.len]
-  %i_2 = sub nsw i32 %CircularBuffer_head_i_read_ass, %CircularBuffer_len_read_assign_1, !dbg !619 ; [#uses=3 type=i32] [debug line = 44:23@26:16@81:3]
-  call void @llvm.dbg.value(metadata !{i32 %i_2}, i64 0, metadata !621), !dbg !619 ; [debug line = 44:23@26:16@81:3] [debug variable = i]
-  %tmp_25 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_2, i32 31), !dbg !622 ; [#uses=1 type=i1] [debug line = 45:3@26:16@81:3]
-  %i_3 = add nsw i32 %i_2, 30, !dbg !623          ; [#uses=1 type=i32] [debug line = 46:4@26:16@81:3]
-  call void @llvm.dbg.value(metadata !{i32 %i_3}, i64 0, metadata !621), !dbg !623 ; [debug line = 46:4@26:16@81:3] [debug variable = i]
-  %i_4 = select i1 %tmp_25, i32 %i_3, i32 %i_2, !dbg !622 ; [#uses=1 type=i32] [debug line = 45:3@26:16@81:3]
-  call void @llvm.dbg.value(metadata !{i32 %i_4}, i64 0, metadata !621), !dbg !622 ; [debug line = 45:3@26:16@81:3] [debug variable = i]
-  %tmp_27_i_i = sext i32 %i_4 to i64, !dbg !624   ; [#uses=1 type=i64] [debug line = 47:3@26:16@81:3]
-  %recentVBools_data_addr_1 = getelementptr [30 x i1]* @recentVBools_data, i64 0, i64 %tmp_27_i_i, !dbg !624 ; [#uses=1 type=i1*] [debug line = 47:3@26:16@81:3]
+; <label>:1                                       ; preds = %._crit_edge49_ifconv
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_read_assign}, i64 0, metadata !600), !dbg !605 ; [debug line = 25:4@81:3] [debug variable = CircularBuffer<int, 30>.sum]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass}, i64 0, metadata !606), !dbg !605 ; [debug line = 25:4@81:3] [debug variable = CircularBuffer<int, 30>.head_i]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_read_assign_1}, i64 0, metadata !607), !dbg !605 ; [debug line = 25:4@81:3] [debug variable = CircularBuffer<int, 30>.len]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass}, i64 0, metadata !608), !dbg !613 ; [debug line = 41:4@26:16@81:3] [debug variable = CircularBuffer<int, 30>.head_i]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_read_assign_1}, i64 0, metadata !614), !dbg !613 ; [debug line = 41:4@26:16@81:3] [debug variable = CircularBuffer<int, 30>.len]
+  %i_2 = sub nsw i32 %CircularBuffer_head_i_read_ass, %CircularBuffer_len_read_assign_1, !dbg !615 ; [#uses=3 type=i32] [debug line = 44:23@26:16@81:3]
+  call void @llvm.dbg.value(metadata !{i32 %i_2}, i64 0, metadata !617), !dbg !615 ; [debug line = 44:23@26:16@81:3] [debug variable = i]
+  %tmp_26 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_2, i32 31), !dbg !618 ; [#uses=1 type=i1] [debug line = 45:3@26:16@81:3]
+  %i_3 = add nsw i32 %i_2, 30, !dbg !619          ; [#uses=1 type=i32] [debug line = 46:4@26:16@81:3]
+  call void @llvm.dbg.value(metadata !{i32 %i_3}, i64 0, metadata !617), !dbg !619 ; [debug line = 46:4@26:16@81:3] [debug variable = i]
+  %i_4 = select i1 %tmp_26, i32 %i_3, i32 %i_2, !dbg !618 ; [#uses=1 type=i32] [debug line = 45:3@26:16@81:3]
+  call void @llvm.dbg.value(metadata !{i32 %i_4}, i64 0, metadata !617), !dbg !618 ; [debug line = 45:3@26:16@81:3] [debug variable = i]
+  %tmp_28_i_i = sext i32 %i_4 to i64, !dbg !620   ; [#uses=1 type=i64] [debug line = 47:3@26:16@81:3]
+  %recentVBools_data_addr_1 = getelementptr [30 x i1]* @recentVBools_data, i64 0, i64 %tmp_28_i_i, !dbg !620 ; [#uses=1 type=i1*] [debug line = 47:3@26:16@81:3]
   %recentVBools_data_load_1 = load i1* %recentVBools_data_addr_1, align 1 ; [#uses=1 type=i1]
-  %not_tmp_i_i = icmp ne i32 %CircularBuffer_len_read_assign_1, 0, !dbg !615 ; [#uses=1 type=i1] [debug line = 26:16@81:3]
-  %toReturn_4 = and i1 %recentVBools_data_load_1, %not_tmp_i_i, !dbg !615 ; [#uses=1 type=i1] [debug line = 26:16@81:3]
-  %toReturn_i_cast = zext i1 %toReturn_4 to i32, !dbg !615 ; [#uses=1 type=i32] [debug line = 26:16@81:3]
-  call void @llvm.dbg.value(metadata !{i1 %toReturn_4}, i64 0, metadata !625), !dbg !615 ; [debug line = 26:16@81:3] [debug variable = toReturn]
-  %CircularBuffer_sum_write_assig = sub nsw i32 %CircularBuffer_sum_read_assign, %toReturn_i_cast, !dbg !626 ; [#uses=1 type=i32] [debug line = 27:3@81:3]
-  %CircularBuffer_len_write_assig = add nsw i32 %CircularBuffer_len_read_assign_1, -1, !dbg !627 ; [#uses=2 type=i32] [debug line = 28:3@81:3]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_write_assig}, i64 0, metadata !628), !dbg !609 ; [debug line = 25:4@81:3] [debug variable = CircularBuffer<int, 30>.sum]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig}, i64 0, metadata !629), !dbg !609 ; [debug line = 25:4@81:3] [debug variable = CircularBuffer<int, 30>.len]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_write_assig}, i64 0, metadata !630), !dbg !632 ; [debug line = 25:4@82:3] [debug variable = CircularBuffer<int, 30>.sum]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass}, i64 0, metadata !633), !dbg !632 ; [debug line = 25:4@82:3] [debug variable = CircularBuffer<int, 30>.head_i]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig}, i64 0, metadata !634), !dbg !632 ; [debug line = 25:4@82:3] [debug variable = CircularBuffer<int, 30>.len]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass}, i64 0, metadata !635), !dbg !637 ; [debug line = 41:4@26:16@82:3] [debug variable = CircularBuffer<int, 30>.head_i]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig}, i64 0, metadata !638), !dbg !637 ; [debug line = 41:4@26:16@82:3] [debug variable = CircularBuffer<int, 30>.len]
-  %i_5 = sub nsw i32 %CircularBuffer_head_i_read_ass, %CircularBuffer_len_write_assig, !dbg !639 ; [#uses=3 type=i32] [debug line = 44:23@26:16@82:3]
-  call void @llvm.dbg.value(metadata !{i32 %i_5}, i64 0, metadata !640), !dbg !639 ; [debug line = 44:23@26:16@82:3] [debug variable = i]
-  %tmp_26 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_5, i32 31), !dbg !641 ; [#uses=1 type=i1] [debug line = 45:3@26:16@82:3]
-  %i_6 = add nsw i32 %i_5, 30, !dbg !642          ; [#uses=1 type=i32] [debug line = 46:4@26:16@82:3]
-  call void @llvm.dbg.value(metadata !{i32 %i_6}, i64 0, metadata !640), !dbg !642 ; [debug line = 46:4@26:16@82:3] [debug variable = i]
-  %i_7 = select i1 %tmp_26, i32 %i_6, i32 %i_5, !dbg !641 ; [#uses=1 type=i32] [debug line = 45:3@26:16@82:3]
-  call void @llvm.dbg.value(metadata !{i32 %i_7}, i64 0, metadata !640), !dbg !641 ; [debug line = 45:3@26:16@82:3] [debug variable = i]
-  %tmp_27_i_i1 = sext i32 %i_7 to i64, !dbg !643  ; [#uses=1 type=i64] [debug line = 47:3@26:16@82:3]
-  %recentVBools_data_addr_2 = getelementptr [30 x i1]* @recentVBools_data, i64 0, i64 %tmp_27_i_i1, !dbg !643 ; [#uses=1 type=i1*] [debug line = 47:3@26:16@82:3]
+  %not_tmp_i_i = icmp ne i32 %CircularBuffer_len_read_assign_1, 0, !dbg !611 ; [#uses=1 type=i1] [debug line = 26:16@81:3]
+  %toReturn_5 = and i1 %recentVBools_data_load_1, %not_tmp_i_i, !dbg !611 ; [#uses=1 type=i1] [debug line = 26:16@81:3]
+  %toReturn_i_cast = zext i1 %toReturn_5 to i32, !dbg !611 ; [#uses=1 type=i32] [debug line = 26:16@81:3]
+  call void @llvm.dbg.value(metadata !{i1 %toReturn_5}, i64 0, metadata !621), !dbg !611 ; [debug line = 26:16@81:3] [debug variable = toReturn]
+  %CircularBuffer_sum_write_assig = sub nsw i32 %CircularBuffer_sum_read_assign, %toReturn_i_cast, !dbg !622 ; [#uses=1 type=i32] [debug line = 27:3@81:3]
+  %CircularBuffer_len_write_assig = add nsw i32 %CircularBuffer_len_read_assign_1, -1, !dbg !623 ; [#uses=2 type=i32] [debug line = 28:3@81:3]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_write_assig}, i64 0, metadata !624), !dbg !605 ; [debug line = 25:4@81:3] [debug variable = CircularBuffer<int, 30>.sum]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig}, i64 0, metadata !625), !dbg !605 ; [debug line = 25:4@81:3] [debug variable = CircularBuffer<int, 30>.len]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_write_assig}, i64 0, metadata !626), !dbg !628 ; [debug line = 25:4@82:3] [debug variable = CircularBuffer<int, 30>.sum]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass}, i64 0, metadata !629), !dbg !628 ; [debug line = 25:4@82:3] [debug variable = CircularBuffer<int, 30>.head_i]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig}, i64 0, metadata !630), !dbg !628 ; [debug line = 25:4@82:3] [debug variable = CircularBuffer<int, 30>.len]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass}, i64 0, metadata !631), !dbg !633 ; [debug line = 41:4@26:16@82:3] [debug variable = CircularBuffer<int, 30>.head_i]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig}, i64 0, metadata !634), !dbg !633 ; [debug line = 41:4@26:16@82:3] [debug variable = CircularBuffer<int, 30>.len]
+  %i_5 = sub nsw i32 %CircularBuffer_head_i_read_ass, %CircularBuffer_len_write_assig, !dbg !635 ; [#uses=3 type=i32] [debug line = 44:23@26:16@82:3]
+  call void @llvm.dbg.value(metadata !{i32 %i_5}, i64 0, metadata !636), !dbg !635 ; [debug line = 44:23@26:16@82:3] [debug variable = i]
+  %tmp_27 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_5, i32 31), !dbg !637 ; [#uses=1 type=i1] [debug line = 45:3@26:16@82:3]
+  %i_6 = add nsw i32 %i_5, 30, !dbg !638          ; [#uses=1 type=i32] [debug line = 46:4@26:16@82:3]
+  call void @llvm.dbg.value(metadata !{i32 %i_6}, i64 0, metadata !636), !dbg !638 ; [debug line = 46:4@26:16@82:3] [debug variable = i]
+  %i_7 = select i1 %tmp_27, i32 %i_6, i32 %i_5, !dbg !637 ; [#uses=1 type=i32] [debug line = 45:3@26:16@82:3]
+  call void @llvm.dbg.value(metadata !{i32 %i_7}, i64 0, metadata !636), !dbg !637 ; [debug line = 45:3@26:16@82:3] [debug variable = i]
+  %tmp_28_i_i9 = sext i32 %i_7 to i64, !dbg !639  ; [#uses=1 type=i64] [debug line = 47:3@26:16@82:3]
+  %recentVBools_data_addr_2 = getelementptr [30 x i1]* @recentVBools_data, i64 0, i64 %tmp_28_i_i9, !dbg !639 ; [#uses=1 type=i1*] [debug line = 47:3@26:16@82:3]
   %recentVBools_data_load_2 = load i1* %recentVBools_data_addr_2, align 1 ; [#uses=1 type=i1]
-  %not_tmp_i_i6 = icmp ne i32 %CircularBuffer_len_write_assig, 0, !dbg !636 ; [#uses=1 type=i1] [debug line = 26:16@82:3]
-  %toReturn_5 = and i1 %recentVBools_data_load_2, %not_tmp_i_i6, !dbg !636 ; [#uses=1 type=i1] [debug line = 26:16@82:3]
-  %toReturn_i14_cast = zext i1 %toReturn_5 to i32, !dbg !636 ; [#uses=1 type=i32] [debug line = 26:16@82:3]
-  call void @llvm.dbg.value(metadata !{i1 %toReturn_5}, i64 0, metadata !644), !dbg !636 ; [debug line = 26:16@82:3] [debug variable = toReturn]
-  %CircularBuffer_sum_write_assig_1 = sub nsw i32 %CircularBuffer_sum_write_assig, %toReturn_i14_cast, !dbg !645 ; [#uses=1 type=i32] [debug line = 27:3@82:3]
-  %CircularBuffer_len_write_assig_1 = add nsw i32 %CircularBuffer_len_read_assign_1, -2, !dbg !646 ; [#uses=1 type=i32] [debug line = 28:3@82:3]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_write_assig_1}, i64 0, metadata !647), !dbg !632 ; [debug line = 25:4@82:3] [debug variable = CircularBuffer<int, 30>.sum]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig_1}, i64 0, metadata !648), !dbg !632 ; [debug line = 25:4@82:3] [debug variable = CircularBuffer<int, 30>.len]
-  br label %._crit_edge48, !dbg !649              ; [debug line = 83:2]
+  %not_tmp_i_i4 = icmp ne i32 %CircularBuffer_len_write_assig, 0, !dbg !632 ; [#uses=1 type=i1] [debug line = 26:16@82:3]
+  %toReturn_6 = and i1 %recentVBools_data_load_2, %not_tmp_i_i4, !dbg !632 ; [#uses=1 type=i1] [debug line = 26:16@82:3]
+  %toReturn_i12_cast = zext i1 %toReturn_6 to i32, !dbg !632 ; [#uses=1 type=i32] [debug line = 26:16@82:3]
+  call void @llvm.dbg.value(metadata !{i1 %toReturn_6}, i64 0, metadata !640), !dbg !632 ; [debug line = 26:16@82:3] [debug variable = toReturn]
+  %CircularBuffer_sum_write_assig_1 = sub nsw i32 %CircularBuffer_sum_write_assig, %toReturn_i12_cast, !dbg !641 ; [#uses=1 type=i32] [debug line = 27:3@82:3]
+  %CircularBuffer_len_write_assig_1 = add nsw i32 %CircularBuffer_len_read_assign_1, -2, !dbg !642 ; [#uses=1 type=i32] [debug line = 28:3@82:3]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_write_assig_1}, i64 0, metadata !643), !dbg !628 ; [debug line = 25:4@82:3] [debug variable = CircularBuffer<int, 30>.sum]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig_1}, i64 0, metadata !644), !dbg !628 ; [debug line = 25:4@82:3] [debug variable = CircularBuffer<int, 30>.len]
+  br label %._crit_edge50, !dbg !645              ; [debug line = 83:2]
 
-._crit_edge48:                                    ; preds = %1, %._crit_edge47_ifconv
-  %sum = phi i32 [ %CircularBuffer_sum_write_assig_1, %1 ], [ %CircularBuffer_sum_read_assign, %._crit_edge47_ifconv ] ; [#uses=2 type=i32]
-  %recentVBools_len_new = phi i32 [ %CircularBuffer_len_write_assig_1, %1 ], [ %CircularBuffer_len_read_assign_1, %._crit_edge47_ifconv ] ; [#uses=1 type=i32]
-  call void @llvm.dbg.value(metadata !{i32 %sum}, i64 0, metadata !650), !dbg !651 ; [debug line = 86:28] [debug variable = sum]
-  %tmp_1 = call i31 @_ssdm_op_PartSelect.i31.i32.i32.i32(i32 %VCaptureThresh_loc, i32 1, i32 31), !dbg !652 ; [#uses=1 type=i31] [debug line = 88:2]
-  %tmp_2 = sext i31 %tmp_1 to i32, !dbg !652      ; [#uses=1 type=i32] [debug line = 88:2]
-  %tmp_10 = icmp sgt i32 %sum, %tmp_2, !dbg !652  ; [#uses=1 type=i1] [debug line = 88:2]
+._crit_edge50:                                    ; preds = %1, %._crit_edge49_ifconv
+  %sum = phi i32 [ %CircularBuffer_sum_write_assig_1, %1 ], [ %CircularBuffer_sum_read_assign, %._crit_edge49_ifconv ] ; [#uses=2 type=i32]
+  %recentVBools_len_new = phi i32 [ %CircularBuffer_len_write_assig_1, %1 ], [ %CircularBuffer_len_read_assign_1, %._crit_edge49_ifconv ] ; [#uses=1 type=i32]
+  call void @llvm.dbg.value(metadata !{i32 %sum}, i64 0, metadata !646), !dbg !647 ; [debug line = 86:28] [debug variable = sum]
+  %tmp_1 = call i31 @_ssdm_op_PartSelect.i31.i32.i32.i32(i32 %VCaptureThresh_loc, i32 1, i32 31), !dbg !648 ; [#uses=1 type=i31] [debug line = 88:2]
+  %tmp_2 = sext i31 %tmp_1 to i32, !dbg !648      ; [#uses=1 type=i32] [debug line = 88:2]
+  %tmp_10 = icmp sgt i32 %sum, %tmp_2, !dbg !648  ; [#uses=1 type=i1] [debug line = 88:2]
   store i32 %recentVBools_len_new, i32* @recentVBools_len, align 4, !dbg !548 ; [debug line = 77:2]
   store i32 %sum, i32* @recentVBools_sum, align 4, !dbg !548 ; [debug line = 77:2]
-  %last_sample_is_V_V_load = load i1* @last_sample_is_V_V, align 1, !dbg !653 ; [#uses=4 type=i1] [debug line = 1871:9@90:6]
-  br i1 %tmp_10, label %2, label %4, !dbg !652    ; [debug line = 88:2]
+  %last_sample_is_V_V_load = load i1* @last_sample_is_V_V, align 1, !dbg !649 ; [#uses=4 type=i1] [debug line = 1871:9@90:6]
+  br i1 %tmp_10, label %2, label %4, !dbg !648    ; [debug line = 88:2]
 
-; <label>:2                                       ; preds = %._crit_edge48
-  br i1 %last_sample_is_V_V_load, label %._crit_edge49_ifconv, label %3, !dbg !656 ; [debug line = 90:6]
+; <label>:2                                       ; preds = %._crit_edge50
+  br i1 %last_sample_is_V_V_load, label %._crit_edge51_ifconv, label %3, !dbg !652 ; [debug line = 90:6]
 
 ; <label>:3                                       ; preds = %2
-  store i1 true, i1* @last_sample_is_V_V, align 1, !dbg !658 ; [debug line = 277:10@93:4]
-  br label %._crit_edge49_ifconv, !dbg !663       ; [debug line = 94:3]
+  store i1 true, i1* @last_sample_is_V_V, align 1, !dbg !654 ; [debug line = 277:10@93:4]
+  br label %._crit_edge51_ifconv, !dbg !659       ; [debug line = 94:3]
 
-; <label>:4                                       ; preds = %._crit_edge48
-  br i1 %last_sample_is_V_V_load, label %5, label %._crit_edge49_ifconv, !dbg !664 ; [debug line = 96:10]
+; <label>:4                                       ; preds = %._crit_edge50
+  br i1 %last_sample_is_V_V_load, label %5, label %._crit_edge51_ifconv, !dbg !660 ; [debug line = 96:10]
 
 ; <label>:5                                       ; preds = %4
-  store i1 false, i1* @last_sample_is_V_V, align 1, !dbg !665 ; [debug line = 277:10@99:3]
-  br label %._crit_edge49_ifconv, !dbg !668       ; [debug line = 100:2]
+  store i1 false, i1* @last_sample_is_V_V, align 1, !dbg !661 ; [debug line = 277:10@99:3]
+  br label %._crit_edge51_ifconv, !dbg !664       ; [debug line = 100:2]
 
-._crit_edge49_ifconv:                             ; preds = %5, %4, %3, %2
+._crit_edge51_ifconv:                             ; preds = %5, %4, %3, %2
   %VbeatDelay_new_1 = phi i32 [ %tmp_4, %2 ], [ 0, %3 ], [ %tmp_4, %5 ], [ %tmp_4, %4 ] ; [#uses=4 type=i32]
-  %VbeatFallDelay_new_1 = phi i32 [ %tmp_5, %2 ], [ %tmp_5, %3 ], [ 0, %5 ], [ %tmp_5, %4 ] ; [#uses=2 type=i32]
+  %VbeatFallDelay_new_1 = phi i32 [ %tmp_5, %2 ], [ %tmp_5, %3 ], [ 0, %5 ], [ %tmp_5, %4 ] ; [#uses=3 type=i32]
   %last_sample_is_V_V_loc_2 = phi i1 [ %last_sample_is_V_V_load, %2 ], [ true, %3 ], [ false, %5 ], [ %last_sample_is_V_V_load, %4 ] ; [#uses=2 type=i1]
-  %tmp_i3 = icmp eq i32 %tmp_37_i, 20, !dbg !669  ; [#uses=1 type=i1] [debug line = 53:3@103:19]
-  %tmp_i3_9 = sext i32 %p_tmp_i to i64, !dbg !673 ; [#uses=1 type=i64] [debug line = 54:4@103:19]
-  %recentdatapoints_data_addr_2 = getelementptr [20 x i16]* @recentdatapoints_data, i64 0, i64 %tmp_i3_9, !dbg !673 ; [#uses=1 type=i16*] [debug line = 54:4@103:19]
+  %tmp_i3 = icmp eq i32 %tmp_38_i, 20, !dbg !665  ; [#uses=1 type=i1] [debug line = 53:3@103:19]
+  %tmp_i3_9 = sext i32 %p_tmp_i to i64, !dbg !669 ; [#uses=1 type=i64] [debug line = 54:4@103:19]
+  %recentdatapoints_data_addr_2 = getelementptr [20 x i16]* @recentdatapoints_data, i64 0, i64 %tmp_i3_9, !dbg !669 ; [#uses=1 type=i16*] [debug line = 54:4@103:19]
   %recentdatapoints_data_load_2 = load i16* %recentdatapoints_data_addr_2, align 2 ; [#uses=1 type=i16]
-  %datapointA = select i1 %tmp_i3, i16 %recentdatapoints_data_load_2, i16 0, !dbg !672 ; [#uses=1 type=i16] [debug line = 103:19]
-  %datapointA_cast = sext i16 %datapointA to i17, !dbg !672 ; [#uses=2 type=i17] [debug line = 103:19]
-  call void @llvm.dbg.value(metadata !{i16 %datapointA}, i64 0, metadata !674), !dbg !672 ; [debug line = 103:19] [debug variable = datapointA]
-  %aflip_load = load i8* @aflip, align 1, !dbg !675 ; [#uses=1 type=i8] [debug line = 105:2]
-  %tmp_11 = icmp eq i8 %aflip_load, -1, !dbg !675 ; [#uses=1 type=i1] [debug line = 105:2]
-  %datapointA_1 = sub i17 0, %datapointA_cast, !dbg !676 ; [#uses=1 type=i17] [debug line = 106:3]
-  call void @llvm.dbg.value(metadata !{i17 %datapointA_1}, i64 0, metadata !674), !dbg !676 ; [debug line = 106:3] [debug variable = datapointA]
-  %p_1 = select i1 %tmp_11, i17 %datapointA_1, i17 %datapointA_cast, !dbg !675 ; [#uses=1 type=i17] [debug line = 105:2]
-  %p_1_cast = sext i17 %p_1 to i32, !dbg !675     ; [#uses=1 type=i32] [debug line = 105:2]
-  %a_thresh_load = load i32* @a_thresh, align 4, !dbg !677 ; [#uses=1 type=i32] [debug line = 108:2]
-  %tmp_12 = icmp sgt i32 %p_1_cast, %a_thresh_load, !dbg !677 ; [#uses=2 type=i1] [debug line = 108:2]
-  %val_assign_2 = zext i1 %tmp_12 to i32, !dbg !677 ; [#uses=1 type=i32] [debug line = 108:2]
-  %recentABools_sum_load = load i32* @recentABools_sum, align 4, !dbg !677 ; [#uses=2 type=i32] [debug line = 108:2]
-  %recentABools_head_i_load = load i32* @recentABools_head_i, align 4, !dbg !677 ; [#uses=2 type=i32] [debug line = 108:2]
-  %recentABools_len_load = load i32* @recentABools_len, align 4, !dbg !677 ; [#uses=2 type=i32] [debug line = 108:2]
-  call void @llvm.dbg.value(metadata !{i32 %recentABools_sum_load}, i64 0, metadata !678), !dbg !679 ; [debug line = 13:7@108:2] [debug variable = CircularBuffer<int, 30>.sum]
-  call void @llvm.dbg.value(metadata !{i32 %recentABools_head_i_load}, i64 0, metadata !680), !dbg !679 ; [debug line = 13:7@108:2] [debug variable = CircularBuffer<int, 30>.head_i]
-  call void @llvm.dbg.value(metadata !{i32 %recentABools_len_load}, i64 0, metadata !681), !dbg !679 ; [debug line = 13:7@108:2] [debug variable = CircularBuffer<int, 30>.len]
-  call void @llvm.dbg.value(metadata !{i32 %val_assign_2}, i64 0, metadata !682), !dbg !683 ; [debug line = 13:14@108:2] [debug variable = val]
-  %tmp_i4 = icmp eq i32 %recentABools_len_load, 30, !dbg !684 ; [#uses=2 type=i1] [debug line = 14:3@108:2]
-  %tmp_i4_10 = sext i32 %recentABools_head_i_load to i64, !dbg !685 ; [#uses=1 type=i64] [debug line = 15:4@108:2]
-  %recentABools_data_addr = getelementptr [30 x i1]* @recentABools_data, i64 0, i64 %tmp_i4_10, !dbg !685 ; [#uses=2 type=i1*] [debug line = 15:4@108:2]
+  %datapointA = select i1 %tmp_i3, i16 %recentdatapoints_data_load_2, i16 0, !dbg !668 ; [#uses=1 type=i16] [debug line = 103:19]
+  %datapointA_cast = sext i16 %datapointA to i17, !dbg !668 ; [#uses=2 type=i17] [debug line = 103:19]
+  call void @llvm.dbg.value(metadata !{i16 %datapointA}, i64 0, metadata !670), !dbg !668 ; [debug line = 103:19] [debug variable = datapointA]
+  %aflip_load = load i8* @aflip, align 1, !dbg !671 ; [#uses=1 type=i8] [debug line = 105:2]
+  %tmp_11 = icmp eq i8 %aflip_load, -1, !dbg !671 ; [#uses=1 type=i1] [debug line = 105:2]
+  %datapointA_1 = sub i17 0, %datapointA_cast, !dbg !672 ; [#uses=1 type=i17] [debug line = 106:3]
+  call void @llvm.dbg.value(metadata !{i17 %datapointA_1}, i64 0, metadata !670), !dbg !672 ; [debug line = 106:3] [debug variable = datapointA]
+  %p_1 = select i1 %tmp_11, i17 %datapointA_1, i17 %datapointA_cast, !dbg !671 ; [#uses=1 type=i17] [debug line = 105:2]
+  %p_1_cast = sext i17 %p_1 to i32, !dbg !671     ; [#uses=1 type=i32] [debug line = 105:2]
+  %a_thresh_load = load i32* @a_thresh, align 4, !dbg !673 ; [#uses=1 type=i32] [debug line = 108:2]
+  %tmp_12 = icmp sgt i32 %p_1_cast, %a_thresh_load, !dbg !673 ; [#uses=2 type=i1] [debug line = 108:2]
+  %val_assign_2 = zext i1 %tmp_12 to i32, !dbg !673 ; [#uses=1 type=i32] [debug line = 108:2]
+  %recentABools_sum_load = load i32* @recentABools_sum, align 4, !dbg !673 ; [#uses=2 type=i32] [debug line = 108:2]
+  %recentABools_head_i_load = load i32* @recentABools_head_i, align 4, !dbg !673 ; [#uses=2 type=i32] [debug line = 108:2]
+  %recentABools_len_load = load i32* @recentABools_len, align 4, !dbg !673 ; [#uses=2 type=i32] [debug line = 108:2]
+  call void @llvm.dbg.value(metadata !{i32 %recentABools_sum_load}, i64 0, metadata !674), !dbg !675 ; [debug line = 13:7@108:2] [debug variable = CircularBuffer<int, 30>.sum]
+  call void @llvm.dbg.value(metadata !{i32 %recentABools_head_i_load}, i64 0, metadata !676), !dbg !675 ; [debug line = 13:7@108:2] [debug variable = CircularBuffer<int, 30>.head_i]
+  call void @llvm.dbg.value(metadata !{i32 %recentABools_len_load}, i64 0, metadata !677), !dbg !675 ; [debug line = 13:7@108:2] [debug variable = CircularBuffer<int, 30>.len]
+  call void @llvm.dbg.value(metadata !{i32 %val_assign_2}, i64 0, metadata !678), !dbg !679 ; [debug line = 13:14@108:2] [debug variable = val]
+  %tmp_i4 = icmp eq i32 %recentABools_len_load, 30, !dbg !680 ; [#uses=2 type=i1] [debug line = 14:3@108:2]
+  %tmp_i4_10 = sext i32 %recentABools_head_i_load to i64, !dbg !681 ; [#uses=1 type=i64] [debug line = 15:4@108:2]
+  %recentABools_data_addr = getelementptr [30 x i1]* @recentABools_data, i64 0, i64 %tmp_i4_10, !dbg !681 ; [#uses=2 type=i1*] [debug line = 15:4@108:2]
   %recentABools_data_load = load i1* %recentABools_data_addr, align 1 ; [#uses=1 type=i1]
   %extLd2 = zext i1 %recentABools_data_load to i32 ; [#uses=1 type=i32]
-  %tmp_28_i1 = sub nsw i32 %recentABools_sum_load, %extLd2, !dbg !685 ; [#uses=1 type=i32] [debug line = 15:4@108:2]
-  %CircularBuffer_int_30_sum_i1 = select i1 %tmp_i4, i32 %tmp_28_i1, i32 %recentABools_sum_load ; [#uses=1 type=i32]
-  store i1 %tmp_12, i1* %recentABools_data_addr, align 1, !dbg !686 ; [debug line = 18:3@108:2]
-  %CircularBuffer_sum_read_assign_1 = add nsw i32 %CircularBuffer_int_30_sum_i1, %val_assign_2, !dbg !687 ; [#uses=2 type=i32] [debug line = 19:3@108:2]
-  %CircularBuffer_len_read_assign_2 = add i32 %recentABools_len_load, 1, !dbg !688 ; [#uses=1 type=i32] [debug line = 20:3@108:2]
-  %CircularBuffer_len_read_assign_3 = select i1 %tmp_i4, i32 30, i32 %CircularBuffer_len_read_assign_2, !dbg !688 ; [#uses=6 type=i32] [debug line = 20:3@108:2]
-  %tmp_32_i1 = add nsw i32 %recentABools_head_i_load, 1, !dbg !689 ; [#uses=2 type=i32] [debug line = 21:3@108:2]
-  %tmp_33_i1 = icmp eq i32 %tmp_32_i1, 30, !dbg !690 ; [#uses=1 type=i1] [debug line = 22:3@108:2]
-  %CircularBuffer_head_i_read_ass_1 = select i1 %tmp_33_i1, i32 0, i32 %tmp_32_i1, !dbg !690 ; [#uses=3 type=i32] [debug line = 22:3@108:2]
-  store i32 %CircularBuffer_head_i_read_ass_1, i32* @recentABools_head_i, align 4, !dbg !677 ; [debug line = 108:2]
+  %tmp_29_i1 = sub nsw i32 %recentABools_sum_load, %extLd2, !dbg !681 ; [#uses=1 type=i32] [debug line = 15:4@108:2]
+  %CircularBuffer_int_30_sum_i1 = select i1 %tmp_i4, i32 %tmp_29_i1, i32 %recentABools_sum_load ; [#uses=1 type=i32]
+  store i1 %tmp_12, i1* %recentABools_data_addr, align 1, !dbg !682 ; [debug line = 18:3@108:2]
+  %CircularBuffer_sum_read_assign_1 = add nsw i32 %CircularBuffer_int_30_sum_i1, %val_assign_2, !dbg !683 ; [#uses=2 type=i32] [debug line = 19:3@108:2]
+  %CircularBuffer_len_read_assign_2 = add i32 %recentABools_len_load, 1, !dbg !684 ; [#uses=1 type=i32] [debug line = 20:3@108:2]
+  %CircularBuffer_len_read_assign_3 = select i1 %tmp_i4, i32 30, i32 %CircularBuffer_len_read_assign_2, !dbg !684 ; [#uses=6 type=i32] [debug line = 20:3@108:2]
+  %tmp_33_i1 = add nsw i32 %recentABools_head_i_load, 1, !dbg !685 ; [#uses=2 type=i32] [debug line = 21:3@108:2]
+  %tmp_34_i1 = icmp eq i32 %tmp_33_i1, 30, !dbg !686 ; [#uses=1 type=i1] [debug line = 22:3@108:2]
+  %CircularBuffer_head_i_read_ass_1 = select i1 %tmp_34_i1, i32 0, i32 %tmp_33_i1, !dbg !686 ; [#uses=3 type=i32] [debug line = 22:3@108:2]
+  store i32 %CircularBuffer_head_i_read_ass_1, i32* @recentABools_head_i, align 4, !dbg !673 ; [debug line = 108:2]
   %tmp_13 = icmp sgt i32 %CircularBuffer_len_read_assign_3, %ACaptureThresh_loc, !dbg !483 ; [#uses=1 type=i1] [debug line = 110:2]
   store i32 %VbeatFallDelay_new_1, i32* @VbeatFallDelay, align 4, !dbg !535 ; [debug line = 64:2]
   store i32 %VbeatDelay_new_1, i32* @VbeatDelay, align 4, !dbg !534 ; [debug line = 63:2]
-  br i1 %tmp_13, label %6, label %._crit_edge51, !dbg !483 ; [debug line = 110:2]
+  br i1 %tmp_13, label %6, label %._crit_edge53, !dbg !483 ; [debug line = 110:2]
 
-; <label>:6                                       ; preds = %._crit_edge49_ifconv
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_read_assign_1}, i64 0, metadata !691), !dbg !694 ; [debug line = 25:4@112:3] [debug variable = CircularBuffer<int, 30>.sum]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass_1}, i64 0, metadata !695), !dbg !694 ; [debug line = 25:4@112:3] [debug variable = CircularBuffer<int, 30>.head_i]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_read_assign_3}, i64 0, metadata !696), !dbg !694 ; [debug line = 25:4@112:3] [debug variable = CircularBuffer<int, 30>.len]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass_1}, i64 0, metadata !697), !dbg !699 ; [debug line = 41:4@26:16@112:3] [debug variable = CircularBuffer<int, 30>.head_i]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_read_assign_3}, i64 0, metadata !700), !dbg !699 ; [debug line = 41:4@26:16@112:3] [debug variable = CircularBuffer<int, 30>.len]
-  %i_8 = sub nsw i32 %CircularBuffer_head_i_read_ass_1, %CircularBuffer_len_read_assign_3, !dbg !701 ; [#uses=3 type=i32] [debug line = 44:23@26:16@112:3]
-  call void @llvm.dbg.value(metadata !{i32 %i_8}, i64 0, metadata !702), !dbg !701 ; [debug line = 44:23@26:16@112:3] [debug variable = i]
-  %tmp_27 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_8, i32 31), !dbg !703 ; [#uses=1 type=i1] [debug line = 45:3@26:16@112:3]
-  %i_9 = add nsw i32 %i_8, 30, !dbg !704          ; [#uses=1 type=i32] [debug line = 46:4@26:16@112:3]
-  call void @llvm.dbg.value(metadata !{i32 %i_9}, i64 0, metadata !702), !dbg !704 ; [debug line = 46:4@26:16@112:3] [debug variable = i]
-  %i_10 = select i1 %tmp_27, i32 %i_9, i32 %i_8, !dbg !703 ; [#uses=1 type=i32] [debug line = 45:3@26:16@112:3]
-  call void @llvm.dbg.value(metadata !{i32 %i_10}, i64 0, metadata !702), !dbg !703 ; [debug line = 45:3@26:16@112:3] [debug variable = i]
-  %tmp_27_i_i2 = sext i32 %i_10 to i64, !dbg !705 ; [#uses=1 type=i64] [debug line = 47:3@26:16@112:3]
-  %recentABools_data_addr_1 = getelementptr [30 x i1]* @recentABools_data, i64 0, i64 %tmp_27_i_i2, !dbg !705 ; [#uses=1 type=i1*] [debug line = 47:3@26:16@112:3]
+; <label>:6                                       ; preds = %._crit_edge51_ifconv
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_read_assign_1}, i64 0, metadata !687), !dbg !690 ; [debug line = 25:4@112:3] [debug variable = CircularBuffer<int, 30>.sum]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass_1}, i64 0, metadata !691), !dbg !690 ; [debug line = 25:4@112:3] [debug variable = CircularBuffer<int, 30>.head_i]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_read_assign_3}, i64 0, metadata !692), !dbg !690 ; [debug line = 25:4@112:3] [debug variable = CircularBuffer<int, 30>.len]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass_1}, i64 0, metadata !693), !dbg !695 ; [debug line = 41:4@26:16@112:3] [debug variable = CircularBuffer<int, 30>.head_i]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_read_assign_3}, i64 0, metadata !696), !dbg !695 ; [debug line = 41:4@26:16@112:3] [debug variable = CircularBuffer<int, 30>.len]
+  %i_8 = sub nsw i32 %CircularBuffer_head_i_read_ass_1, %CircularBuffer_len_read_assign_3, !dbg !697 ; [#uses=3 type=i32] [debug line = 44:23@26:16@112:3]
+  call void @llvm.dbg.value(metadata !{i32 %i_8}, i64 0, metadata !698), !dbg !697 ; [debug line = 44:23@26:16@112:3] [debug variable = i]
+  %tmp_28 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_8, i32 31), !dbg !699 ; [#uses=1 type=i1] [debug line = 45:3@26:16@112:3]
+  %i_9 = add nsw i32 %i_8, 30, !dbg !700          ; [#uses=1 type=i32] [debug line = 46:4@26:16@112:3]
+  call void @llvm.dbg.value(metadata !{i32 %i_9}, i64 0, metadata !698), !dbg !700 ; [debug line = 46:4@26:16@112:3] [debug variable = i]
+  %i_10 = select i1 %tmp_28, i32 %i_9, i32 %i_8, !dbg !699 ; [#uses=1 type=i32] [debug line = 45:3@26:16@112:3]
+  call void @llvm.dbg.value(metadata !{i32 %i_10}, i64 0, metadata !698), !dbg !699 ; [debug line = 45:3@26:16@112:3] [debug variable = i]
+  %tmp_28_i_i1 = sext i32 %i_10 to i64, !dbg !701 ; [#uses=1 type=i64] [debug line = 47:3@26:16@112:3]
+  %recentABools_data_addr_1 = getelementptr [30 x i1]* @recentABools_data, i64 0, i64 %tmp_28_i_i1, !dbg !701 ; [#uses=1 type=i1*] [debug line = 47:3@26:16@112:3]
   %recentABools_data_load_1 = load i1* %recentABools_data_addr_1, align 1 ; [#uses=1 type=i1]
-  %not_tmp_i_i1 = icmp ne i32 %CircularBuffer_len_read_assign_3, 0, !dbg !698 ; [#uses=1 type=i1] [debug line = 26:16@112:3]
-  %toReturn_6 = and i1 %recentABools_data_load_1, %not_tmp_i_i1, !dbg !698 ; [#uses=1 type=i1] [debug line = 26:16@112:3]
-  %toReturn_i27_cast = zext i1 %toReturn_6 to i32, !dbg !698 ; [#uses=1 type=i32] [debug line = 26:16@112:3]
-  call void @llvm.dbg.value(metadata !{i1 %toReturn_6}, i64 0, metadata !706), !dbg !698 ; [debug line = 26:16@112:3] [debug variable = toReturn]
-  %CircularBuffer_sum_write_assig_2 = sub nsw i32 %CircularBuffer_sum_read_assign_1, %toReturn_i27_cast, !dbg !707 ; [#uses=1 type=i32] [debug line = 27:3@112:3]
-  %CircularBuffer_len_write_assig_2 = add nsw i32 %CircularBuffer_len_read_assign_3, -1, !dbg !708 ; [#uses=2 type=i32] [debug line = 28:3@112:3]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_write_assig_2}, i64 0, metadata !709), !dbg !694 ; [debug line = 25:4@112:3] [debug variable = CircularBuffer<int, 30>.sum]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig_2}, i64 0, metadata !710), !dbg !694 ; [debug line = 25:4@112:3] [debug variable = CircularBuffer<int, 30>.len]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_write_assig_2}, i64 0, metadata !711), !dbg !713 ; [debug line = 25:4@113:3] [debug variable = CircularBuffer<int, 30>.sum]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass_1}, i64 0, metadata !714), !dbg !713 ; [debug line = 25:4@113:3] [debug variable = CircularBuffer<int, 30>.head_i]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig_2}, i64 0, metadata !715), !dbg !713 ; [debug line = 25:4@113:3] [debug variable = CircularBuffer<int, 30>.len]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass_1}, i64 0, metadata !716), !dbg !718 ; [debug line = 41:4@26:16@113:3] [debug variable = CircularBuffer<int, 30>.head_i]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig_2}, i64 0, metadata !719), !dbg !718 ; [debug line = 41:4@26:16@113:3] [debug variable = CircularBuffer<int, 30>.len]
-  %i_11 = sub nsw i32 %CircularBuffer_head_i_read_ass_1, %CircularBuffer_len_write_assig_2, !dbg !720 ; [#uses=3 type=i32] [debug line = 44:23@26:16@113:3]
-  call void @llvm.dbg.value(metadata !{i32 %i_11}, i64 0, metadata !721), !dbg !720 ; [debug line = 44:23@26:16@113:3] [debug variable = i]
-  %tmp_28 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_11, i32 31), !dbg !722 ; [#uses=1 type=i1] [debug line = 45:3@26:16@113:3]
-  %i_12 = add nsw i32 %i_11, 30, !dbg !723        ; [#uses=1 type=i32] [debug line = 46:4@26:16@113:3]
-  call void @llvm.dbg.value(metadata !{i32 %i_12}, i64 0, metadata !721), !dbg !723 ; [debug line = 46:4@26:16@113:3] [debug variable = i]
-  %i_13 = select i1 %tmp_28, i32 %i_12, i32 %i_11, !dbg !722 ; [#uses=1 type=i32] [debug line = 45:3@26:16@113:3]
-  call void @llvm.dbg.value(metadata !{i32 %i_13}, i64 0, metadata !721), !dbg !722 ; [debug line = 45:3@26:16@113:3] [debug variable = i]
-  %tmp_27_i_i3 = sext i32 %i_13 to i64, !dbg !724 ; [#uses=1 type=i64] [debug line = 47:3@26:16@113:3]
-  %recentABools_data_addr_2 = getelementptr [30 x i1]* @recentABools_data, i64 0, i64 %tmp_27_i_i3, !dbg !724 ; [#uses=1 type=i1*] [debug line = 47:3@26:16@113:3]
+  %not_tmp_i_i1 = icmp ne i32 %CircularBuffer_len_read_assign_3, 0, !dbg !694 ; [#uses=1 type=i1] [debug line = 26:16@112:3]
+  %toReturn_7 = and i1 %recentABools_data_load_1, %not_tmp_i_i1, !dbg !694 ; [#uses=1 type=i1] [debug line = 26:16@112:3]
+  %toReturn_i25_cast = zext i1 %toReturn_7 to i32, !dbg !694 ; [#uses=1 type=i32] [debug line = 26:16@112:3]
+  call void @llvm.dbg.value(metadata !{i1 %toReturn_7}, i64 0, metadata !702), !dbg !694 ; [debug line = 26:16@112:3] [debug variable = toReturn]
+  %CircularBuffer_sum_write_assig_2 = sub nsw i32 %CircularBuffer_sum_read_assign_1, %toReturn_i25_cast, !dbg !703 ; [#uses=1 type=i32] [debug line = 27:3@112:3]
+  %CircularBuffer_len_write_assig_2 = add nsw i32 %CircularBuffer_len_read_assign_3, -1, !dbg !704 ; [#uses=2 type=i32] [debug line = 28:3@112:3]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_write_assig_2}, i64 0, metadata !705), !dbg !690 ; [debug line = 25:4@112:3] [debug variable = CircularBuffer<int, 30>.sum]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig_2}, i64 0, metadata !706), !dbg !690 ; [debug line = 25:4@112:3] [debug variable = CircularBuffer<int, 30>.len]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_write_assig_2}, i64 0, metadata !707), !dbg !709 ; [debug line = 25:4@113:3] [debug variable = CircularBuffer<int, 30>.sum]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass_1}, i64 0, metadata !710), !dbg !709 ; [debug line = 25:4@113:3] [debug variable = CircularBuffer<int, 30>.head_i]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig_2}, i64 0, metadata !711), !dbg !709 ; [debug line = 25:4@113:3] [debug variable = CircularBuffer<int, 30>.len]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_head_i_read_ass_1}, i64 0, metadata !712), !dbg !714 ; [debug line = 41:4@26:16@113:3] [debug variable = CircularBuffer<int, 30>.head_i]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig_2}, i64 0, metadata !715), !dbg !714 ; [debug line = 41:4@26:16@113:3] [debug variable = CircularBuffer<int, 30>.len]
+  %i_11 = sub nsw i32 %CircularBuffer_head_i_read_ass_1, %CircularBuffer_len_write_assig_2, !dbg !716 ; [#uses=3 type=i32] [debug line = 44:23@26:16@113:3]
+  call void @llvm.dbg.value(metadata !{i32 %i_11}, i64 0, metadata !717), !dbg !716 ; [debug line = 44:23@26:16@113:3] [debug variable = i]
+  %tmp_29 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_11, i32 31), !dbg !718 ; [#uses=1 type=i1] [debug line = 45:3@26:16@113:3]
+  %i_12 = add nsw i32 %i_11, 30, !dbg !719        ; [#uses=1 type=i32] [debug line = 46:4@26:16@113:3]
+  call void @llvm.dbg.value(metadata !{i32 %i_12}, i64 0, metadata !717), !dbg !719 ; [debug line = 46:4@26:16@113:3] [debug variable = i]
+  %i_13 = select i1 %tmp_29, i32 %i_12, i32 %i_11, !dbg !718 ; [#uses=1 type=i32] [debug line = 45:3@26:16@113:3]
+  call void @llvm.dbg.value(metadata !{i32 %i_13}, i64 0, metadata !717), !dbg !718 ; [debug line = 45:3@26:16@113:3] [debug variable = i]
+  %tmp_28_i_i2 = sext i32 %i_13 to i64, !dbg !720 ; [#uses=1 type=i64] [debug line = 47:3@26:16@113:3]
+  %recentABools_data_addr_2 = getelementptr [30 x i1]* @recentABools_data, i64 0, i64 %tmp_28_i_i2, !dbg !720 ; [#uses=1 type=i1*] [debug line = 47:3@26:16@113:3]
   %recentABools_data_load_2 = load i1* %recentABools_data_addr_2, align 1 ; [#uses=1 type=i1]
-  %not_tmp_i_i2 = icmp ne i32 %CircularBuffer_len_write_assig_2, 0, !dbg !717 ; [#uses=1 type=i1] [debug line = 26:16@113:3]
-  %toReturn_7 = and i1 %recentABools_data_load_2, %not_tmp_i_i2, !dbg !717 ; [#uses=1 type=i1] [debug line = 26:16@113:3]
-  %toReturn_i40_cast = zext i1 %toReturn_7 to i32, !dbg !717 ; [#uses=1 type=i32] [debug line = 26:16@113:3]
-  call void @llvm.dbg.value(metadata !{i1 %toReturn_7}, i64 0, metadata !725), !dbg !717 ; [debug line = 26:16@113:3] [debug variable = toReturn]
-  %CircularBuffer_sum_write_assig_3 = sub nsw i32 %CircularBuffer_sum_write_assig_2, %toReturn_i40_cast, !dbg !726 ; [#uses=1 type=i32] [debug line = 27:3@113:3]
-  %CircularBuffer_len_write_assig_3 = add nsw i32 %CircularBuffer_len_read_assign_3, -2, !dbg !727 ; [#uses=1 type=i32] [debug line = 28:3@113:3]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_write_assig_3}, i64 0, metadata !728), !dbg !713 ; [debug line = 25:4@113:3] [debug variable = CircularBuffer<int, 30>.sum]
-  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig_3}, i64 0, metadata !729), !dbg !713 ; [debug line = 25:4@113:3] [debug variable = CircularBuffer<int, 30>.len]
-  br label %._crit_edge51, !dbg !730              ; [debug line = 114:2]
+  %not_tmp_i_i2 = icmp ne i32 %CircularBuffer_len_write_assig_2, 0, !dbg !713 ; [#uses=1 type=i1] [debug line = 26:16@113:3]
+  %toReturn_8 = and i1 %recentABools_data_load_2, %not_tmp_i_i2, !dbg !713 ; [#uses=1 type=i1] [debug line = 26:16@113:3]
+  %toReturn_i38_cast = zext i1 %toReturn_8 to i32, !dbg !713 ; [#uses=1 type=i32] [debug line = 26:16@113:3]
+  call void @llvm.dbg.value(metadata !{i1 %toReturn_8}, i64 0, metadata !721), !dbg !713 ; [debug line = 26:16@113:3] [debug variable = toReturn]
+  %CircularBuffer_sum_write_assig_3 = sub nsw i32 %CircularBuffer_sum_write_assig_2, %toReturn_i38_cast, !dbg !722 ; [#uses=1 type=i32] [debug line = 27:3@113:3]
+  %CircularBuffer_len_write_assig_3 = add nsw i32 %CircularBuffer_len_read_assign_3, -2, !dbg !723 ; [#uses=1 type=i32] [debug line = 28:3@113:3]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_sum_write_assig_3}, i64 0, metadata !724), !dbg !709 ; [debug line = 25:4@113:3] [debug variable = CircularBuffer<int, 30>.sum]
+  call void @llvm.dbg.value(metadata !{i32 %CircularBuffer_len_write_assig_3}, i64 0, metadata !725), !dbg !709 ; [debug line = 25:4@113:3] [debug variable = CircularBuffer<int, 30>.len]
+  br label %._crit_edge53, !dbg !726              ; [debug line = 114:2]
 
-._crit_edge51:                                    ; preds = %6, %._crit_edge49_ifconv
-  %sum_1 = phi i32 [ %CircularBuffer_sum_write_assig_3, %6 ], [ %CircularBuffer_sum_read_assign_1, %._crit_edge49_ifconv ] ; [#uses=2 type=i32]
-  %recentABools_len_new = phi i32 [ %CircularBuffer_len_write_assig_3, %6 ], [ %CircularBuffer_len_read_assign_3, %._crit_edge49_ifconv ] ; [#uses=1 type=i32]
-  call void @llvm.dbg.value(metadata !{i32 %sum_1}, i64 0, metadata !650), !dbg !731 ; [debug line = 116:2] [debug variable = sum]
-  %tmp_14 = call i31 @_ssdm_op_PartSelect.i31.i32.i32.i32(i32 %ACaptureThresh_loc, i32 1, i32 31), !dbg !732 ; [#uses=1 type=i31] [debug line = 118:2]
-  %tmp_15 = sext i31 %tmp_14 to i32, !dbg !732    ; [#uses=1 type=i32] [debug line = 118:2]
-  %tmp_16 = icmp sgt i32 %sum_1, %tmp_15, !dbg !732 ; [#uses=1 type=i1] [debug line = 118:2]
-  store i32 %recentABools_len_new, i32* @recentABools_len, align 4, !dbg !677 ; [debug line = 108:2]
-  store i32 %sum_1, i32* @recentABools_sum, align 4, !dbg !677 ; [debug line = 108:2]
-  %last_sample_is_A_V_load = load i1* @last_sample_is_A_V, align 1, !dbg !733 ; [#uses=4 type=i1] [debug line = 1871:9@120:6]
-  %tmp_17 = icmp sgt i32 %VbeatDelay_new_1, %VbeatFallDelay_new_1, !dbg !732 ; [#uses=1 type=i1] [debug line = 118:2]
-  %or_cond1 = and i1 %tmp_16, %tmp_17, !dbg !732  ; [#uses=1 type=i1] [debug line = 118:2]
-  br i1 %or_cond1, label %7, label %._crit_edge52, !dbg !732 ; [debug line = 118:2]
+._crit_edge53:                                    ; preds = %6, %._crit_edge51_ifconv
+  %sum_1 = phi i32 [ %CircularBuffer_sum_write_assig_3, %6 ], [ %CircularBuffer_sum_read_assign_1, %._crit_edge51_ifconv ] ; [#uses=2 type=i32]
+  %recentABools_len_new = phi i32 [ %CircularBuffer_len_write_assig_3, %6 ], [ %CircularBuffer_len_read_assign_3, %._crit_edge51_ifconv ] ; [#uses=1 type=i32]
+  call void @llvm.dbg.value(metadata !{i32 %sum_1}, i64 0, metadata !646), !dbg !727 ; [debug line = 116:2] [debug variable = sum]
+  %tmp_14 = call i31 @_ssdm_op_PartSelect.i31.i32.i32.i32(i32 %ACaptureThresh_loc, i32 1, i32 31), !dbg !728 ; [#uses=1 type=i31] [debug line = 118:2]
+  %tmp_15 = sext i31 %tmp_14 to i32, !dbg !728    ; [#uses=1 type=i32] [debug line = 118:2]
+  %tmp_16 = icmp sgt i32 %sum_1, %tmp_15, !dbg !728 ; [#uses=1 type=i1] [debug line = 118:2]
+  store i32 %recentABools_len_new, i32* @recentABools_len, align 4, !dbg !673 ; [debug line = 108:2]
+  store i32 %sum_1, i32* @recentABools_sum, align 4, !dbg !673 ; [debug line = 108:2]
+  %last_sample_is_A_V_load = load i1* @last_sample_is_A_V, align 1, !dbg !729 ; [#uses=4 type=i1] [debug line = 1871:9@120:6]
+  br i1 %tmp_16, label %7, label %._crit_edge54, !dbg !728 ; [debug line = 118:2]
 
-; <label>:7                                       ; preds = %._crit_edge51
-  br i1 %last_sample_is_A_V_load, label %._crit_edge54_ifconv, label %8, !dbg !734 ; [debug line = 120:6]
+; <label>:7                                       ; preds = %._crit_edge53
+  %tmp_17 = icmp sgt i32 %VbeatDelay_new_1, %VbeatFallDelay_new_1, !dbg !728 ; [#uses=1 type=i1] [debug line = 118:2]
+  %tmp_18 = icmp sgt i32 %VbeatFallDelay_new_1, 250, !dbg !728 ; [#uses=1 type=i1] [debug line = 118:2]
+  %or_cond = and i1 %tmp_17, %tmp_18, !dbg !728   ; [#uses=1 type=i1] [debug line = 118:2]
+  br i1 %or_cond, label %8, label %._crit_edge54, !dbg !728 ; [debug line = 118:2]
 
 ; <label>:8                                       ; preds = %7
-  store i1 true, i1* @last_sample_is_A_V, align 1, !dbg !736 ; [debug line = 277:10@123:4]
-  br label %._crit_edge54_ifconv, !dbg !739       ; [debug line = 124:3]
+  br i1 %last_sample_is_A_V_load, label %._crit_edge56_ifconv, label %9, !dbg !730 ; [debug line = 120:6]
 
-._crit_edge52:                                    ; preds = %._crit_edge51
-  br i1 %last_sample_is_A_V_load, label %9, label %._crit_edge54_ifconv, !dbg !740 ; [debug line = 127:10]
+; <label>:9                                       ; preds = %8
+  store i1 true, i1* @last_sample_is_A_V, align 1, !dbg !732 ; [debug line = 277:10@123:4]
+  br label %._crit_edge56_ifconv, !dbg !735       ; [debug line = 124:3]
 
-; <label>:9                                       ; preds = %._crit_edge52
-  store i1 false, i1* @last_sample_is_A_V, align 1, !dbg !741 ; [debug line = 277:10@129:3]
-  br label %._crit_edge54_ifconv, !dbg !744       ; [debug line = 130:2]
+._crit_edge54:                                    ; preds = %7, %._crit_edge53
+  br i1 %last_sample_is_A_V_load, label %10, label %._crit_edge56_ifconv, !dbg !736 ; [debug line = 127:10]
 
-._crit_edge54_ifconv:                             ; preds = %9, %._crit_edge52, %8, %7
-  %AbeatDelay_new = phi i32 [ %tmp_3, %7 ], [ 0, %8 ], [ %tmp_3, %9 ], [ %tmp_3, %._crit_edge52 ] ; [#uses=5 type=i32]
-  %tmp_18 = phi i1 [ %last_sample_is_A_V_load, %7 ], [ true, %8 ], [ false, %9 ], [ %last_sample_is_A_V_load, %._crit_edge52 ] ; [#uses=1 type=i1]
+; <label>:10                                      ; preds = %._crit_edge54
+  store i1 false, i1* @last_sample_is_A_V, align 1, !dbg !737 ; [debug line = 277:10@129:3]
+  br label %._crit_edge56_ifconv, !dbg !740       ; [debug line = 130:2]
+
+._crit_edge56_ifconv:                             ; preds = %10, %._crit_edge54, %9, %8
+  %AbeatDelay_new = phi i32 [ %tmp_3, %8 ], [ 0, %9 ], [ %tmp_3, %10 ], [ %tmp_3, %._crit_edge54 ] ; [#uses=5 type=i32]
+  %tmp_19 = phi i1 [ %last_sample_is_A_V_load, %8 ], [ true, %9 ], [ false, %10 ], [ %last_sample_is_A_V_load, %._crit_edge54 ] ; [#uses=1 type=i1]
   store i32 %AbeatDelay_new, i32* @AbeatDelay, align 4, !dbg !533 ; [debug line = 62:2]
-  %tmp_20_not = icmp ne i32 %VbeatDelay_new_1, 0, !dbg !745 ; [#uses=2 type=i1] [debug line = 136:2]
-  %last_sample_is_V_V_loc_2_not = xor i1 %last_sample_is_V_V_loc_2, true, !dbg !745 ; [#uses=1 type=i1] [debug line = 136:2]
-  %brmerge = or i1 %tmp_20_not, %last_sample_is_V_V_loc_2_not, !dbg !745 ; [#uses=1 type=i1] [debug line = 136:2]
-  %tmp_19 = icmp eq i32 %AbeatDelay_new, 0, !dbg !746 ; [#uses=1 type=i1] [debug line = 140:7]
-  %p_2 = select i1 %tmp_18, i13 -4096, i13 0, !dbg !747 ; [#uses=1 type=i13] [debug line = 140:30]
-  %sel_tmp = and i1 %brmerge, %tmp_19             ; [#uses=1 type=i1]
+  %tmp_21_not = icmp ne i32 %VbeatDelay_new_1, 0, !dbg !741 ; [#uses=2 type=i1] [debug line = 136:2]
+  %last_sample_is_V_V_loc_2_not = xor i1 %last_sample_is_V_V_loc_2, true, !dbg !741 ; [#uses=1 type=i1] [debug line = 136:2]
+  %brmerge = or i1 %tmp_21_not, %last_sample_is_V_V_loc_2_not, !dbg !741 ; [#uses=1 type=i1] [debug line = 136:2]
+  %tmp_20 = icmp eq i32 %AbeatDelay_new, 0, !dbg !742 ; [#uses=1 type=i1] [debug line = 140:7]
+  %p_2 = select i1 %tmp_19, i13 -4096, i13 0, !dbg !743 ; [#uses=1 type=i13] [debug line = 140:30]
+  %sel_tmp = and i1 %brmerge, %tmp_20             ; [#uses=1 type=i1]
   %sel_tmp1 = select i1 %sel_tmp, i13 %p_2, i13 0 ; [#uses=1 type=i13]
-  %tmp_20_not_not = xor i1 %tmp_20_not, true, !dbg !745 ; [#uses=1 type=i1] [debug line = 136:2]
-  %sel_tmp2 = and i1 %last_sample_is_V_V_loc_2, %tmp_20_not_not, !dbg !745 ; [#uses=1 type=i1] [debug line = 136:2]
-  %toReturn_1 = select i1 %sel_tmp2, i13 240, i13 %sel_tmp1 ; [#uses=3 type=i13]
-  %tmp_20 = icmp sgt i32 %AbeatDelay_new, 1000, !dbg !748 ; [#uses=1 type=i1] [debug line = 145:2]
-  %tmp_21 = icmp sgt i32 %tmp_6, %ACaptureThresh_loc, !dbg !748 ; [#uses=1 type=i1] [debug line = 145:2]
-  %toReturn = or i13 %toReturn_1, 3840, !dbg !749 ; [#uses=1 type=i13] [debug line = 147:3]
-  call void @llvm.dbg.value(metadata !{i13 %toReturn}, i64 0, metadata !751), !dbg !749 ; [debug line = 147:3] [debug variable = toReturn]
-  %p_toReturn_1 = select i1 %tmp_21, i13 %toReturn, i13 %toReturn_1, !dbg !748 ; [#uses=1 type=i13] [debug line = 145:2]
-  %toReturn_2 = select i1 %tmp_20, i13 %p_toReturn_1, i13 %toReturn_1 ; [#uses=3 type=i13]
-  %tmp_22 = icmp sgt i32 %VbeatDelay_new_1, %AbeatDelay_new, !dbg !752 ; [#uses=1 type=i1] [debug line = 151:2]
-  %tmp_23 = icmp sgt i32 %AbeatDelay_new, 900, !dbg !752 ; [#uses=1 type=i1] [debug line = 151:2]
-  %or_cond = and i1 %tmp_22, %tmp_23, !dbg !752   ; [#uses=1 type=i1] [debug line = 151:2]
-  %tmp_24 = icmp sgt i32 %tmp_7, %VCaptureThresh_loc, !dbg !752 ; [#uses=1 type=i1] [debug line = 151:2]
-  %toReturn_3 = or i13 %toReturn_2, 15, !dbg !753 ; [#uses=1 type=i13] [debug line = 153:3]
-  call void @llvm.dbg.value(metadata !{i13 %toReturn_3}, i64 0, metadata !751), !dbg !753 ; [debug line = 153:3] [debug variable = toReturn]
-  %p_toReturn_2 = select i1 %tmp_24, i13 %toReturn_3, i13 %toReturn_2, !dbg !752 ; [#uses=1 type=i13] [debug line = 151:2]
-  %UnifiedRetVal = select i1 %or_cond, i13 %p_toReturn_2, i13 %toReturn_2 ; [#uses=1 type=i13]
-  %UnifiedRetVal_cast = sext i13 %UnifiedRetVal to i16 ; [#uses=1 type=i16]
-  ret i16 %UnifiedRetVal_cast, !dbg !755          ; [debug line = 155:2]
+  %tmp_21_not_not = xor i1 %tmp_21_not, true, !dbg !741 ; [#uses=1 type=i1] [debug line = 136:2]
+  %sel_tmp2 = and i1 %last_sample_is_V_V_loc_2, %tmp_21_not_not, !dbg !741 ; [#uses=1 type=i1] [debug line = 136:2]
+  %toReturn_1 = select i1 %sel_tmp2, i13 240, i13 %sel_tmp1 ; [#uses=2 type=i13]
+  %tmp_21 = icmp sgt i32 %AbeatDelay_new, 1000, !dbg !744 ; [#uses=1 type=i1] [debug line = 145:2]
+  %tmp_22 = icmp sgt i32 %tmp_6, %ACaptureThresh_loc, !dbg !744 ; [#uses=1 type=i1] [debug line = 145:2]
+  %or_cond1 = and i1 %tmp_21, %tmp_22, !dbg !744  ; [#uses=2 type=i1] [debug line = 145:2]
+  %toReturn = or i13 %toReturn_1, 3840, !dbg !745 ; [#uses=1 type=i13] [debug line = 147:3]
+  call void @llvm.dbg.value(metadata !{i13 %toReturn}, i64 0, metadata !747), !dbg !745 ; [debug line = 147:3] [debug variable = toReturn]
+  %AstimDelay_new = select i1 %or_cond1, i32 0, i32 %tmp_6, !dbg !744 ; [#uses=1 type=i32] [debug line = 145:2]
+  %toReturn_2 = select i1 %or_cond1, i13 %toReturn, i13 %toReturn_1, !dbg !744 ; [#uses=2 type=i13] [debug line = 145:2]
+  call void @llvm.dbg.value(metadata !{i13 %toReturn_2}, i64 0, metadata !747), !dbg !744 ; [debug line = 145:2] [debug variable = toReturn]
+  %tmp_23 = icmp sgt i32 %VbeatDelay_new_1, %AbeatDelay_new, !dbg !748 ; [#uses=1 type=i1] [debug line = 151:2]
+  %tmp_24 = icmp sgt i32 %AbeatDelay_new, 900, !dbg !748 ; [#uses=1 type=i1] [debug line = 151:2]
+  store i32 %AstimDelay_new, i32* @AstimDelay, align 4, !dbg !749 ; [debug line = 42:3]
+  %tmp_25 = icmp sgt i32 %tmp_7, %VCaptureThresh_loc, !dbg !748 ; [#uses=1 type=i1] [debug line = 151:2]
+  %tmp1 = and i1 %tmp_24, %tmp_25, !dbg !748      ; [#uses=1 type=i1] [debug line = 151:2]
+  %or_cond3 = and i1 %tmp1, %tmp_23, !dbg !748    ; [#uses=2 type=i1] [debug line = 151:2]
+  %toReturn_4 = or i13 %toReturn_2, 15, !dbg !751 ; [#uses=1 type=i13] [debug line = 153:3]
+  call void @llvm.dbg.value(metadata !{i13 %toReturn_4}, i64 0, metadata !747), !dbg !751 ; [debug line = 153:3] [debug variable = toReturn]
+  %VstimDelay_new = select i1 %or_cond3, i32 0, i32 %tmp_7, !dbg !748 ; [#uses=1 type=i32] [debug line = 151:2]
+  %toReturn_3 = select i1 %or_cond3, i13 %toReturn_4, i13 %toReturn_2, !dbg !748 ; [#uses=1 type=i13] [debug line = 151:2]
+  %toReturn_3_cast = sext i13 %toReturn_3 to i16, !dbg !748 ; [#uses=1 type=i16] [debug line = 151:2]
+  call void @llvm.dbg.value(metadata !{i13 %toReturn_3}, i64 0, metadata !747), !dbg !748 ; [debug line = 151:2] [debug variable = toReturn]
+  store i32 %VstimDelay_new, i32* @VstimDelay, align 4, !dbg !753 ; [debug line = 47:3]
+  ret i16 %toReturn_3_cast, !dbg !755             ; [debug line = 156:2]
 }
 
 !opencl.kernels = !{!0, !7, !13, !7, !7, !7, !19, !7, !19, !7, !7, !7, !19, !19, !7, !7, !7, !7}
@@ -1085,159 +1093,159 @@ codeRepl:
 !597 = metadata !{i32 20, i32 3, metadata !592, metadata !548}
 !598 = metadata !{i32 21, i32 3, metadata !592, metadata !548}
 !599 = metadata !{i32 22, i32 3, metadata !592, metadata !548}
-!600 = metadata !{i32 47, i32 3, metadata !601, null}
-!601 = metadata !{i32 786443, metadata !470, i32 46, i32 2, metadata !79, i32 2} ; [ DW_TAG_lexical_block ]
-!602 = metadata !{i32 42, i32 3, metadata !603, null}
-!603 = metadata !{i32 786443, metadata !470, i32 41, i32 2, metadata !79, i32 1} ; [ DW_TAG_lexical_block ]
-!604 = metadata !{i32 790533, metadata !605, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !607} ; [ DW_TAG_arg_variable_field_ro ]
-!605 = metadata !{i32 786689, metadata !606, metadata !"this", metadata !496, i32 16777241, metadata !576, i32 64, i32 0} ; [ DW_TAG_arg_variable ]
-!606 = metadata !{i32 786478, i32 0, null, metadata !"pop", metadata !"pop", metadata !"_ZN14CircularBufferIiLi30EE3popEv", metadata !496, i32 25, metadata !569, i1 false, i1 true, i32 0, i32 0, null, i32 256, i1 false, null, null, metadata !568, metadata !101, i32 25} ; [ DW_TAG_subprogram ]
-!607 = metadata !{i32 81, i32 3, metadata !608, null}
-!608 = metadata !{i32 786443, metadata !470, i32 80, i32 2, metadata !79, i32 4} ; [ DW_TAG_lexical_block ]
-!609 = metadata !{i32 25, i32 4, metadata !606, metadata !607}
-!610 = metadata !{i32 790533, metadata !605, metadata !"CircularBuffer<int, 30>.head_i", null, i32 25, metadata !582, i32 0, metadata !607} ; [ DW_TAG_arg_variable_field_ro ]
-!611 = metadata !{i32 790533, metadata !605, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !607} ; [ DW_TAG_arg_variable_field_ro ]
-!612 = metadata !{i32 790533, metadata !613, metadata !"CircularBuffer<int, 30>.head_i", null, i32 41, metadata !582, i32 0, metadata !615} ; [ DW_TAG_arg_variable_field_ro ]
-!613 = metadata !{i32 786689, metadata !614, metadata !"this", metadata !496, i32 16777257, metadata !576, i32 64, i32 0} ; [ DW_TAG_arg_variable ]
-!614 = metadata !{i32 786478, i32 0, null, metadata !"tail", metadata !"tail", metadata !"_ZN14CircularBufferIiLi30EE4tailEv", metadata !496, i32 41, metadata !569, i1 false, i1 true, i32 0, i32 0, null, i32 256, i1 false, null, null, metadata !572, metadata !101, i32 41} ; [ DW_TAG_subprogram ]
-!615 = metadata !{i32 26, i32 16, metadata !616, metadata !607}
-!616 = metadata !{i32 786443, metadata !606, i32 25, i32 10, metadata !496, i32 19} ; [ DW_TAG_lexical_block ]
-!617 = metadata !{i32 41, i32 4, metadata !614, metadata !615}
-!618 = metadata !{i32 790533, metadata !613, metadata !"CircularBuffer<int, 30>.len", null, i32 41, metadata !586, i32 0, metadata !615} ; [ DW_TAG_arg_variable_field_ro ]
-!619 = metadata !{i32 44, i32 23, metadata !620, metadata !615}
-!620 = metadata !{i32 786443, metadata !614, i32 41, i32 11, metadata !496, i32 20} ; [ DW_TAG_lexical_block ]
-!621 = metadata !{i32 786688, metadata !620, metadata !"i", metadata !496, i32 44, metadata !110, i32 0, metadata !615} ; [ DW_TAG_auto_variable ]
-!622 = metadata !{i32 45, i32 3, metadata !620, metadata !615}
-!623 = metadata !{i32 46, i32 4, metadata !620, metadata !615}
-!624 = metadata !{i32 47, i32 3, metadata !620, metadata !615}
-!625 = metadata !{i32 786688, metadata !616, metadata !"toReturn", metadata !496, i32 26, metadata !110, i32 0, metadata !607} ; [ DW_TAG_auto_variable ]
-!626 = metadata !{i32 27, i32 3, metadata !616, metadata !607}
-!627 = metadata !{i32 28, i32 3, metadata !616, metadata !607}
-!628 = metadata !{i32 790535, metadata !605, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !607} ; [ DW_TAG_arg_variable_field_wo ]
-!629 = metadata !{i32 790535, metadata !605, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !607} ; [ DW_TAG_arg_variable_field_wo ]
-!630 = metadata !{i32 790533, metadata !605, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !631} ; [ DW_TAG_arg_variable_field_ro ]
-!631 = metadata !{i32 82, i32 3, metadata !608, null}
-!632 = metadata !{i32 25, i32 4, metadata !606, metadata !631}
-!633 = metadata !{i32 790533, metadata !605, metadata !"CircularBuffer<int, 30>.head_i", null, i32 25, metadata !582, i32 0, metadata !631} ; [ DW_TAG_arg_variable_field_ro ]
-!634 = metadata !{i32 790533, metadata !605, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !631} ; [ DW_TAG_arg_variable_field_ro ]
-!635 = metadata !{i32 790533, metadata !613, metadata !"CircularBuffer<int, 30>.head_i", null, i32 41, metadata !582, i32 0, metadata !636} ; [ DW_TAG_arg_variable_field_ro ]
-!636 = metadata !{i32 26, i32 16, metadata !616, metadata !631}
-!637 = metadata !{i32 41, i32 4, metadata !614, metadata !636}
-!638 = metadata !{i32 790533, metadata !613, metadata !"CircularBuffer<int, 30>.len", null, i32 41, metadata !586, i32 0, metadata !636} ; [ DW_TAG_arg_variable_field_ro ]
-!639 = metadata !{i32 44, i32 23, metadata !620, metadata !636}
-!640 = metadata !{i32 786688, metadata !620, metadata !"i", metadata !496, i32 44, metadata !110, i32 0, metadata !636} ; [ DW_TAG_auto_variable ]
-!641 = metadata !{i32 45, i32 3, metadata !620, metadata !636}
-!642 = metadata !{i32 46, i32 4, metadata !620, metadata !636}
-!643 = metadata !{i32 47, i32 3, metadata !620, metadata !636}
-!644 = metadata !{i32 786688, metadata !616, metadata !"toReturn", metadata !496, i32 26, metadata !110, i32 0, metadata !631} ; [ DW_TAG_auto_variable ]
-!645 = metadata !{i32 27, i32 3, metadata !616, metadata !631}
-!646 = metadata !{i32 28, i32 3, metadata !616, metadata !631}
-!647 = metadata !{i32 790535, metadata !605, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !631} ; [ DW_TAG_arg_variable_field_wo ]
-!648 = metadata !{i32 790535, metadata !605, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !631} ; [ DW_TAG_arg_variable_field_wo ]
-!649 = metadata !{i32 83, i32 2, metadata !608, null}
-!650 = metadata !{i32 786688, metadata !470, metadata !"sum", metadata !79, i32 86, metadata !110, i32 0, i32 0} ; [ DW_TAG_auto_variable ]
-!651 = metadata !{i32 86, i32 28, metadata !470, null}
-!652 = metadata !{i32 88, i32 2, metadata !470, null}
-!653 = metadata !{i32 1871, i32 9, metadata !654, metadata !656}
-!654 = metadata !{i32 786443, metadata !655, i32 1870, i32 68, metadata !89, i32 18} ; [ DW_TAG_lexical_block ]
-!655 = metadata !{i32 786478, i32 0, null, metadata !"operator!", metadata !"operator!", metadata !"_ZNK11ap_int_baseILi1ELb0ELb1EEntEv", metadata !89, i32 1870, metadata !248, i1 false, i1 true, i32 0, i32 0, null, i32 256, i1 false, null, null, metadata !320, metadata !101, i32 1870} ; [ DW_TAG_subprogram ]
-!656 = metadata !{i32 90, i32 6, metadata !657, null}
-!657 = metadata !{i32 786443, metadata !470, i32 89, i32 2, metadata !79, i32 5} ; [ DW_TAG_lexical_block ]
-!658 = metadata !{i32 277, i32 10, metadata !659, metadata !661}
-!659 = metadata !{i32 786443, metadata !660, i32 276, i32 92, metadata !85, i32 17} ; [ DW_TAG_lexical_block ]
-!660 = metadata !{i32 786478, i32 0, null, metadata !"operator=", metadata !"operator=", metadata !"_ZN7ap_uintILi1EEaSERKS0_", metadata !85, i32 276, metadata !451, i1 false, i1 true, i32 0, i32 0, null, i32 256, i1 false, null, null, metadata !450, metadata !101, i32 276} ; [ DW_TAG_subprogram ]
-!661 = metadata !{i32 93, i32 4, metadata !662, null}
-!662 = metadata !{i32 786443, metadata !657, i32 91, i32 3, metadata !79, i32 6} ; [ DW_TAG_lexical_block ]
-!663 = metadata !{i32 94, i32 3, metadata !662, null}
-!664 = metadata !{i32 96, i32 10, metadata !470, null}
-!665 = metadata !{i32 277, i32 10, metadata !659, metadata !666}
-!666 = metadata !{i32 99, i32 3, metadata !667, null}
-!667 = metadata !{i32 786443, metadata !470, i32 97, i32 2, metadata !79, i32 7} ; [ DW_TAG_lexical_block ]
-!668 = metadata !{i32 100, i32 2, metadata !667, null}
-!669 = metadata !{i32 53, i32 3, metadata !670, metadata !672}
-!670 = metadata !{i32 786443, metadata !671, i32 52, i32 12, metadata !496, i32 16} ; [ DW_TAG_lexical_block ]
-!671 = metadata !{i32 786478, i32 0, null, metadata !"ftail", metadata !"ftail", metadata !"_ZN14CircularBufferIiLi20EE5ftailEv", metadata !496, i32 52, metadata !514, i1 false, i1 true, i32 0, i32 0, null, i32 256, i1 false, null, null, metadata !518, metadata !101, i32 52} ; [ DW_TAG_subprogram ]
-!672 = metadata !{i32 103, i32 19, metadata !470, null}
-!673 = metadata !{i32 54, i32 4, metadata !670, metadata !672}
-!674 = metadata !{i32 786688, metadata !470, metadata !"datapointA", metadata !79, i32 103, metadata !110, i32 0, i32 0} ; [ DW_TAG_auto_variable ]
-!675 = metadata !{i32 105, i32 2, metadata !470, null}
-!676 = metadata !{i32 106, i32 3, metadata !470, null}
-!677 = metadata !{i32 108, i32 2, metadata !470, null}
-!678 = metadata !{i32 790533, metadata !550, metadata !"CircularBuffer<int, 30>.sum", null, i32 13, metadata !577, i32 0, metadata !677} ; [ DW_TAG_arg_variable_field_ro ]
-!679 = metadata !{i32 13, i32 7, metadata !551, metadata !677}
-!680 = metadata !{i32 790533, metadata !550, metadata !"CircularBuffer<int, 30>.head_i", null, i32 13, metadata !582, i32 0, metadata !677} ; [ DW_TAG_arg_variable_field_ro ]
-!681 = metadata !{i32 790533, metadata !550, metadata !"CircularBuffer<int, 30>.len", null, i32 13, metadata !586, i32 0, metadata !677} ; [ DW_TAG_arg_variable_field_ro ]
-!682 = metadata !{i32 786689, metadata !551, metadata !"val", metadata !496, i32 33554445, metadata !110, i32 0, metadata !677} ; [ DW_TAG_arg_variable ]
-!683 = metadata !{i32 13, i32 14, metadata !551, metadata !677}
-!684 = metadata !{i32 14, i32 3, metadata !592, metadata !677}
-!685 = metadata !{i32 15, i32 4, metadata !594, metadata !677}
-!686 = metadata !{i32 18, i32 3, metadata !592, metadata !677}
-!687 = metadata !{i32 19, i32 3, metadata !592, metadata !677}
-!688 = metadata !{i32 20, i32 3, metadata !592, metadata !677}
-!689 = metadata !{i32 21, i32 3, metadata !592, metadata !677}
-!690 = metadata !{i32 22, i32 3, metadata !592, metadata !677}
-!691 = metadata !{i32 790533, metadata !605, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !692} ; [ DW_TAG_arg_variable_field_ro ]
-!692 = metadata !{i32 112, i32 3, metadata !693, null}
-!693 = metadata !{i32 786443, metadata !470, i32 111, i32 2, metadata !79, i32 8} ; [ DW_TAG_lexical_block ]
-!694 = metadata !{i32 25, i32 4, metadata !606, metadata !692}
-!695 = metadata !{i32 790533, metadata !605, metadata !"CircularBuffer<int, 30>.head_i", null, i32 25, metadata !582, i32 0, metadata !692} ; [ DW_TAG_arg_variable_field_ro ]
-!696 = metadata !{i32 790533, metadata !605, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !692} ; [ DW_TAG_arg_variable_field_ro ]
-!697 = metadata !{i32 790533, metadata !613, metadata !"CircularBuffer<int, 30>.head_i", null, i32 41, metadata !582, i32 0, metadata !698} ; [ DW_TAG_arg_variable_field_ro ]
-!698 = metadata !{i32 26, i32 16, metadata !616, metadata !692}
-!699 = metadata !{i32 41, i32 4, metadata !614, metadata !698}
-!700 = metadata !{i32 790533, metadata !613, metadata !"CircularBuffer<int, 30>.len", null, i32 41, metadata !586, i32 0, metadata !698} ; [ DW_TAG_arg_variable_field_ro ]
-!701 = metadata !{i32 44, i32 23, metadata !620, metadata !698}
-!702 = metadata !{i32 786688, metadata !620, metadata !"i", metadata !496, i32 44, metadata !110, i32 0, metadata !698} ; [ DW_TAG_auto_variable ]
-!703 = metadata !{i32 45, i32 3, metadata !620, metadata !698}
-!704 = metadata !{i32 46, i32 4, metadata !620, metadata !698}
-!705 = metadata !{i32 47, i32 3, metadata !620, metadata !698}
-!706 = metadata !{i32 786688, metadata !616, metadata !"toReturn", metadata !496, i32 26, metadata !110, i32 0, metadata !692} ; [ DW_TAG_auto_variable ]
-!707 = metadata !{i32 27, i32 3, metadata !616, metadata !692}
-!708 = metadata !{i32 28, i32 3, metadata !616, metadata !692}
-!709 = metadata !{i32 790535, metadata !605, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !692} ; [ DW_TAG_arg_variable_field_wo ]
-!710 = metadata !{i32 790535, metadata !605, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !692} ; [ DW_TAG_arg_variable_field_wo ]
-!711 = metadata !{i32 790533, metadata !605, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !712} ; [ DW_TAG_arg_variable_field_ro ]
-!712 = metadata !{i32 113, i32 3, metadata !693, null}
-!713 = metadata !{i32 25, i32 4, metadata !606, metadata !712}
-!714 = metadata !{i32 790533, metadata !605, metadata !"CircularBuffer<int, 30>.head_i", null, i32 25, metadata !582, i32 0, metadata !712} ; [ DW_TAG_arg_variable_field_ro ]
-!715 = metadata !{i32 790533, metadata !605, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !712} ; [ DW_TAG_arg_variable_field_ro ]
-!716 = metadata !{i32 790533, metadata !613, metadata !"CircularBuffer<int, 30>.head_i", null, i32 41, metadata !582, i32 0, metadata !717} ; [ DW_TAG_arg_variable_field_ro ]
-!717 = metadata !{i32 26, i32 16, metadata !616, metadata !712}
-!718 = metadata !{i32 41, i32 4, metadata !614, metadata !717}
-!719 = metadata !{i32 790533, metadata !613, metadata !"CircularBuffer<int, 30>.len", null, i32 41, metadata !586, i32 0, metadata !717} ; [ DW_TAG_arg_variable_field_ro ]
-!720 = metadata !{i32 44, i32 23, metadata !620, metadata !717}
-!721 = metadata !{i32 786688, metadata !620, metadata !"i", metadata !496, i32 44, metadata !110, i32 0, metadata !717} ; [ DW_TAG_auto_variable ]
-!722 = metadata !{i32 45, i32 3, metadata !620, metadata !717}
-!723 = metadata !{i32 46, i32 4, metadata !620, metadata !717}
-!724 = metadata !{i32 47, i32 3, metadata !620, metadata !717}
-!725 = metadata !{i32 786688, metadata !616, metadata !"toReturn", metadata !496, i32 26, metadata !110, i32 0, metadata !712} ; [ DW_TAG_auto_variable ]
-!726 = metadata !{i32 27, i32 3, metadata !616, metadata !712}
-!727 = metadata !{i32 28, i32 3, metadata !616, metadata !712}
-!728 = metadata !{i32 790535, metadata !605, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !712} ; [ DW_TAG_arg_variable_field_wo ]
-!729 = metadata !{i32 790535, metadata !605, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !712} ; [ DW_TAG_arg_variable_field_wo ]
-!730 = metadata !{i32 114, i32 2, metadata !693, null}
-!731 = metadata !{i32 116, i32 2, metadata !470, null}
-!732 = metadata !{i32 118, i32 2, metadata !470, null}
-!733 = metadata !{i32 1871, i32 9, metadata !654, metadata !734}
-!734 = metadata !{i32 120, i32 6, metadata !735, null}
-!735 = metadata !{i32 786443, metadata !470, i32 119, i32 2, metadata !79, i32 9} ; [ DW_TAG_lexical_block ]
-!736 = metadata !{i32 277, i32 10, metadata !659, metadata !737}
-!737 = metadata !{i32 123, i32 4, metadata !738, null}
-!738 = metadata !{i32 786443, metadata !735, i32 121, i32 3, metadata !79, i32 10} ; [ DW_TAG_lexical_block ]
-!739 = metadata !{i32 124, i32 3, metadata !738, null}
-!740 = metadata !{i32 127, i32 10, metadata !470, null}
-!741 = metadata !{i32 277, i32 10, metadata !659, metadata !742}
-!742 = metadata !{i32 129, i32 3, metadata !743, null}
-!743 = metadata !{i32 786443, metadata !470, i32 128, i32 2, metadata !79, i32 11} ; [ DW_TAG_lexical_block ]
-!744 = metadata !{i32 130, i32 2, metadata !743, null}
-!745 = metadata !{i32 136, i32 2, metadata !470, null}
-!746 = metadata !{i32 140, i32 7, metadata !470, null}
-!747 = metadata !{i32 140, i32 30, metadata !470, null}
-!748 = metadata !{i32 145, i32 2, metadata !470, null}
-!749 = metadata !{i32 147, i32 3, metadata !750, null}
-!750 = metadata !{i32 786443, metadata !470, i32 146, i32 2, metadata !79, i32 14} ; [ DW_TAG_lexical_block ]
-!751 = metadata !{i32 786688, metadata !470, metadata !"toReturn", metadata !79, i32 38, metadata !82, i32 0, i32 0} ; [ DW_TAG_auto_variable ]
-!752 = metadata !{i32 151, i32 2, metadata !470, null}
-!753 = metadata !{i32 153, i32 3, metadata !754, null}
-!754 = metadata !{i32 786443, metadata !470, i32 152, i32 2, metadata !79, i32 15} ; [ DW_TAG_lexical_block ]
-!755 = metadata !{i32 155, i32 2, metadata !470, null}
+!600 = metadata !{i32 790533, metadata !601, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !603} ; [ DW_TAG_arg_variable_field_ro ]
+!601 = metadata !{i32 786689, metadata !602, metadata !"this", metadata !496, i32 16777241, metadata !576, i32 64, i32 0} ; [ DW_TAG_arg_variable ]
+!602 = metadata !{i32 786478, i32 0, null, metadata !"pop", metadata !"pop", metadata !"_ZN14CircularBufferIiLi30EE3popEv", metadata !496, i32 25, metadata !569, i1 false, i1 true, i32 0, i32 0, null, i32 256, i1 false, null, null, metadata !568, metadata !101, i32 25} ; [ DW_TAG_subprogram ]
+!603 = metadata !{i32 81, i32 3, metadata !604, null}
+!604 = metadata !{i32 786443, metadata !470, i32 80, i32 2, metadata !79, i32 4} ; [ DW_TAG_lexical_block ]
+!605 = metadata !{i32 25, i32 4, metadata !602, metadata !603}
+!606 = metadata !{i32 790533, metadata !601, metadata !"CircularBuffer<int, 30>.head_i", null, i32 25, metadata !582, i32 0, metadata !603} ; [ DW_TAG_arg_variable_field_ro ]
+!607 = metadata !{i32 790533, metadata !601, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !603} ; [ DW_TAG_arg_variable_field_ro ]
+!608 = metadata !{i32 790533, metadata !609, metadata !"CircularBuffer<int, 30>.head_i", null, i32 41, metadata !582, i32 0, metadata !611} ; [ DW_TAG_arg_variable_field_ro ]
+!609 = metadata !{i32 786689, metadata !610, metadata !"this", metadata !496, i32 16777257, metadata !576, i32 64, i32 0} ; [ DW_TAG_arg_variable ]
+!610 = metadata !{i32 786478, i32 0, null, metadata !"tail", metadata !"tail", metadata !"_ZN14CircularBufferIiLi30EE4tailEv", metadata !496, i32 41, metadata !569, i1 false, i1 true, i32 0, i32 0, null, i32 256, i1 false, null, null, metadata !572, metadata !101, i32 41} ; [ DW_TAG_subprogram ]
+!611 = metadata !{i32 26, i32 16, metadata !612, metadata !603}
+!612 = metadata !{i32 786443, metadata !602, i32 25, i32 10, metadata !496, i32 19} ; [ DW_TAG_lexical_block ]
+!613 = metadata !{i32 41, i32 4, metadata !610, metadata !611}
+!614 = metadata !{i32 790533, metadata !609, metadata !"CircularBuffer<int, 30>.len", null, i32 41, metadata !586, i32 0, metadata !611} ; [ DW_TAG_arg_variable_field_ro ]
+!615 = metadata !{i32 44, i32 23, metadata !616, metadata !611}
+!616 = metadata !{i32 786443, metadata !610, i32 41, i32 11, metadata !496, i32 20} ; [ DW_TAG_lexical_block ]
+!617 = metadata !{i32 786688, metadata !616, metadata !"i", metadata !496, i32 44, metadata !110, i32 0, metadata !611} ; [ DW_TAG_auto_variable ]
+!618 = metadata !{i32 45, i32 3, metadata !616, metadata !611}
+!619 = metadata !{i32 46, i32 4, metadata !616, metadata !611}
+!620 = metadata !{i32 47, i32 3, metadata !616, metadata !611}
+!621 = metadata !{i32 786688, metadata !612, metadata !"toReturn", metadata !496, i32 26, metadata !110, i32 0, metadata !603} ; [ DW_TAG_auto_variable ]
+!622 = metadata !{i32 27, i32 3, metadata !612, metadata !603}
+!623 = metadata !{i32 28, i32 3, metadata !612, metadata !603}
+!624 = metadata !{i32 790535, metadata !601, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !603} ; [ DW_TAG_arg_variable_field_wo ]
+!625 = metadata !{i32 790535, metadata !601, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !603} ; [ DW_TAG_arg_variable_field_wo ]
+!626 = metadata !{i32 790533, metadata !601, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !627} ; [ DW_TAG_arg_variable_field_ro ]
+!627 = metadata !{i32 82, i32 3, metadata !604, null}
+!628 = metadata !{i32 25, i32 4, metadata !602, metadata !627}
+!629 = metadata !{i32 790533, metadata !601, metadata !"CircularBuffer<int, 30>.head_i", null, i32 25, metadata !582, i32 0, metadata !627} ; [ DW_TAG_arg_variable_field_ro ]
+!630 = metadata !{i32 790533, metadata !601, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !627} ; [ DW_TAG_arg_variable_field_ro ]
+!631 = metadata !{i32 790533, metadata !609, metadata !"CircularBuffer<int, 30>.head_i", null, i32 41, metadata !582, i32 0, metadata !632} ; [ DW_TAG_arg_variable_field_ro ]
+!632 = metadata !{i32 26, i32 16, metadata !612, metadata !627}
+!633 = metadata !{i32 41, i32 4, metadata !610, metadata !632}
+!634 = metadata !{i32 790533, metadata !609, metadata !"CircularBuffer<int, 30>.len", null, i32 41, metadata !586, i32 0, metadata !632} ; [ DW_TAG_arg_variable_field_ro ]
+!635 = metadata !{i32 44, i32 23, metadata !616, metadata !632}
+!636 = metadata !{i32 786688, metadata !616, metadata !"i", metadata !496, i32 44, metadata !110, i32 0, metadata !632} ; [ DW_TAG_auto_variable ]
+!637 = metadata !{i32 45, i32 3, metadata !616, metadata !632}
+!638 = metadata !{i32 46, i32 4, metadata !616, metadata !632}
+!639 = metadata !{i32 47, i32 3, metadata !616, metadata !632}
+!640 = metadata !{i32 786688, metadata !612, metadata !"toReturn", metadata !496, i32 26, metadata !110, i32 0, metadata !627} ; [ DW_TAG_auto_variable ]
+!641 = metadata !{i32 27, i32 3, metadata !612, metadata !627}
+!642 = metadata !{i32 28, i32 3, metadata !612, metadata !627}
+!643 = metadata !{i32 790535, metadata !601, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !627} ; [ DW_TAG_arg_variable_field_wo ]
+!644 = metadata !{i32 790535, metadata !601, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !627} ; [ DW_TAG_arg_variable_field_wo ]
+!645 = metadata !{i32 83, i32 2, metadata !604, null}
+!646 = metadata !{i32 786688, metadata !470, metadata !"sum", metadata !79, i32 86, metadata !110, i32 0, i32 0} ; [ DW_TAG_auto_variable ]
+!647 = metadata !{i32 86, i32 28, metadata !470, null}
+!648 = metadata !{i32 88, i32 2, metadata !470, null}
+!649 = metadata !{i32 1871, i32 9, metadata !650, metadata !652}
+!650 = metadata !{i32 786443, metadata !651, i32 1870, i32 68, metadata !89, i32 18} ; [ DW_TAG_lexical_block ]
+!651 = metadata !{i32 786478, i32 0, null, metadata !"operator!", metadata !"operator!", metadata !"_ZNK11ap_int_baseILi1ELb0ELb1EEntEv", metadata !89, i32 1870, metadata !248, i1 false, i1 true, i32 0, i32 0, null, i32 256, i1 false, null, null, metadata !320, metadata !101, i32 1870} ; [ DW_TAG_subprogram ]
+!652 = metadata !{i32 90, i32 6, metadata !653, null}
+!653 = metadata !{i32 786443, metadata !470, i32 89, i32 2, metadata !79, i32 5} ; [ DW_TAG_lexical_block ]
+!654 = metadata !{i32 277, i32 10, metadata !655, metadata !657}
+!655 = metadata !{i32 786443, metadata !656, i32 276, i32 92, metadata !85, i32 17} ; [ DW_TAG_lexical_block ]
+!656 = metadata !{i32 786478, i32 0, null, metadata !"operator=", metadata !"operator=", metadata !"_ZN7ap_uintILi1EEaSERKS0_", metadata !85, i32 276, metadata !451, i1 false, i1 true, i32 0, i32 0, null, i32 256, i1 false, null, null, metadata !450, metadata !101, i32 276} ; [ DW_TAG_subprogram ]
+!657 = metadata !{i32 93, i32 4, metadata !658, null}
+!658 = metadata !{i32 786443, metadata !653, i32 91, i32 3, metadata !79, i32 6} ; [ DW_TAG_lexical_block ]
+!659 = metadata !{i32 94, i32 3, metadata !658, null}
+!660 = metadata !{i32 96, i32 10, metadata !470, null}
+!661 = metadata !{i32 277, i32 10, metadata !655, metadata !662}
+!662 = metadata !{i32 99, i32 3, metadata !663, null}
+!663 = metadata !{i32 786443, metadata !470, i32 97, i32 2, metadata !79, i32 7} ; [ DW_TAG_lexical_block ]
+!664 = metadata !{i32 100, i32 2, metadata !663, null}
+!665 = metadata !{i32 53, i32 3, metadata !666, metadata !668}
+!666 = metadata !{i32 786443, metadata !667, i32 52, i32 12, metadata !496, i32 16} ; [ DW_TAG_lexical_block ]
+!667 = metadata !{i32 786478, i32 0, null, metadata !"ftail", metadata !"ftail", metadata !"_ZN14CircularBufferIiLi20EE5ftailEv", metadata !496, i32 52, metadata !514, i1 false, i1 true, i32 0, i32 0, null, i32 256, i1 false, null, null, metadata !518, metadata !101, i32 52} ; [ DW_TAG_subprogram ]
+!668 = metadata !{i32 103, i32 19, metadata !470, null}
+!669 = metadata !{i32 54, i32 4, metadata !666, metadata !668}
+!670 = metadata !{i32 786688, metadata !470, metadata !"datapointA", metadata !79, i32 103, metadata !110, i32 0, i32 0} ; [ DW_TAG_auto_variable ]
+!671 = metadata !{i32 105, i32 2, metadata !470, null}
+!672 = metadata !{i32 106, i32 3, metadata !470, null}
+!673 = metadata !{i32 108, i32 2, metadata !470, null}
+!674 = metadata !{i32 790533, metadata !550, metadata !"CircularBuffer<int, 30>.sum", null, i32 13, metadata !577, i32 0, metadata !673} ; [ DW_TAG_arg_variable_field_ro ]
+!675 = metadata !{i32 13, i32 7, metadata !551, metadata !673}
+!676 = metadata !{i32 790533, metadata !550, metadata !"CircularBuffer<int, 30>.head_i", null, i32 13, metadata !582, i32 0, metadata !673} ; [ DW_TAG_arg_variable_field_ro ]
+!677 = metadata !{i32 790533, metadata !550, metadata !"CircularBuffer<int, 30>.len", null, i32 13, metadata !586, i32 0, metadata !673} ; [ DW_TAG_arg_variable_field_ro ]
+!678 = metadata !{i32 786689, metadata !551, metadata !"val", metadata !496, i32 33554445, metadata !110, i32 0, metadata !673} ; [ DW_TAG_arg_variable ]
+!679 = metadata !{i32 13, i32 14, metadata !551, metadata !673}
+!680 = metadata !{i32 14, i32 3, metadata !592, metadata !673}
+!681 = metadata !{i32 15, i32 4, metadata !594, metadata !673}
+!682 = metadata !{i32 18, i32 3, metadata !592, metadata !673}
+!683 = metadata !{i32 19, i32 3, metadata !592, metadata !673}
+!684 = metadata !{i32 20, i32 3, metadata !592, metadata !673}
+!685 = metadata !{i32 21, i32 3, metadata !592, metadata !673}
+!686 = metadata !{i32 22, i32 3, metadata !592, metadata !673}
+!687 = metadata !{i32 790533, metadata !601, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !688} ; [ DW_TAG_arg_variable_field_ro ]
+!688 = metadata !{i32 112, i32 3, metadata !689, null}
+!689 = metadata !{i32 786443, metadata !470, i32 111, i32 2, metadata !79, i32 8} ; [ DW_TAG_lexical_block ]
+!690 = metadata !{i32 25, i32 4, metadata !602, metadata !688}
+!691 = metadata !{i32 790533, metadata !601, metadata !"CircularBuffer<int, 30>.head_i", null, i32 25, metadata !582, i32 0, metadata !688} ; [ DW_TAG_arg_variable_field_ro ]
+!692 = metadata !{i32 790533, metadata !601, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !688} ; [ DW_TAG_arg_variable_field_ro ]
+!693 = metadata !{i32 790533, metadata !609, metadata !"CircularBuffer<int, 30>.head_i", null, i32 41, metadata !582, i32 0, metadata !694} ; [ DW_TAG_arg_variable_field_ro ]
+!694 = metadata !{i32 26, i32 16, metadata !612, metadata !688}
+!695 = metadata !{i32 41, i32 4, metadata !610, metadata !694}
+!696 = metadata !{i32 790533, metadata !609, metadata !"CircularBuffer<int, 30>.len", null, i32 41, metadata !586, i32 0, metadata !694} ; [ DW_TAG_arg_variable_field_ro ]
+!697 = metadata !{i32 44, i32 23, metadata !616, metadata !694}
+!698 = metadata !{i32 786688, metadata !616, metadata !"i", metadata !496, i32 44, metadata !110, i32 0, metadata !694} ; [ DW_TAG_auto_variable ]
+!699 = metadata !{i32 45, i32 3, metadata !616, metadata !694}
+!700 = metadata !{i32 46, i32 4, metadata !616, metadata !694}
+!701 = metadata !{i32 47, i32 3, metadata !616, metadata !694}
+!702 = metadata !{i32 786688, metadata !612, metadata !"toReturn", metadata !496, i32 26, metadata !110, i32 0, metadata !688} ; [ DW_TAG_auto_variable ]
+!703 = metadata !{i32 27, i32 3, metadata !612, metadata !688}
+!704 = metadata !{i32 28, i32 3, metadata !612, metadata !688}
+!705 = metadata !{i32 790535, metadata !601, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !688} ; [ DW_TAG_arg_variable_field_wo ]
+!706 = metadata !{i32 790535, metadata !601, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !688} ; [ DW_TAG_arg_variable_field_wo ]
+!707 = metadata !{i32 790533, metadata !601, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !708} ; [ DW_TAG_arg_variable_field_ro ]
+!708 = metadata !{i32 113, i32 3, metadata !689, null}
+!709 = metadata !{i32 25, i32 4, metadata !602, metadata !708}
+!710 = metadata !{i32 790533, metadata !601, metadata !"CircularBuffer<int, 30>.head_i", null, i32 25, metadata !582, i32 0, metadata !708} ; [ DW_TAG_arg_variable_field_ro ]
+!711 = metadata !{i32 790533, metadata !601, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !708} ; [ DW_TAG_arg_variable_field_ro ]
+!712 = metadata !{i32 790533, metadata !609, metadata !"CircularBuffer<int, 30>.head_i", null, i32 41, metadata !582, i32 0, metadata !713} ; [ DW_TAG_arg_variable_field_ro ]
+!713 = metadata !{i32 26, i32 16, metadata !612, metadata !708}
+!714 = metadata !{i32 41, i32 4, metadata !610, metadata !713}
+!715 = metadata !{i32 790533, metadata !609, metadata !"CircularBuffer<int, 30>.len", null, i32 41, metadata !586, i32 0, metadata !713} ; [ DW_TAG_arg_variable_field_ro ]
+!716 = metadata !{i32 44, i32 23, metadata !616, metadata !713}
+!717 = metadata !{i32 786688, metadata !616, metadata !"i", metadata !496, i32 44, metadata !110, i32 0, metadata !713} ; [ DW_TAG_auto_variable ]
+!718 = metadata !{i32 45, i32 3, metadata !616, metadata !713}
+!719 = metadata !{i32 46, i32 4, metadata !616, metadata !713}
+!720 = metadata !{i32 47, i32 3, metadata !616, metadata !713}
+!721 = metadata !{i32 786688, metadata !612, metadata !"toReturn", metadata !496, i32 26, metadata !110, i32 0, metadata !708} ; [ DW_TAG_auto_variable ]
+!722 = metadata !{i32 27, i32 3, metadata !612, metadata !708}
+!723 = metadata !{i32 28, i32 3, metadata !612, metadata !708}
+!724 = metadata !{i32 790535, metadata !601, metadata !"CircularBuffer<int, 30>.sum", null, i32 25, metadata !577, i32 0, metadata !708} ; [ DW_TAG_arg_variable_field_wo ]
+!725 = metadata !{i32 790535, metadata !601, metadata !"CircularBuffer<int, 30>.len", null, i32 25, metadata !586, i32 0, metadata !708} ; [ DW_TAG_arg_variable_field_wo ]
+!726 = metadata !{i32 114, i32 2, metadata !689, null}
+!727 = metadata !{i32 116, i32 2, metadata !470, null}
+!728 = metadata !{i32 118, i32 2, metadata !470, null}
+!729 = metadata !{i32 1871, i32 9, metadata !650, metadata !730}
+!730 = metadata !{i32 120, i32 6, metadata !731, null}
+!731 = metadata !{i32 786443, metadata !470, i32 119, i32 2, metadata !79, i32 9} ; [ DW_TAG_lexical_block ]
+!732 = metadata !{i32 277, i32 10, metadata !655, metadata !733}
+!733 = metadata !{i32 123, i32 4, metadata !734, null}
+!734 = metadata !{i32 786443, metadata !731, i32 121, i32 3, metadata !79, i32 10} ; [ DW_TAG_lexical_block ]
+!735 = metadata !{i32 124, i32 3, metadata !734, null}
+!736 = metadata !{i32 127, i32 10, metadata !470, null}
+!737 = metadata !{i32 277, i32 10, metadata !655, metadata !738}
+!738 = metadata !{i32 129, i32 3, metadata !739, null}
+!739 = metadata !{i32 786443, metadata !470, i32 128, i32 2, metadata !79, i32 11} ; [ DW_TAG_lexical_block ]
+!740 = metadata !{i32 130, i32 2, metadata !739, null}
+!741 = metadata !{i32 136, i32 2, metadata !470, null}
+!742 = metadata !{i32 140, i32 7, metadata !470, null}
+!743 = metadata !{i32 140, i32 30, metadata !470, null}
+!744 = metadata !{i32 145, i32 2, metadata !470, null}
+!745 = metadata !{i32 147, i32 3, metadata !746, null}
+!746 = metadata !{i32 786443, metadata !470, i32 146, i32 2, metadata !79, i32 14} ; [ DW_TAG_lexical_block ]
+!747 = metadata !{i32 786688, metadata !470, metadata !"toReturn", metadata !79, i32 38, metadata !82, i32 0, i32 0} ; [ DW_TAG_auto_variable ]
+!748 = metadata !{i32 151, i32 2, metadata !470, null}
+!749 = metadata !{i32 42, i32 3, metadata !750, null}
+!750 = metadata !{i32 786443, metadata !470, i32 41, i32 2, metadata !79, i32 1} ; [ DW_TAG_lexical_block ]
+!751 = metadata !{i32 153, i32 3, metadata !752, null}
+!752 = metadata !{i32 786443, metadata !470, i32 152, i32 2, metadata !79, i32 15} ; [ DW_TAG_lexical_block ]
+!753 = metadata !{i32 47, i32 3, metadata !754, null}
+!754 = metadata !{i32 786443, metadata !470, i32 46, i32 2, metadata !79, i32 2} ; [ DW_TAG_lexical_block ]
+!755 = metadata !{i32 156, i32 2, metadata !470, null}

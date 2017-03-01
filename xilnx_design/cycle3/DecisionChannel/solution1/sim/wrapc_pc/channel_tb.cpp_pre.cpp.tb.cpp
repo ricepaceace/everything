@@ -33597,7 +33597,7 @@ int check()
    vpeaks ++;
   }
  }
- if(apeaks !=18) return 1;
+ if(apeaks !=16) return 1;
  if(vpeaks !=17) return 1;
 
  return 0;

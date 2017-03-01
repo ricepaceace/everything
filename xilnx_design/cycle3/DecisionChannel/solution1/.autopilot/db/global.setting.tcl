@@ -44,7 +44,7 @@ set TargetInfo "xc7z020:clg484:-1"
 set SourceFiles {sc {} c ../../src/hls/channel.cpp}
 set SourceFlags {sc {} c {{}}}
 set DirectiveFile {/home/greg/everything/xilnx_design/cycle3/DecisionChannel/solution1/solution1.directive}
-set TBFiles {verilog {../../src/hls/good-ch2.h ../../src/hls/channel_tb.cpp} bc {../../src/hls/good-ch2.h ../../src/hls/channel_tb.cpp} sc {../../src/hls/good-ch2.h ../../src/hls/channel_tb.cpp} vhdl {../../src/hls/good-ch2.h ../../src/hls/channel_tb.cpp} c {} cas {../../src/hls/good-ch2.h ../../src/hls/channel_tb.cpp}}
+set TBFiles {verilog {../../src/hls/channel_tb.cpp ../../src/hls/good-ch2.h} bc {../../src/hls/channel_tb.cpp ../../src/hls/good-ch2.h} sc {../../src/hls/channel_tb.cpp ../../src/hls/good-ch2.h} vhdl {../../src/hls/channel_tb.cpp ../../src/hls/good-ch2.h} c {} cas {../../src/hls/channel_tb.cpp ../../src/hls/good-ch2.h}}
 set SpecLanguage "C"
 set TVInFiles {bc {} c {} sc {} cas {} vhdl {} verilog {}}
 set TVOutFiles {bc {} c {} sc {} cas {} vhdl {} verilog {}}

@@ -33738,7 +33738,7 @@ short Decision(dbool reset_A, dbool reset_V, dbool reset_params, int athresh, in
 
  sum = recentABools.sum;
 
- if(sum > (ACaptureThresh >> 1) && VbeatDelay > VbeatFallDelay)
+ if(sum > (ACaptureThresh >> 1) && (VbeatDelay > VbeatFallDelay) && VbeatFallDelay > 250)
  {
   if(!last_sample_is_A)
   {
@@ -33768,15 +33768,16 @@ short Decision(dbool reset_A, dbool reset_V, dbool reset_params, int athresh, in
  if (AbeatDelay > 1000 && AstimDelay > ACaptureThresh)
  {
   toReturn |= 0x0F00;
-
+  AstimDelay = 0;
  }
 
  if (VbeatDelay > AbeatDelay && AbeatDelay > 900 && VstimDelay > VCaptureThresh)
  {
   toReturn |= 0X000F;
+  VstimDelay = 0;
  }
  return toReturn;
 }
 #undef Decision
 
-#156 "/home/greg/everything/xilnx_design/cycle3/src/hls/channel.cpp"
+#157 "/home/greg/everything/xilnx_design/cycle3/src/hls/channel.cpp"

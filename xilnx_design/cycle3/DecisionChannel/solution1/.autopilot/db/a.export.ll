@@ -129,7 +129,7 @@ codeRepl:
   %VstimDelay_load = load i32* @VstimDelay, align 4
   %ACaptureThresh_load = load i32* @ACaptureThresh, align 4
   %VCaptureThresh_load = load i32* @VCaptureThresh, align 4
-  br i1 %reset_params_V_read, label %0, label %._crit_edge47_ifconv
+  br i1 %reset_params_V_read, label %0, label %._crit_edge49_ifconv
 
 ; <label>:0                                       ; preds = %codeRepl
   store i32 %vthresh_read, i32* @v_thresh, align 4
@@ -138,9 +138,9 @@ codeRepl:
   store i8 %v_flip_read, i8* @vflip, align 1
   store i32 %a_length_read, i32* @ACaptureThresh, align 4
   store i32 %v_length_read, i32* @VCaptureThresh, align 4
-  br label %._crit_edge47_ifconv
+  br label %._crit_edge49_ifconv
 
-._crit_edge47_ifconv:                             ; preds = %0, %codeRepl
+._crit_edge49_ifconv:                             ; preds = %0, %codeRepl
   %ACaptureThresh_loc = phi i32 [ %a_length_read, %0 ], [ %ACaptureThresh_load, %codeRepl ]
   %VCaptureThresh_loc = phi i32 [ %v_length_read, %0 ], [ %VCaptureThresh_load, %codeRepl ]
   %recentdatapoints_len_load = load i32* @recentdatapoints_len, align 4
@@ -151,18 +151,18 @@ codeRepl:
   %recentdatapoints_data_addr = getelementptr [20 x i16]* @recentdatapoints_data, i64 0, i64 %tmp_i_7
   %recentdatapoints_data_load = load i16* %recentdatapoints_data_addr, align 2
   %extLd = sext i16 %recentdatapoints_data_load to i32
-  %tmp_34_i = sub nsw i32 %recentdatapoints_sum_load, %extLd
-  %recentdatapoints_sum_loc_i = select i1 %tmp_i, i32 %tmp_34_i, i32 %recentdatapoints_sum_load
+  %tmp_35_i = sub nsw i32 %recentdatapoints_sum_load, %extLd
+  %recentdatapoints_sum_loc_i = select i1 %tmp_i, i32 %tmp_35_i, i32 %recentdatapoints_sum_load
   store i16 %data_read, i16* %recentdatapoints_data_addr, align 2
-  %tmp_36_i = add nsw i32 %recentdatapoints_sum_loc_i, %val_assign
+  %tmp_37_i = add nsw i32 %recentdatapoints_sum_loc_i, %val_assign
   %recentdatapoints_len_load_op = add i32 %recentdatapoints_len_load, 1
-  %tmp_37_i = select i1 %tmp_i, i32 20, i32 %recentdatapoints_len_load_op
-  store i32 %tmp_37_i, i32* @recentdatapoints_len, align 4
-  %tmp_38_i = add nsw i32 %recentdatapoints_head_i_load, 1
-  %tmp_39_i = icmp eq i32 %tmp_38_i, 20
-  %p_tmp_i = select i1 %tmp_39_i, i32 0, i32 %tmp_38_i
+  %tmp_38_i = select i1 %tmp_i, i32 20, i32 %recentdatapoints_len_load_op
+  store i32 %tmp_38_i, i32* @recentdatapoints_len, align 4
+  %tmp_39_i = add nsw i32 %recentdatapoints_head_i_load, 1
+  %tmp_40_i = icmp eq i32 %tmp_39_i, 20
+  %p_tmp_i = select i1 %tmp_40_i, i32 0, i32 %tmp_39_i
   store i32 %p_tmp_i, i32* @recentdatapoints_head_i, align 4
-  store i32 %tmp_36_i, i32* @recentdatapoints_sum, align 4
+  store i32 %tmp_37_i, i32* @recentdatapoints_sum, align 4
   %AbeatDelay_load = load i32* @AbeatDelay, align 4
   %tmp_3 = add nsw i32 %AbeatDelay_load, 1
   %VbeatDelay_load = load i32* @VbeatDelay, align 4
@@ -173,13 +173,13 @@ codeRepl:
   %tmp_6 = select i1 %reset_A_V_read, i32 1, i32 %AstimDelay_load_op
   %VstimDelay_load_op = add i32 %VstimDelay_load, 1
   %tmp_7 = select i1 %reset_V_V_read, i32 1, i32 %VstimDelay_load_op
-  %tmp_i1 = icmp eq i32 %tmp_37_i, 0
+  %tmp_i1 = icmp eq i32 %tmp_38_i, 0
   %i = add nsw i32 %p_tmp_i, -1
   %tmp = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i, i32 31)
   %i_1 = add nsw i32 %p_tmp_i, 19
   %p_i = select i1 %tmp, i32 %i_1, i32 %i
-  %tmp_40_i = sext i32 %p_i to i64
-  %recentdatapoints_data_addr_1 = getelementptr [20 x i16]* @recentdatapoints_data, i64 0, i64 %tmp_40_i
+  %tmp_41_i = sext i32 %p_i to i64
+  %recentdatapoints_data_addr_1 = getelementptr [20 x i16]* @recentdatapoints_data, i64 0, i64 %tmp_41_i
   %recentdatapoints_data_load_1 = load i16* %recentdatapoints_data_addr_1, align 2
   %datapointV = select i1 %tmp_i1, i16 0, i16 %recentdatapoints_data_load_1
   %datapointV_cast = sext i16 %datapointV to i17
@@ -199,51 +199,49 @@ codeRepl:
   %recentVBools_data_addr = getelementptr [30 x i1]* @recentVBools_data, i64 0, i64 %tmp_i2_8
   %recentVBools_data_load = load i1* %recentVBools_data_addr, align 1
   %extLd1 = zext i1 %recentVBools_data_load to i32
-  %tmp_28_i = sub nsw i32 %recentVBools_sum_load, %extLd1
-  %CircularBuffer_int_30_sum_i = select i1 %tmp_i2, i32 %tmp_28_i, i32 %recentVBools_sum_load
+  %tmp_29_i = sub nsw i32 %recentVBools_sum_load, %extLd1
+  %CircularBuffer_int_30_sum_i = select i1 %tmp_i2, i32 %tmp_29_i, i32 %recentVBools_sum_load
   store i1 %tmp_s, i1* %recentVBools_data_addr, align 1
   %CircularBuffer_sum_read_assign = add nsw i32 %CircularBuffer_int_30_sum_i, %val_assign_1
   %CircularBuffer_len_read_assign = add i32 %recentVBools_len_load, 1
   %CircularBuffer_len_read_assign_1 = select i1 %tmp_i2, i32 30, i32 %CircularBuffer_len_read_assign
-  %tmp_32_i = add nsw i32 %recentVBools_head_i_load, 1
-  %tmp_33_i = icmp eq i32 %tmp_32_i, 30
-  %CircularBuffer_head_i_read_ass = select i1 %tmp_33_i, i32 0, i32 %tmp_32_i
+  %tmp_33_i = add nsw i32 %recentVBools_head_i_load, 1
+  %tmp_34_i = icmp eq i32 %tmp_33_i, 30
+  %CircularBuffer_head_i_read_ass = select i1 %tmp_34_i, i32 0, i32 %tmp_33_i
   store i32 %CircularBuffer_head_i_read_ass, i32* @recentVBools_head_i, align 4
   %tmp_8 = icmp sgt i32 %CircularBuffer_len_read_assign_1, %VCaptureThresh_loc
-  store i32 %tmp_7, i32* @VstimDelay, align 4
-  store i32 %tmp_6, i32* @AstimDelay, align 4
-  br i1 %tmp_8, label %1, label %._crit_edge48
+  br i1 %tmp_8, label %1, label %._crit_edge50
 
-; <label>:1                                       ; preds = %._crit_edge47_ifconv
+; <label>:1                                       ; preds = %._crit_edge49_ifconv
   %i_2 = sub nsw i32 %CircularBuffer_head_i_read_ass, %CircularBuffer_len_read_assign_1
-  %tmp_25 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_2, i32 31)
+  %tmp_26 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_2, i32 31)
   %i_3 = add nsw i32 %i_2, 30
-  %i_4 = select i1 %tmp_25, i32 %i_3, i32 %i_2
-  %tmp_27_i_i = sext i32 %i_4 to i64
-  %recentVBools_data_addr_1 = getelementptr [30 x i1]* @recentVBools_data, i64 0, i64 %tmp_27_i_i
+  %i_4 = select i1 %tmp_26, i32 %i_3, i32 %i_2
+  %tmp_28_i_i = sext i32 %i_4 to i64
+  %recentVBools_data_addr_1 = getelementptr [30 x i1]* @recentVBools_data, i64 0, i64 %tmp_28_i_i
   %recentVBools_data_load_1 = load i1* %recentVBools_data_addr_1, align 1
   %not_tmp_i_i = icmp ne i32 %CircularBuffer_len_read_assign_1, 0
-  %toReturn_4 = and i1 %recentVBools_data_load_1, %not_tmp_i_i
-  %toReturn_i_cast = zext i1 %toReturn_4 to i32
+  %toReturn_5 = and i1 %recentVBools_data_load_1, %not_tmp_i_i
+  %toReturn_i_cast = zext i1 %toReturn_5 to i32
   %CircularBuffer_sum_write_assig = sub nsw i32 %CircularBuffer_sum_read_assign, %toReturn_i_cast
   %CircularBuffer_len_write_assig = add nsw i32 %CircularBuffer_len_read_assign_1, -1
   %i_5 = sub nsw i32 %CircularBuffer_head_i_read_ass, %CircularBuffer_len_write_assig
-  %tmp_26 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_5, i32 31)
+  %tmp_27 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_5, i32 31)
   %i_6 = add nsw i32 %i_5, 30
-  %i_7 = select i1 %tmp_26, i32 %i_6, i32 %i_5
-  %tmp_27_i_i1 = sext i32 %i_7 to i64
-  %recentVBools_data_addr_2 = getelementptr [30 x i1]* @recentVBools_data, i64 0, i64 %tmp_27_i_i1
+  %i_7 = select i1 %tmp_27, i32 %i_6, i32 %i_5
+  %tmp_28_i_i9 = sext i32 %i_7 to i64
+  %recentVBools_data_addr_2 = getelementptr [30 x i1]* @recentVBools_data, i64 0, i64 %tmp_28_i_i9
   %recentVBools_data_load_2 = load i1* %recentVBools_data_addr_2, align 1
-  %not_tmp_i_i6 = icmp ne i32 %CircularBuffer_len_write_assig, 0
-  %toReturn_5 = and i1 %recentVBools_data_load_2, %not_tmp_i_i6
-  %toReturn_i14_cast = zext i1 %toReturn_5 to i32
-  %CircularBuffer_sum_write_assig_1 = sub nsw i32 %CircularBuffer_sum_write_assig, %toReturn_i14_cast
+  %not_tmp_i_i4 = icmp ne i32 %CircularBuffer_len_write_assig, 0
+  %toReturn_6 = and i1 %recentVBools_data_load_2, %not_tmp_i_i4
+  %toReturn_i12_cast = zext i1 %toReturn_6 to i32
+  %CircularBuffer_sum_write_assig_1 = sub nsw i32 %CircularBuffer_sum_write_assig, %toReturn_i12_cast
   %CircularBuffer_len_write_assig_1 = add nsw i32 %CircularBuffer_len_read_assign_1, -2
-  br label %._crit_edge48
+  br label %._crit_edge50
 
-._crit_edge48:                                    ; preds = %1, %._crit_edge47_ifconv
-  %sum = phi i32 [ %CircularBuffer_sum_write_assig_1, %1 ], [ %CircularBuffer_sum_read_assign, %._crit_edge47_ifconv ]
-  %recentVBools_len_new = phi i32 [ %CircularBuffer_len_write_assig_1, %1 ], [ %CircularBuffer_len_read_assign_1, %._crit_edge47_ifconv ]
+._crit_edge50:                                    ; preds = %1, %._crit_edge49_ifconv
+  %sum = phi i32 [ %CircularBuffer_sum_write_assig_1, %1 ], [ %CircularBuffer_sum_read_assign, %._crit_edge49_ifconv ]
+  %recentVBools_len_new = phi i32 [ %CircularBuffer_len_write_assig_1, %1 ], [ %CircularBuffer_len_read_assign_1, %._crit_edge49_ifconv ]
   %tmp_1 = call i31 @_ssdm_op_PartSelect.i31.i32.i32.i32(i32 %VCaptureThresh_loc, i32 1, i32 31)
   %tmp_2 = sext i31 %tmp_1 to i32
   %tmp_10 = icmp sgt i32 %sum, %tmp_2
@@ -252,25 +250,25 @@ codeRepl:
   %last_sample_is_V_V_load = load i1* @last_sample_is_V_V, align 1
   br i1 %tmp_10, label %2, label %4
 
-; <label>:2                                       ; preds = %._crit_edge48
-  br i1 %last_sample_is_V_V_load, label %._crit_edge49_ifconv, label %3
+; <label>:2                                       ; preds = %._crit_edge50
+  br i1 %last_sample_is_V_V_load, label %._crit_edge51_ifconv, label %3
 
 ; <label>:3                                       ; preds = %2
   store i1 true, i1* @last_sample_is_V_V, align 1
-  br label %._crit_edge49_ifconv
+  br label %._crit_edge51_ifconv
 
-; <label>:4                                       ; preds = %._crit_edge48
-  br i1 %last_sample_is_V_V_load, label %5, label %._crit_edge49_ifconv
+; <label>:4                                       ; preds = %._crit_edge50
+  br i1 %last_sample_is_V_V_load, label %5, label %._crit_edge51_ifconv
 
 ; <label>:5                                       ; preds = %4
   store i1 false, i1* @last_sample_is_V_V, align 1
-  br label %._crit_edge49_ifconv
+  br label %._crit_edge51_ifconv
 
-._crit_edge49_ifconv:                             ; preds = %5, %4, %3, %2
+._crit_edge51_ifconv:                             ; preds = %5, %4, %3, %2
   %VbeatDelay_new_1 = phi i32 [ %tmp_4, %2 ], [ 0, %3 ], [ %tmp_4, %5 ], [ %tmp_4, %4 ]
   %VbeatFallDelay_new_1 = phi i32 [ %tmp_5, %2 ], [ %tmp_5, %3 ], [ 0, %5 ], [ %tmp_5, %4 ]
   %last_sample_is_V_V_loc_2 = phi i1 [ %last_sample_is_V_V_load, %2 ], [ true, %3 ], [ false, %5 ], [ %last_sample_is_V_V_load, %4 ]
-  %tmp_i3 = icmp eq i32 %tmp_37_i, 20
+  %tmp_i3 = icmp eq i32 %tmp_38_i, 20
   %tmp_i3_9 = sext i32 %p_tmp_i to i64
   %recentdatapoints_data_addr_2 = getelementptr [20 x i16]* @recentdatapoints_data, i64 0, i64 %tmp_i3_9
   %recentdatapoints_data_load_2 = load i16* %recentdatapoints_data_addr_2, align 2
@@ -292,103 +290,111 @@ codeRepl:
   %recentABools_data_addr = getelementptr [30 x i1]* @recentABools_data, i64 0, i64 %tmp_i4_10
   %recentABools_data_load = load i1* %recentABools_data_addr, align 1
   %extLd2 = zext i1 %recentABools_data_load to i32
-  %tmp_28_i1 = sub nsw i32 %recentABools_sum_load, %extLd2
-  %CircularBuffer_int_30_sum_i1 = select i1 %tmp_i4, i32 %tmp_28_i1, i32 %recentABools_sum_load
+  %tmp_29_i1 = sub nsw i32 %recentABools_sum_load, %extLd2
+  %CircularBuffer_int_30_sum_i1 = select i1 %tmp_i4, i32 %tmp_29_i1, i32 %recentABools_sum_load
   store i1 %tmp_12, i1* %recentABools_data_addr, align 1
   %CircularBuffer_sum_read_assign_1 = add nsw i32 %CircularBuffer_int_30_sum_i1, %val_assign_2
   %CircularBuffer_len_read_assign_2 = add i32 %recentABools_len_load, 1
   %CircularBuffer_len_read_assign_3 = select i1 %tmp_i4, i32 30, i32 %CircularBuffer_len_read_assign_2
-  %tmp_32_i1 = add nsw i32 %recentABools_head_i_load, 1
-  %tmp_33_i1 = icmp eq i32 %tmp_32_i1, 30
-  %CircularBuffer_head_i_read_ass_1 = select i1 %tmp_33_i1, i32 0, i32 %tmp_32_i1
+  %tmp_33_i1 = add nsw i32 %recentABools_head_i_load, 1
+  %tmp_34_i1 = icmp eq i32 %tmp_33_i1, 30
+  %CircularBuffer_head_i_read_ass_1 = select i1 %tmp_34_i1, i32 0, i32 %tmp_33_i1
   store i32 %CircularBuffer_head_i_read_ass_1, i32* @recentABools_head_i, align 4
   %tmp_13 = icmp sgt i32 %CircularBuffer_len_read_assign_3, %ACaptureThresh_loc
   store i32 %VbeatFallDelay_new_1, i32* @VbeatFallDelay, align 4
   store i32 %VbeatDelay_new_1, i32* @VbeatDelay, align 4
-  br i1 %tmp_13, label %6, label %._crit_edge51
+  br i1 %tmp_13, label %6, label %._crit_edge53
 
-; <label>:6                                       ; preds = %._crit_edge49_ifconv
+; <label>:6                                       ; preds = %._crit_edge51_ifconv
   %i_8 = sub nsw i32 %CircularBuffer_head_i_read_ass_1, %CircularBuffer_len_read_assign_3
-  %tmp_27 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_8, i32 31)
+  %tmp_28 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_8, i32 31)
   %i_9 = add nsw i32 %i_8, 30
-  %i_10 = select i1 %tmp_27, i32 %i_9, i32 %i_8
-  %tmp_27_i_i2 = sext i32 %i_10 to i64
-  %recentABools_data_addr_1 = getelementptr [30 x i1]* @recentABools_data, i64 0, i64 %tmp_27_i_i2
+  %i_10 = select i1 %tmp_28, i32 %i_9, i32 %i_8
+  %tmp_28_i_i1 = sext i32 %i_10 to i64
+  %recentABools_data_addr_1 = getelementptr [30 x i1]* @recentABools_data, i64 0, i64 %tmp_28_i_i1
   %recentABools_data_load_1 = load i1* %recentABools_data_addr_1, align 1
   %not_tmp_i_i1 = icmp ne i32 %CircularBuffer_len_read_assign_3, 0
-  %toReturn_6 = and i1 %recentABools_data_load_1, %not_tmp_i_i1
-  %toReturn_i27_cast = zext i1 %toReturn_6 to i32
-  %CircularBuffer_sum_write_assig_2 = sub nsw i32 %CircularBuffer_sum_read_assign_1, %toReturn_i27_cast
+  %toReturn_7 = and i1 %recentABools_data_load_1, %not_tmp_i_i1
+  %toReturn_i25_cast = zext i1 %toReturn_7 to i32
+  %CircularBuffer_sum_write_assig_2 = sub nsw i32 %CircularBuffer_sum_read_assign_1, %toReturn_i25_cast
   %CircularBuffer_len_write_assig_2 = add nsw i32 %CircularBuffer_len_read_assign_3, -1
   %i_11 = sub nsw i32 %CircularBuffer_head_i_read_ass_1, %CircularBuffer_len_write_assig_2
-  %tmp_28 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_11, i32 31)
+  %tmp_29 = call i1 @_ssdm_op_BitSelect.i1.i32.i32(i32 %i_11, i32 31)
   %i_12 = add nsw i32 %i_11, 30
-  %i_13 = select i1 %tmp_28, i32 %i_12, i32 %i_11
-  %tmp_27_i_i3 = sext i32 %i_13 to i64
-  %recentABools_data_addr_2 = getelementptr [30 x i1]* @recentABools_data, i64 0, i64 %tmp_27_i_i3
+  %i_13 = select i1 %tmp_29, i32 %i_12, i32 %i_11
+  %tmp_28_i_i2 = sext i32 %i_13 to i64
+  %recentABools_data_addr_2 = getelementptr [30 x i1]* @recentABools_data, i64 0, i64 %tmp_28_i_i2
   %recentABools_data_load_2 = load i1* %recentABools_data_addr_2, align 1
   %not_tmp_i_i2 = icmp ne i32 %CircularBuffer_len_write_assig_2, 0
-  %toReturn_7 = and i1 %recentABools_data_load_2, %not_tmp_i_i2
-  %toReturn_i40_cast = zext i1 %toReturn_7 to i32
-  %CircularBuffer_sum_write_assig_3 = sub nsw i32 %CircularBuffer_sum_write_assig_2, %toReturn_i40_cast
+  %toReturn_8 = and i1 %recentABools_data_load_2, %not_tmp_i_i2
+  %toReturn_i38_cast = zext i1 %toReturn_8 to i32
+  %CircularBuffer_sum_write_assig_3 = sub nsw i32 %CircularBuffer_sum_write_assig_2, %toReturn_i38_cast
   %CircularBuffer_len_write_assig_3 = add nsw i32 %CircularBuffer_len_read_assign_3, -2
-  br label %._crit_edge51
+  br label %._crit_edge53
 
-._crit_edge51:                                    ; preds = %6, %._crit_edge49_ifconv
-  %sum_1 = phi i32 [ %CircularBuffer_sum_write_assig_3, %6 ], [ %CircularBuffer_sum_read_assign_1, %._crit_edge49_ifconv ]
-  %recentABools_len_new = phi i32 [ %CircularBuffer_len_write_assig_3, %6 ], [ %CircularBuffer_len_read_assign_3, %._crit_edge49_ifconv ]
+._crit_edge53:                                    ; preds = %6, %._crit_edge51_ifconv
+  %sum_1 = phi i32 [ %CircularBuffer_sum_write_assig_3, %6 ], [ %CircularBuffer_sum_read_assign_1, %._crit_edge51_ifconv ]
+  %recentABools_len_new = phi i32 [ %CircularBuffer_len_write_assig_3, %6 ], [ %CircularBuffer_len_read_assign_3, %._crit_edge51_ifconv ]
   %tmp_14 = call i31 @_ssdm_op_PartSelect.i31.i32.i32.i32(i32 %ACaptureThresh_loc, i32 1, i32 31)
   %tmp_15 = sext i31 %tmp_14 to i32
   %tmp_16 = icmp sgt i32 %sum_1, %tmp_15
   store i32 %recentABools_len_new, i32* @recentABools_len, align 4
   store i32 %sum_1, i32* @recentABools_sum, align 4
   %last_sample_is_A_V_load = load i1* @last_sample_is_A_V, align 1
-  %tmp_17 = icmp sgt i32 %VbeatDelay_new_1, %VbeatFallDelay_new_1
-  %or_cond1 = and i1 %tmp_16, %tmp_17
-  br i1 %or_cond1, label %7, label %._crit_edge52
+  br i1 %tmp_16, label %7, label %._crit_edge54
 
-; <label>:7                                       ; preds = %._crit_edge51
-  br i1 %last_sample_is_A_V_load, label %._crit_edge54_ifconv, label %8
+; <label>:7                                       ; preds = %._crit_edge53
+  %tmp_17 = icmp sgt i32 %VbeatDelay_new_1, %VbeatFallDelay_new_1
+  %tmp_18 = icmp sgt i32 %VbeatFallDelay_new_1, 250
+  %or_cond = and i1 %tmp_17, %tmp_18
+  br i1 %or_cond, label %8, label %._crit_edge54
 
 ; <label>:8                                       ; preds = %7
+  br i1 %last_sample_is_A_V_load, label %._crit_edge56_ifconv, label %9
+
+; <label>:9                                       ; preds = %8
   store i1 true, i1* @last_sample_is_A_V, align 1
-  br label %._crit_edge54_ifconv
+  br label %._crit_edge56_ifconv
 
-._crit_edge52:                                    ; preds = %._crit_edge51
-  br i1 %last_sample_is_A_V_load, label %9, label %._crit_edge54_ifconv
+._crit_edge54:                                    ; preds = %7, %._crit_edge53
+  br i1 %last_sample_is_A_V_load, label %10, label %._crit_edge56_ifconv
 
-; <label>:9                                       ; preds = %._crit_edge52
+; <label>:10                                      ; preds = %._crit_edge54
   store i1 false, i1* @last_sample_is_A_V, align 1
-  br label %._crit_edge54_ifconv
+  br label %._crit_edge56_ifconv
 
-._crit_edge54_ifconv:                             ; preds = %9, %._crit_edge52, %8, %7
-  %AbeatDelay_new = phi i32 [ %tmp_3, %7 ], [ 0, %8 ], [ %tmp_3, %9 ], [ %tmp_3, %._crit_edge52 ]
-  %tmp_18 = phi i1 [ %last_sample_is_A_V_load, %7 ], [ true, %8 ], [ false, %9 ], [ %last_sample_is_A_V_load, %._crit_edge52 ]
+._crit_edge56_ifconv:                             ; preds = %10, %._crit_edge54, %9, %8
+  %AbeatDelay_new = phi i32 [ %tmp_3, %8 ], [ 0, %9 ], [ %tmp_3, %10 ], [ %tmp_3, %._crit_edge54 ]
+  %tmp_19 = phi i1 [ %last_sample_is_A_V_load, %8 ], [ true, %9 ], [ false, %10 ], [ %last_sample_is_A_V_load, %._crit_edge54 ]
   store i32 %AbeatDelay_new, i32* @AbeatDelay, align 4
-  %tmp_20_not = icmp ne i32 %VbeatDelay_new_1, 0
+  %tmp_21_not = icmp ne i32 %VbeatDelay_new_1, 0
   %last_sample_is_V_V_loc_2_not = xor i1 %last_sample_is_V_V_loc_2, true
-  %brmerge = or i1 %tmp_20_not, %last_sample_is_V_V_loc_2_not
-  %tmp_19 = icmp eq i32 %AbeatDelay_new, 0
-  %p_2 = select i1 %tmp_18, i13 -4096, i13 0
-  %sel_tmp = and i1 %brmerge, %tmp_19
+  %brmerge = or i1 %tmp_21_not, %last_sample_is_V_V_loc_2_not
+  %tmp_20 = icmp eq i32 %AbeatDelay_new, 0
+  %p_2 = select i1 %tmp_19, i13 -4096, i13 0
+  %sel_tmp = and i1 %brmerge, %tmp_20
   %sel_tmp1 = select i1 %sel_tmp, i13 %p_2, i13 0
-  %tmp_20_not_not = xor i1 %tmp_20_not, true
-  %sel_tmp2 = and i1 %last_sample_is_V_V_loc_2, %tmp_20_not_not
+  %tmp_21_not_not = xor i1 %tmp_21_not, true
+  %sel_tmp2 = and i1 %last_sample_is_V_V_loc_2, %tmp_21_not_not
   %toReturn_1 = select i1 %sel_tmp2, i13 240, i13 %sel_tmp1
-  %tmp_20 = icmp sgt i32 %AbeatDelay_new, 1000
-  %tmp_21 = icmp sgt i32 %tmp_6, %ACaptureThresh_loc
+  %tmp_21 = icmp sgt i32 %AbeatDelay_new, 1000
+  %tmp_22 = icmp sgt i32 %tmp_6, %ACaptureThresh_loc
+  %or_cond1 = and i1 %tmp_21, %tmp_22
   %toReturn = or i13 %toReturn_1, 3840
-  %p_toReturn_1 = select i1 %tmp_21, i13 %toReturn, i13 %toReturn_1
-  %toReturn_2 = select i1 %tmp_20, i13 %p_toReturn_1, i13 %toReturn_1
-  %tmp_22 = icmp sgt i32 %VbeatDelay_new_1, %AbeatDelay_new
-  %tmp_23 = icmp sgt i32 %AbeatDelay_new, 900
-  %or_cond = and i1 %tmp_22, %tmp_23
-  %tmp_24 = icmp sgt i32 %tmp_7, %VCaptureThresh_loc
-  %toReturn_3 = or i13 %toReturn_2, 15
-  %p_toReturn_2 = select i1 %tmp_24, i13 %toReturn_3, i13 %toReturn_2
-  %UnifiedRetVal = select i1 %or_cond, i13 %p_toReturn_2, i13 %toReturn_2
-  %UnifiedRetVal_cast = sext i13 %UnifiedRetVal to i16
-  ret i16 %UnifiedRetVal_cast
+  %AstimDelay_new = select i1 %or_cond1, i32 0, i32 %tmp_6
+  %toReturn_2 = select i1 %or_cond1, i13 %toReturn, i13 %toReturn_1
+  %tmp_23 = icmp sgt i32 %VbeatDelay_new_1, %AbeatDelay_new
+  %tmp_24 = icmp sgt i32 %AbeatDelay_new, 900
+  store i32 %AstimDelay_new, i32* @AstimDelay, align 4
+  %tmp_25 = icmp sgt i32 %tmp_7, %VCaptureThresh_loc
+  %tmp1 = and i1 %tmp_24, %tmp_25
+  %or_cond3 = and i1 %tmp1, %tmp_23
+  %toReturn_4 = or i13 %toReturn_2, 15
+  %VstimDelay_new = select i1 %or_cond3, i32 0, i32 %tmp_7
+  %toReturn_3 = select i1 %or_cond3, i13 %toReturn_4, i13 %toReturn_2
+  %toReturn_3_cast = sext i13 %toReturn_3 to i16
+  store i32 %VstimDelay_new, i32* @VstimDelay, align 4
+  ret i16 %toReturn_3_cast
 }
 
 !opencl.kernels = !{!0, !7, !13, !7, !7, !7, !19, !7, !19, !7, !7, !7, !19, !19, !7, !7, !7, !7}

@@ -100,16 +100,6 @@ vcom -work xil_defaultlib -64 \
 "../../../bd/full_system/ip/full_system_axi_max11100_0_2/sim/full_system_axi_max11100_0_2.vhd" \
 "../../../bd/full_system/ip/full_system_axi_max11100_0_3/sim/full_system_axi_max11100_0_3.vhd" \
 
-vlog -work xil_defaultlib -64 "+incdir+../../../ipstatic/axi_infrastructure_v1_1/hdl/verilog" "+incdir+../../../ipstatic/processing_system7_bfm_v2_0/hdl" "+incdir+../../../ipstatic/axi_infrastructure_v1_1/hdl/verilog" "+incdir+../../../ipstatic/processing_system7_bfm_v2_0/hdl" \
-"../../../../fullPrototype.srcs/sources_1/bd/full_system/ipshared/paceace/decision_v1_0/hdl/verilog/Decision_AXILiteS_s_axi.v" \
-"../../../../fullPrototype.srcs/sources_1/bd/full_system/ipshared/paceace/decision_v1_0/hdl/verilog/Decision.v" \
-"../../../../fullPrototype.srcs/sources_1/bd/full_system/ipshared/paceace/decision_v1_0/hdl/verilog/Decision_recentdatapoints_data.v" \
-"../../../../fullPrototype.srcs/sources_1/bd/full_system/ipshared/paceace/decision_v1_0/hdl/verilog/Decision_recentVBools_data.v" \
-"../../../bd/full_system/ip/full_system_Decision_0_0/sim/full_system_Decision_0_0.v" \
-"../../../bd/full_system/ip/full_system_Decision_0_1/sim/full_system_Decision_0_1.v" \
-"../../../bd/full_system/ip/full_system_Decision_0_2/sim/full_system_Decision_0_2.v" \
-"../../../bd/full_system/ip/full_system_Decision_0_3/sim/full_system_Decision_0_3.v" \
-
 vcom -work axi_lite_ipif_v3_0_4 -64 \
 "../../../ipstatic/axi_lite_ipif_v3_0/hdl/src/vhdl/ipif_pkg.vhd" \
 "../../../ipstatic/axi_lite_ipif_v3_0/hdl/src/vhdl/pselect_f.vhd" \
@@ -220,6 +210,15 @@ vlog -work axi_crossbar_v2_1_10 -64 "+incdir+../../../ipstatic/axi_infrastructur
 
 vlog -work xil_defaultlib -64 "+incdir+../../../ipstatic/axi_infrastructure_v1_1/hdl/verilog" "+incdir+../../../ipstatic/processing_system7_bfm_v2_0/hdl" "+incdir+../../../ipstatic/axi_infrastructure_v1_1/hdl/verilog" "+incdir+../../../ipstatic/processing_system7_bfm_v2_0/hdl" \
 "../../../bd/full_system/ip/full_system_xbar_0/sim/full_system_xbar_0.v" \
+"../../../bd/full_system/hdl/full_system.v" \
+"../../../../fullPrototype.srcs/sources_1/bd/full_system/ipshared/paceace/decision_v1_0/hdl/verilog/Decision_AXILiteS_s_axi.v" \
+"../../../../fullPrototype.srcs/sources_1/bd/full_system/ipshared/paceace/decision_v1_0/hdl/verilog/Decision.v" \
+"../../../../fullPrototype.srcs/sources_1/bd/full_system/ipshared/paceace/decision_v1_0/hdl/verilog/Decision_recentdatapoints_data.v" \
+"../../../../fullPrototype.srcs/sources_1/bd/full_system/ipshared/paceace/decision_v1_0/hdl/verilog/Decision_recentVBools_data.v" \
+"../../../bd/full_system/ip/full_system_Decision_0_4/sim/full_system_Decision_0_4.v" \
+"../../../bd/full_system/ip/full_system_Decision_0_5/sim/full_system_Decision_0_5.v" \
+"../../../bd/full_system/ip/full_system_Decision_0_6/sim/full_system_Decision_0_6.v" \
+"../../../bd/full_system/ip/full_system_Decision_0_7/sim/full_system_Decision_0_7.v" \
 
 vlog -work axi_protocol_converter_v2_1_9 -64 "+incdir+../../../ipstatic/axi_infrastructure_v1_1/hdl/verilog" "+incdir+../../../ipstatic/processing_system7_bfm_v2_0/hdl" "+incdir+../../../ipstatic/axi_infrastructure_v1_1/hdl/verilog" "+incdir+../../../ipstatic/processing_system7_bfm_v2_0/hdl" \
 "../../../ipstatic/axi_protocol_converter_v2_1/hdl/verilog/axi_protocol_converter_v2_1_a_axi3_conv.v" \
@@ -244,7 +243,6 @@ vlog -work axi_protocol_converter_v2_1_9 -64 "+incdir+../../../ipstatic/axi_infr
 
 vlog -work xil_defaultlib -64 "+incdir+../../../ipstatic/axi_infrastructure_v1_1/hdl/verilog" "+incdir+../../../ipstatic/processing_system7_bfm_v2_0/hdl" "+incdir+../../../ipstatic/axi_infrastructure_v1_1/hdl/verilog" "+incdir+../../../ipstatic/processing_system7_bfm_v2_0/hdl" \
 "../../../bd/full_system/ip/full_system_auto_pc_0/sim/full_system_auto_pc_0.v" \
-"../../../bd/full_system/hdl/full_system.v" \
 
 vlog -work xil_defaultlib "glbl.v"
 

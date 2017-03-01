@@ -1,7 +1,7 @@
 Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2016.2 (lin64) Build 1577090 Thu Jun  2 16:32:35 MDT 2016
-| Date             : Tue Feb 28 08:53:35 2017
+| Date             : Tue Feb 28 22:00:29 2017
 | Host             : gregbox running 64-bit Ubuntu 16.04.2 LTS
 | Command          : report_power -file full_system_wrapper_power_routed.rpt -pb full_system_wrapper_power_summary_routed.pb -rpx full_system_wrapper_power_routed.rpx
 | Design           : full_system_wrapper
@@ -30,12 +30,12 @@ Table of Contents
 ----------
 
 +--------------------------+-------+
-| Total On-Chip Power (W)  | 1.765 |
-| Dynamic (W)              | 1.606 |
+| Total On-Chip Power (W)  | 1.758 |
+| Dynamic (W)              | 1.600 |
 | Device Static (W)        | 0.158 |
 | Effective TJA (C/W)      | 11.5  |
-| Max Ambient (C)          | 64.6  |
-| Junction Temperature (C) | 45.4  |
+| Max Ambient (C)          | 64.7  |
+| Junction Temperature (C) | 45.3  |
 | Confidence Level         | Low   |
 | Setting File             | ---   |
 | Simulation Activity File | ---   |
@@ -49,20 +49,20 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.026 |        3 |       --- |             --- |
-| Slice Logic              |     0.022 |    20936 |       --- |             --- |
-|   LUT as Logic           |     0.019 |     8693 |     53200 |           16.34 |
-|   CARRY4                 |     0.003 |     1246 |     13300 |            9.37 |
-|   Register               |    <0.001 |     8453 |    106400 |            7.94 |
+| Clocks                   |     0.025 |        3 |       --- |             --- |
+| Slice Logic              |     0.019 |    20976 |       --- |             --- |
+|   LUT as Logic           |     0.015 |     8538 |     53200 |           16.05 |
+|   CARRY4                 |     0.003 |     1262 |     13300 |            9.49 |
+|   Register               |    <0.001 |     8589 |    106400 |            8.07 |
 |   LUT as Distributed RAM |    <0.001 |      160 |     17400 |            0.92 |
 |   LUT as Shift Register  |    <0.001 |       68 |     17400 |            0.39 |
 |   F7/F8 Muxes            |    <0.001 |        1 |     53200 |           <0.01 |
 |   Others                 |     0.000 |      327 |       --- |             --- |
-| Signals                  |     0.026 |    14907 |       --- |             --- |
-| I/O                      |     0.005 |       25 |       200 |           12.50 |
+| Signals                  |     0.022 |    15183 |       --- |             --- |
+| I/O                      |     0.006 |       25 |       200 |           12.50 |
 | PS7                      |     1.527 |        1 |       --- |             --- |
 | Static Power             |     0.158 |          |           |                 |
-| Total                    |     1.765 |          |           |                 |
+| Total                    |     1.758 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -72,9 +72,9 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.090 |       0.074 |      0.015 |
+| Vccint    |       1.000 |     0.082 |       0.066 |      0.015 |
 | Vccaux    |       1.800 |     0.021 |       0.000 |      0.021 |
-| Vcco33    |       3.300 |     0.002 |       0.001 |      0.001 |
+| Vcco33    |       3.300 |     0.003 |       0.002 |      0.001 |
 | Vcco25    |       2.500 |     0.001 |       0.000 |      0.001 |
 | Vcco18    |       1.800 |     0.001 |       0.000 |      0.001 |
 | Vcco15    |       1.500 |     0.001 |       0.000 |      0.001 |
@@ -148,10 +148,10 @@ Table of Contents
 +-----------------------------------------------------------------------------+-----------+
 | Name                                                                        | Power (W) |
 +-----------------------------------------------------------------------------+-----------+
-| full_system_wrapper                                                         |     1.606 |
-|   full_system_i                                                             |     1.602 |
-|     Decision_0                                                              |     0.014 |
-|       inst                                                                  |     0.014 |
+| full_system_wrapper                                                         |     1.600 |
+|   full_system_i                                                             |     1.593 |
+|     Decision_0                                                              |     0.012 |
+|       inst                                                                  |     0.012 |
 |         Decision_AXILiteS_s_axi_U                                           |     0.001 |
 |         recentABools_data_U                                                 |    <0.001 |
 |           Decision_recentVBools_data_ram_U                                  |    <0.001 |
@@ -195,8 +195,8 @@ Table of Contents
 |             ram_reg_0_15_0_0__7                                             |    <0.001 |
 |             ram_reg_0_15_0_0__8                                             |    <0.001 |
 |             ram_reg_0_15_0_0__9                                             |    <0.001 |
-|     Decision_1                                                              |     0.014 |
-|       inst                                                                  |     0.014 |
+|     Decision_1                                                              |     0.012 |
+|       inst                                                                  |     0.012 |
 |         Decision_AXILiteS_s_axi_U                                           |     0.001 |
 |         recentABools_data_U                                                 |    <0.001 |
 |           Decision_recentVBools_data_ram_U                                  |    <0.001 |
@@ -240,8 +240,8 @@ Table of Contents
 |             ram_reg_0_15_0_0__7                                             |    <0.001 |
 |             ram_reg_0_15_0_0__8                                             |    <0.001 |
 |             ram_reg_0_15_0_0__9                                             |    <0.001 |
-|     Decision_2                                                              |     0.014 |
-|       inst                                                                  |     0.014 |
+|     Decision_2                                                              |     0.012 |
+|       inst                                                                  |     0.012 |
 |         Decision_AXILiteS_s_axi_U                                           |     0.001 |
 |         recentABools_data_U                                                 |    <0.001 |
 |           Decision_recentVBools_data_ram_U                                  |    <0.001 |
@@ -285,8 +285,8 @@ Table of Contents
 |             ram_reg_0_15_0_0__7                                             |    <0.001 |
 |             ram_reg_0_15_0_0__8                                             |    <0.001 |
 |             ram_reg_0_15_0_0__9                                             |    <0.001 |
-|     Decision_3                                                              |     0.014 |
-|       inst                                                                  |     0.014 |
+|     Decision_3                                                              |     0.012 |
+|       inst                                                                  |     0.012 |
 |         Decision_AXILiteS_s_axi_U                                           |     0.001 |
 |         recentABools_data_U                                                 |    <0.001 |
 |           Decision_recentVBools_data_ram_U                                  |    <0.001 |
@@ -373,17 +373,17 @@ Table of Contents
 |               MEM_DECODE_GEN[0].PER_CE_GEN[5].MULTIPLE_CES_THIS_CS_GEN.CE_I |     0.000 |
 |               MEM_DECODE_GEN[0].PER_CE_GEN[6].MULTIPLE_CES_THIS_CS_GEN.CE_I |     0.000 |
 |               MEM_DECODE_GEN[0].PER_CE_GEN[7].MULTIPLE_CES_THIS_CS_GEN.CE_I |     0.000 |
-|         TC_CORE_I                                                           |     0.003 |
+|         TC_CORE_I                                                           |     0.002 |
 |           COUNTER_0_I                                                       |    <0.001 |
 |             COUNTER_I                                                       |    <0.001 |
-|           GEN_SECOND_TIMER.COUNTER_1_I                                      |     0.002 |
+|           GEN_SECOND_TIMER.COUNTER_1_I                                      |     0.001 |
 |             COUNTER_I                                                       |     0.001 |
 |           READ_MUX_I                                                        |     0.000 |
 |           TIMER_CONTROL_I                                                   |    <0.001 |
 |             INPUT_DOUBLE_REGS3                                              |    <0.001 |
 |     processing_system7_0                                                    |     1.530 |
 |       inst                                                                  |     1.530 |
-|     processing_system7_0_axi_periph                                         |     0.006 |
+|     processing_system7_0_axi_periph                                         |     0.005 |
 |       s00_couplers                                                          |     0.004 |
 |         auto_pc                                                             |     0.004 |
 |           inst                                                              |     0.004 |
@@ -409,10 +409,10 @@ Table of Contents
 |               WR.b_channel_0                                                |    <0.001 |
 |                 bid_fifo_0                                                  |    <0.001 |
 |                 bresp_fifo_0                                                |    <0.001 |
-|       xbar                                                                  |     0.002 |
-|         inst                                                                |     0.002 |
-|           gen_sasd.crossbar_sasd_0                                          |     0.002 |
-|             addr_arbiter_inst                                               |     0.001 |
+|       xbar                                                                  |     0.001 |
+|         inst                                                                |     0.001 |
+|           gen_sasd.crossbar_sasd_0                                          |     0.001 |
+|             addr_arbiter_inst                                               |    <0.001 |
 |             gen_decerr.decerr_slave_inst                                    |    <0.001 |
 |             reg_slice_r                                                     |    <0.001 |
 |             splitter_ar                                                     |    <0.001 |

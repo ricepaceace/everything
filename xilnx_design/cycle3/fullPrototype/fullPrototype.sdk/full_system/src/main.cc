@@ -152,19 +152,15 @@ int main()
 
 	newms = false;
 	int i = 0;
-	unsigned short max_val[4] = {0,0,0,0};
 	while(i < PARAM_LEARN_SIZE)
 	{
 		if(newms)
 		{
 			results[0][i] = get_sample(0);
-			if(results[0][i] > max_val[0]) max_val[0] = results[0][i];
+			xil_printf("%d\r\n", results[0][i]);
 			results[1][i] = get_sample(1);
-			if(results[1][i] > max_val[1]) max_val[1] = results[1][i];
 			results[2][i] = get_sample(2);
-			if(results[2][i] > max_val[2]) max_val[2] = results[2][i];
 			results[3][i] = get_sample(3);
-			if(results[3][i] > max_val[3]) max_val[3] = results[3][i];
 
 			i++;
 			newms = false;
@@ -173,10 +169,10 @@ int main()
 
 	for(i = 0; i < PARAM_LEARN_SIZE;i++)
 	{
-		cen[0][i] = (short)((int)results[0][i] - (int)max_val[0]);
-		cen[1][i] = (short)((int)results[1][i] - (int)max_val[1]);
-		cen[2][i] = (short)((int)results[2][i] - (int)max_val[2]);
-		cen[3][i] = (short)((int)results[3][i] - (int)max_val[3]);
+		cen[0][i] = (short)((int)results[0][i] - 32768);
+		cen[1][i] = (short)((int)results[1][i] - 32768);
+		cen[2][i] = (short)((int)results[2][i] - 32768);
+		cen[3][i] = (short)((int)results[3][i] - 32768);
 	}
 	xil_printf("-- Data Gathering Complete! --\r\n");
 	xil_printf("-- Press btn 1 to  run parameter learning\r\n");
@@ -192,55 +188,33 @@ int main()
 
 
 	unsigned short r[4];
-	bool v = false;
-	bool a = false;
-	short on_a = 0;
-	short on_v = 0;
-	unsigned char towrite;
+	unsigned long long on_a = 0;
+	unsigned long long on_v = 0;
 	newms = false;
 	while(1)
 	{
 		if(newms)
 		{
 			newms = false;
-			r[0] = read_chan(&Xsdc0, (short)((int)get_sample(0) - (int)max_val[0]));
-			r[1] = read_chan(&Xsdc1, (short)((int)get_sample(1) - (int)max_val[1]));
-			r[2] = read_chan(&Xsdc2, (short)((int)get_sample(2) - (int)max_val[2]));
-			r[3] = read_chan(&Xsdc3, (short)((int)get_sample(3) - (int)max_val[3]));
-			for(i = 0; i <4;i++)
+			r[0] = read_chan(&Xsdc0, (short)((int)get_sample(0) - 32768));
+			if(!(r[0] & 0xf0f0))
 			{
-				if(((unsigned short)r[i] & IS_V) == 1)
-					v = true;
-				if(((unsigned short)r[i] & IS_A) == 1)
-					a = true;
 			}
-			if(v)
-				on_v = 1;
-			if(a)
-				on_a = 1;
-			towrite = 0;
-			if(on_v > 0 && on_v <300)
+			else if (r[0] == 240)
 			{
-				towrite += (1<<2);
-				on_v++;
+				on_v = ms +10;
+				XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, 0x10); // e.g. this writes a 1 to pin 1 (starting from 0)
+
 			}
 			else
 			{
-				on_v = 0;
+				on_a = ms+10;
+				XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, 0x40); // e.g. this writes a 1 to pin 1 (starting from 0)
 			}
-			if(on_a > 0 && on_a <300)
+			if(ms == on_a || ms == on_v)
 			{
-				towrite += (1<<6);
-				on_a++;
-			}
-			else
-			{
-				on_a = 0;
-			}
-			if(towrite)
-				XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, towrite); // e.g. this writes a 1 to pin 1 (starting from 0)
-			else
 				 XGpio_DiscreteClear(&stim, GPIO_CHANNEL, 0xFF);
+			}
 			if(btn_value ==1)
 				break;
 

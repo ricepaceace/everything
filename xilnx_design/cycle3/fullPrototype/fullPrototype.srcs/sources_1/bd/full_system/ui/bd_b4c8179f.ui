@@ -18,9 +18,9 @@ preplace port MISO_2 -pg 1 -y 1290 -defaultsOSRD
 preplace port GPIO -pg 1 -y 1090 -defaultsOSRD
 preplace port MISO_3 -pg 1 -y 1400 -defaultsOSRD
 preplace inst Decision_0 -pg 1 -lvl 4 -y 70 -defaultsOSRD
+preplace inst Decision_1 -pg 1 -lvl 4 -y 200 -defaultsOSRD
 preplace inst rst_processing_system7_0_100M -pg 1 -lvl 2 -y 980 -defaultsOSRD
 preplace inst stim -pg 1 -lvl 4 -y 1090 -defaultsOSRD
-preplace inst Decision_1 -pg 1 -lvl 4 -y 200 -defaultsOSRD
 preplace inst axi_max11100_0 -pg 1 -lvl 4 -y 740 -defaultsOSRD
 preplace inst Decision_2 -pg 1 -lvl 4 -y 330 -defaultsOSRD
 preplace inst axi_max11100_1 -pg 1 -lvl 4 -y 1580 -defaultsOSRD
@@ -32,50 +32,50 @@ preplace inst axi_max11100_3 -pg 1 -lvl 4 -y 1410 -defaultsOSRD
 preplace inst axi_btns -pg 1 -lvl 4 -y 590 -defaultsOSRD
 preplace inst processing_system7_0_axi_periph -pg 1 -lvl 3 -y 810 -defaultsOSRD
 preplace inst processing_system7_0 -pg 1 -lvl 2 -y 1180 -defaultsOSRD
-preplace netloc processing_system7_0_axi_periph_M09_AXI 1 3 1 1060
-preplace netloc processing_system7_0_DDR 1 2 3 NJ 1490 NJ 1490 NJ
+preplace netloc processing_system7_0_DDR 1 2 3 NJ 1140 NJ 1490 NJ
+preplace netloc processing_system7_0_axi_periph_M09_AXI 1 3 1 1080
 preplace netloc axi_max11100_0_SCLK 1 4 1 NJ
-preplace netloc processing_system7_0_axi_periph_M08_AXI 1 3 1 1000
-preplace netloc processing_system7_0_axi_periph_M03_AXI 1 3 1 990
+preplace netloc processing_system7_0_axi_periph_M08_AXI 1 3 1 1030
+preplace netloc processing_system7_0_axi_periph_M03_AXI 1 3 1 1010
 preplace netloc processing_system7_0_axi_periph_M00_AXI 1 3 1 N
-preplace netloc processing_system7_0_axi_periph_M07_AXI 1 3 1 1030
-preplace netloc processing_system7_0_M_AXI_GP0 1 2 1 630
+preplace netloc processing_system7_0_axi_periph_M07_AXI 1 3 1 1050
+preplace netloc processing_system7_0_M_AXI_GP0 1 2 1 670
 preplace netloc axi_max11100_2_SCLK 1 4 1 NJ
-preplace netloc processing_system7_0_axi_periph_M05_AXI 1 3 1 980
-preplace netloc axi_max11100_3_IP_INTR 1 0 5 40 1330 NJ 1330 NJ 1330 NJ 1330 1390
+preplace netloc processing_system7_0_axi_periph_M05_AXI 1 3 1 1000
+preplace netloc axi_max11100_3_IP_INTR 1 0 5 40 1330 NJ 1330 NJ 1330 NJ 1330 1400
 preplace netloc axi_max11100_1_CS 1 4 1 NJ
 preplace netloc MISO_1_1 1 0 4 NJ 1570 NJ 1570 NJ 1570 NJ
-preplace netloc processing_system7_0_FCLK_RESET0_N 1 1 2 240 1090 620
-preplace netloc axi_max11100_2_IP_INTR 1 0 5 30 1320 NJ 1320 NJ 1320 NJ 1320 1390
-preplace netloc processing_system7_0_axi_periph_M02_AXI 1 3 1 1020
+preplace netloc processing_system7_0_FCLK_RESET0_N 1 1 2 250 1090 630
+preplace netloc axi_max11100_2_IP_INTR 1 0 5 30 1320 NJ 1320 NJ 1320 NJ 1320 1400
+preplace netloc processing_system7_0_axi_periph_M02_AXI 1 3 1 1040
 preplace netloc axi_max11100_3_CS 1 4 1 NJ
-preplace netloc rst_processing_system7_0_100M_peripheral_aresetn 1 2 2 670 1140 1050
-preplace netloc processing_system7_0_axi_periph_M06_AXI 1 3 1 1000
+preplace netloc rst_processing_system7_0_100M_peripheral_aresetn 1 2 2 690 490 1070
+preplace netloc processing_system7_0_axi_periph_M06_AXI 1 3 1 1030
 preplace netloc xlconcat_0_dout 1 1 1 220
-preplace netloc MISO_2_1 1 0 4 NJ 1290 NJ 1290 NJ 1230 NJ
+preplace netloc MISO_2_1 1 0 4 NJ 1060 NJ 1070 NJ 1230 NJ
 preplace netloc processing_system7_0_FIXED_IO 1 2 3 NJ 1160 NJ 1160 NJ
-preplace netloc axi_gpio_1_ip2intc_irpt 1 0 5 30 480 NJ 480 NJ 480 NJ 660 1390
+preplace netloc axi_gpio_1_ip2intc_irpt 1 0 5 30 450 NJ 450 NJ 450 NJ 660 1400
 preplace netloc axi_gpio_0_GPIO 1 4 1 NJ
-preplace netloc processing_system7_0_axi_periph_M10_AXI 1 3 1 1070
-preplace netloc MISO_1 1 0 4 NJ 1270 NJ 1270 NJ 1220 NJ
+preplace netloc processing_system7_0_axi_periph_M10_AXI 1 3 1 1100
+preplace netloc MISO_1 1 0 4 NJ 440 NJ 440 NJ 440 NJ
 preplace netloc axi_max11100_0_CS 1 4 1 NJ
-preplace netloc rst_processing_system7_0_100M_interconnect_aresetn 1 2 1 640
-preplace netloc processing_system7_0_FCLK_CLK0 1 1 3 230 1070 650 1170 1040
+preplace netloc rst_processing_system7_0_100M_interconnect_aresetn 1 2 1 680
+preplace netloc processing_system7_0_FCLK_CLK0 1 1 3 240 890 660 480 1060
 preplace netloc axi_gpio_1_GPIO 1 4 1 NJ
-preplace netloc axi_max11100_1_IP_INTR 1 0 5 20 1500 NJ 1500 NJ 1500 NJ 1500 1390
-preplace netloc axi_max11100_0_IP_INTR 1 0 5 20 490 NJ 490 NJ 490 NJ 820 1390
+preplace netloc axi_max11100_1_IP_INTR 1 0 5 20 1500 NJ 1500 NJ 1500 NJ 1500 1400
+preplace netloc axi_max11100_0_IP_INTR 1 0 5 20 470 NJ 470 NJ 470 NJ 820 1400
 preplace netloc axi_max11100_3_SCLK 1 4 1 NJ
 preplace netloc axi_max11100_2_CS 1 4 1 NJ
-preplace netloc processing_system7_0_axi_periph_M04_AXI 1 3 1 970
-preplace netloc processing_system7_0_axi_periph_M01_AXI 1 3 1 1010
-preplace netloc axi_timer_0_interrupt 1 0 5 40 1070 NJ 1080 NJ 1130 NJ 1020 1390
+preplace netloc processing_system7_0_axi_periph_M04_AXI 1 3 1 990
+preplace netloc processing_system7_0_axi_periph_M01_AXI 1 3 1 1020
+preplace netloc axi_timer_0_interrupt 1 0 5 40 1070 NJ 1080 NJ 1130 NJ 1020 1400
 preplace netloc MISO_3_1 1 0 4 NJ 1400 NJ 1400 NJ 1400 NJ
 preplace netloc axi_max11100_1_SCLK 1 4 1 NJ
-levelinfo -pg 1 0 130 430 820 1240 1410 -top 0 -bot 1660
+levelinfo -pg 1 -20 130 440 840 1250 1420 -top 0 -bot 1660
 ",
 }
 {
-   da_axi4_cnt: "11",
+   da_axi4_cnt: "15",
    da_board_cnt: "2",
    da_ps7_cnt: "1",
 }

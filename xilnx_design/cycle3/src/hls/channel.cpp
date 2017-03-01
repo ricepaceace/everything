@@ -115,7 +115,7 @@ short Decision(dbool reset_A, dbool reset_V, dbool reset_params, int athresh, in
 
 	sum = recentABools.sum;
 
-	if(sum > (ACaptureThresh >> 1) && VbeatDelay > VbeatFallDelay)
+	if(sum > (ACaptureThresh >> 1) && (VbeatDelay > VbeatFallDelay)  && VbeatFallDelay > POSTVARP)
 	{
 		if(!last_sample_is_A)
 		{
@@ -145,12 +145,13 @@ short Decision(dbool reset_A, dbool reset_V, dbool reset_params, int athresh, in
 	if (AbeatDelay > AA_DELAY_THRESH && AstimDelay > ACaptureThresh)
 	{
 		toReturn |= A_ST;
-
+		AstimDelay = 0;
 	}
 
 	if (VbeatDelay > AbeatDelay && AbeatDelay > AV_DELAY_THRESH && VstimDelay > VCaptureThresh)
 	{
 		toReturn |= V_ST;
+		VstimDelay = 0;
 	}
 	return toReturn;
 }

@@ -72,7 +72,7 @@ Time: 14401615 ns  Iteration: 1  Process: /apatb_Decision_top/generate_sim_done_
 Failure: NORMAL EXIT (note: failure is to force the simulator to stop)
 Time: 14401615 ns  Iteration: 1  Process: /apatb_Decision_top/generate_sim_done_proc  File: /home/greg/everything/xilnx_design/cycle3/DecisionChannel/solution1/sim/vhdl/Decision.autotb.vhd
 $finish called at time : 14401615 ns
-run: Time (s): cpu = 00:00:00 ; elapsed = 00:00:23 . Memory (MB): peak = 252.152 ; gain = 0.000 ; free physical = 1594 ; free virtual = 33776
+run: Time (s): cpu = 00:00:00 ; elapsed = 00:00:23 . Memory (MB): peak = 252.156 ; gain = 0.000 ; free physical = 4565 ; free virtual = 35348
 ## quit
-INFO: [Common 17-206] Exiting xsim at Tue Feb 28 07:22:31 2017...
+INFO: [Common 17-206] Exiting xsim at Tue Feb 28 21:38:24 2017...
 @I [SIM-1000] *** C/RTL co-simulation finished: PASS ***
