@@ -28,20 +28,19 @@ b2 = fir1(1000,150/Fs);
 %%% run on each channel individually
 ainds = zeros(numChannels, 1);
 vinds = zeros(numChannels, 1);
-for i=9%1:numChannels
+for i=1:numChannels
     data(:,i) = filter(b,1,data(:,i));
     data(:,i) = filter(b2,1,data(:,i));
-%     detection.a_length = 30;
-%     detection.v_length = 11;
-    [d.v_length, d.a_length, d.v_thresh, d.a_thresh, d.vflip, d.aflip, d.v_first] = LearnParameters(data(:,i));
+    [d.v_thresh, d.a_thresh, d.vflip, d.aflip, d.v_length, d.a_length d.v_first] = LearnParameters(data(:,i));
     [vind, aind] = one_chamber_peak_finder(d, data(:,i));
-    
         
     figure; hold on;
     plot(data(:,i),'b');
     plot(vind, d.v_thresh*d.vflip, 'or');
     plot(aind, d.a_thresh*d.aflip, 'xk');
-    title(['Channel' num2str(i)])
+    title(['Channel' num2str(i)],'Fontsize',18)
+    %legend({'input waveform','detected ventricles','detected atria'},'Fontsize',18)
+    xlabel('time (samples)','Fontsize',14)
     
     ainds(i) = length(aind);
     vinds(i) = length(vind);
