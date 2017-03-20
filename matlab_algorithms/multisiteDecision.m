@@ -41,7 +41,7 @@ b2 = fir1(500,150/Fs);
 %~~~~~~~~~~~~~~~~~~~~~
 %Channel Parameters
 %~~~~~~~~~~~~~~~~~~~~~
-numChannels = 3;
+%numChannels = 3;
 ds = repmat(struct(), numChannels, 1);
 aSumofVote = [];
 vSumofVote = [];
@@ -61,19 +61,26 @@ for k = 1:numChannels
     ds(k).AbeatDelay = 0;
     ds(k).VbeatDelay = 0;
     ds(k).VbeatFallDelay = 0;
+    ds(k).AbeatFallDelay = 0;
     ds(k).AstimDelay = 0;
     ds(k).VstimDelay = 0;
     ds(k).ACaptureThresh = ds(k).a_length;
     ds(k).VCaptureThresh = ds(k).v_length;
     ds(k).PostVARP = 250;
     ds(k).PreVARP = 20;
+    ds(k).PostAVRP = 100;
+    ds(k).PreAVRP = 20;
     
     %these are used for doing real time detection
     ds(k).recentVBools = zeros(1,ds(k).v_length); %all the recent samples needed to do real time filtering
     ds(k).recentABools = zeros(1,ds(k).a_length); %all the recent samples needed to do real time filtering
     ds(k).last_sample_is_V = false;
     ds(k).last_sample_is_A = false;
-    ds(k).recentdatapoints = zeros(1,ds(k).PreVARP);
+    if ds(k).v_first
+        ds(k).recentdatapoints = zeros(1,ds(k).PreVARP);
+    else
+        ds(k).recentdatapoints = zeros(1,ds(k).PreAVRP);
+    end
     ds(k).aWeight = 1/numChannels;
     ds(k).vWeight = 1/numChannels;
     ds(k).AbeatWeighted = false;
@@ -108,6 +115,7 @@ for i = 1:numSamples
         
         ds(k).AbeatDelay = ds(k).AbeatDelay + 1;
         ds(k).VbeatDelay = ds(k).VbeatDelay + 1;
+        ds(k).AbeatFallDelay = ds(k).AbeatFallDelay + 1;
         ds(k).VbeatFallDelay = ds(k).VbeatFallDelay + 1;
         ds(k).AstimDelay = ds(k).AstimDelay + 1;
         ds(k).VstimDelay = ds(k).VstimDelay + 1;
@@ -324,7 +332,7 @@ end
 function newW = adjustWeightFn(oldW,correct,numChannels)
     if ~correct
         %newW = sig(oldW-1/numChannels-1)*2/numChannels;
-        newW = oldW*0.7;
+        newW = oldW*0.9;
     else
         %newW = sig(oldW-1/numChannels+1)*2/numChannels;
         newW = oldW+0.01;
