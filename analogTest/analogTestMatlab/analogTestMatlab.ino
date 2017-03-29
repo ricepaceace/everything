@@ -5,8 +5,9 @@
 int outPins[] = {9, 10, 11, 12};
 
 const byte ch1[] PROGMEM =  {
-#include "rounded-ch1.h"
+#include "rounded-ch5.h"
 };
+
 const byte ch2[] PROGMEM =  {
 #include "rounded-ch2.h"
 };
@@ -43,14 +44,12 @@ void loop() {
  
   incomingVal = pgm_read_byte_near(&(ch1[i]));
    analogWrite(outPins[0], incomingVal);
-
    incomingVal = pgm_read_byte_near(&(ch2[i]));
    analogWrite(outPins[1], incomingVal);
    incomingVal = pgm_read_byte_near(&(ch3[i]));
    analogWrite(outPins[2], incomingVal);
    incomingVal = pgm_read_byte_near(&(ch4[i]));
-   analogWrite(outPins[3], incomingVal);
-  
+   analogWrite(outPins[3], incomingVal);  
   i++;
  
   finish = micros();
