@@ -117,9 +117,17 @@ int multisiteDecision(void)
 				STATUS_PRINT("Found A beat");
 
 		}
+		int aPacingVoteCount = 0;
 		for(i = 0; i < NUM_CHANNELS; i++)
 		{
 			if (detects[i].AbeatDelay > AA_DELAY_THRESH && detects[i].AstimDelay > detects[i].ACaptureThresh)
+			{
+				aPacingVoteCount++;
+			}
+		}
+		if (aPacingVoteCount >= NUM_CHANNELS/2)
+		{
+			for(i = 0; i < NUM_CHANNELS; i++)
 			{
 				if (detects[i].AstimDelay == detects[i].ACaptureThresh+1)
 				{
@@ -132,13 +140,21 @@ int multisiteDecision(void)
 				{
 				    detects[j].AstimDelay = 0;
 				}
-				break;
 			}
 		}
 
+
+		int vPacingVoteCount = 0;
 		for(i = 0; i < NUM_CHANNELS; i++)
 		{
 			if (detects[i].VbeatDelay > detects[i].AbeatDelay && detects[i].AbeatDelay > AV_DELAY_THRESH && detects[i].VstimDelay > detects[i].VCaptureThresh)
+			{
+				vPacingVoteCount++;
+			}
+		}
+		if (vPacingVoteCount >= NUM_CHANNELS/2)
+		{
+			for(i = 0; i < NUM_CHANNELS; i++)
 			{
 				if (detects[i].VstimDelay == detects[i].VCaptureThresh+1)
 				{
@@ -151,7 +167,6 @@ int multisiteDecision(void)
 				{
 					detects[j].VstimDelay = 0;
 				}
-				break;
 			 }
 		}
    #ifdef ANALOG

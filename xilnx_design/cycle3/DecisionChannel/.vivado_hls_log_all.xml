@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vivadoHLSLog:LogRoot xmlns:vivadoHLSLog="www.xilinx.com/vivadoHLSLog">
+  <errorLogs>
+    <logs>
+      <synLog/>
+      <simLog/>
+      <mgLog/>
+      <packageLog/>
+      <csimLog/>
+    </logs>
+  </errorLogs>
+  <warningLogs>
+    <logs>
+      <synLog>
+        <logs message="WARNING: [RTGEN 206-101] Register 'last_sample_is_A_V' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.257-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'recentABools_len' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.252-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'recentABools_head_i' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.247-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'recentABools_sum' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.242-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'last_sample_is_V_V' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.236-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'recentVBools_len' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.231-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'recentVBools_head_i' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.225-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'recentVBools_sum' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.220-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'VbeatFallDelay' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.212-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'VbeatDelay' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.207-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'AbeatDelay' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.202-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'recentdatapoints_sum' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.198-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'recentdatapoints_head_i' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.194-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'recentdatapoints_len' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.190-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'vflip' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.185-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'aflip' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.181-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'a_thresh' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.178-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'v_thresh' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.174-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'VCaptureThresh' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.170-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'ACaptureThresh' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.166-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'VstimDelay' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.164-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'AstimDelay' is power-on initialization." projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:19.160-0600" type="Warning"/>
+      </synLog>
+      <simLog>
+        <logs message="WARNING: [XSIM 43-3431] One or more environment variables have been detected which affect the operation of the C compiler. These are typically not set in standard installations and are not tested by Xilinx, however they may be appropriate for your system, so the flow will attempt to continue.  If errors occur, try running fuse with the &quot;-mt off -v 1&quot; switches to see more information from the C compiler. The following environment variables have been detected:&#xA;    LIBRARY_PATH" projectName="DecisionChannel" solutionName="solution1" date="2017-02-28T21:37:58.490-0600" type="Warning"/>
+      </simLog>
+      <mgLog/>
+      <packageLog/>
+      <csimLog/>
+    </logs>
+  </warningLogs>
+</vivadoHLSLog:LogRoot>

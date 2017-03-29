@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2016.2 (64-bit)
+# SW Build 1577090 on Thu Jun  2 16:32:35 MDT 2016
+# IP Build 1577682 on Fri Jun  3 12:00:54 MDT 2016
+# Start of session at: Tue Feb 28 21:52:24 2017
+# Process ID: 28203
+# Current directory: /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.runs/synth_1
+# Command line: vivado -log full_system_wrapper.vds -mode batch -messageDb vivado.pb -notrace -source full_system_wrapper.tcl
+# Log file: /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.runs/synth_1/full_system_wrapper.vds
+# Journal file: /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.runs/synth_1/vivado.jou
+#-----------------------------------------------------------
+source full_system_wrapper.tcl -notrace

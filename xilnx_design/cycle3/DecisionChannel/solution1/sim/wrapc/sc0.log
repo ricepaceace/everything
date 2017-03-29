@@ -1,0 +1,5 @@
+   Build using "/opt/Xilinx/Vivado_HLS/2016.2/lnx64/tools/gcc/bin/g++"
+   Compiling channel.cpp_pre.cpp.tb.cpp
+   Compiling apatb_Decision.cpp
+   Compiling channel_tb.cpp_pre.cpp.tb.cpp
+   Generating cosim.tv.exe

@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# xsim v2016.2 (64-bit)
+# SW Build 1577090 on Thu Jun  2 16:32:35 MDT 2016
+# IP Build 1577682 on Fri Jun  3 12:00:54 MDT 2016
+# Start of session at: Tue Feb 28 21:37:59 2017
+# Process ID: 26184
+# Current directory: /home/greg/everything/xilnx_design/cycle3/DecisionChannel/solution1/sim/vhdl
+# Command line: xsim -mode tcl -source {xsim.dir/Decision/xsim_script.tcl}
+# Log file: /home/greg/everything/xilnx_design/cycle3/DecisionChannel/solution1/sim/vhdl/xsim.log
+# Journal file: /home/greg/everything/xilnx_design/cycle3/DecisionChannel/solution1/sim/vhdl/xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/Decision/xsim_script.tcl
+source Decision.tcl

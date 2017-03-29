@@ -1,0 +1,1100 @@
+22:33:05 **** Clean-only build of configuration Debug for project full_system ****
+make clean 
+rm -rf  ./src/main.d  ./src/axi_max11100.o ./src/main.o ./src/platform.o  ./src/axi_max11100.d ./src/platform.d  full_system.elf.size  full_system.elf
+ 
+22:33:05 **** Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/axi_max11100.c
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/axi_max11100.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/axi_max11100.d" -MT"src/axi_max11100.o" -o "src/axi_max11100.o" "../src/axi_max11100.c"
+../src/axi_max11100.c:63:13: warning: ‘void AXI_MAX11100_Write_Delay_Reg(u32, u32)’ defined but not used [-Wunused-function]
+ static void AXI_MAX11100_Write_Delay_Reg(u32 BaseAddress, u32 Value)
+             ^
+../src/axi_max11100.c:81:13: warning: ‘void AXI_MAX11100_Interrupt_Enable(u32)’ defined but not used [-Wunused-function]
+ static void AXI_MAX11100_Interrupt_Enable(u32 BaseAddress)
+             ^
+Finished building: ../src/axi_max11100.c
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘void chan_param(char)’:
+../src/main.cc:75:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_vthresh(sdc0, vthresh[i]);
+                                       ^
+../src/main.cc:76:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_athresh(sdc0, athresh[i]);
+                                       ^
+../src/main.cc:77:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_flip(sdc0, vflip[i]);
+                                    ^
+../src/main.cc:78:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_flip(sdc0, aflip[i]);
+                                    ^
+../src/main.cc:79:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_length(sdc0, alen[i]);
+                                     ^
+../src/main.cc:80:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_length(sdc0, vlen[i]);
+                                     ^
+../src/main.cc: In function ‘int main()’:
+../src/main.cc:191:7: warning: unused variable ‘v’ [-Wunused-variable]
+  bool v = false;
+       ^
+../src/main.cc:192:7: warning: unused variable ‘a’ [-Wunused-variable]
+  bool a = false;
+       ^
+../src/main.cc:193:8: warning: unused variable ‘on_a’ [-Wunused-variable]
+  short on_a = 0;
+        ^
+../src/main.cc:194:8: warning: unused variable ‘on_v’ [-Wunused-variable]
+  short on_v = 0;
+        ^
+../src/main.cc:195:16: warning: unused variable ‘towrite’ [-Wunused-variable]
+  unsigned char towrite;
+                ^
+Finished building: ../src/main.cc
+ 
+Building file: ../src/platform.c
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+Finished building: ../src/platform.c
+ 
+Building target: full_system.elf
+Invoking: ARM v7 g++ linker
+arm-none-eabi-g++ -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../full_system_test_bsp/ps7_cortexa9_0/lib -o "full_system.elf"  ./src/axi_max11100.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
+Finished building target: full_system.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size full_system.elf  |tee "full_system.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  66544	   3848	 481824	 552216	  86d18	full_system.elf
+Finished building: full_system.elf.size
+ 
+22:33:17 **** Build of project full_system_test_bsp ****
+make -k all 
+Running Make include in ps7_cortexa9_0/libsrc/ddrps_v1_0/src
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/gpio_v4_1/src
+make -C ps7_cortexa9_0/libsrc/gpio_v4_1/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_2/src
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_2/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/uartps_v3_1/src
+make -C ps7_cortexa9_0/libsrc/uartps_v3_1/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/scugic_v3_3/src
+make -C ps7_cortexa9_0/libsrc/scugic_v3_3/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/tmrctr_v4_1/src
+make -C ps7_cortexa9_0/libsrc/tmrctr_v4_1/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/xadcps_v2_2/src
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_2/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/devcfg_v3_4/src
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_4/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/dmaps_v2_1/src
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_1/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/scuwdt_v2_1/src
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/Decision_v1_0/src
+make -C ps7_cortexa9_0/libsrc/Decision_v1_0/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/coresightps_dcc_v1_2/src
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_2/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/standalone_v5_5/src
+make -C ps7_cortexa9_0/libsrc/standalone_v5_5/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/scutimer_v2_1/src
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make libs in ps7_cortexa9_0/libsrc/ddrps_v1_0/src
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling ddrps
+Running Make libs in ps7_cortexa9_0/libsrc/gpio_v4_1/src
+make -C ps7_cortexa9_0/libsrc/gpio_v4_1/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling gpio
+Running Make libs in ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_2/src
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_2/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling cpu_cortexa9
+Running Make libs in ps7_cortexa9_0/libsrc/uartps_v3_1/src
+make -C ps7_cortexa9_0/libsrc/uartps_v3_1/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling uartps
+Running Make libs in ps7_cortexa9_0/libsrc/scugic_v3_3/src
+make -C ps7_cortexa9_0/libsrc/scugic_v3_3/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling scugic
+Running Make libs in ps7_cortexa9_0/libsrc/tmrctr_v4_1/src
+make -C ps7_cortexa9_0/libsrc/tmrctr_v4_1/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling tmrctr
+Running Make libs in ps7_cortexa9_0/libsrc/xadcps_v2_2/src
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_2/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling xadcps
+Running Make libs in ps7_cortexa9_0/libsrc/devcfg_v3_4/src
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_4/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling devcfg
+Running Make libs in ps7_cortexa9_0/libsrc/dmaps_v2_1/src
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_1/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling dmaps
+Running Make libs in ps7_cortexa9_0/libsrc/scuwdt_v2_1/src
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling scuwdt
+Running Make libs in ps7_cortexa9_0/libsrc/Decision_v1_0/src
+make -C ps7_cortexa9_0/libsrc/Decision_v1_0/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling Decision
+Running Make libs in ps7_cortexa9_0/libsrc/coresightps_dcc_v1_2/src
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_2/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling coresightps_dcc
+Running Make libs in ps7_cortexa9_0/libsrc/standalone_v5_5/src
+make -C ps7_cortexa9_0/libsrc/standalone_v5_5/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling standalone
+Running Make libs in ps7_cortexa9_0/libsrc/scutimer_v2_1/src
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling scutimer
+Finished building libraries
+22:33:22 **** Auto Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/axi_max11100.c
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/axi_max11100.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/axi_max11100.d" -MT"src/axi_max11100.o" -o "src/axi_max11100.o" "../src/axi_max11100.c"
+../src/axi_max11100.c:63:13: warning: ‘void AXI_MAX11100_Write_Delay_Reg(u32, u32)’ defined but not used [-Wunused-function]
+ static void AXI_MAX11100_Write_Delay_Reg(u32 BaseAddress, u32 Value)
+             ^
+../src/axi_max11100.c:81:13: warning: ‘void AXI_MAX11100_Interrupt_Enable(u32)’ defined but not used [-Wunused-function]
+ static void AXI_MAX11100_Interrupt_Enable(u32 BaseAddress)
+             ^
+Finished building: ../src/axi_max11100.c
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘void chan_param(char)’:
+../src/main.cc:75:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_vthresh(sdc0, vthresh[i]);
+                                       ^
+../src/main.cc:76:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_athresh(sdc0, athresh[i]);
+                                       ^
+../src/main.cc:77:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_flip(sdc0, vflip[i]);
+                                    ^
+../src/main.cc:78:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_flip(sdc0, aflip[i]);
+                                    ^
+../src/main.cc:79:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_length(sdc0, alen[i]);
+                                     ^
+../src/main.cc:80:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_length(sdc0, vlen[i]);
+                                     ^
+../src/main.cc: In function ‘int main()’:
+../src/main.cc:191:7: warning: unused variable ‘v’ [-Wunused-variable]
+  bool v = false;
+       ^
+../src/main.cc:192:7: warning: unused variable ‘a’ [-Wunused-variable]
+  bool a = false;
+       ^
+../src/main.cc:193:8: warning: unused variable ‘on_a’ [-Wunused-variable]
+  short on_a = 0;
+        ^
+../src/main.cc:194:8: warning: unused variable ‘on_v’ [-Wunused-variable]
+  short on_v = 0;
+        ^
+../src/main.cc:195:16: warning: unused variable ‘towrite’ [-Wunused-variable]
+  unsigned char towrite;
+                ^
+Finished building: ../src/main.cc
+ 
+Building file: ../src/platform.c
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+Finished building: ../src/platform.c
+ 
+Building target: full_system.elf
+Invoking: ARM v7 g++ linker
+arm-none-eabi-g++ -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../full_system_test_bsp/ps7_cortexa9_0/lib -o "full_system.elf"  ./src/axi_max11100.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
+Finished building target: full_system.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size full_system.elf  |tee "full_system.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  66544	   3848	 481824	 552216	  86d18	full_system.elf
+Finished building: full_system.elf.size
+ 
+22:33:30 **** Clean-only build of configuration Debug for project full_system_test ****
+make clean 
+rm -rf  ./src/main.d  ./src/axi_max11100.o ./src/main.o ./src/platform.o  ./src/axi_max11100.d ./src/platform.d  full_system_test.elf.size  full_system_test.elf
+ 
+22:33:30 **** Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/axi_max11100.c
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/axi_max11100.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/axi_max11100.d" -MT"src/axi_max11100.o" -o "src/axi_max11100.o" "../src/axi_max11100.c"
+../src/axi_max11100.c:63:13: warning: ‘void AXI_MAX11100_Write_Delay_Reg(u32, u32)’ defined but not used [-Wunused-function]
+ static void AXI_MAX11100_Write_Delay_Reg(u32 BaseAddress, u32 Value)
+             ^
+../src/axi_max11100.c:81:13: warning: ‘void AXI_MAX11100_Interrupt_Enable(u32)’ defined but not used [-Wunused-function]
+ static void AXI_MAX11100_Interrupt_Enable(u32 BaseAddress)
+             ^
+Finished building: ../src/axi_max11100.c
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘int flow_test()’:
+../src/main.cc:383:10: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+   if((r[i] & V_ST) != 0)
+          ^
+../src/main.cc:385:10: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+   if((r[i] & A_ST) != 0)
+          ^
+Finished building: ../src/main.cc
+ 
+Building file: ../src/platform.c
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+Finished building: ../src/platform.c
+ 
+Building target: full_system_test.elf
+Invoking: ARM v7 g++ linker
+arm-none-eabi-g++ -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../full_system_test_bsp/ps7_cortexa9_0/lib -o "full_system_test.elf"  ./src/axi_max11100.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
+Finished building target: full_system_test.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size full_system_test.elf  |tee "full_system_test.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+ 115188	  24240	 402456	 541884	  844bc	full_system_test.elf
+Finished building: full_system_test.elf.size
+ 
+22:33:37 **** Auto Build of project full_system_test_bsp ****
+make -k all 
+Running Make include in ps7_cortexa9_0/libsrc/ddrps_v1_0/src
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/gpio_v4_1/src
+make -C ps7_cortexa9_0/libsrc/gpio_v4_1/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_2/src
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_2/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/uartps_v3_1/src
+make -C ps7_cortexa9_0/libsrc/uartps_v3_1/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/scugic_v3_3/src
+make -C ps7_cortexa9_0/libsrc/scugic_v3_3/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/tmrctr_v4_1/src
+make -C ps7_cortexa9_0/libsrc/tmrctr_v4_1/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/xadcps_v2_2/src
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_2/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/devcfg_v3_4/src
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_4/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/dmaps_v2_1/src
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_1/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/scuwdt_v2_1/src
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/Decision_v1_0/src
+make -C ps7_cortexa9_0/libsrc/Decision_v1_0/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/coresightps_dcc_v1_2/src
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_2/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/standalone_v5_5/src
+make -C ps7_cortexa9_0/libsrc/standalone_v5_5/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make include in ps7_cortexa9_0/libsrc/scutimer_v2_1/src
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s include  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Running Make libs in ps7_cortexa9_0/libsrc/ddrps_v1_0/src
+make -C ps7_cortexa9_0/libsrc/ddrps_v1_0/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling ddrps
+arm-none-eabi-ar: creating ../../../lib/libxil.a
+Running Make libs in ps7_cortexa9_0/libsrc/gpio_v4_1/src
+make -C ps7_cortexa9_0/libsrc/gpio_v4_1/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling gpio
+Running Make libs in ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_2/src
+make -C ps7_cortexa9_0/libsrc/cpu_cortexa9_v2_2/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling cpu_cortexa9
+Running Make libs in ps7_cortexa9_0/libsrc/uartps_v3_1/src
+make -C ps7_cortexa9_0/libsrc/uartps_v3_1/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling uartps
+Running Make libs in ps7_cortexa9_0/libsrc/scugic_v3_3/src
+make -C ps7_cortexa9_0/libsrc/scugic_v3_3/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling scugic
+Running Make libs in ps7_cortexa9_0/libsrc/tmrctr_v4_1/src
+make -C ps7_cortexa9_0/libsrc/tmrctr_v4_1/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling tmrctr
+Running Make libs in ps7_cortexa9_0/libsrc/xadcps_v2_2/src
+make -C ps7_cortexa9_0/libsrc/xadcps_v2_2/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling xadcps
+Running Make libs in ps7_cortexa9_0/libsrc/devcfg_v3_4/src
+make -C ps7_cortexa9_0/libsrc/devcfg_v3_4/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling devcfg
+Running Make libs in ps7_cortexa9_0/libsrc/dmaps_v2_1/src
+make -C ps7_cortexa9_0/libsrc/dmaps_v2_1/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling dmaps
+Running Make libs in ps7_cortexa9_0/libsrc/scuwdt_v2_1/src
+make -C ps7_cortexa9_0/libsrc/scuwdt_v2_1/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling scuwdt
+Running Make libs in ps7_cortexa9_0/libsrc/Decision_v1_0/src
+make -C ps7_cortexa9_0/libsrc/Decision_v1_0/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling Decision
+Running Make libs in ps7_cortexa9_0/libsrc/coresightps_dcc_v1_2/src
+make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_2/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling coresightps_dcc
+Running Make libs in ps7_cortexa9_0/libsrc/standalone_v5_5/src
+make -C ps7_cortexa9_0/libsrc/standalone_v5_5/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling standalone
+Running Make libs in ps7_cortexa9_0/libsrc/scutimer_v2_1/src
+make -C ps7_cortexa9_0/libsrc/scutimer_v2_1/src -s libs  "SHELL=/bin/sh" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles"
+Compiling scutimer
+Finished building libraries
+22:33:42 **** Auto Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/axi_max11100.c
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/axi_max11100.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/axi_max11100.d" -MT"src/axi_max11100.o" -o "src/axi_max11100.o" "../src/axi_max11100.c"
+../src/axi_max11100.c:63:13: warning: ‘void AXI_MAX11100_Write_Delay_Reg(u32, u32)’ defined but not used [-Wunused-function]
+ static void AXI_MAX11100_Write_Delay_Reg(u32 BaseAddress, u32 Value)
+             ^
+../src/axi_max11100.c:81:13: warning: ‘void AXI_MAX11100_Interrupt_Enable(u32)’ defined but not used [-Wunused-function]
+ static void AXI_MAX11100_Interrupt_Enable(u32 BaseAddress)
+             ^
+Finished building: ../src/axi_max11100.c
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘int flow_test()’:
+../src/main.cc:383:10: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+   if((r[i] & V_ST) != 0)
+          ^
+../src/main.cc:385:10: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+   if((r[i] & A_ST) != 0)
+          ^
+Finished building: ../src/main.cc
+ 
+Building file: ../src/platform.c
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+Finished building: ../src/platform.c
+ 
+Building target: full_system_test.elf
+Invoking: ARM v7 g++ linker
+arm-none-eabi-g++ -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../full_system_test_bsp/ps7_cortexa9_0/lib -o "full_system_test.elf"  ./src/axi_max11100.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
+Finished building target: full_system_test.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size full_system_test.elf  |tee "full_system_test.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+ 115188	  24240	 402456	 541884	  844bc	full_system_test.elf
+Finished building: full_system_test.elf.size
+ 
+22:33:43 **** Auto Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/axi_max11100.c
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/axi_max11100.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/axi_max11100.d" -MT"src/axi_max11100.o" -o "src/axi_max11100.o" "../src/axi_max11100.c"
+../src/axi_max11100.c:63:13: warning: ‘void AXI_MAX11100_Write_Delay_Reg(u32, u32)’ defined but not used [-Wunused-function]
+ static void AXI_MAX11100_Write_Delay_Reg(u32 BaseAddress, u32 Value)
+             ^
+../src/axi_max11100.c:81:13: warning: ‘void AXI_MAX11100_Interrupt_Enable(u32)’ defined but not used [-Wunused-function]
+ static void AXI_MAX11100_Interrupt_Enable(u32 BaseAddress)
+             ^
+Finished building: ../src/axi_max11100.c
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘void chan_param(char)’:
+../src/main.cc:75:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_vthresh(sdc0, vthresh[i]);
+                                       ^
+../src/main.cc:76:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_athresh(sdc0, athresh[i]);
+                                       ^
+../src/main.cc:77:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_flip(sdc0, vflip[i]);
+                                    ^
+../src/main.cc:78:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_flip(sdc0, aflip[i]);
+                                    ^
+../src/main.cc:79:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_length(sdc0, alen[i]);
+                                     ^
+../src/main.cc:80:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_length(sdc0, vlen[i]);
+                                     ^
+../src/main.cc: In function ‘int main()’:
+../src/main.cc:191:7: warning: unused variable ‘v’ [-Wunused-variable]
+  bool v = false;
+       ^
+../src/main.cc:192:7: warning: unused variable ‘a’ [-Wunused-variable]
+  bool a = false;
+       ^
+../src/main.cc:193:8: warning: unused variable ‘on_a’ [-Wunused-variable]
+  short on_a = 0;
+        ^
+../src/main.cc:194:8: warning: unused variable ‘on_v’ [-Wunused-variable]
+  short on_v = 0;
+        ^
+../src/main.cc:195:16: warning: unused variable ‘towrite’ [-Wunused-variable]
+  unsigned char towrite;
+                ^
+Finished building: ../src/main.cc
+ 
+Building file: ../src/platform.c
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+Finished building: ../src/platform.c
+ 
+Building target: full_system.elf
+Invoking: ARM v7 g++ linker
+arm-none-eabi-g++ -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../full_system_test_bsp/ps7_cortexa9_0/lib -o "full_system.elf"  ./src/axi_max11100.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
+Finished building target: full_system.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size full_system.elf  |tee "full_system.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  66544	   3848	 481824	 552216	  86d18	full_system.elf
+Finished building: full_system.elf.size
+ 
+22:34:37 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:34:38 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:35:15 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:35:16 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:35:25 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:35:25 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:42:02 **** Auto Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘void chan_param(char)’:
+../src/main.cc:75:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_vthresh(sdc0, vthresh[i]);
+                                       ^
+../src/main.cc:76:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_athresh(sdc0, athresh[i]);
+                                       ^
+../src/main.cc:77:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_flip(sdc0, vflip[i]);
+                                    ^
+../src/main.cc:78:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_flip(sdc0, aflip[i]);
+                                    ^
+../src/main.cc:79:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_length(sdc0, alen[i]);
+                                     ^
+../src/main.cc:80:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_length(sdc0, vlen[i]);
+                                     ^
+../src/main.cc: In function ‘int main()’:
+../src/main.cc:191:7: warning: unused variable ‘v’ [-Wunused-variable]
+  bool v = false;
+       ^
+../src/main.cc:192:7: warning: unused variable ‘a’ [-Wunused-variable]
+  bool a = false;
+       ^
+../src/main.cc:193:8: warning: variable ‘on_a’ set but not used [-Wunused-but-set-variable]
+  short on_a = 0;
+        ^
+../src/main.cc:194:8: warning: variable ‘on_v’ set but not used [-Wunused-but-set-variable]
+  short on_v = 0;
+        ^
+../src/main.cc:195:16: warning: unused variable ‘towrite’ [-Wunused-variable]
+  unsigned char towrite;
+                ^
+Finished building: ../src/main.cc
+ 
+Building target: full_system.elf
+Invoking: ARM v7 g++ linker
+arm-none-eabi-g++ -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../full_system_test_bsp/ps7_cortexa9_0/lib -o "full_system.elf"  ./src/axi_max11100.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
+Finished building target: full_system.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size full_system.elf  |tee "full_system.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  66596	   3848	 481824	 552268	  86d4c	full_system.elf
+Finished building: full_system.elf.size
+ 
+22:42:17 **** Auto Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘void chan_param(char)’:
+../src/main.cc:75:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_vthresh(sdc0, vthresh[i]);
+                                       ^
+../src/main.cc:76:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_athresh(sdc0, athresh[i]);
+                                       ^
+../src/main.cc:77:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_flip(sdc0, vflip[i]);
+                                    ^
+../src/main.cc:78:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_flip(sdc0, aflip[i]);
+                                    ^
+../src/main.cc:79:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_length(sdc0, alen[i]);
+                                     ^
+../src/main.cc:80:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_length(sdc0, vlen[i]);
+                                     ^
+../src/main.cc: In function ‘int main()’:
+../src/main.cc:191:7: warning: unused variable ‘v’ [-Wunused-variable]
+  bool v = false;
+       ^
+../src/main.cc:192:7: warning: unused variable ‘a’ [-Wunused-variable]
+  bool a = false;
+       ^
+../src/main.cc:193:8: warning: variable ‘on_a’ set but not used [-Wunused-but-set-variable]
+  short on_a = 0;
+        ^
+../src/main.cc:194:8: warning: variable ‘on_v’ set but not used [-Wunused-but-set-variable]
+  short on_v = 0;
+        ^
+../src/main.cc:195:16: warning: unused variable ‘towrite’ [-Wunused-variable]
+  unsigned char towrite;
+                ^
+Finished building: ../src/main.cc
+ 
+Building target: full_system.elf
+Invoking: ARM v7 g++ linker
+arm-none-eabi-g++ -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../full_system_test_bsp/ps7_cortexa9_0/lib -o "full_system.elf"  ./src/axi_max11100.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
+Finished building target: full_system.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size full_system.elf  |tee "full_system.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  66596	   3848	 481824	 552268	  86d4c	full_system.elf
+Finished building: full_system.elf.size
+ 
+22:42:21 **** Auto Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘void chan_param(char)’:
+../src/main.cc:75:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_vthresh(sdc0, vthresh[i]);
+                                       ^
+../src/main.cc:76:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_athresh(sdc0, athresh[i]);
+                                       ^
+../src/main.cc:77:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_flip(sdc0, vflip[i]);
+                                    ^
+../src/main.cc:78:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_flip(sdc0, aflip[i]);
+                                    ^
+../src/main.cc:79:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_length(sdc0, alen[i]);
+                                     ^
+../src/main.cc:80:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_length(sdc0, vlen[i]);
+                                     ^
+../src/main.cc: In function ‘int main()’:
+../src/main.cc:191:7: warning: unused variable ‘v’ [-Wunused-variable]
+  bool v = false;
+       ^
+../src/main.cc:192:7: warning: unused variable ‘a’ [-Wunused-variable]
+  bool a = false;
+       ^
+../src/main.cc:193:8: warning: variable ‘on_a’ set but not used [-Wunused-but-set-variable]
+  short on_a = 0;
+        ^
+../src/main.cc:194:8: warning: variable ‘on_v’ set but not used [-Wunused-but-set-variable]
+  short on_v = 0;
+        ^
+../src/main.cc:195:16: warning: unused variable ‘towrite’ [-Wunused-variable]
+  unsigned char towrite;
+                ^
+Finished building: ../src/main.cc
+ 
+Building target: full_system.elf
+Invoking: ARM v7 g++ linker
+arm-none-eabi-g++ -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../full_system_test_bsp/ps7_cortexa9_0/lib -o "full_system.elf"  ./src/axi_max11100.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
+Finished building target: full_system.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size full_system.elf  |tee "full_system.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  66596	   3848	 481824	 552268	  86d4c	full_system.elf
+Finished building: full_system.elf.size
+ 
+22:43:07 **** Auto Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘void chan_param(char)’:
+../src/main.cc:75:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_vthresh(sdc0, vthresh[i]);
+                                       ^
+../src/main.cc:76:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_athresh(sdc0, athresh[i]);
+                                       ^
+../src/main.cc:77:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_flip(sdc0, vflip[i]);
+                                    ^
+../src/main.cc:78:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_flip(sdc0, aflip[i]);
+                                    ^
+../src/main.cc:79:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_length(sdc0, alen[i]);
+                                     ^
+../src/main.cc:80:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_length(sdc0, vlen[i]);
+                                     ^
+../src/main.cc: In function ‘int main()’:
+../src/main.cc:217:10: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    if(ms == on_a ||ms == on_v)
+          ^
+../src/main.cc:217:23: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    if(ms == on_a ||ms == on_v)
+                       ^
+../src/main.cc:218:54: error: expected primary-expression before ‘/’ token
+      XGpio_DiscreteClear(&stim, GPIO_CHANNEL, 0xFF);*/
+                                                      ^
+../src/main.cc:219:4: error: expected primary-expression before ‘if’
+    if(btn_value ==1)
+    ^
+../src/main.cc:191:7: warning: unused variable ‘v’ [-Wunused-variable]
+  bool v = false;
+       ^
+../src/main.cc:192:7: warning: unused variable ‘a’ [-Wunused-variable]
+  bool a = false;
+       ^
+../src/main.cc:195:16: warning: unused variable ‘towrite’ [-Wunused-variable]
+  unsigned char towrite;
+                ^
+make: *** [src/main.o] Error 1
+src/subdir.mk:38: recipe for target 'src/main.o' failed
+22:43:14 **** Auto Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘void chan_param(char)’:
+../src/main.cc:75:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_vthresh(sdc0, vthresh[i]);
+                                       ^
+../src/main.cc:76:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_athresh(sdc0, athresh[i]);
+                                       ^
+../src/main.cc:77:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_flip(sdc0, vflip[i]);
+                                    ^
+../src/main.cc:78:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_flip(sdc0, aflip[i]);
+                                    ^
+../src/main.cc:79:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_length(sdc0, alen[i]);
+                                     ^
+../src/main.cc:80:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_length(sdc0, vlen[i]);
+                                     ^
+../src/main.cc: In function ‘int main()’:
+../src/main.cc:217:10: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    if(ms == on_a ||ms == on_v)
+          ^
+../src/main.cc:217:23: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    if(ms == on_a ||ms == on_v)
+                       ^
+../src/main.cc:219:54: error: expected primary-expression before ‘/’ token
+      XGpio_DiscreteClear(&stim, GPIO_CHANNEL, 0xFF);*/
+                                                      ^
+../src/main.cc:220:4: error: expected primary-expression before ‘if’
+    if(btn_value ==1)
+    ^
+../src/main.cc:232:1: error: a function-definition is not allowed here before ‘{’ token
+ {
+ ^
+../src/main.cc:191:7: warning: unused variable ‘v’ [-Wunused-variable]
+  bool v = false;
+       ^
+../src/main.cc:192:7: warning: unused variable ‘a’ [-Wunused-variable]
+  bool a = false;
+       ^
+../src/main.cc:195:16: warning: unused variable ‘towrite’ [-Wunused-variable]
+  unsigned char towrite;
+                ^
+../src/main.cc:470:1: error: expected ‘}’ at end of input
+ }
+ ^
+../src/main.cc: At global scope:
+../src/main.cc:35:13: warning: ‘void BTN_Intr_Handler(void*)’ declared ‘static’ but never defined [-Wunused-function]
+ static void BTN_Intr_Handler(void *baseaddr_p);
+             ^
+../src/main.cc:36:12: warning: ‘int InterruptSystemSetup(XScuGic*)’ declared ‘static’ but never defined [-Wunused-function]
+ static int InterruptSystemSetup(XScuGic *XScuGicInstancePtr);
+            ^
+../src/main.cc:37:12: warning: ‘int IntcInitFunction(u16, XTmrCtr*, XGpio*)’ declared ‘static’ but never defined [-Wunused-function]
+ static int IntcInitFunction(u16 DeviceId, XTmrCtr *TmrInstancePtr, XGpio *GpioInstancePtr);
+src/subdir.mk:38: recipe for target 'src/main.o' failed
+            ^
+../src/main.cc:38:13: warning: ‘void TMR_Intr_Handler(void*, u8)’ declared ‘static’ but never defined [-Wunused-function]
+ static void TMR_Intr_Handler(void *baseaddr_p, u8 num);
+             ^
+../src/main.cc:39:12: warning: ‘int Timer_btn_setup()’ declared ‘static’ but never defined [-Wunused-function]
+ static int Timer_btn_setup(void);
+            ^
+../src/main.cc:40:12: warning: ‘int channel_init(XDecision*, XDecision*, XDecision*, XDecision*)’ declared ‘static’ but never defined [-Wunused-function]
+ static int channel_init(XDecision * sdc0, XDecision * sdc1, XDecision * sdc2, XDecision * sdc3);
+            ^
+../src/main.cc:42:13: warning: ‘void run_params()’ declared ‘static’ but never defined [-Wunused-function]
+ static void run_params(void);
+             ^
+make: *** [src/main.o] Error 1
+22:43:18 **** Auto Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘void chan_param(char)’:
+../src/main.cc:75:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_vthresh(sdc0, vthresh[i]);
+                                       ^
+../src/main.cc:76:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_athresh(sdc0, athresh[i]);
+                                       ^
+../src/main.cc:77:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_flip(sdc0, vflip[i]);
+                                    ^
+../src/main.cc:78:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_flip(sdc0, aflip[i]);
+                                    ^
+../src/main.cc:79:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_length(sdc0, alen[i]);
+                                     ^
+../src/main.cc:80:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_length(sdc0, vlen[i]);
+                                     ^
+../src/main.cc: In function ‘int main()’:
+../src/main.cc:217:10: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    if(ms == on_a ||ms == on_v)
+          ^
+../src/main.cc:217:23: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    if(ms == on_a ||ms == on_v)
+                       ^
+../src/main.cc:219:54: error: expected primary-expression before ‘/’ token
+      XGpio_DiscreteClear(&stim, GPIO_CHANNEL, 0xFF);*/
+                                                      ^
+../src/main.cc:220:4: error: expected primary-expression before ‘}’ token
+    }
+    ^
+../src/main.cc:191:7: warning: unused variable ‘v’ [-Wunused-variable]
+  bool v = false;
+       ^
+../src/main.cc:192:7: warning: unused variable ‘a’ [-Wunused-variable]
+  bool a = false;
+       ^
+../src/main.cc:195:16: warning: unused variable ‘towrite’ [-Wunused-variable]
+  unsigned char towrite;
+                ^
+src/subdir.mk:38: recipe for target 'src/main.o' failed
+make: *** [src/main.o] Error 1
+22:43:27 **** Auto Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘void chan_param(char)’:
+../src/main.cc:75:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_vthresh(sdc0, vthresh[i]);
+                                       ^
+../src/main.cc:76:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_athresh(sdc0, athresh[i]);
+                                       ^
+../src/main.cc:77:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_flip(sdc0, vflip[i]);
+                                    ^
+../src/main.cc:78:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_flip(sdc0, aflip[i]);
+                                    ^
+../src/main.cc:79:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_length(sdc0, alen[i]);
+                                     ^
+../src/main.cc:80:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_length(sdc0, vlen[i]);
+                                     ^
+../src/main.cc: In function ‘int main()’:
+../src/main.cc:217:10: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    if(ms == on_a ||ms == on_v)
+          ^
+../src/main.cc:217:23: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+    if(ms == on_a ||ms == on_v)
+                       ^
+../src/main.cc:191:7: warning: unused variable ‘v’ [-Wunused-variable]
+  bool v = false;
+       ^
+../src/main.cc:192:7: warning: unused variable ‘a’ [-Wunused-variable]
+  bool a = false;
+       ^
+../src/main.cc:195:16: warning: unused variable ‘towrite’ [-Wunused-variable]
+  unsigned char towrite;
+                ^
+Finished building: ../src/main.cc
+ 
+Building target: full_system.elf
+Invoking: ARM v7 g++ linker
+arm-none-eabi-g++ -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../full_system_test_bsp/ps7_cortexa9_0/lib -o "full_system.elf"  ./src/axi_max11100.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
+Finished building target: full_system.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size full_system.elf  |tee "full_system.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  67124	   3848	 481824	 552796	  86f5c	full_system.elf
+Finished building: full_system.elf.size
+ 
+22:43:52 **** Auto Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘void chan_param(char)’:
+../src/main.cc:75:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_vthresh(sdc0, vthresh[i]);
+                                       ^
+../src/main.cc:76:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_athresh(sdc0, athresh[i]);
+                                       ^
+../src/main.cc:77:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_flip(sdc0, vflip[i]);
+                                    ^
+../src/main.cc:78:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_flip(sdc0, aflip[i]);
+                                    ^
+../src/main.cc:79:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_length(sdc0, alen[i]);
+                                     ^
+../src/main.cc:80:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_length(sdc0, vlen[i]);
+                                     ^
+../src/main.cc: In function ‘int main()’:
+../src/main.cc:191:7: warning: unused variable ‘v’ [-Wunused-variable]
+  bool v = false;
+       ^
+../src/main.cc:192:7: warning: unused variable ‘a’ [-Wunused-variable]
+  bool a = false;
+       ^
+../src/main.cc:195:16: warning: unused variable ‘towrite’ [-Wunused-variable]
+  unsigned char towrite;
+                ^
+Finished building: ../src/main.cc
+ 
+Building target: full_system.elf
+Invoking: ARM v7 g++ linker
+arm-none-eabi-g++ -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../full_system_test_bsp/ps7_cortexa9_0/lib -o "full_system.elf"  ./src/axi_max11100.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
+Finished building target: full_system.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size full_system.elf  |tee "full_system.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  67124	   3848	 481824	 552796	  86f5c	full_system.elf
+Finished building: full_system.elf.size
+ 
+22:43:59 **** Auto Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘void chan_param(char)’:
+../src/main.cc:75:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_vthresh(sdc0, vthresh[i]);
+                                       ^
+../src/main.cc:76:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_athresh(sdc0, athresh[i]);
+                                       ^
+../src/main.cc:77:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_flip(sdc0, vflip[i]);
+                                    ^
+../src/main.cc:78:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_flip(sdc0, aflip[i]);
+                                    ^
+../src/main.cc:79:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_length(sdc0, alen[i]);
+                                     ^
+../src/main.cc:80:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_length(sdc0, vlen[i]);
+                                     ^
+Finished building: ../src/main.cc
+ 
+Building target: full_system.elf
+Invoking: ARM v7 g++ linker
+arm-none-eabi-g++ -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../full_system_test_bsp/ps7_cortexa9_0/lib -o "full_system.elf"  ./src/axi_max11100.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
+Finished building target: full_system.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size full_system.elf  |tee "full_system.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  67124	   3848	 481824	 552796	  86f5c	full_system.elf
+Finished building: full_system.elf.size
+ 
+22:44:29 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:44:29 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:44:36 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:44:37 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:50:01 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:50:01 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:50:08 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:50:09 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:51:23 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:51:23 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:57:23 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:57:24 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:57:25 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+22:57:25 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+23:12:29 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+23:12:29 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+23:13:16 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+23:13:16 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+23:18:23 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+23:18:23 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+23:19:49 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+23:19:49 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+23:21:19 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+23:21:20 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+23:22:47 **** Incremental Build of configuration Debug for project full_system_test ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.
+23:22:47 **** Incremental Build of configuration Debug for project full_system ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+make: Nothing to be done for 'main-build'.

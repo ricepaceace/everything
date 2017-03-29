@@ -1,0 +1,18 @@
+set_property IOSTANDARD LVCMOS33 [get_ports {gpio_tri_o[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gpio_tri_o[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gpio_tri_o[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gpio_tri_o[0]}]
+set_property PACKAGE_PIN A16 [get_ports {gpio_tri_o[0]}]
+set_property PACKAGE_PIN C15 [get_ports {gpio_tri_o[1]}]
+set_property PACKAGE_PIN A17 [get_ports {gpio_tri_o[2]}]
+set_property PACKAGE_PIN B15 [get_ports {gpio_tri_o[3]}]
+
+
+set_property IOSTANDARD LVCMOS33 [get_ports {gpio_tri_o[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gpio_tri_o[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gpio_tri_o[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gpio_tri_o[7]}]
+set_property PACKAGE_PIN C17 [get_ports {gpio_tri_o[4]}]
+set_property PACKAGE_PIN B16 [get_ports {gpio_tri_o[5]}]
+set_property PACKAGE_PIN C18 [get_ports {gpio_tri_o[6]}]
+set_property PACKAGE_PIN B17 [get_ports {gpio_tri_o[7]}]

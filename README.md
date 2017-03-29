@@ -1,7 +1,7 @@
-# multisite_test_detection_algorithms
-Matlab algorithms that run on test multisite data and figure out optimal detection strategy. 
-test_data folder contains all of our test data (original files and our created .mat files), organized by its source. 
-multisite_detect.m is the Matlab script to run - it loads data and calls helper functions
-GuessParameters2.m learns parameters for detecting beats in the data
-one_chamber_peak_finder.m uses parameters to locate all the beats in a waveform
-
+# everything
+Each folder in this directory contains all the files for the separate areas of our project.
+matlab_algorithms     contains all of the data and matlab code for running simulations of our developing algorithm
+analogTest            contains the design of our artificial anaolg input generator
+Arduino               contains all the code and test data used by the Arduino microcontroller
+preprocessor_harware  contains the design of our preprocessor boards
+xilinx_design         contains the FPGA design
