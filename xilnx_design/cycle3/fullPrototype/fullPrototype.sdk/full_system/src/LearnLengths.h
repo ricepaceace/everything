@@ -30,7 +30,7 @@ void learnLengths(short * ldata, int * v_length, int * a_length)
 	int maxdata = ldata[0], maxddatadt = 0, i, j, add;
 	for (i = 1; i < PARAM_LEARN_SIZE; i++)
 	{
-		int diff = ldata[i]-ldata[i-1];
+		long long diff = ldata[i]-ldata[i-1];
 		ddatadt[i] = diff*diff * ldata[i] * SIGN(ldata[i]) * SIGN(diff);
 
 		maxdata = MAX(maxdata, ldata[i]);

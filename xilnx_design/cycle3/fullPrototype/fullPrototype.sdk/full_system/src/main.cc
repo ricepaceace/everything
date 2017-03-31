@@ -53,7 +53,7 @@ unsigned long long ms = 0;
 static unsigned short results[4][PARAM_LEARN_SIZE];
 static short cen[4][PARAM_LEARN_SIZE];
 int alen[4], vlen[4], athresh[4], vthresh[4], aflip[4], vflip[4];
-bool newms = false;
+volatile bool newms = false;
 
 
 static void chan_param(char i)
@@ -157,7 +157,6 @@ int main()
 		if(newms)
 		{
 			results[0][i] = get_sample(0);
-			xil_printf("%d\r\n", results[0][i]);
 			results[1][i] = get_sample(1);
 			results[2][i] = get_sample(2);
 			results[3][i] = get_sample(3);
@@ -169,10 +168,10 @@ int main()
 
 	for(i = 0; i < PARAM_LEARN_SIZE;i++)
 	{
-		cen[0][i] = (short)((int)results[0][i] - 32768);
-		cen[1][i] = (short)((int)results[1][i] - 32768);
-		cen[2][i] = (short)((int)results[2][i] - 32768);
-		cen[3][i] = (short)((int)results[3][i] - 32768);
+		cen[0][i] = (short)((int)results[0][i] - 11000);
+		cen[1][i] = (short)((int)results[1][i] - 11000);
+		cen[2][i] = (short)((int)results[2][i] - 11000);
+		cen[3][i] = (short)((int)results[3][i] - 11000);
 	}
 	xil_printf("-- Data Gathering Complete! --\r\n");
 	xil_printf("-- Press btn 1 to  run parameter learning\r\n");
@@ -181,9 +180,6 @@ int main()
 	run_params();
 
 	chan_param(0);
-	chan_param(1);
-	chan_param(2);
-	chan_param(3);
 	xil_printf("-- Parameter learning complete! --\r\n");
 
 
@@ -191,33 +187,36 @@ int main()
 	unsigned long long on_a = 0;
 	unsigned long long on_v = 0;
 	newms = false;
-	while(1)
+	for(;;)
 	{
 		if(newms)
 		{
 			newms = false;
-			r[0] = read_chan(&Xsdc0, (short)((int)get_sample(0) - 32768));
+			r[0] = read_chan(&Xsdc0, (short)((int)get_sample(0) - 11000));
+
 			if(!(r[0] & 0xf0f0))
 			{
 			}
 			else if (r[0] == 240)
 			{
-				on_v = ms +10;
-				XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, 0x10); // e.g. this writes a 1 to pin 1 (starting from 0)
+				on_v = ms +300;
+				XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, 0x10);
+				xil_printf("-- VENTRICLE\r\n");
+
 
 			}
 			else
 			{
-				on_a = ms+10;
-				XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, 0x40); // e.g. this writes a 1 to pin 1 (starting from 0)
+				on_a = ms+300;
+				XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, 0x40);
+				xil_printf("-- ATRIA\r\n");
+
 			}
 			if(ms == on_a || ms == on_v)
 			{
 				 XGpio_DiscreteClear(&stim, GPIO_CHANNEL, 0xFF);
 			}
-			if(btn_value ==1)
-				break;
-
+			if(r[0]!= 0) xil_printf("%d\r\n",r[0]);
 		}
 	}
 
@@ -232,7 +231,7 @@ static void run_params()
 	XTime start_time_co;
 	XTime stop_time_co;
 
-	for(i =0; i<4;i++)
+	for(i =0; i<1;i++)
 	{
 		XTime_GetTime(&start_time_co);
 
