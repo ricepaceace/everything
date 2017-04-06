@@ -127,3 +127,102 @@
 00:09:57 INFO  : Processor reset is completed for ps7_cortexa9_0
 00:12:06 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
 00:12:07 INFO  : Processor reset is completed for ps7_cortexa9_0
+00:16:26 ERROR : Unexpected error while parsing XMD response ￿: com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: invalid number or unquoted string near 
+08:13:22 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/temp_xsdb_launch_script.tcl
+08:13:23 INFO  : XSDB server has started successfully.
+08:13:23 INFO  : Processing command line option -hwspec /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper.hdf.
+08:13:23 INFO  : Checking for hwspec changes in the project full_system_wrapper_hw_platform_0.
+08:18:28 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+08:18:28 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent Zed 210248685987" && level==0} -index 1' command is executed.
+08:18:30 INFO  : FPGA configured successfully with bitstream "/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper_hw_platform_0/full_system_wrapper.bit"
+08:20:34 INFO  : ps7_init is completed.
+08:20:34 INFO  : ps7_post_config is completed.
+08:20:34 INFO  : Processor reset is completed for ps7_cortexa9_0
+08:20:54 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
+08:20:56 INFO  : Processor reset is completed for ps7_cortexa9_0
+08:21:53 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
+08:21:55 INFO  : Processor reset is completed for ps7_cortexa9_0
+08:24:26 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+08:24:26 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent Zed 210248685987" && level==0} -index 1' command is executed.
+08:24:28 INFO  : FPGA configured successfully with bitstream "/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper_hw_platform_0/full_system_wrapper.bit"
+08:24:37 INFO  : ps7_init is completed.
+08:24:37 INFO  : ps7_post_config is completed.
+08:24:37 INFO  : Processor reset is completed for ps7_cortexa9_0
+08:26:21 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
+08:26:23 INFO  : Processor reset is completed for ps7_cortexa9_0
+08:29:44 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
+08:29:45 INFO  : Processor reset is completed for ps7_cortexa9_0
+08:35:30 ERROR : Checking FPGA configuration failed..Connection to Board Failed
+
+
+    Unknown Error Occured
+    Cable is not powered-on
+
+08:35:30 ERROR : Unexpected error while launching program.
+com.xilinx.sdk.targetmanager.TMException: Connection to Board Failed
+
+
+    Unknown Error Occured
+    Cable is not powered-on
+
+	at com.xilinx.sdk.targetmanager.internal.TM.isFPGAConfigured(TM.java:374)
+	at com.xilinx.sdk.debug.core.XilinxAppLaunchConfigurationDelegate.isFpgaConfigured(XilinxAppLaunchConfigurationDelegate.java:409)
+	at com.xilinx.sdk.debug.core.XilinxAppLaunchConfigurationDelegate.launch(XilinxAppLaunchConfigurationDelegate.java:303)
+	at com.xilinx.sdk.debug.ui.XilinxAppLaunchDelegateWrapper.launch(XilinxAppLaunchDelegateWrapper.java:31)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:885)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:739)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1039)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$8.run(DebugUIPlugin.java:1256)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+08:38:11 INFO  : ps7_init is completed.
+08:38:11 INFO  : ps7_post_config is completed.
+08:38:11 INFO  : Processor reset is completed for ps7_cortexa9_0
+08:38:19 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+08:38:19 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent Zed 210248685987" && level==0} -index 1' command is executed.
+08:38:21 INFO  : FPGA configured successfully with bitstream "/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper_hw_platform_0/full_system_wrapper.bit"
+08:38:34 INFO  : ps7_init is completed.
+08:38:35 INFO  : ps7_post_config is completed.
+08:38:35 INFO  : Processor reset is completed for ps7_cortexa9_0
+08:40:17 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
+08:40:23 INFO  : Processor reset is completed for ps7_cortexa9_0
+08:46:39 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+08:46:39 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent Zed 210248685987" && level==0} -index 1' command is executed.
+08:46:41 INFO  : FPGA configured successfully with bitstream "/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper_hw_platform_0/full_system_wrapper.bit"
+08:47:00 INFO  : ps7_init is completed.
+08:47:00 INFO  : ps7_post_config is completed.
+08:47:00 INFO  : Processor reset is completed for ps7_cortexa9_0
+08:47:11 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
+08:47:13 INFO  : Processor reset is completed for ps7_cortexa9_0
+08:47:31 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
+08:47:32 INFO  : Processor reset is completed for ps7_cortexa9_0
+08:51:50 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/temp_xsdb_launch_script.tcl
+08:51:51 INFO  : XSDB server has started successfully.
+08:51:51 INFO  : Processing command line option -hwspec /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper.hdf.
+08:51:51 INFO  : Checking for hwspec changes in the project full_system_wrapper_hw_platform_0.
+09:05:55 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/temp_xsdb_launch_script.tcl
+09:05:56 INFO  : XSDB server has started successfully.
+09:05:56 INFO  : Processing command line option -hwspec /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper.hdf.
+09:05:56 INFO  : Checking for hwspec changes in the project full_system_wrapper_hw_platform_0.
+09:06:13 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+09:06:14 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent Zed 210248685987" && level==0} -index 1' command is executed.
+09:06:16 INFO  : FPGA configured successfully with bitstream "/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper_hw_platform_0/full_system_wrapper.bit"
+09:06:29 INFO  : ps7_init is completed.
+09:06:29 INFO  : ps7_post_config is completed.
+09:06:29 INFO  : Processor reset is completed for ps7_cortexa9_0
+09:06:40 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
+09:06:43 INFO  : Processor reset is completed for ps7_cortexa9_0
+11:27:14 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+11:27:14 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent Zed 210248685987" && level==0} -index 1' command is executed.
+11:27:17 INFO  : FPGA configured successfully with bitstream "/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper_hw_platform_0/full_system_wrapper.bit"
+11:27:29 INFO  : ps7_init is completed.
+11:27:29 INFO  : ps7_post_config is completed.
+11:27:29 INFO  : Processor reset is completed for ps7_cortexa9_0
+12:04:59 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+12:04:59 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent Zed 210248685987" && level==0} -index 1' command is executed.
+12:05:02 INFO  : FPGA configured successfully with bitstream "/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper_hw_platform_0/full_system_wrapper.bit"
+12:05:20 INFO  : ps7_init is completed.
+12:05:20 INFO  : ps7_post_config is completed.
+12:05:20 INFO  : Processor reset is completed for ps7_cortexa9_0
+12:05:44 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
+12:05:45 INFO  : Processor reset is completed for ps7_cortexa9_0
+20:08:03 ERROR : Unexpected error while parsing XMD response ￿: com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: invalid number or unquoted string near 

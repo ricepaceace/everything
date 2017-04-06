@@ -54,6 +54,7 @@ static unsigned short results[4][PARAM_LEARN_SIZE];
 static short cen[4][PARAM_LEARN_SIZE];
 int alen[4], vlen[4], athresh[4], vthresh[4], aflip[4], vflip[4];
 volatile bool newms = false;
+unsigned long offset = 0;
 
 
 static void chan_param(char i)
@@ -161,17 +162,22 @@ int main()
 			results[2][i] = get_sample(2);
 			results[3][i] = get_sample(3);
 
+			offset = offset + results[0][i];
+
 			i++;
 			newms = false;
 		}
 	}
+	offset = offset/PARAM_LEARN_SIZE;
+
+	xil_printf("%d\r\n", (int) offset);
 
 	for(i = 0; i < PARAM_LEARN_SIZE;i++)
 	{
-		cen[0][i] = (short)((int)results[0][i] - 11000);
-		cen[1][i] = (short)((int)results[1][i] - 11000);
-		cen[2][i] = (short)((int)results[2][i] - 11000);
-		cen[3][i] = (short)((int)results[3][i] - 11000);
+		cen[0][i] = (short)((int)results[0][i] - offset);
+		cen[1][i] = (short)((int)results[1][i] - offset);
+		cen[2][i] = (short)((int)results[2][i] - offset);
+		cen[3][i] = (short)((int)results[3][i] - offset);
 	}
 	xil_printf("-- Data Gathering Complete! --\r\n");
 	xil_printf("-- Press btn 1 to  run parameter learning\r\n");
@@ -180,6 +186,8 @@ int main()
 	run_params();
 
 	chan_param(0);
+	chan_param(1);
+
 	xil_printf("-- Parameter learning complete! --\r\n");
 
 
@@ -192,14 +200,14 @@ int main()
 		if(newms)
 		{
 			newms = false;
-			r[0] = read_chan(&Xsdc0, (short)((int)get_sample(0) - 11000));
+			r[0] = read_chan(&Xsdc0, (short)((int)get_sample(0) - offset));
 
 			if(!(r[0] & 0xf0f0))
 			{
 			}
 			else if (r[0] == 240)
 			{
-				on_v = ms +300;
+				on_v = ms +30;
 				XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, 0x10);
 				xil_printf("-- VENTRICLE\r\n");
 
@@ -207,7 +215,7 @@ int main()
 			}
 			else
 			{
-				on_a = ms+300;
+				on_a = ms+30;
 				XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, 0x40);
 				xil_printf("-- ATRIA\r\n");
 
@@ -216,6 +224,7 @@ int main()
 			{
 				 XGpio_DiscreteClear(&stim, GPIO_CHANNEL, 0xFF);
 			}
+
 			if(r[0]!= 0) xil_printf("%d\r\n",r[0]);
 		}
 	}
@@ -231,7 +240,7 @@ static void run_params()
 	XTime start_time_co;
 	XTime stop_time_co;
 
-	for(i =0; i<1;i++)
+	for(i =0; i<2;i++)
 	{
 		XTime_GetTime(&start_time_co);
 

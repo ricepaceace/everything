@@ -5,12 +5,12 @@
 ############################################################
 open_project DecisionChannel
 set_top Decision
-add_files src/hls/constants.h
-add_files src/hls/circularBuffer.h
-add_files src/hls/channel.h
 add_files src/hls/channel.cpp
-add_files -tb src/hls/good-ch2.h
+add_files src/hls/channel.h
+add_files src/hls/circularBuffer.h
+add_files src/hls/constants.h
 add_files -tb src/hls/channel_tb.cpp
+add_files -tb src/hls/good-ch2.h
 open_solution "solution1"
 set_part {xc7z020clg484-1} -tool vivado
 create_clock -period 10 -name default
