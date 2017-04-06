@@ -5,12 +5,12 @@
 int outPins[] = {9, 10, 11, 12};
 
 const byte ch1[] PROGMEM =  {
-#include "rounded-ch6.h"
+#include "NormalSinusRhythm_struct1.h"
 };
-
-/*const byte ch2[] PROGMEM =  {
-#include "rounded-ch2.h"
+const byte ch2[] PROGMEM =  {
+#include "NormalSinusRhythm_struct2.h"
 };
+/*
 const byte ch3[] PROGMEM =  {
 #include "rounded-ch3.h"
 };
@@ -18,9 +18,7 @@ const byte ch4[] PROGMEM =  {
 #include "rounded-ch4.h"
 };
 */
-const byte *ch2 = ch1;
-const byte *ch3 = ch1;
-const byte *ch4 = ch1;
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -49,10 +47,12 @@ void loop() {
    analogWrite(outPins[0], incomingVal);
    incomingVal = pgm_read_byte_near(&(ch2[i]));
    analogWrite(outPins[1], incomingVal);
+   /*
    incomingVal = pgm_read_byte_near(&(ch3[i]));
    analogWrite(outPins[2], incomingVal);
    incomingVal = pgm_read_byte_near(&(ch4[i]));
    analogWrite(outPins[3], incomingVal);  
+   */
   i++;
  
   finish = micros();
