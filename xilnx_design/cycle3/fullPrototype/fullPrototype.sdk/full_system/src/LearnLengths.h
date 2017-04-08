@@ -148,6 +148,7 @@ static struct means kmeans(int npts, int * peak_lengths, int * peak_heights)
 
 	for (ii = 0; randomVal > 0 && ii < npts; ii++)
 		randomVal -= P_DIST2(ii, c1x, c1y);
+	ii--; // We want the one that caused it to drop below 0, which is one less.
 
 	int c2x = peak_lengths[ii];
 	int c2y = peak_heights[ii];
