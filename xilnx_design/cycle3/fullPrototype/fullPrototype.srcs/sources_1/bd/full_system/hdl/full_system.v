@@ -1,7 +1,7 @@
 //Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2016.2 (lin64) Build 1577090 Thu Jun  2 16:32:35 MDT 2016
-//Date        : Tue Feb 28 21:51:45 2017
+//Date        : Fri Apr  7 20:32:21 2017
 //Host        : gregbox running 64-bit Ubuntu 16.04.2 LTS
 //Command     : generate_target full_system.bd
 //Design      : full_system
@@ -71,7 +71,7 @@ module full_system
   inout FIXED_IO_ps_clk;
   inout FIXED_IO_ps_porb;
   inout FIXED_IO_ps_srstb;
-  output [7:0]GPIO_tri_o;
+  output [15:0]GPIO_tri_o;
   input MISO;
   input MISO_1;
   input MISO_2;
@@ -86,7 +86,7 @@ module full_system
   wire MISO_1_1;
   wire MISO_2_1;
   wire MISO_3_1;
-  wire [7:0]axi_gpio_0_GPIO_TRI_O;
+  wire [15:0]axi_gpio_0_GPIO_TRI_O;
   wire [4:0]axi_gpio_1_GPIO_TRI_I;
   wire axi_gpio_1_ip2intc_irpt;
   wire axi_max11100_0_CS;
@@ -358,7 +358,7 @@ module full_system
   assign CS_1 = axi_max11100_1_CS;
   assign CS_2 = axi_max11100_2_CS;
   assign CS_3 = axi_max11100_3_CS;
-  assign GPIO_tri_o[7:0] = axi_gpio_0_GPIO_TRI_O;
+  assign GPIO_tri_o[15:0] = axi_gpio_0_GPIO_TRI_O;
   assign MISO_1_1 = MISO_1;
   assign MISO_2_1 = MISO_2;
   assign MISO_3_1 = MISO_3;

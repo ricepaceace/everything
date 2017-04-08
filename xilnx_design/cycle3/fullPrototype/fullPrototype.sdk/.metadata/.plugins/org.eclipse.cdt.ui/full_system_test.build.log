@@ -1,8 +1,46 @@
-12:05:43 **** Incremental Build of configuration Debug for project full_system_test ****
+21:35:44 **** Build of configuration Debug for project full_system_test ****
 make pre-build main-build 
 a9-linaro-pre-build-step
  
-make: Nothing to be done for 'main-build'.
+Building file: ../src/axi_max11100.c
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/axi_max11100.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/axi_max11100.d" -MT"src/axi_max11100.o" -o "src/axi_max11100.o" "../src/axi_max11100.c"
+../src/axi_max11100.c:63:13: warning: ‘void AXI_MAX11100_Write_Delay_Reg(u32, u32)’ defined but not used [-Wunused-function]
+ static void AXI_MAX11100_Write_Delay_Reg(u32 BaseAddress, u32 Value)
+             ^
+../src/axi_max11100.c:81:13: warning: ‘void AXI_MAX11100_Interrupt_Enable(u32)’ defined but not used [-Wunused-function]
+ static void AXI_MAX11100_Interrupt_Enable(u32 BaseAddress)
+             ^
+Finished building: ../src/axi_max11100.c
+ 
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘int flow_test()’:
+../src/main.cc:383:10: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+   if((r[i] & V_ST) != 0)
+          ^
+../src/main.cc:385:10: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+   if((r[i] & A_ST) != 0)
+          ^
+Finished building: ../src/main.cc
+ 
+Building file: ../src/platform.c
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/platform.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/platform.d" -MT"src/platform.o" -o "src/platform.o" "../src/platform.c"
+Finished building: ../src/platform.c
+ 
+Building target: full_system_test.elf
+Invoking: ARM v7 g++ linker
+arm-none-eabi-g++ -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../full_system_test_bsp/ps7_cortexa9_0/lib -o "full_system_test.elf"  ./src/axi_max11100.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
+Finished building target: full_system_test.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size full_system_test.elf  |tee "full_system_test.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+ 115188	  24240	 402456	 541884	  844bc	full_system_test.elf
+Finished building: full_system_test.elf.size
+ 
 
-12:05:43 Build Finished (took 73ms)
+21:35:44 Build Finished (took 319ms)
 

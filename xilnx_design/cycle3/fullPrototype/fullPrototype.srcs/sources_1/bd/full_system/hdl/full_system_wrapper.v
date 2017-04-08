@@ -1,7 +1,7 @@
 //Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2016.2 (lin64) Build 1577090 Thu Jun  2 16:32:35 MDT 2016
-//Date        : Tue Feb 28 21:51:45 2017
+//Date        : Fri Apr  7 20:32:21 2017
 //Host        : gregbox running 64-bit Ubuntu 16.04.2 LTS
 //Command     : generate_target full_system_wrapper.bd
 //Design      : full_system_wrapper
@@ -79,7 +79,7 @@ module full_system_wrapper
   output SCLK_2;
   output SCLK_3;
   input [4:0]btns_5bits_0_tri_i;
-  output [7:0]gpio_tri_o;
+  output [15:0]gpio_tri_o;
 
   wire CS;
   wire CS_1;
@@ -115,7 +115,7 @@ module full_system_wrapper
   wire SCLK_2;
   wire SCLK_3;
   wire [4:0]btns_5bits_0_tri_i;
-  wire [7:0]gpio_tri_o;
+  wire [15:0]gpio_tri_o;
 
   full_system full_system_i
        (.CS(CS),

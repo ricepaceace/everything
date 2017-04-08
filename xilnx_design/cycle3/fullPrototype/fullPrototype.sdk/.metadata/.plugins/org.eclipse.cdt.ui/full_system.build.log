@@ -1,8 +1,42 @@
-12:05:43 **** Incremental Build of configuration Debug for project full_system ****
+21:45:41 **** Auto Build of configuration Debug for project full_system ****
 make pre-build main-build 
 a9-linaro-pre-build-step
  
-make: Nothing to be done for 'main-build'.
+Building file: ../src/main.cc
+Invoking: ARM v7 g++ compiler
+arm-none-eabi-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../full_system_test_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.cc"
+../src/main.cc: In function ‘void chan_param(char)’:
+../src/main.cc:77:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_vthresh(sdc0, vthresh[i]);
+                                       ^
+../src/main.cc:78:39: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_athresh(sdc0, athresh[i]);
+                                       ^
+../src/main.cc:79:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_flip(sdc0, vflip[i]);
+                                    ^
+../src/main.cc:80:36: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_flip(sdc0, aflip[i]);
+                                    ^
+../src/main.cc:81:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_a_length(sdc0, alen[i]);
+                                     ^
+../src/main.cc:82:37: warning: array subscript has type ‘char’ [-Wchar-subscripts]
+  XDecision_Set_v_length(sdc0, vlen[i]);
+                                     ^
+Finished building: ../src/main.cc
+ 
+Building target: full_system.elf
+Invoking: ARM v7 g++ linker
+arm-none-eabi-g++ -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../full_system_test_bsp/ps7_cortexa9_0/lib -o "full_system.elf"  ./src/axi_max11100.o ./src/main.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
+Finished building target: full_system.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size full_system.elf  |tee "full_system.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  68252	   3848	 481840	 553940	  873d4	full_system.elf
+Finished building: full_system.elf.size
+ 
 
-12:05:43 Build Finished (took 63ms)
+21:45:41 Build Finished (took 215ms)
 

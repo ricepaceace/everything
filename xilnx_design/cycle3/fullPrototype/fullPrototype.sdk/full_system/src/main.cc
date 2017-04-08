@@ -39,7 +39,7 @@ static void TMR_Intr_Handler(void *baseaddr_p, u8 num);
 static int Timer_btn_setup(void);
 static int channel_init(XDecision * sdc0, XDecision * sdc1, XDecision * sdc2, XDecision * sdc3);
 
-static void run_params(void);
+static void run_params(char n);
 
 
 XGpio   BTNInst;
@@ -54,7 +54,8 @@ static unsigned short results[4][PARAM_LEARN_SIZE];
 static short cen[4][PARAM_LEARN_SIZE];
 int alen[4], vlen[4], athresh[4], vthresh[4], aflip[4], vflip[4];
 volatile bool newms = false;
-unsigned long offset = 0;
+unsigned long offset[4] = {0,0,0,0};
+char mode = 0;
 
 
 static void chan_param(char i)
@@ -148,84 +149,120 @@ int main()
 
 	xil_printf("-- Init Complete --\r\n");
 
-	xil_printf("-- Press btn 1 to  start gathering data for parameter learning\r\n");
-	while(btn_value != 1);
+	xil_printf("-- Press btn 1 to  start gathering data for demo parameter learning and peak detection\r\n");
+	xil_printf("-- Press btn 2 to  start static pacing for langendorff\r\n");
+	xil_printf("-- Press btn 4 to  start gathering data for 3 channel pacing\r\n");
 
-	newms = false;
-	int i = 0;
-	while(i < PARAM_LEARN_SIZE)
+
+	while(btn_value != 1 && btn_value !=2 && btn_value != 4);
+
+	if(btn_value == 1)
 	{
-		if(newms)
+		xil_printf("starting peak detection demo: gathering data on 1 channels\r\n");
+		newms = false;
+		int i = 0;
+		while(i < PARAM_LEARN_SIZE)
 		{
-			results[0][i] = get_sample(0);
-			results[1][i] = get_sample(1);
-			results[2][i] = get_sample(2);
-			results[3][i] = get_sample(3);
+			if(newms)
+			{
+				results[0][i] = get_sample(0);
+				xil_printf("%d\r\n", (int) results[0][i]);
+				offset[0] = offset[0] + results[0][i];
+				i++;
+				newms = false;
+			}
+		}
 
-			offset = offset + results[0][i];
+		offset[0] = offset[0]/PARAM_LEARN_SIZE;
+		xil_printf("offset = %d\r\n",(int) offset[0]);
 
-			i++;
-			newms = false;
+		for(i = 0; i < PARAM_LEARN_SIZE;i++)
+		{
+			cen[0][i] = (short)((int)results[0][i] - offset[0]);
+		}
+
+		xil_printf("-- Data Gathering Complete! --\r\n");
+		xil_printf("-- Press btn 1 to  run parameter learning\r\n");
+		while(btn_value != 1);
+
+		run_params(1);
+
+		chan_param(0);
+
+		xil_printf("-- Parameter learning complete! --\r\n");
+
+		unsigned short r[1];
+		unsigned long long on_a = 0;
+		unsigned long long on_v = 0;
+		newms = false;
+		for(;;)
+		{
+			if(newms)
+			{
+				newms = false;
+				r[0] = read_chan(&Xsdc0, (short)((int)get_sample(0) - offset[0]));
+
+				if(!(r[0] & 0xf0f0))
+				{
+				}
+				else if (r[0] == 240)
+				{
+					on_v = ms +30;
+					XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, 0x10);
+					xil_printf("-- VENTRICLE\r\n");
+
+
+				}
+				else
+				{
+					on_a = ms+30;
+					XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, 0x40);
+					xil_printf("-- ATRIA\r\n");
+
+				}
+				if(ms == on_a || ms == on_v)
+				{
+					 XGpio_DiscreteClear(&stim, GPIO_CHANNEL, 0xFF);
+				}
+
+				if(r[0]!= 0) xil_printf("%d\r\n",r[0]);
+			}
 		}
 	}
-	offset = offset/PARAM_LEARN_SIZE;
-
-	xil_printf("%d\r\n", (int) offset);
-
-	for(i = 0; i < PARAM_LEARN_SIZE;i++)
+	else if (btn_value == 2)
 	{
-		cen[0][i] = (short)((int)results[0][i] - offset);
-		cen[1][i] = (short)((int)results[1][i] - offset);
-		cen[2][i] = (short)((int)results[2][i] - offset);
-		cen[3][i] = (short)((int)results[3][i] - offset);
-	}
-	xil_printf("-- Data Gathering Complete! --\r\n");
-	xil_printf("-- Press btn 1 to  run parameter learning\r\n");
-	while(btn_value != 1);
-
-	run_params();
-
-	chan_param(0);
-	chan_param(1);
-
-	xil_printf("-- Parameter learning complete! --\r\n");
-
-
-	unsigned short r[4];
-	unsigned long long on_a = 0;
-	unsigned long long on_v = 0;
-	newms = false;
-	for(;;)
-	{
-		if(newms)
+		int i = 0;
+		xil_printf("Beginning Pacing. Press btn 1 to exit\r\n");
+		newms = false;
+		while(btn_value != 1)
 		{
-			newms = false;
-			r[0] = read_chan(&Xsdc0, (short)((int)get_sample(0) - offset));
-
-			if(!(r[0] & 0xf0f0))
+			if(newms)
 			{
-			}
-			else if (r[0] == 240)
-			{
-				on_v = ms +30;
-				XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, 0x10);
-				xil_printf("-- VENTRICLE\r\n");
+				newms = false;
+				results[0][i] = get_sample(0);
+				results[1][i] = get_sample(1);
+				i = (i+1) % PARAM_LEARN_SIZE;
 
-
+				if(ms % 125 == 0)
+				{
+					XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, 0x88);
+				}
+				else if (ms %125 == 5)
+				{
+					 XGpio_DiscreteClear(&stim, GPIO_CHANNEL, 0xFF);
+				}
 			}
-			else
-			{
-				on_a = ms+30;
-				XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, 0x40);
-				xil_printf("-- ATRIA\r\n");
+		}
+		xil_printf("Printing last 10s data gathered\r\n");
 
-			}
-			if(ms == on_a || ms == on_v)
-			{
-				 XGpio_DiscreteClear(&stim, GPIO_CHANNEL, 0xFF);
-			}
-
-			if(r[0]!= 0) xil_printf("%d\r\n",r[0]);
+		for(i = 0; i <PARAM_LEARN_SIZE;i ++)
+		{
+			xil_printf("%d\r\n", (int)results[0][i]);
+		}
+		xil_printf("\r\nPrinting second channel gathered\r\n");
+		for(i = 0; i <PARAM_LEARN_SIZE;i ++)
+		{
+			xil_printf("%d\r\n", (int)results[1][i]);
 		}
 	}
 
@@ -234,13 +271,13 @@ int main()
 	return 0;
 }
 
-static void run_params()
+static void run_params(char n)
 {
 	unsigned int tt, i;
 	XTime start_time_co;
 	XTime stop_time_co;
 
-	for(i =0; i<2;i++)
+	for(i =0; i<n;i++)
 	{
 		XTime_GetTime(&start_time_co);
 

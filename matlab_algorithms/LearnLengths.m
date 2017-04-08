@@ -1,7 +1,7 @@
 function [v_length, a_length, first] = LearnLengths(data)
 
 extreme_over = 100;
-ddatadt = [0; diff(data)].^5.*data.*sign(data);
+ddatadt = [0; diff(data)].^2.*data.*sign(data);
 ddatadt = ddatadt * max(data)/max(ddatadt);
 a_length = [];
 v_length = [];

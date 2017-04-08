@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7z020clg484-1" LaunchTime="1488340343">
-  <File Type="RDS-PROPCONSTRS" Name="full_system_wrapper_drc_synth.rpt"/>
-  <File Type="RDS-UTIL" Name="full_system_wrapper_utilization_synth.rpt"/>
-  <File Type="RDS-RDS" Name="full_system_wrapper.vds"/>
+<GenRun Id="synth_1" LaunchPart="xc7z020clg484-1" LaunchTime="1491615145">
   <File Type="VDS-TIMING-PB" Name="full_system_wrapper_timing_summary_synth.pb"/>
-  <File Type="PA-TCL" Name="full_system_wrapper.tcl"/>
   <File Type="VDS-TIMINGSUMMARY" Name="full_system_wrapper_timing_summary_synth.rpt"/>
   <File Type="RDS-DCP" Name="full_system_wrapper.dcp"/>
   <File Type="RDS-UTIL-PB" Name="full_system_wrapper_utilization_synth.pb"/>
+  <File Type="RDS-UTIL" Name="full_system_wrapper_utilization_synth.rpt"/>
+  <File Type="RDS-PROPCONSTRS" Name="full_system_wrapper_drc_synth.rpt"/>
+  <File Type="RDS-RDS" Name="full_system_wrapper.vds"/>
+  <File Type="PA-TCL" Name="full_system_wrapper.tcl"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PSRCDIR/sources_1/bd/full_system/full_system.bd">

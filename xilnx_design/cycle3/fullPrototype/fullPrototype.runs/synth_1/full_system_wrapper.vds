@@ -2,8 +2,8 @@
 # Vivado v2016.2 (64-bit)
 # SW Build 1577090 on Thu Jun  2 16:32:35 MDT 2016
 # IP Build 1577682 on Fri Jun  3 12:00:54 MDT 2016
-# Start of session at: Tue Feb 28 21:52:24 2017
-# Process ID: 28203
+# Start of session at: Fri Apr  7 20:32:25 2017
+# Process ID: 5562
 # Current directory: /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.runs/synth_1
 # Command line: vivado -log full_system_wrapper.vds -mode batch -messageDb vivado.pb -notrace -source full_system_wrapper.tcl
 # Log file: /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.runs/synth_1/full_system_wrapper.vds
@@ -18,9 +18,9 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 28207 
+INFO: Helper process launched with PID 5568 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1104.562 ; gain = 219.488 ; free physical = 4518 ; free virtual = 35267
+Starting RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1104.562 ; gain = 219.488 ; free physical = 10077 ; free virtual = 36305
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-1090] 'counter_f' is not compiled in library proc_common_v3_00_a [/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.srcs/sources_1/bd/full_system/ipshared/xilinx.com/axi_lite_ipif_v1_01_a/slave_attachment.vhd:110]
 INFO: [Synth 8-638] synthesizing module 'full_system_wrapper' [/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.srcs/sources_1/bd/full_system/hdl/full_system_wrapper.v:12]
@@ -2478,7 +2478,7 @@ INFO: [Synth 8-638] synthesizing module 'full_system_axi_gpio_0_0' [/home/greg/e
 	Parameter C_FAMILY bound to: zynq - type: string 
 	Parameter C_S_AXI_ADDR_WIDTH bound to: 9 - type: integer 
 	Parameter C_S_AXI_DATA_WIDTH bound to: 32 - type: integer 
-	Parameter C_GPIO_WIDTH bound to: 8 - type: integer 
+	Parameter C_GPIO_WIDTH bound to: 16 - type: integer 
 	Parameter C_GPIO2_WIDTH bound to: 32 - type: integer 
 	Parameter C_ALL_INPUTS bound to: 0 - type: integer 
 	Parameter C_ALL_INPUTS_2 bound to: 0 - type: integer 
@@ -2495,7 +2495,7 @@ INFO: [Synth 8-638] synthesizing module 'axi_gpio__parameterized1' [/home/greg/e
 	Parameter C_FAMILY bound to: zynq - type: string 
 	Parameter C_S_AXI_ADDR_WIDTH bound to: 9 - type: integer 
 	Parameter C_S_AXI_DATA_WIDTH bound to: 32 - type: integer 
-	Parameter C_GPIO_WIDTH bound to: 8 - type: integer 
+	Parameter C_GPIO_WIDTH bound to: 16 - type: integer 
 	Parameter C_GPIO2_WIDTH bound to: 32 - type: integer 
 	Parameter C_ALL_INPUTS bound to: 0 - type: integer 
 	Parameter C_ALL_INPUTS_2 bound to: 0 - type: integer 
@@ -2566,9 +2566,9 @@ INFO: [Synth 8-256] done synthesizing module 'axi_lite_ipif_v3_0_4_axi_lite_ipif
 INFO: [Synth 8-638] synthesizing module 'GPIO_Core__parameterized0' [/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.srcs/sources_1/bd/full_system/ipshared/xilinx.com/axi_gpio_v2_0/hdl/src/vhdl/gpio_core.vhd:173]
 	Parameter C_DW bound to: 32 - type: integer 
 	Parameter C_AW bound to: 9 - type: integer 
-	Parameter C_GPIO_WIDTH bound to: 8 - type: integer 
+	Parameter C_GPIO_WIDTH bound to: 16 - type: integer 
 	Parameter C_GPIO2_WIDTH bound to: 32 - type: integer 
-	Parameter C_MAX_GPIO_WIDTH bound to: 8 - type: integer 
+	Parameter C_MAX_GPIO_WIDTH bound to: 16 - type: integer 
 	Parameter C_INTERRUPT_PRESENT bound to: 0 - type: integer 
 	Parameter C_DOUT_DEFAULT bound to: 0 - type: integer 
 	Parameter C_TRI_DEFAULT bound to: -1 - type: integer 
@@ -2582,8 +2582,56 @@ INFO: [Synth 8-638] synthesizing module 'cdc_sync__parameterized5' [/home/greg/e
 	Parameter C_RESET_STATE bound to: 0 - type: integer 
 	Parameter C_SINGLE_BIT bound to: 0 - type: integer 
 	Parameter C_FLOP_INPUT bound to: 0 - type: integer 
-	Parameter C_VECTOR_WIDTH bound to: 8 - type: integer 
+	Parameter C_VECTOR_WIDTH bound to: 16 - type: integer 
 	Parameter C_MTBF_STAGES bound to: 4 - type: integer 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
+	Parameter INIT bound to: 1'b0 
 	Parameter INIT bound to: 1'b0 
 	Parameter INIT bound to: 1'b0 
 	Parameter INIT bound to: 1'b0 
@@ -2778,7 +2826,7 @@ WARNING: [Synth 8-3331] design axi_crossbar_v2_1_10_decerr_slave has unconnected
 WARNING: [Synth 8-3331] design axi_crossbar_v2_1_10_decerr_slave has unconnected port S_AXI_ARLEN[7]
 INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:28 ; elapsed = 00:00:28 . Memory (MB): peak = 1290.000 ; gain = 404.926 ; free physical = 4326 ; free virtual = 35078
+Finished RTL Elaboration : Time (s): cpu = 00:00:29 ; elapsed = 00:00:29 . Memory (MB): peak = 1290.000 ; gain = 404.926 ; free physical = 9683 ; free virtual = 35931
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -2788,9 +2836,9 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 1290.000 ; gain = 404.926 ; free physical = 4326 ; free virtual = 35077
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:30 ; elapsed = 00:00:30 . Memory (MB): peak = 1290.000 ; gain = 404.926 ; free physical = 9683 ; free virtual = 35931
 ---------------------------------------------------------------------------------
-INFO: [Netlist 29-17] Analyzing 199 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 247 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Device 21-403] Loading part xc7z020clg484-1
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -2830,22 +2878,22 @@ Resolution: To avoid this warning, move constraints listed in [.Xil/full_system_
 Completed Processing XDC Constraints
 
 INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 135 instances were transformed.
-  FDR => FDRE: 108 instances
+  A total of 183 instances were transformed.
+  FDR => FDRE: 156 instances
   FDRS => FDRS (FDRE, LUT2, VCC): 1 instances
   FDRSE => FDRSE (FDRE, LUT4, VCC): 25 instances
   SRL16 => SRL16E: 1 instances
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1596.328 ; gain = 0.000 ; free physical = 4155 ; free virtual = 34906
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.03 . Memory (MB): peak = 1597.328 ; gain = 1.000 ; free physical = 9358 ; free virtual = 35654
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:40 ; elapsed = 00:01:20 . Memory (MB): peak = 1596.328 ; gain = 711.254 ; free physical = 4146 ; free virtual = 34897
+Finished Constraint Validation : Time (s): cpu = 00:00:41 ; elapsed = 00:00:42 . Memory (MB): peak = 1597.328 ; gain = 712.254 ; free physical = 9360 ; free virtual = 35656
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z020clg484-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:40 ; elapsed = 00:01:20 . Memory (MB): peak = 1596.328 ; gain = 711.254 ; free physical = 4146 ; free virtual = 34897
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:41 ; elapsed = 00:00:42 . Memory (MB): peak = 1597.328 ; gain = 712.254 ; free physical = 9360 ; free virtual = 35656
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -2874,7 +2922,7 @@ Applied set_property DONT_TOUCH = true for full_system_i/rst_processing_system7_
 Applied set_property DONT_TOUCH = true for full_system_i/stim. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for full_system_i/xlconcat_0. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:40 ; elapsed = 00:01:20 . Memory (MB): peak = 1596.328 ; gain = 711.254 ; free physical = 4145 ; free virtual = 34896
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:42 ; elapsed = 00:00:42 . Memory (MB): peak = 1597.328 ; gain = 712.254 ; free physical = 9360 ; free virtual = 35656
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-4471] merging register 'CircularBuffer_head_i_read_ass_1_reg_1719_reg[31:0]' into 'recentABools_head_i_reg[31:0]' [/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.srcs/sources_1/bd/full_system/ipshared/paceace/decision_v1_0/hdl/verilog/Decision.v:656]
 INFO: [Synth 8-4471] merging register 'CircularBuffer_head_i_read_ass_reg_1624_reg[31:0]' into 'recentVBools_head_i_reg[31:0]' [/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.srcs/sources_1/bd/full_system/ipshared/paceace/decision_v1_0/hdl/verilog/Decision.v:668]
@@ -2959,7 +3007,7 @@ INFO: [Synth 8-5544] ROM "s_axi_rresp_i" won't be mapped to Block RAM because ad
 INFO: [Synth 8-5544] ROM "s_axi_bresp_i" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "s_axi_bresp_i" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:44 ; elapsed = 00:01:24 . Memory (MB): peak = 1596.328 ; gain = 711.254 ; free physical = 4143 ; free virtual = 34894
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:45 ; elapsed = 00:00:45 . Memory (MB): peak = 1597.328 ; gain = 712.254 ; free physical = 9377 ; free virtual = 35674
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -2967,7 +3015,7 @@ Report RTL Partitions:
 |      |RTL Partition    |Replication |Instances |
 +------+-----------------+------------+----------+
 |1     |Decision         |           4|      9805|
-|2     |full_system__GC0 |           1|     28121|
+|2     |full_system__GC0 |           1|     28217|
 +------+-----------------+------------+----------+
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -2998,11 +3046,11 @@ Detailed RTL Component Info :
 	               36 Bit    Registers := 2     
 	               33 Bit    Registers := 2     
 	               32 Bit    Registers := 193   
-	               16 Bit    Registers := 20    
+	               16 Bit    Registers := 23    
 	               14 Bit    Registers := 6     
 	               12 Bit    Registers := 8     
 	                9 Bit    Registers := 4     
-	                8 Bit    Registers := 21    
+	                8 Bit    Registers := 18    
 	                7 Bit    Registers := 4     
 	                6 Bit    Registers := 2     
 	                5 Bit    Registers := 29    
@@ -3023,7 +3071,7 @@ Detailed RTL Component Info :
 	   3 Input     32 Bit        Muxes := 12    
 	   7 Input     32 Bit        Muxes := 8     
 	   2 Input     17 Bit        Muxes := 8     
-	   2 Input     16 Bit        Muxes := 20    
+	   2 Input     16 Bit        Muxes := 22    
 	   5 Input     16 Bit        Muxes := 4     
 	  15 Input     14 Bit        Muxes := 4     
 	   2 Input     14 Bit        Muxes := 2     
@@ -3033,7 +3081,7 @@ Detailed RTL Component Info :
 	   2 Input     11 Bit        Muxes := 2     
 	   2 Input      9 Bit        Muxes := 13    
 	   3 Input      9 Bit        Muxes := 1     
-	   2 Input      8 Bit        Muxes := 14    
+	   2 Input      8 Bit        Muxes := 12    
 	   2 Input      6 Bit        Muxes := 1     
 	   2 Input      5 Bit        Muxes := 51    
 	   5 Input      5 Bit        Muxes := 8     
@@ -3922,10 +3970,10 @@ Detailed RTL Component Info :
 Module GPIO_Core__parameterized0 
 Detailed RTL Component Info : 
 +---Registers : 
-	                8 Bit    Registers := 3     
+	               16 Bit    Registers := 3     
 	                1 Bit    Registers := 2     
 +---Muxes : 
-	   2 Input      8 Bit        Muxes := 2     
+	   2 Input     16 Bit        Muxes := 2     
 	   2 Input      1 Bit        Muxes := 3     
 Module axi_gpio__parameterized1 
 Detailed RTL Component Info : 
@@ -3946,7 +3994,7 @@ BRAMs: 280 (col length: RAMB18 60 RAMB36 30)
 ---------------------------------------------------------------------------------
 Finished Part Resource Summary
 ---------------------------------------------------------------------------------
-Start Parallel Synthesis Optimization  : Time (s): cpu = 00:00:44 ; elapsed = 00:01:24 . Memory (MB): peak = 1596.328 ; gain = 711.254 ; free physical = 4143 ; free virtual = 34894
+Start Parallel Synthesis Optimization  : Time (s): cpu = 00:00:46 ; elapsed = 00:00:46 . Memory (MB): peak = 1597.328 ; gain = 712.254 ; free physical = 9379 ; free virtual = 35676
 ---------------------------------------------------------------------------------
 Start Cross Boundary Optimization
 ---------------------------------------------------------------------------------
@@ -3995,16 +4043,16 @@ INFO: [Synth 8-3936] Found unconnected internal register 'inst/gen_axilite.gen_b
 INFO: [Synth 8-3936] Found unconnected internal register 'inst/gen_sasd.crossbar_sasd_0/reg_slice_r/m_payload_i_reg' and it is trimmed from '36' to '35' bits. [/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.srcs/sources_1/bd/full_system/ipshared/xilinx.com/axi_register_slice_v2_1/hdl/verilog/axi_register_slice_v2_1_axic_register_slice.v:318]
 INFO: [Synth 8-4471] merging register 'bus2ip_reset_reg' into 'AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/rst_reg' [/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.srcs/sources_1/bd/full_system/ipshared/xilinx.com/axi_gpio_v2_0/hdl/src/vhdl/axi_gpio.vhd:608]
 ---------------------------------------------------------------------------------
-Finished Cross Boundary Optimization : Time (s): cpu = 00:00:47 ; elapsed = 00:01:27 . Memory (MB): peak = 1596.328 ; gain = 711.254 ; free physical = 4143 ; free virtual = 34895
+Finished Cross Boundary Optimization : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 1597.328 ; gain = 712.254 ; free physical = 9399 ; free virtual = 35696
 ---------------------------------------------------------------------------------
-Finished Parallel Reinference  : Time (s): cpu = 00:00:47 ; elapsed = 00:01:27 . Memory (MB): peak = 1596.328 ; gain = 711.254 ; free physical = 4143 ; free virtual = 34895
+Finished Parallel Reinference  : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 1597.328 ; gain = 712.254 ; free physical = 9399 ; free virtual = 35696
 
 Report RTL Partitions: 
 +------+-----------------+------------+----------+
 |      |RTL Partition    |Replication |Instances |
 +------+-----------------+------------+----------+
 |1     |Decision         |           4|     10575|
-|2     |full_system__GC0 |           1|     27541|
+|2     |full_system__GC0 |           1|     27645|
 +------+-----------------+------------+----------+
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -4210,14 +4258,6 @@ INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/processing_system7_0
 INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/processing_system7_0_axi_periph/s00_couplers/auto_pc/inst/gen_axilite.gen_b2s_conv.axilite_b2s/SI_REG/b_pipe/aresetn_d_reg[1]' (FDR) to 'full_system_i/i_14_0/processing_system7_0_axi_periph/s00_couplers/auto_pc/inst/gen_axilite.gen_b2s_conv.axilite_b2s/SI_REG/ar_pipe/aresetn_d_reg[1]'
 INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/rst_processing_system7_0_100M/U0/SEQ/pr_dec_reg[1]' (FD) to 'full_system_i/i_14_0/rst_processing_system7_0_100M/U0/SEQ/bsr_dec_reg[1]'
 INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/rst_processing_system7_0_100M/U0/SEQ/bsr_dec_reg[1]' (FD) to 'full_system_i/i_14_0/rst_processing_system7_0_100M/U0/SEQ/core_dec_reg[1]'
-INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[23]' (FDR) to 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[22]'
-INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[22]' (FDR) to 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[21]'
-INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[21]' (FDR) to 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[20]'
-INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[20]' (FDR) to 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[19]'
-INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[19]' (FDR) to 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[18]'
-INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[18]' (FDR) to 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[17]'
-INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[17]' (FDR) to 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[16]'
-INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[16]' (FDR) to 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[15]'
 INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[15]' (FDR) to 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[14]'
 INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[14]' (FDR) to 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[13]'
 INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[13]' (FDR) to 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[12]'
@@ -4234,25 +4274,33 @@ INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/ip2bus_data_
 INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[2]' (FDR) to 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[1]'
 INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[1]' (FDR) to 'full_system_i/i_14_0/stim/U0/ip2bus_data_i_D1_reg[0]'
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (full_system_i/i_14_0/stim/U0/\ip2bus_data_i_D1_reg[0] )
-INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rresp_i_reg[1]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[8]'
-INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[8]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[9]'
-INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[9]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[10]'
-INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[10]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[11]'
-INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[11]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[12]'
-INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[12]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[13]'
+INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rresp_i_reg[1]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[16]'
+INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[16]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[17]'
+INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[17]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[18]'
+INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[18]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[19]'
+INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[19]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[20]'
+INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[20]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[21]'
+INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[21]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[22]'
+INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[22]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[23]'
+INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[23]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[24]'
+INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[24]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[25]'
+INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[25]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[26]'
+INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[26]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[27]'
+INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[27]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[28]'
+INFO: [Synth 8-3886] merging instance 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[28]' (FDRE) to 'full_system_i/i_14_0/stim/U0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_reg[29]'
 INFO: [Common 17-14] Message 'Synth 8-3886' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (full_system_i/i_14_0/stim/U0/\AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_bresp_i_reg[1] )
 ---------------------------------------------------------------------------------
-Finished Area Optimization : Time (s): cpu = 00:01:01 ; elapsed = 00:01:41 . Memory (MB): peak = 1596.328 ; gain = 711.254 ; free physical = 4148 ; free virtual = 34900
+Finished Area Optimization : Time (s): cpu = 00:01:03 ; elapsed = 00:01:03 . Memory (MB): peak = 1597.328 ; gain = 712.254 ; free physical = 9348 ; free virtual = 35647
 ---------------------------------------------------------------------------------
-Finished Parallel Area Optimization  : Time (s): cpu = 00:01:01 ; elapsed = 00:01:41 . Memory (MB): peak = 1596.328 ; gain = 711.254 ; free physical = 4148 ; free virtual = 34900
+Finished Parallel Area Optimization  : Time (s): cpu = 00:01:03 ; elapsed = 00:01:03 . Memory (MB): peak = 1597.328 ; gain = 712.254 ; free physical = 9348 ; free virtual = 35647
 
 Report RTL Partitions: 
 +------+-----------------+------------+----------+
 |      |RTL Partition    |Replication |Instances |
 +------+-----------------+------------+----------+
 |1     |Decision         |           4|      5931|
-|2     |full_system__GC0 |           1|     11642|
+|2     |full_system__GC0 |           1|     11770|
 +------+-----------------+------------+----------+
 ---------------------------------------------------------------------------------
 Start Timing Optimization
@@ -4261,10 +4309,10 @@ Start Timing Optimization
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:08 ; elapsed = 00:01:48 . Memory (MB): peak = 1756.312 ; gain = 871.238 ; free physical = 3915 ; free virtual = 34667
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:10 ; elapsed = 00:01:10 . Memory (MB): peak = 1757.312 ; gain = 872.238 ; free physical = 9133 ; free virtual = 35440
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:01:13 ; elapsed = 00:01:54 . Memory (MB): peak = 1888.641 ; gain = 1003.566 ; free physical = 3766 ; free virtual = 34518
+Finished Timing Optimization : Time (s): cpu = 00:01:16 ; elapsed = 00:01:16 . Memory (MB): peak = 1888.641 ; gain = 1003.566 ; free physical = 8990 ; free virtual = 35297
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -4272,22 +4320,22 @@ Report RTL Partitions:
 |      |RTL Partition    |Replication |Instances |
 +------+-----------------+------------+----------+
 |1     |Decision         |           4|      5931|
-|2     |full_system__GC0 |           1|     11642|
+|2     |full_system__GC0 |           1|     11770|
 +------+-----------------+------------+----------+
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:01:21 ; elapsed = 00:02:01 . Memory (MB): peak = 1888.641 ; gain = 1003.566 ; free physical = 3765 ; free virtual = 34517
+Finished Technology Mapping : Time (s): cpu = 00:01:23 ; elapsed = 00:01:24 . Memory (MB): peak = 1896.648 ; gain = 1011.574 ; free physical = 8974 ; free virtual = 35281
 ---------------------------------------------------------------------------------
-Finished Parallel Technology Mapping Optimization  : Time (s): cpu = 00:01:21 ; elapsed = 00:02:01 . Memory (MB): peak = 1888.641 ; gain = 1003.566 ; free physical = 3765 ; free virtual = 34517
+Finished Parallel Technology Mapping Optimization  : Time (s): cpu = 00:01:23 ; elapsed = 00:01:24 . Memory (MB): peak = 1896.648 ; gain = 1011.574 ; free physical = 8974 ; free virtual = 35281
 
 Report RTL Partitions: 
 +-+--------------+------------+----------+
 | |RTL Partition |Replication |Instances |
 +-+--------------+------------+----------+
 +-+--------------+------------+----------+
-Finished Parallel Synthesis Optimization  : Time (s): cpu = 00:01:21 ; elapsed = 00:02:01 . Memory (MB): peak = 1888.641 ; gain = 1003.566 ; free physical = 3765 ; free virtual = 34517
+Finished Parallel Synthesis Optimization  : Time (s): cpu = 00:01:23 ; elapsed = 00:01:24 . Memory (MB): peak = 1896.648 ; gain = 1011.574 ; free physical = 8973 ; free virtual = 35280
 ---------------------------------------------------------------------------------
 Start IO Insertion
 ---------------------------------------------------------------------------------
@@ -4321,7 +4369,7 @@ INFO: [Synth 8-4618] Found max_fanout attribute set to 20 on net \inst/gen_axili
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:01:23 ; elapsed = 00:02:03 . Memory (MB): peak = 1888.641 ; gain = 1003.566 ; free physical = 3764 ; free virtual = 34517
+Finished IO Insertion : Time (s): cpu = 00:01:25 ; elapsed = 00:01:26 . Memory (MB): peak = 1896.648 ; gain = 1011.574 ; free physical = 8953 ; free virtual = 35260
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -4334,7 +4382,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:01:23 ; elapsed = 00:02:03 . Memory (MB): peak = 1888.641 ; gain = 1003.566 ; free physical = 3764 ; free virtual = 34517
+Finished Renaming Generated Instances : Time (s): cpu = 00:01:25 ; elapsed = 00:01:26 . Memory (MB): peak = 1896.648 ; gain = 1011.574 ; free physical = 8953 ; free virtual = 35260
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -4346,25 +4394,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:25 ; elapsed = 00:02:06 . Memory (MB): peak = 1888.641 ; gain = 1003.566 ; free physical = 3765 ; free virtual = 34517
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:27 ; elapsed = 00:01:28 . Memory (MB): peak = 1896.648 ; gain = 1011.574 ; free physical = 8952 ; free virtual = 35259
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:01:25 ; elapsed = 00:02:06 . Memory (MB): peak = 1888.641 ; gain = 1003.566 ; free physical = 3765 ; free virtual = 34517
+Finished Renaming Generated Ports : Time (s): cpu = 00:01:28 ; elapsed = 00:01:28 . Memory (MB): peak = 1896.648 ; gain = 1011.574 ; free physical = 8952 ; free virtual = 35259
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:01:26 ; elapsed = 00:02:06 . Memory (MB): peak = 1888.641 ; gain = 1003.566 ; free physical = 3766 ; free virtual = 34518
+Finished Handling Custom Attributes : Time (s): cpu = 00:01:28 ; elapsed = 00:01:29 . Memory (MB): peak = 1896.648 ; gain = 1011.574 ; free physical = 8954 ; free virtual = 35261
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:01:26 ; elapsed = 00:02:06 . Memory (MB): peak = 1888.641 ; gain = 1003.566 ; free physical = 3766 ; free virtual = 34518
+Finished Renaming Generated Nets : Time (s): cpu = 00:01:28 ; elapsed = 00:01:29 . Memory (MB): peak = 1896.648 ; gain = 1011.574 ; free physical = 8954 ; free virtual = 35261
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -4403,9 +4451,9 @@ Report Cell Usage:
 |4     |LUT1     |  2546|
 |5     |LUT2     |  2357|
 |6     |LUT3     |  1600|
-|7     |LUT4     |  1996|
+|7     |LUT4     |  2004|
 |8     |LUT5     |  1417|
-|9     |LUT6     |  2389|
+|9     |LUT6     |  2397|
 |10    |MUXCY    |    64|
 |11    |MUXF7    |     1|
 |12    |PS7      |     1|
@@ -4414,19 +4462,19 @@ Report Cell Usage:
 |15    |SRL16    |     1|
 |16    |SRL16E   |    22|
 |17    |SRLC32E  |    47|
-|18    |FDR      |    72|
-|19    |FDRE     |  8551|
-|20    |FDSE     |    84|
+|18    |FDR      |   104|
+|19    |FDRE     |  8591|
+|20    |FDSE     |    92|
 |21    |IBUF     |     9|
-|22    |OBUF     |    16|
+|22    |OBUF     |    24|
 +------+---------+------+
 
 Report Instance Areas: 
 +------+------------------------------------------------------------------------------+--------------------------------------------------------------+------+
 |      |Instance                                                                      |Module                                                        |Cells |
 +------+------------------------------------------------------------------------------+--------------------------------------------------------------+------+
-|1     |top                                                                           |                                                              | 22678|
-|2     |  full_system_i                                                               |full_system                                                   | 22653|
+|1     |top                                                                           |                                                              | 22782|
+|2     |  full_system_i                                                               |full_system                                                   | 22749|
 |3     |    Decision_0                                                                |full_system_Decision_0_4                                      |  4108|
 |4     |      inst                                                                    |Decision_36                                                   |  4108|
 |5     |        Decision_AXILiteS_s_axi_U                                             |Decision_AXILiteS_s_axi_37                                    |   699|
@@ -4559,30 +4607,30 @@ Report Instance Areas:
 |132   |          \ACTIVE_LOW_EXT.ACT_LO_EXT                                          |cdc_sync__parameterized3                                      |     6|
 |133   |        SEQ                                                                   |sequence_psr                                                  |    38|
 |134   |          SEQ_COUNTER                                                         |upcnt_n                                                       |    13|
-|135   |    stim                                                                      |full_system_axi_gpio_0_0                                      |   148|
-|136   |      U0                                                                      |axi_gpio__parameterized1                                      |   148|
-|137   |        AXI_LITE_IPIF_I                                                       |axi_lite_ipif_v3_0_4_axi_lite_ipif__parameterized1            |    69|
-|138   |          I_SLAVE_ATTACHMENT                                                  |axi_lite_ipif_v3_0_4_slave_attachment__parameterized1         |    69|
-|139   |            I_DECODER                                                         |axi_lite_ipif_v3_0_4_address_decoder__parameterized1          |    23|
-|140   |        gpio_core_1                                                           |GPIO_Core__parameterized0                                     |    69|
-|141   |          \Not_Dual.INPUT_DOUBLE_REGS3                                        |cdc_sync__parameterized5                                      |    32|
+|135   |    stim                                                                      |full_system_axi_gpio_0_0                                      |   244|
+|136   |      U0                                                                      |axi_gpio__parameterized1                                      |   244|
+|137   |        AXI_LITE_IPIF_I                                                       |axi_lite_ipif_v3_0_4_axi_lite_ipif__parameterized1            |    93|
+|138   |          I_SLAVE_ATTACHMENT                                                  |axi_lite_ipif_v3_0_4_slave_attachment__parameterized1         |    93|
+|139   |            I_DECODER                                                         |axi_lite_ipif_v3_0_4_address_decoder__parameterized1          |    39|
+|140   |        gpio_core_1                                                           |GPIO_Core__parameterized0                                     |   133|
+|141   |          \Not_Dual.INPUT_DOUBLE_REGS3                                        |cdc_sync__parameterized5                                      |    64|
 |142   |    xlconcat_0                                                                |full_system_xlconcat_0_0                                      |     0|
 +------+------------------------------------------------------------------------------+--------------------------------------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:01:26 ; elapsed = 00:02:06 . Memory (MB): peak = 1888.641 ; gain = 1003.566 ; free physical = 3766 ; free virtual = 34518
+Finished Writing Synthesis Report : Time (s): cpu = 00:01:28 ; elapsed = 00:01:29 . Memory (MB): peak = 1896.648 ; gain = 1011.574 ; free physical = 8952 ; free virtual = 35259
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 18 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:01:14 ; elapsed = 00:01:15 . Memory (MB): peak = 1888.641 ; gain = 549.746 ; free physical = 3766 ; free virtual = 34518
-Synthesis Optimization Complete : Time (s): cpu = 00:01:26 ; elapsed = 00:02:06 . Memory (MB): peak = 1888.648 ; gain = 1003.574 ; free physical = 3767 ; free virtual = 34519
+Synthesis Optimization Runtime : Time (s): cpu = 00:01:16 ; elapsed = 00:01:17 . Memory (MB): peak = 1896.648 ; gain = 556.754 ; free physical = 8952 ; free virtual = 35259
+Synthesis Optimization Complete : Time (s): cpu = 00:01:28 ; elapsed = 00:01:29 . Memory (MB): peak = 1896.656 ; gain = 1011.582 ; free physical = 8954 ; free virtual = 35261
 INFO: [Project 1-571] Translating synthesized netlist
-INFO: [Netlist 29-17] Analyzing 1520 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 1552 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
 INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 249 instances were transformed.
+  A total of 281 instances were transformed.
   (MUXCY,XORCY) => CARRY4: 32 instances
-  FDR => FDRE: 72 instances
+  FDR => FDRE: 104 instances
   RAM16X1D => RAM32X1D (RAMD32, RAMD32): 16 instances
   RAM16X1S => RAM32X1S (RAMS32): 128 instances
   SRL16 => SRL16E: 1 instances
@@ -4590,6 +4638,6 @@ INFO: [Project 1-111] Unisim Transformation Summary:
 INFO: [Common 17-83] Releasing license: Synthesis
 924 Infos, 202 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:01:27 ; elapsed = 00:02:07 . Memory (MB): peak = 1920.656 ; gain = 900.676 ; free physical = 3873 ; free virtual = 34596
-report_utilization: Time (s): cpu = 00:00:00.26 ; elapsed = 00:00:00.30 . Memory (MB): peak = 1952.672 ; gain = 0.000 ; free physical = 4011 ; free virtual = 34737
-INFO: [Common 17-206] Exiting Vivado at Tue Feb 28 21:54:43 2017...
+synth_design: Time (s): cpu = 00:01:30 ; elapsed = 00:01:30 . Memory (MB): peak = 1928.664 ; gain = 908.684 ; free physical = 8943 ; free virtual = 35252
+report_utilization: Time (s): cpu = 00:00:00.22 ; elapsed = 00:00:00.25 . Memory (MB): peak = 1960.680 ; gain = 0.000 ; free physical = 8940 ; free virtual = 35253
+INFO: [Common 17-206] Exiting Vivado at Fri Apr  7 20:34:07 2017...

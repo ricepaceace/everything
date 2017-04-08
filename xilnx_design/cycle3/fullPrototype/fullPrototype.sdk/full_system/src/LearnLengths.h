@@ -18,7 +18,7 @@ static struct means kmeans(int npts, int * peak_lengths, int * peak_heights);
 
 void learnLengths(short * ldata, int * v_length, int * a_length)
 {
-	CircularBuffer<int, 2*EXTREME_OVER> nearby;
+	CircularBuffer<long long, 2*EXTREME_OVER> nearby;
 	int nextrema = 0;
 	int wall_times[MAX_EXTREMA];
 	short wall_steeps[MAX_EXTREMA];
@@ -26,8 +26,9 @@ void learnLengths(short * ldata, int * v_length, int * a_length)
 	int peak_lengths[MAX_EXTREMA];
 	int peak_heights[MAX_EXTREMA];
 
+	long long  maxddatadt = 0;
 	ddatadt[0] = 0;
-	int maxdata = ldata[0], maxddatadt = 0, i, j, add;
+	int maxdata = ldata[0], i, j, add;
 	for (i = 1; i < PARAM_LEARN_SIZE; i++)
 	{
 		long long diff = ldata[i]-ldata[i-1];
@@ -65,7 +66,7 @@ void learnLengths(short * ldata, int * v_length, int * a_length)
 			{
 				// We found an extrema
 				wall_times[nextrema] = i;
-				wall_steeps[nextrema] = ddatadt[i];
+				wall_steeps[nextrema] = SIGN(ddatadt[i]);
 				nextrema++;
 			}
 		}
@@ -143,7 +144,7 @@ static struct means kmeans(int npts, int * peak_lengths, int * peak_heights)
 	for (i = 0; i < npts; i++)
 		sum += P_DIST2(i, c1x, c1y);
 
-	long long randomVal = sum/2; // This should be a random int < sum
+	long long randomVal = sum >> 1; // This should be a random int < sum
 
 	for (ii = 0; randomVal > 0 && ii < npts; ii++)
 		randomVal -= P_DIST2(ii, c1x, c1y);
