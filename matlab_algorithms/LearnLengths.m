@@ -1,7 +1,7 @@
 function [v_length, a_length, first] = LearnLengths(data)
 
 extreme_over = 100;
-ddatadt = [0; diff(data)].^2.*data.*sign(data);
+ddatadt = [0; diff(data)].^2.*sign([0; diff(data)]).*data.*sign(data);
 ddatadt = ddatadt * max(data)/max(ddatadt);
 a_length = [];
 v_length = [];
@@ -42,7 +42,9 @@ for s = [+1 -1]
     end
     
     %remove outliers
-    outliers = abs(zscore([peak_lengths peak_heights peak_steeps]))>3;
+    zscores = zscore([peak_lengths peak_heights peak_steeps]);
+    zscorenorms = sqrt(sum(zscores.^2,2));
+    outliers = zscorenorms > 2.5;
     to_removes = [];
     for i=1:length(peak_lengths)
         if any(outliers(i,:))
