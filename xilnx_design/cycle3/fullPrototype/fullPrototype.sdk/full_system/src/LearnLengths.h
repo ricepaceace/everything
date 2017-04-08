@@ -87,7 +87,7 @@ void learnLengths(short * ldata, int * v_length, int * a_length)
 					(SIGN(ldata[wall_times[i]]) == 1) &&
 					(SIGN(wall_steeps[i-1]) == 1) &&
 					(SIGN(wall_steeps[i]) != 1) &&
-					len < 75 && //TODO: Make sample-rate invariant
+					len < 45 && //TODO: Make sample-rate invariant
 					len > 2 &&
 					npeaks < MAX_EXTREMA)
 				{
