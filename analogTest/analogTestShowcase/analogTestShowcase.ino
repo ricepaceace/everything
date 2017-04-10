@@ -1,13 +1,13 @@
 #define N_CH 3
 #define N_BUTTON 4
-#define MEGA 1
+
 #define TIME_SCALAR 2 // Each millisecond is 2 units of time, that way we can slow the signal down
 #include <avr/pgmspace.h>
 
 #ifndef MEGA
-int outPins[N_CH] = {3, 5, 6};
-int buttonPins[N_BUTTON] = {10, 11, 12, 13};
-int buzzerPin = 9;
+int outPins[N_CH] = {9, 10, 11};
+int buttonPins[N_BUTTON] = {4,5,6,7};
+int buzzerPin = 3;
 #else
 int outPins[N_CH] = {9, 10, 11};
 int buttonPins[N_BUTTON] = { 22, 24, 26, 28};
@@ -45,7 +45,7 @@ void setup() {
   TCCR2B = TCCR2B & 0b11111000 | 0x01;
   TCCR1B = TCCR1B & 0b11111000 | 0x01;
   #ifndef MEGA
-   TCCR0B = TCCR0B & 0b11111000 | 0x01;
+  
 #endif
 
 #ifdef MEGA
