@@ -1,7 +1,7 @@
 Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2016.2 (lin64) Build 1577090 Thu Jun  2 16:32:35 MDT 2016
-| Date         : Fri Apr  7 20:34:07 2017
+| Date         : Sat Apr  8 15:04:32 2017
 | Host         : gregbox running 64-bit Ubuntu 16.04.2 LTS
 | Command      : report_utilization -file full_system_wrapper_utilization_synth.rpt -pb full_system_wrapper_utilization_synth.pb
 | Design       : full_system_wrapper
@@ -27,20 +27,20 @@ Table of Contents
 1. Slice Logic
 --------------
 
-+----------------------------+------+-------+-----------+-------+
-|          Site Type         | Used | Fixed | Available | Util% |
-+----------------------------+------+-------+-----------+-------+
-| Slice LUTs*                | 8990 |     0 |     53200 | 16.90 |
-|   LUT as Logic             | 8760 |     0 |     53200 | 16.47 |
-|   LUT as Memory            |  230 |     0 |     17400 |  1.32 |
-|     LUT as Distributed RAM |  160 |     0 |           |       |
-|     LUT as Shift Register  |   70 |     0 |           |       |
-| Slice Registers            | 8787 |     0 |    106400 |  8.26 |
-|   Register as Flip Flop    | 8787 |     0 |    106400 |  8.26 |
-|   Register as Latch        |    0 |     0 |    106400 |  0.00 |
-| F7 Muxes                   |    1 |     0 |     26600 | <0.01 |
-| F8 Muxes                   |    0 |     0 |     13300 |  0.00 |
-+----------------------------+------+-------+-----------+-------+
++----------------------------+-------+-------+-----------+-------+
+|          Site Type         |  Used | Fixed | Available | Util% |
++----------------------------+-------+-------+-----------+-------+
+| Slice LUTs*                | 12229 |     0 |     53200 | 22.99 |
+|   LUT as Logic             | 11943 |     0 |     53200 | 22.45 |
+|   LUT as Memory            |   286 |     0 |     17400 |  1.64 |
+|     LUT as Distributed RAM |   216 |     0 |           |       |
+|     LUT as Shift Register  |    70 |     0 |           |       |
+| Slice Registers            | 11791 |     0 |    106400 | 11.08 |
+|   Register as Flip Flop    | 11791 |     0 |    106400 | 11.08 |
+|   Register as Latch        |     0 |     0 |    106400 |  0.00 |
+| F7 Muxes                   |     1 |     0 |     26600 | <0.01 |
+| F8 Muxes                   |     0 |     0 |     13300 |  0.00 |
++----------------------------+-------+-------+-----------+-------+
 * Warning! The Final LUT count, after physical optimizations and full implementation, is typically lower. Run opt_design after synthesis, if not already completed, for a more realistic count.
 
 
@@ -58,8 +58,8 @@ Table of Contents
 | 0     |          Yes |           - |            - |
 | 0     |          Yes |           - |          Set |
 | 0     |          Yes |           - |        Reset |
-| 92    |          Yes |         Set |            - |
-| 8695  |          Yes |       Reset |            - |
+| 98    |          Yes |         Set |            - |
+| 11693 |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -145,29 +145,29 @@ Table of Contents
 7. Primitives
 -------------
 
-+----------+------+----------------------+
-| Ref Name | Used |  Functional Category |
-+----------+------+----------------------+
-| FDRE     | 8695 |         Flop & Latch |
-| LUT6     | 2397 |                  LUT |
-| LUT2     | 2357 |                  LUT |
-| LUT4     | 2004 |                  LUT |
-| LUT3     | 1600 |                  LUT |
-| LUT5     | 1417 |                  LUT |
-| CARRY4   | 1262 |           CarryLogic |
-| LUT1     | 1018 |                  LUT |
-| BIBUF    |  130 |                   IO |
-| RAMS32   |  128 |   Distributed Memory |
-| FDSE     |   92 |         Flop & Latch |
-| SRLC32E  |   47 |   Distributed Memory |
-| RAMD32   |   32 |   Distributed Memory |
-| OBUF     |   24 |                   IO |
-| SRL16E   |   23 |   Distributed Memory |
-| IBUF     |    9 |                   IO |
-| PS7      |    1 | Specialized Resource |
-| MUXF7    |    1 |                MuxFx |
-| BUFG     |    1 |                Clock |
-+----------+------+----------------------+
++----------+-------+----------------------+
+| Ref Name |  Used |  Functional Category |
++----------+-------+----------------------+
+| FDRE     | 11693 |         Flop & Latch |
+| LUT2     |  3325 |                  LUT |
+| LUT6     |  3085 |                  LUT |
+| LUT4     |  2742 |                  LUT |
+| LUT3     |  2154 |                  LUT |
+| LUT5     |  1987 |                  LUT |
+| CARRY4   |  1814 |           CarryLogic |
+| LUT1     |  1457 |                  LUT |
+| RAMS32   |   160 |   Distributed Memory |
+| BIBUF    |   130 |                   IO |
+| FDSE     |    98 |         Flop & Latch |
+| RAMD32   |    56 |   Distributed Memory |
+| SRLC32E  |    47 |   Distributed Memory |
+| OBUF     |    24 |                   IO |
+| SRL16E   |    23 |   Distributed Memory |
+| IBUF     |     9 |                   IO |
+| PS7      |     1 | Specialized Resource |
+| MUXF7    |     1 |                MuxFx |
+| BUFG     |     1 |                Clock |
++----------+-------+----------------------+
 
 
 8. Black Boxes

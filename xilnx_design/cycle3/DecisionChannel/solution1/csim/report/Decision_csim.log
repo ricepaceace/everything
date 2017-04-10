@@ -1,0 +1,4 @@
+   Compiling ../../../../src/hls/channel_tb.cpp in debug mode
+   Compiling ../../../../src/hls/channel.cpp in debug mode
+   Generating csim.exe
+INFO: [SIM 1] CSim file generation done with 0 errors.

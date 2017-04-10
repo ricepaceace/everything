@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<autopilotfilemapping:AutoPilotFileMapping xmlns:autopilotfilemapping="www.autoesl.com/autopilotfilemapping">
+  <source>
+    <originFiles name="ratConstants.h" path="/home/greg/everything/xilnx_design/cycle3/src/hls/ratConstants.h"/>
+    <originFiles name="ratChannel.h" path="/home/greg/everything/xilnx_design/cycle3/src/hls/ratChannel.h"/>
+    <originFiles name="ratChannel.cpp" path="/home/greg/everything/xilnx_design/cycle3/src/hls/ratChannel.cpp"/>
+    <originFiles name="circularBuffer.h" path="/home/greg/everything/xilnx_design/cycle3/src/hls/circularBuffer.h"/>
+  </source>
+  <testbench/>
+</autopilotfilemapping:AutoPilotFileMapping>

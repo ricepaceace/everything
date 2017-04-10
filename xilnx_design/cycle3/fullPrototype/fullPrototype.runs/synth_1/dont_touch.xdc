@@ -56,6 +56,12 @@ set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==full_system_Dec
 # IP: bd/full_system/ip/full_system_Decision_0_7/full_system_Decision_0_7.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==full_system_Decision_0_7 || ORIG_REF_NAME==full_system_Decision_0_7}]
 
+# IP: bd/full_system/ip/full_system_ratDecision_0_0/full_system_ratDecision_0_0.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==full_system_ratDecision_0_0 || ORIG_REF_NAME==full_system_ratDecision_0_0}]
+
+# IP: bd/full_system/ip/full_system_ratDecision_0_1/full_system_ratDecision_0_1.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==full_system_ratDecision_0_1 || ORIG_REF_NAME==full_system_ratDecision_0_1}]
+
 # IP: bd/full_system/ip/full_system_auto_pc_0/full_system_auto_pc_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==full_system_auto_pc_0 || ORIG_REF_NAME==full_system_auto_pc_0}]
 
@@ -100,6 +106,10 @@ set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {R
 # XDC: bd/full_system/ip/full_system_Decision_0_6/constraints/Decision_ooc.xdc
 
 # XDC: bd/full_system/ip/full_system_Decision_0_7/constraints/Decision_ooc.xdc
+
+# XDC: bd/full_system/ip/full_system_ratDecision_0_0/constraints/ratDecision_ooc.xdc
+
+# XDC: bd/full_system/ip/full_system_ratDecision_0_1/constraints/ratDecision_ooc.xdc
 
 # XDC: bd/full_system/ip/full_system_auto_pc_0/full_system_auto_pc_0_ooc.xdc
 

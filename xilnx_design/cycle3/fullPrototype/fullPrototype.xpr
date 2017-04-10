@@ -51,28 +51,6 @@
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_Decision_0_7/full_system_Decision_0_7.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_Decision_0_6/full_system_Decision_0_6.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_Decision_0_5/full_system_Decision_0_5.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_Decision_0_4/full_system_Decision_0_4.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="hdl/full_system.v"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_xbar_0/full_system_xbar_0.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_rst_processing_system7_0_100M_0/full_system_rst_processing_system7_0_100M_0.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_processing_system7_0_axi_periph_0/full_system_processing_system7_0_axi_periph_0.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_xlconcat_0_0/full_system_xlconcat_0_0.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_axi_timer_0_0/full_system_axi_timer_0_0.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_axi_gpio_1_0/full_system_axi_gpio_1_0.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_axi_gpio_0_0/full_system_axi_gpio_0_0.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_axi_max11100_0_3/full_system_axi_max11100_0_3.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_axi_max11100_0_2/full_system_axi_max11100_0_2.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_processing_system7_0_0/full_system_processing_system7_0_0.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_axi_max11100_0_0/full_system_axi_max11100_0_0.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_axi_max11100_0_1/full_system_axi_max11100_0_1.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="ip/full_system_auto_pc_0/full_system_auto_pc_0.xci"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="full_system_ooc.xdc"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="hdl/full_system.hwdef"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="hw_handoff/full_system.hwh"/>
-        <CompFileExtendedInfo CompFileName="full_system.bd" FileRelPathName="hw_handoff/full_system_bd.tcl"/>
       </File>
       <File Path="$PSRCDIR/sources_1/bd/full_system/hdl/full_system_wrapper.v">
         <FileInfo>
@@ -147,7 +125,7 @@
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
     </Run>
-    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="constrs_1" Description="Default settings for Implementation." State="current" SynthRun="synth_1" IncludeInArchive="true">
+    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="constrs_1" Description="Default settings for Implementation." State="current" Dir="$PRUNDIR/impl_1" SynthRun="synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2016"/>
         <Step Id="init_design"/>
@@ -160,6 +138,7 @@
         <Step Id="post_route_phys_opt_design"/>
         <Step Id="write_bitstream"/>
       </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
     </Run>
   </Runs>
 </Project>
