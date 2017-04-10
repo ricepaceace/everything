@@ -35,6 +35,8 @@ set_property used_in_implementation false [get_files -all /home/greg/everything/
 set_property used_in_implementation false [get_files -all /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.srcs/sources_1/bd/full_system/ip/full_system_Decision_0_5/constraints/Decision_ooc.xdc]
 set_property used_in_implementation false [get_files -all /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.srcs/sources_1/bd/full_system/ip/full_system_Decision_0_6/constraints/Decision_ooc.xdc]
 set_property used_in_implementation false [get_files -all /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.srcs/sources_1/bd/full_system/ip/full_system_Decision_0_7/constraints/Decision_ooc.xdc]
+set_property used_in_implementation false [get_files -all /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.srcs/sources_1/bd/full_system/ip/full_system_ratDecision_0_0/constraints/ratDecision_ooc.xdc]
+set_property used_in_implementation false [get_files -all /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.srcs/sources_1/bd/full_system/ip/full_system_ratDecision_0_1/constraints/ratDecision_ooc.xdc]
 set_property used_in_implementation false [get_files -all /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.srcs/sources_1/bd/full_system/ip/full_system_auto_pc_0/full_system_auto_pc_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.srcs/sources_1/bd/full_system/full_system_ooc.xdc]
 set_property is_locked true [get_files /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.srcs/sources_1/bd/full_system/full_system.bd]

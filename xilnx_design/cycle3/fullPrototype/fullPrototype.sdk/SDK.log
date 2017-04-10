@@ -307,3 +307,104 @@ java.lang.NullPointerException
 21:22:28 INFO  : XSDB server has started successfully.
 21:22:28 INFO  : Processing command line option -hwspec /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper.hdf.
 21:22:28 INFO  : Checking for hwspec changes in the project full_system_wrapper_hw_platform_0.
+10:31:58 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/temp_xsdb_launch_script.tcl
+10:31:59 INFO  : XSDB server has started successfully.
+10:31:59 INFO  : Processing command line option -hwspec /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper.hdf.
+10:31:59 INFO  : Checking for hwspec changes in the project full_system_wrapper_hw_platform_0.
+12:51:12 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+12:51:13 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent Zed 210248685987" && level==0} -index 1' command is executed.
+12:51:15 INFO  : FPGA configured successfully with bitstream "/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper_hw_platform_0/full_system_wrapper.bit"
+12:52:02 INFO  : ps7_init is completed.
+12:52:02 INFO  : ps7_post_config is completed.
+12:52:02 INFO  : Processor reset is completed for ps7_cortexa9_0
+12:52:12 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
+12:52:13 INFO  : Processor reset is completed for ps7_cortexa9_0
+12:53:03 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
+12:53:05 INFO  : Processor reset is completed for ps7_cortexa9_0
+12:56:57 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
+12:56:59 INFO  : Processor reset is completed for ps7_cortexa9_0
+12:57:32 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
+12:57:34 INFO  : Processor reset is completed for ps7_cortexa9_0
+13:09:01 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+13:09:01 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent Zed 210248685987" && level==0} -index 1' command is executed.
+13:09:03 INFO  : FPGA configured successfully with bitstream "/home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper_hw_platform_0/full_system_wrapper.bit"
+13:11:16 INFO  : ps7_init is completed.
+13:11:16 INFO  : ps7_post_config is completed.
+13:11:16 INFO  : Processor reset is completed for ps7_cortexa9_0
+13:11:57 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
+13:12:06 INFO  : Processor reset is completed for ps7_cortexa9_0
+13:12:37 INFO  : ps7_cortexa9_0 Processor is in use. Please stop existing Run or Debug sessions before launching.
+13:12:49 INFO  : Processor reset is completed for ps7_cortexa9_0
+13:17:36 ERROR : Unexpected error while parsing XMD response ￿: com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: invalid number or unquoted string near 
+15:14:47 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/temp_xsdb_launch_script.tcl
+15:14:48 INFO  : XSDB server has started successfully.
+15:14:49 INFO  : Processing command line option -hwspec /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper.hdf.
+15:14:49 INFO  : Checking for hwspec changes in the project full_system_wrapper_hw_platform_0.
+15:14:50 INFO  : SDK has detected change in the last modified timestamps for source hardware specification file Source:1491682422000,  Project:1488341061000
+15:14:50 INFO  : The hardware specification for project 'full_system_wrapper_hw_platform_0' is different from /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper.hdf.
+15:14:50 INFO  : Copied contents of /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper.hdf into /full_system_wrapper_hw_platform_0/system.hdf.
+15:14:53 INFO  : Synchronizing projects in the workspace with the hardware platform specification changes.
+15:14:55 INFO  : 
+15:14:55 INFO  : Updating hardware inferred compiler options for full_system.
+15:14:56 INFO  : Updating hardware inferred compiler options for full_system_test.
+15:14:56 INFO  : Clearing existing target manager status.
+15:14:58 INFO  : Workspace synchronized with the new hardware specification file. Cleaning dependent projects...
+15:14:59 WARN  : Linker script will not be updated automatically. Users need to update it manually.
+15:24:41 ERROR : Unexpected error while parsing XMD response ￿: com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: invalid number or unquoted string near 
+15:26:52 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/temp_xsdb_launch_script.tcl
+15:26:53 INFO  : XSDB server has started successfully.
+15:26:53 INFO  : Processing command line option -hwspec /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper.hdf.
+15:26:53 INFO  : Checking for hwspec changes in the project full_system_wrapper_hw_platform_0.
+15:35:04 INFO  : Inferring section assignments and sizes from elf file: /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/test_bench/Debug/test_bench.elf
+15:36:31 INFO  : Inferring section assignments and sizes from elf file: /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/test_bench/Debug/test_bench.elf
+15:36:52 INFO  : Successfully generated /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/test_bench/src/lscript.ld.
+15:36:52 INFO  : Applying linker script to all configurations of project test_bench.
+15:36:52 INFO  : Setting rebuild state to true for all configurations of project test_bench.
+15:41:18 INFO  : Inferring section assignments and sizes from elf file: /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/heart_demo/Debug/heart_demo.elf
+15:41:29 INFO  : Successfully generated /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/heart_demo/src/lscript.ld.
+15:41:29 INFO  : Applying linker script to all configurations of project heart_demo.
+15:41:29 INFO  : Setting rebuild state to true for all configurations of project heart_demo.
+15:47:24 ERROR : (XSDB Server)/opt/Xilinx/SDK/2016.2/bin/loader: line 164:   811 Segmentation fault      (core dumped) "$RDI_PROG" "$@"
+
+15:47:24 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/temp_xsdb_launch_script.tcl
+15:47:25 INFO  : XSDB server has started successfully.
+15:49:49 ERROR : (XSDB Server)/opt/Xilinx/SDK/2016.2/bin/loader: line 164:  3836 Segmentation fault      (core dumped) "$RDI_PROG" "$@"
+
+15:49:49 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/temp_xsdb_launch_script.tcl
+15:49:50 INFO  : XSDB server has started successfully.
+15:51:25 ERROR : (XSDB Server)/opt/Xilinx/SDK/2016.2/bin/loader: line 164:  4494 Segmentation fault      (core dumped) "$RDI_PROG" "$@"
+
+15:51:25 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/temp_xsdb_launch_script.tcl
+15:51:26 INFO  : XSDB server has started successfully.
+15:51:28 ERROR : (XSDB Server)/opt/Xilinx/SDK/2016.2/bin/loader: line 164:  4661 Segmentation fault      (core dumped) "$RDI_PROG" "$@"
+
+15:51:28 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/temp_xsdb_launch_script.tcl
+15:51:29 INFO  : XSDB server has started successfully.
+15:52:04 ERROR : (XSDB Server)/opt/Xilinx/SDK/2016.2/bin/loader: line 164:  4725 Segmentation fault      (core dumped) "$RDI_PROG" "$@"
+
+15:52:04 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/temp_xsdb_launch_script.tcl
+15:52:05 INFO  : XSDB server has started successfully.
+15:52:07 ERROR : (XSDB Server)/opt/Xilinx/SDK/2016.2/bin/loader: line 164:  4816 Segmentation fault      (core dumped) "$RDI_PROG" "$@"
+
+15:52:07 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/temp_xsdb_launch_script.tcl
+15:52:08 INFO  : XSDB server has started successfully.
+15:53:08 INFO  : Inferring section assignments and sizes from elf file: /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/jorge_demo/Debug/jorge_demo.elf
+15:53:15 INFO  : Successfully generated /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/jorge_demo/src/lscript.ld.
+15:53:15 INFO  : Applying linker script to all configurations of project jorge_demo.
+15:53:15 INFO  : Setting rebuild state to true for all configurations of project jorge_demo.
+10:53:23 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/temp_xsdb_launch_script.tcl
+10:53:24 INFO  : XSDB server has started successfully.
+10:53:24 INFO  : Processing command line option -hwspec /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper.hdf.
+10:53:24 INFO  : Checking for hwspec changes in the project full_system_wrapper_hw_platform_0.
+18:44:13 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/temp_xsdb_launch_script.tcl
+18:44:15 INFO  : XSDB server has started successfully.
+18:44:15 INFO  : Processing command line option -hwspec /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/full_system_wrapper.hdf.
+18:44:15 INFO  : Checking for hwspec changes in the project full_system_wrapper_hw_platform_0.
+18:57:43 ERROR : (XSDB Server)/opt/Xilinx/SDK/2016.2/bin/loader: line 164:  5084 Segmentation fault      (core dumped) "$RDI_PROG" "$@"
+
+18:57:43 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/temp_xsdb_launch_script.tcl
+18:57:44 INFO  : XSDB server has started successfully.
+18:59:08 INFO  : Inferring section assignments and sizes from elf file: /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/rat_demo/Debug/rat_demo.elf
+18:59:17 INFO  : Successfully generated /home/greg/everything/xilnx_design/cycle3/fullPrototype/fullPrototype.sdk/rat_demo/src/lscript.ld.
+18:59:17 INFO  : Applying linker script to all configurations of project rat_demo.
+18:59:17 INFO  : Setting rebuild state to true for all configurations of project rat_demo.
