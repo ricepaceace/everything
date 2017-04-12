@@ -24,6 +24,7 @@ const byte ch2[] PROGMEM =  {
 const byte* data[N_CH] = {ch1, ch2, ch2};
 const int ch_len[N_CH] = {14317, 14317, 14317}; 
 int cindex[N_CH] = {0, 0, 0};
+byte mask[N_CH] = {0xFF, 0xFF, 0xFF};
 /*
 const byte ch3[] PROGMEM =  {
 #include "rounded-ch3.h"
@@ -63,10 +64,13 @@ void loop() {
 
   analogWrite(buzzerPin, millis() & 0xFF);
   
-  int pressedButton = -1;
-  for (int i = 0; i < N_BUTTON; i++) {
-    if (!digitalRead(buttonPins[i])) {
-      pressedButton = i;
+  for (int i = 1; i < (1+N_CH); i++) {
+    // Using INPUT_PULLUP, so when low, button was pressed
+    mask[i-1] = digitalRead(buttonPins[i]) ? 0xFF : 0;
+  }
+  if (!digitalRead(buttonPins[0])) {
+    for (int ch = 0; ch < N_CH; ch++) {
+      mask[ch] = 0;
     }
   }
  
@@ -83,7 +87,7 @@ void loop() {
     int incomingVal =  pgm_read_byte_near(data[ch] + (cindex[ch] / TIME_SCALAR));
     int increment = TIME_SCALAR;
     
-    switch (pressedButton) {
+    /*switch (pressedButton) {
       case -1: break;
       case 0: // flatline
         incomingVal = 128;
@@ -102,8 +106,8 @@ void loop() {
     Serial.println(pressedButton);
     #endif
     //if (ch == 0)
-    //  Serial.println(incomingVal);
-    analogWrite(outPins[ch], incomingVal);
+    //  Serial.println(incomingVal); */
+    analogWrite(outPins[ch], incomingVal & mask[ch]);
     cindex[ch] += increment;
     
   }
