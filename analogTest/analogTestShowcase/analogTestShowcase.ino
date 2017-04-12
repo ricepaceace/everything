@@ -24,7 +24,7 @@ const byte ch2[] PROGMEM =  {
 const byte* data[N_CH] = {ch1, ch2, ch2};
 const int ch_len[N_CH] = {14317, 14317, 14317}; 
 int cindex[N_CH] = {0, 0, 0};
-byte mask[N_CH] = {0xFF, 0xFF, 0xFF};
+boolean zeroed[N_CH] = {false, false, false};
 /*
 const byte ch3[] PROGMEM =  {
 #include "rounded-ch3.h"
@@ -66,11 +66,11 @@ void loop() {
   
   for (int i = 1; i < (1+N_CH); i++) {
     // Using INPUT_PULLUP, so when low, button was pressed
-    mask[i-1] = digitalRead(buttonPins[i]) ? 0xFF : 0;
+    zeroed[i-1] = digitalRead(buttonPins[i]) ? false : true;
   }
   if (!digitalRead(buttonPins[0])) {
     for (int ch = 0; ch < N_CH; ch++) {
-      mask[ch] = 0;
+      zeroed[ch] = true;
     }
   }
  
@@ -107,7 +107,10 @@ void loop() {
     #endif
     //if (ch == 0)
     //  Serial.println(incomingVal); */
-    analogWrite(outPins[ch], incomingVal & mask[ch]);
+    if (zeroed[ch])
+      analogWrite(outPins[ch], 128);
+    else
+      analogWrite(outPins[ch], incomingVal);
     cindex[ch] += increment;
     
   }
