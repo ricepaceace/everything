@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="8.0.0">
+<eagle version="6.5.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.025" altunitdist="inch" altunit="inch"/>
+<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="yes"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
@@ -24,11 +24,11 @@
 <layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
-<layer number="31" name="tCream" color="7" fill="4" visible="yes" active="yes"/>
-<layer number="32" name="bCream" color="7" fill="5" visible="yes" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
 <layer number="33" name="tFinish" color="6" fill="3" visible="yes" active="yes"/>
 <layer number="34" name="bFinish" color="6" fill="6" visible="yes" active="yes"/>
-<layer number="35" name="tGlue" color="7" fill="4" visible="yes" active="yes"/>
+<layer number="35" name="tGlue" color="7" fill="4" visible="no" active="yes"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="yes" active="yes"/>
 <layer number="37" name="tTest" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="38" name="bTest" color="7" fill="1" visible="yes" active="yes"/>
@@ -37,15 +37,15 @@
 <layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
 <layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
 <layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
-<layer number="44" name="Drills" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="45" name="Holes" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
 <layer number="46" name="Milling" color="3" fill="1" visible="yes" active="yes"/>
 <layer number="47" name="Measures" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="51" name="tDocu" color="7" fill="3" visible="yes" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="8" visible="yes" active="yes"/>
 <layer number="53" name="tGND_GNDA" color="7" fill="9" visible="no" active="no"/>
 <layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
 <layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
@@ -1560,11 +1560,8 @@ These are design rules for the Advanced Circuits barebones PCBs (4pcb.com).</des
 <autorouter>
 <pass name="Default">
 <param name="RoutingGrid" value="50mil"/>
-<param name="AutoGrid" value="1"/>
-<param name="Efforts" value="0"/>
-<param name="TopRouterVariant" value="1"/>
 <param name="tpViaShape" value="round"/>
-<param name="PrefDir.1" value="a"/>
+<param name="PrefDir.1" value="|"/>
 <param name="PrefDir.2" value="0"/>
 <param name="PrefDir.3" value="0"/>
 <param name="PrefDir.4" value="0"/>
@@ -1579,7 +1576,7 @@ These are design rules for the Advanced Circuits barebones PCBs (4pcb.com).</des
 <param name="PrefDir.13" value="0"/>
 <param name="PrefDir.14" value="0"/>
 <param name="PrefDir.15" value="0"/>
-<param name="PrefDir.16" value="a"/>
+<param name="PrefDir.16" value="-"/>
 <param name="cfVia" value="8"/>
 <param name="cfNonPref" value="5"/>
 <param name="cfChangeDir" value="2"/>
@@ -1654,121 +1651,327 @@ These are design rules for the Advanced Circuits barebones PCBs (4pcb.com).</des
 </pass>
 </autorouter>
 <elements>
-<element name="BIT0_1" library="pinhead" package="1X01" value="" x="31.75" y="77.47"/>
-<element name="BIT0_2" library="pinhead" package="1X01" value="" x="46.99" y="77.47"/>
-<element name="BIT0_3" library="pinhead" package="1X01" value="" x="2.54" y="63.5"/>
-<element name="BIT0_4" library="pinhead" package="1X01" value="" x="2.54" y="48.26"/>
-<element name="BIT0_5" library="pinhead" package="1X01" value="" x="2.54" y="35.56"/>
-<element name="BIT0_6" library="pinhead" package="1X01" value="" x="17.78" y="25.4"/>
-<element name="BIT1_1" library="pinhead" package="1X01" value="" x="34.29" y="77.47"/>
-<element name="BIT1_2" library="pinhead" package="1X01" value="" x="49.53" y="77.47"/>
-<element name="BIT1_3" library="pinhead" package="1X01" value="" x="2.54" y="60.96"/>
-<element name="BIT1_4" library="pinhead" package="1X01" value="" x="2.54" y="45.72"/>
-<element name="BIT1_5" library="pinhead" package="1X01" value="" x="2.54" y="33.02"/>
-<element name="BIT1_6" library="pinhead" package="1X01" value="" x="20.32" y="25.4"/>
-<element name="BIT2_1" library="pinhead" package="1X01" value="" x="36.83" y="77.47"/>
-<element name="BIT2_2" library="pinhead" package="1X01" value="" x="52.07" y="77.47"/>
-<element name="BIT2_3" library="pinhead" package="1X01" value="" x="2.54" y="58.42"/>
-<element name="BIT2_4" library="pinhead" package="1X01" value="" x="2.54" y="43.18"/>
-<element name="BIT2_5" library="pinhead" package="1X01" value="" x="2.54" y="30.48"/>
-<element name="BIT2_6" library="pinhead" package="1X01" value="" x="22.86" y="25.4"/>
-<element name="BIT3_1" library="pinhead" package="1X01" value="" x="39.37" y="77.47"/>
-<element name="BIT3_2" library="pinhead" package="1X01" value="" x="54.61" y="77.47"/>
-<element name="BIT3_3" library="pinhead" package="1X01" value="" x="2.54" y="55.88"/>
-<element name="BIT3_4" library="pinhead" package="1X01" value="" x="2.54" y="40.64"/>
-<element name="BIT3_5" library="pinhead" package="1X01" value="" x="2.54" y="27.94"/>
-<element name="BIT3_6" library="pinhead" package="1X01" value="" x="25.4" y="25.4"/>
-<element name="C1" library="rcl" package="C1206" value="3.3u" x="10.16" y="69.85"/>
-<element name="C2" library="rcl" package="C1206" value="3.3u" x="3.81" y="74.93" rot="R180"/>
-<element name="C3" library="rcl" package="C1206" value="10u" x="24.13" y="73.66" rot="MR0"/>
-<element name="C4" library="rcl" package="C1206" value="10u" x="25.4" y="67.31"/>
-<element name="D1" library="diode" package="DO41-10" value="1N4004" x="11.43" y="77.47" rot="R180"/>
-<element name="GND" library="pinhead" package="1X01" value="" x="2.54" y="71.12"/>
-<element name="OUT1" library="pinhead" package="1X01" value="" x="44.45" y="48.26"/>
-<element name="OUT2" library="pinhead" package="1X01" value="" x="52.07" y="48.26"/>
-<element name="OUT3" library="pinhead" package="1X01" value="" x="44.45" y="39.37"/>
-<element name="OUT4" library="pinhead" package="1X01" value="" x="52.07" y="39.37"/>
-<element name="OUT5" library="pinhead" package="1X01" value="" x="44.45" y="30.48"/>
-<element name="OUT6" library="pinhead" package="1X01" value="" x="52.07" y="30.48"/>
-<element name="R1" library="rcl" package="M1206" value="8k" x="30.48" y="73.66" rot="R270"/>
-<element name="R10" library="rcl" package="M1206" value="1k" x="29.21" y="64.77" rot="R180"/>
-<element name="R11" library="rcl" package="M1206" value="1k" x="26.67" y="59.69" rot="R90"/>
-<element name="R12" library="rcl" package="M1206" value="1k" x="46.99" y="60.96" rot="R90"/>
-<element name="R13" library="rcl" package="M1206" value="1k" x="49.53" y="68.58" rot="R180"/>
-<element name="R14" library="rcl" package="M1206" value="1k" x="43.18" y="68.58"/>
-<element name="R15" library="rcl" package="M1206" value="8k" x="6.35" y="66.04"/>
-<element name="R16" library="rcl" package="M1206" value="4k" x="6.35" y="62.23"/>
-<element name="R17" library="rcl" package="M1206" value="2k" x="6.35" y="58.42"/>
-<element name="R18" library="rcl" package="M1206" value="1k" x="6.35" y="54.61"/>
-<element name="R19" library="rcl" package="M1206" value="1k" x="11.43" y="58.42" rot="R90"/>
-<element name="R2" library="rcl" package="M1206" value="4k" x="34.29" y="73.66" rot="R270"/>
-<element name="R20" library="rcl" package="M1206" value="1k" x="17.78" y="63.5" rot="R90"/>
-<element name="R21" library="rcl" package="M1206" value="8k" x="6.35" y="50.8"/>
-<element name="R22" library="rcl" package="M1206" value="4k" x="6.35" y="46.99"/>
-<element name="R23" library="rcl" package="M1206" value="2k" x="6.35" y="43.18"/>
-<element name="R24" library="rcl" package="M1206" value="1k" x="6.35" y="39.37"/>
-<element name="R25" library="rcl" package="M1206" value="1k" x="26.67" y="50.8" rot="R270"/>
-<element name="R26" library="rcl" package="M1206" value="1k" x="22.86" y="49.53" rot="R270"/>
-<element name="R27" library="rcl" package="M1206" value="1k" x="12.7" y="64.77"/>
-<element name="R28" library="rcl" package="M1206" value="1k" x="22.86" y="58.42" rot="R90"/>
-<element name="R29" library="rcl" package="M1206" value="8k" x="6.35" y="35.56"/>
-<element name="R3" library="rcl" package="M1206" value="2k" x="38.1" y="73.66" rot="R270"/>
-<element name="R30" library="rcl" package="M1206" value="4k" x="6.35" y="31.75"/>
-<element name="R31" library="rcl" package="M1206" value="2k" x="6.35" y="27.94"/>
-<element name="R32" library="rcl" package="M1206" value="1k" x="11.43" y="26.67" rot="R90"/>
-<element name="R33" library="rcl" package="M1206" value="1k" x="11.43" y="35.56"/>
-<element name="R34" library="rcl" package="M1206" value="1k" x="17.78" y="41.91" rot="R180"/>
-<element name="R35" library="rcl" package="M1206" value="8k" x="15.24" y="29.21" rot="R90"/>
-<element name="R36" library="rcl" package="M1206" value="4k" x="19.05" y="29.21" rot="R90"/>
-<element name="R37" library="rcl" package="M1206" value="2k" x="22.86" y="29.21" rot="R90"/>
-<element name="R38" library="rcl" package="M1206" value="1k" x="26.67" y="29.21" rot="R90"/>
-<element name="R39" library="rcl" package="M1206" value="1k" x="24.13" y="34.29" rot="R180"/>
-<element name="R4" library="rcl" package="M1206" value="1k" x="41.91" y="73.66" rot="R270"/>
-<element name="R40" library="rcl" package="M1206" value="1k" x="19.05" y="34.29" rot="R90"/>
-<element name="R41" library="rcl" package="M1206" value="1k" x="12.7" y="40.64" rot="R90"/>
-<element name="R42" library="rcl" package="M1206" value="1k" x="29.21" y="34.29"/>
-<element name="R5" library="rcl" package="M1206" value="8k" x="45.72" y="73.66" rot="R270"/>
-<element name="R6" library="rcl" package="M1206" value="4k" x="49.53" y="73.66" rot="R270"/>
-<element name="R7" library="rcl" package="M1206" value="2k" x="53.34" y="73.66" rot="R270"/>
-<element name="R8" library="rcl" package="M1206" value="1k" x="54.61" y="66.04" rot="R90"/>
-<element name="R9" library="rcl" package="M1206" value="1k" x="35.56" y="68.58" rot="R180"/>
-<element name="U$1" library="LM2681" package="LM2681" value="LM2681" x="8.89" y="74.93"/>
-<element name="U1" library="AD8619ARZ" package="SOIC127P600X175-14N" value="AD8619ARZ" x="39.37" y="60.96">
+<element name="BIT0_1" library="pinhead" package="1X01" value="a0" x="31.75" y="77.47" smashed="yes">
+<attribute name="VALUE" x="30.734" y="79.121" size="1.27" layer="27"/>
+</element>
+<element name="BIT0_2" library="pinhead" package="1X01" value="b0" x="46.99" y="77.47" smashed="yes">
+<attribute name="VALUE" x="45.974" y="79.121" size="1.27" layer="27"/>
+</element>
+<element name="BIT0_3" library="pinhead" package="1X01" value="c0" x="2.54" y="63.5" smashed="yes">
+<attribute name="VALUE" x="1.143" y="62.484" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="BIT0_4" library="pinhead" package="1X01" value="d0" x="2.54" y="48.26" smashed="yes">
+<attribute name="VALUE" x="0.889" y="47.498" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="BIT0_5" library="pinhead" package="1X01" value="e0" x="2.54" y="35.56" smashed="yes">
+<attribute name="VALUE" x="0.889" y="34.544" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="BIT0_6" library="pinhead" package="1X01" value="f0" x="17.78" y="25.4" smashed="yes">
+<attribute name="VALUE" x="16.51" y="22.225" size="1.27" layer="27"/>
+</element>
+<element name="BIT1_1" library="pinhead" package="1X01" value="a1" x="34.29" y="77.47" smashed="yes">
+<attribute name="VALUE" x="33.528" y="79.121" size="1.27" layer="27"/>
+</element>
+<element name="BIT1_2" library="pinhead" package="1X01" value="b1" x="49.53" y="77.47" smashed="yes">
+<attribute name="VALUE" x="48.514" y="79.121" size="1.27" layer="27"/>
+</element>
+<element name="BIT1_3" library="pinhead" package="1X01" value="c1" x="2.54" y="60.96" smashed="yes">
+<attribute name="VALUE" x="1.143" y="59.944" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="BIT1_4" library="pinhead" package="1X01" value="d1" x="2.54" y="45.72" smashed="yes">
+<attribute name="VALUE" x="0.889" y="44.958" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="BIT1_5" library="pinhead" package="1X01" value="e1" x="2.54" y="33.02" smashed="yes">
+<attribute name="VALUE" x="0.889" y="32.258" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="BIT1_6" library="pinhead" package="1X01" value="f1" x="20.32" y="25.4" smashed="yes">
+<attribute name="VALUE" x="19.05" y="22.225" size="1.27" layer="27"/>
+</element>
+<element name="BIT2_1" library="pinhead" package="1X01" value="a2" x="36.83" y="77.47" smashed="yes">
+<attribute name="VALUE" x="35.814" y="79.121" size="1.27" layer="27"/>
+</element>
+<element name="BIT2_2" library="pinhead" package="1X01" value="b2" x="52.07" y="77.47" smashed="yes">
+<attribute name="VALUE" x="51.054" y="79.121" size="1.27" layer="27"/>
+</element>
+<element name="BIT2_3" library="pinhead" package="1X01" value="c2" x="2.54" y="58.42" smashed="yes">
+<attribute name="VALUE" x="1.143" y="57.15" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="BIT2_4" library="pinhead" package="1X01" value="d2" x="2.54" y="43.18" smashed="yes">
+<attribute name="VALUE" x="0.889" y="42.164" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="BIT2_5" library="pinhead" package="1X01" value="e2" x="2.54" y="30.48" smashed="yes">
+<attribute name="VALUE" x="0.889" y="29.718" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="BIT2_6" library="pinhead" package="1X01" value="f2" x="22.86" y="25.4" smashed="yes">
+<attribute name="VALUE" x="21.59" y="22.225" size="1.27" layer="27"/>
+</element>
+<element name="BIT3_1" library="pinhead" package="1X01" value="a3" x="39.37" y="77.47" smashed="yes">
+<attribute name="VALUE" x="38.608" y="79.121" size="1.27" layer="27"/>
+</element>
+<element name="BIT3_2" library="pinhead" package="1X01" value="b3" x="54.61" y="77.47" smashed="yes">
+<attribute name="VALUE" x="53.594" y="79.121" size="1.27" layer="27"/>
+</element>
+<element name="BIT3_3" library="pinhead" package="1X01" value="c3" x="2.54" y="55.88" smashed="yes">
+<attribute name="VALUE" x="1.143" y="54.61" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="BIT3_4" library="pinhead" package="1X01" value="d3" x="2.54" y="40.64" smashed="yes">
+<attribute name="VALUE" x="0.889" y="39.624" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="BIT3_5" library="pinhead" package="1X01" value="e3" x="2.54" y="27.94" smashed="yes">
+<attribute name="VALUE" x="0.889" y="27.178" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="BIT3_6" library="pinhead" package="1X01" value="f3" x="25.4" y="25.4" smashed="yes">
+<attribute name="VALUE" x="24.13" y="22.225" size="1.27" layer="27"/>
+</element>
+<element name="C1" library="rcl" package="C1206" value="3.3u" x="10.16" y="69.85" smashed="yes">
+<attribute name="NAME" x="7.62" y="70.866" size="1.27" layer="25"/>
+<attribute name="VALUE" x="9.398" y="69.342" size="0.8128" layer="27"/>
+</element>
+<element name="C2" library="rcl" package="C1206" value="3.3u" x="3.81" y="74.93" smashed="yes" rot="R180">
+<attribute name="NAME" x="6.096" y="73.66" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="5.08" y="75.184" size="0.8128" layer="27" rot="R180"/>
+</element>
+<element name="C3" library="rcl" package="C1206" value="10u" x="24.13" y="73.66" smashed="yes" rot="MR0">
+<attribute name="NAME" x="21.59" y="74.93" size="1.27" layer="25"/>
+<attribute name="VALUE" x="24.384" y="74.93" size="1.27" layer="27"/>
+</element>
+<element name="C4" library="rcl" package="C1206" value="10u" x="25.4" y="67.31" smashed="yes">
+<attribute name="NAME" x="22.86" y="65.024" size="1.27" layer="25"/>
+<attribute name="VALUE" x="26.162" y="67.564" size="0.8128" layer="27" rot="R180"/>
+</element>
+<element name="D1" library="diode" package="DO41-10" value="1N4004" x="11.43" y="77.47" smashed="yes" rot="R180">
+<attribute name="NAME" x="13.462" y="75.819" size="1.27" layer="25" ratio="10" rot="R180"/>
+<attribute name="VALUE" x="13.462" y="80.264" size="1.27" layer="27" ratio="10" rot="R180"/>
+</element>
+<element name="GND" library="pinhead" package="1X01" value="" x="2.54" y="71.12" smashed="yes">
+<attribute name="NAME" x="0.9398" y="68.3768" size="1.27" layer="25" ratio="10"/>
+<attribute name="VALUE" x="1.27" y="67.945" size="1.27" layer="27"/>
+</element>
+<element name="OUTA" library="pinhead" package="1X01" value="" x="44.45" y="48.26"/>
+<element name="OUTB" library="pinhead" package="1X01" value="" x="52.07" y="48.26"/>
+<element name="OUTC" library="pinhead" package="1X01" value="" x="44.45" y="39.37"/>
+<element name="OUTD" library="pinhead" package="1X01" value="" x="52.07" y="39.37"/>
+<element name="OUTE" library="pinhead" package="1X01" value="" x="44.45" y="30.48"/>
+<element name="OUTF" library="pinhead" package="1X01" value="" x="52.07" y="30.48"/>
+<element name="R1" library="rcl" package="M1206" value="8k" x="30.48" y="73.66" smashed="yes" rot="R270">
+<attribute name="NAME" x="29.464" y="70.358" size="1.27" layer="25"/>
+<attribute name="VALUE" x="29.972" y="74.422" size="1.27" layer="27" rot="R270"/>
+</element>
+<element name="R10" library="rcl" package="M1206" value="1k" x="29.21" y="64.77" smashed="yes" rot="R180">
+<attribute name="NAME" x="33.274" y="63.246" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="29.972" y="65.278" size="1.27" layer="27" rot="R180"/>
+</element>
+<element name="R11" library="rcl" package="M1206" value="1k" x="26.67" y="59.69" smashed="yes" rot="R90">
+<attribute name="NAME" x="28.448" y="57.658" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="27.432" y="58.42" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="R12" library="rcl" package="M1206" value="1k" x="46.99" y="60.96" smashed="yes" rot="R90">
+<attribute name="NAME" x="49.022" y="58.928" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="47.498" y="59.944" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="R13" library="rcl" package="M1206" value="1k" x="49.53" y="68.58" smashed="yes" rot="R180">
+<attribute name="NAME" x="50.8" y="67.056" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="50.292" y="69.088" size="1.27" layer="27" rot="R180"/>
+</element>
+<element name="R14" library="rcl" package="M1206" value="1k" x="43.18" y="68.58" smashed="yes">
+<attribute name="NAME" x="40.894" y="65.786" size="1.27" layer="25"/>
+<attribute name="VALUE" x="42.164" y="67.818" size="1.27" layer="27"/>
+</element>
+<element name="R15" library="rcl" package="M1206" value="8k" x="6.35" y="66.04" smashed="yes">
+<attribute name="NAME" x="9.652" y="64.262" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="5.588" y="65.532" size="1.27" layer="27"/>
+</element>
+<element name="R16" library="rcl" package="M1206" value="4k" x="6.35" y="62.23" smashed="yes">
+<attribute name="NAME" x="9.652" y="60.452" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="5.588" y="61.468" size="1.27" layer="27"/>
+</element>
+<element name="R17" library="rcl" package="M1206" value="2k" x="6.35" y="58.42" smashed="yes">
+<attribute name="NAME" x="9.652" y="56.642" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="7.366" y="58.928" size="1.27" layer="27" rot="R180"/>
+</element>
+<element name="R18" library="rcl" package="M1206" value="1k" x="6.35" y="54.61" smashed="yes">
+<attribute name="NAME" x="9.652" y="52.832" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="5.334" y="53.848" size="1.27" layer="27"/>
+</element>
+<element name="R19" library="rcl" package="M1206" value="1k" x="11.43" y="58.42" smashed="yes" rot="R90">
+<attribute name="NAME" x="13.208" y="56.134" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="11.938" y="57.404" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="R2" library="rcl" package="M1206" value="4k" x="34.29" y="73.66" smashed="yes" rot="R270">
+<attribute name="NAME" x="33.274" y="70.358" size="1.27" layer="25"/>
+<attribute name="VALUE" x="33.782" y="74.422" size="1.27" layer="27" rot="R270"/>
+</element>
+<element name="R20" library="rcl" package="M1206" value="1k" x="17.78" y="63.5" smashed="yes" rot="R90">
+<attribute name="NAME" x="19.558" y="67.564" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="18.542" y="62.484" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="R21" library="rcl" package="M1206" value="8k" x="6.35" y="50.8" smashed="yes">
+<attribute name="NAME" x="9.652" y="49.022" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="5.334" y="50.038" size="1.27" layer="27"/>
+</element>
+<element name="R22" library="rcl" package="M1206" value="4k" x="6.35" y="46.99" smashed="yes">
+<attribute name="NAME" x="9.652" y="45.212" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="5.588" y="46.228" size="1.27" layer="27"/>
+</element>
+<element name="R23" library="rcl" package="M1206" value="2k" x="6.35" y="43.18" smashed="yes">
+<attribute name="NAME" x="9.652" y="41.402" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="5.588" y="42.418" size="1.27" layer="27"/>
+</element>
+<element name="R24" library="rcl" package="M1206" value="1k" x="6.35" y="39.37" smashed="yes">
+<attribute name="NAME" x="9.652" y="37.592" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="5.334" y="38.608" size="1.27" layer="27"/>
+</element>
+<element name="R25" library="rcl" package="M1206" value="1k" x="26.67" y="50.8" smashed="yes" rot="R270">
+<attribute name="NAME" x="25.146" y="46.99" size="1.27" layer="25"/>
+<attribute name="VALUE" x="26.162" y="51.562" size="1.27" layer="27" rot="R270"/>
+</element>
+<element name="R26" library="rcl" package="M1206" value="1k" x="22.86" y="49.53" smashed="yes" rot="R270">
+<attribute name="NAME" x="21.336" y="45.466" size="1.27" layer="25"/>
+<attribute name="VALUE" x="22.352" y="50.292" size="1.27" layer="27" rot="R270"/>
+</element>
+<element name="R27" library="rcl" package="M1206" value="1k" x="12.7" y="64.77" smashed="yes">
+<attribute name="NAME" x="12.192" y="65.786" size="1.27" layer="25"/>
+<attribute name="VALUE" x="11.938" y="64.262" size="1.27" layer="27"/>
+</element>
+<element name="R28" library="rcl" package="M1206" value="1k" x="22.86" y="58.42" smashed="yes" rot="R90">
+<attribute name="NAME" x="24.638" y="56.388" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="23.622" y="57.404" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="R29" library="rcl" package="M1206" value="8k" x="6.35" y="35.56" smashed="yes">
+<attribute name="NAME" x="5.08" y="36.83" size="1.27" layer="25"/>
+<attribute name="VALUE" x="5.588" y="34.798" size="1.27" layer="27"/>
+</element>
+<element name="R3" library="rcl" package="M1206" value="2k" x="38.1" y="73.66" smashed="yes" rot="R270">
+<attribute name="NAME" x="37.084" y="70.358" size="1.27" layer="25"/>
+<attribute name="VALUE" x="37.592" y="74.676" size="1.27" layer="27" rot="R270"/>
+</element>
+<element name="R30" library="rcl" package="M1206" value="4k" x="6.35" y="31.75" smashed="yes">
+<attribute name="NAME" x="9.652" y="29.972" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="5.588" y="30.988" size="1.27" layer="27"/>
+</element>
+<element name="R31" library="rcl" package="M1206" value="2k" x="6.35" y="27.94" smashed="yes">
+<attribute name="NAME" x="9.652" y="26.416" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="5.588" y="27.178" size="1.27" layer="27"/>
+</element>
+<element name="R32" library="rcl" package="M1206" value="1k" x="11.43" y="26.67" smashed="yes" rot="R90">
+<attribute name="NAME" x="12.954" y="24.638" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="11.938" y="25.654" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="R33" library="rcl" package="M1206" value="1k" x="11.43" y="35.56" smashed="yes">
+<attribute name="NAME" x="14.732" y="33.782" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="10.668" y="34.798" size="1.27" layer="27"/>
+</element>
+<element name="R34" library="rcl" package="M1206" value="1k" x="17.78" y="41.91" smashed="yes" rot="R180">
+<attribute name="NAME" x="19.304" y="40.386" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="18.542" y="42.418" size="1.27" layer="27" rot="R180"/>
+</element>
+<element name="R35" library="rcl" package="M1206" value="8k" x="15.24" y="29.21" smashed="yes" rot="R90">
+<attribute name="NAME" x="16.764" y="32.258" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="16.002" y="28.194" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="R36" library="rcl" package="M1206" value="4k" x="19.05" y="29.21" smashed="yes" rot="R90">
+<attribute name="NAME" x="20.574" y="32.258" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="19.812" y="28.194" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="R37" library="rcl" package="M1206" value="2k" x="22.86" y="29.21" smashed="yes" rot="R90">
+<attribute name="NAME" x="24.638" y="32.512" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="23.622" y="28.194" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="R38" library="rcl" package="M1206" value="1k" x="26.67" y="29.21" smashed="yes" rot="R90">
+<attribute name="NAME" x="28.448" y="32.512" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="27.432" y="28.194" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="R39" library="rcl" package="M1206" value="1k" x="24.13" y="34.29" smashed="yes" rot="R180">
+<attribute name="NAME" x="25.654" y="36.576" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="24.892" y="34.798" size="1.27" layer="27" rot="R180"/>
+</element>
+<element name="R4" library="rcl" package="M1206" value="1k" x="41.91" y="73.66" smashed="yes" rot="R270">
+<attribute name="NAME" x="40.894" y="70.358" size="1.27" layer="25"/>
+<attribute name="VALUE" x="41.402" y="74.676" size="1.27" layer="27" rot="R270"/>
+</element>
+<element name="R40" library="rcl" package="M1206" value="1k" x="19.05" y="34.29" smashed="yes" rot="R90">
+<attribute name="NAME" x="17.78" y="33.02" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="19.558" y="33.274" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="R41" library="rcl" package="M1206" value="1k" x="12.7" y="40.64" smashed="yes" rot="R90">
+<attribute name="NAME" x="14.478" y="44.45" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="13.462" y="39.624" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="R42" library="rcl" package="M1206" value="1k" x="29.21" y="34.29" smashed="yes">
+<attribute name="NAME" x="27.94" y="35.56" size="1.27" layer="25"/>
+<attribute name="VALUE" x="28.194" y="33.528" size="1.27" layer="27"/>
+</element>
+<element name="R5" library="rcl" package="M1206" value="8k" x="45.72" y="73.66" smashed="yes" rot="R270">
+<attribute name="NAME" x="44.704" y="70.358" size="1.27" layer="25"/>
+<attribute name="VALUE" x="45.212" y="74.422" size="1.27" layer="27" rot="R270"/>
+</element>
+<element name="R6" library="rcl" package="M1206" value="4k" x="49.53" y="73.66" smashed="yes" rot="R270">
+<attribute name="NAME" x="48.514" y="70.358" size="1.27" layer="25"/>
+<attribute name="VALUE" x="49.022" y="74.676" size="1.27" layer="27" rot="R270"/>
+</element>
+<element name="R7" library="rcl" package="M1206" value="2k" x="53.34" y="73.66" smashed="yes" rot="R270">
+<attribute name="NAME" x="52.324" y="70.358" size="1.27" layer="25"/>
+<attribute name="VALUE" x="52.832" y="74.676" size="1.27" layer="27" rot="R270"/>
+</element>
+<element name="R8" library="rcl" package="M1206" value="1k" x="54.61" y="66.04" smashed="yes" rot="R90">
+<attribute name="NAME" x="55.626" y="63.246" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="55.118" y="65.024" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="R9" library="rcl" package="M1206" value="1k" x="35.56" y="68.58" smashed="yes" rot="R180">
+<attribute name="NAME" x="35.56" y="67.056" size="1.27" layer="25" rot="R180"/>
+<attribute name="VALUE" x="36.576" y="69.088" size="1.27" layer="27" rot="R180"/>
+</element>
+<element name="U4" library="LM2681" package="LM2681" value="LM2681" x="8.89" y="74.93" smashed="yes">
+<attribute name="NAME" x="6.9596" y="72.39" size="0.8128" layer="25" ratio="10" rot="SR0"/>
+<attribute name="VALUE" x="9.017" y="73.5076" size="0.6096" layer="27" ratio="10" rot="SR90"/>
+</element>
+<element name="U1" library="AD8619ARZ" package="SOIC127P600X175-14N" value="AD8619ARZ" x="39.37" y="60.96" smashed="yes">
 <attribute name="PRICE" value="1.96 USD" x="39.37" y="60.96" size="1.778" layer="27" display="off"/>
 <attribute name="MP" value="AD8619ARZ" x="39.37" y="60.96" size="1.778" layer="27" display="off"/>
 <attribute name="AVAILABILITY" value="Good" x="39.37" y="60.96" size="1.778" layer="27" display="off"/>
 <attribute name="PACKAGE" value="SOIC-14 Analog Devices" x="39.37" y="60.96" size="1.778" layer="27" display="off"/>
 <attribute name="DESCRIPTION" value="OP Amp Quad GP R-R I/O ???}2.5V/5V 14-Pin SOIC N Tube" x="39.37" y="60.96" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="Analog Devices" x="39.37" y="60.96" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="37.6936" y="63.627" size="1.4224" layer="25" ratio="10" rot="SR0"/>
+<attribute name="VALUE" x="40.894" y="56.9976" size="0.8128" layer="27" ratio="10" rot="SR90"/>
 </element>
-<element name="U2" library="AD8619ARZ" package="SOIC127P600X175-14N" value="AD8619ARZ" x="16.51" y="54.61">
+<element name="U2" library="AD8619ARZ" package="SOIC127P600X175-14N" value="AD8619ARZ" x="16.51" y="54.61" smashed="yes">
 <attribute name="PRICE" value="1.96 USD" x="16.51" y="54.61" size="1.778" layer="27" display="off"/>
 <attribute name="MP" value="AD8619ARZ" x="16.51" y="54.61" size="1.778" layer="27" display="off"/>
 <attribute name="AVAILABILITY" value="Good" x="16.51" y="54.61" size="1.778" layer="27" display="off"/>
 <attribute name="PACKAGE" value="SOIC-14 Analog Devices" x="16.51" y="54.61" size="1.778" layer="27" display="off"/>
 <attribute name="DESCRIPTION" value="OP Amp Quad GP R-R I/O ???}2.5V/5V 14-Pin SOIC N Tube" x="16.51" y="54.61" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="Analog Devices" x="16.51" y="54.61" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="15.0876" y="57.277" size="1.4224" layer="25" ratio="10" rot="SR0"/>
+<attribute name="VALUE" x="17.78" y="50.6476" size="0.8128" layer="27" ratio="10" rot="SR90"/>
 </element>
-<element name="U3" library="AD8619ARZ" package="SOIC127P600X175-14N" value="AD8619ARZ" x="30.48" y="41.91" rot="R270">
+<element name="U3" library="AD8619ARZ" package="SOIC127P600X175-14N" value="AD8619ARZ" x="30.48" y="41.91" smashed="yes" rot="R270">
 <attribute name="PRICE" value="1.96 USD" x="30.48" y="41.91" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MP" value="AD8619ARZ" x="30.48" y="41.91" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="AVAILABILITY" value="Good" x="30.48" y="41.91" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="PACKAGE" value="SOIC-14 Analog Devices" x="30.48" y="41.91" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="DESCRIPTION" value="OP Amp Quad GP R-R I/O ???}2.5V/5V 14-Pin SOIC N Tube" x="30.48" y="41.91" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MF" value="Analog Devices" x="30.48" y="41.91" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="NAME" x="35.1536" y="43.053" size="1.4224" layer="25" ratio="10" rot="SR0"/>
+<attribute name="VALUE" x="27.0256" y="40.64" size="0.8128" layer="27" ratio="10" rot="SR0"/>
 </element>
-<element name="VDD" library="pinhead" package="1X01" value="" x="2.54" y="77.47"/>
-<element name="VOLTAGECONVERTER" library="texas" package="DIL08" value="TL7660P" x="22.86" y="73.66" rot="MR180">
+<element name="VDD" library="pinhead" package="1X01" value="" x="2.54" y="77.47" smashed="yes">
+<attribute name="NAME" x="0.6858" y="78.7908" size="1.27" layer="25" ratio="10"/>
+<attribute name="VALUE" x="1.27" y="74.295" size="1.27" layer="27"/>
+</element>
+<element name="U5" library="texas" package="DIL08" value="TL7660P" x="22.86" y="73.66" smashed="yes" rot="MR180">
 <attribute name="OC_FARNELL" value="1755283" x="22.86" y="73.66" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="OC_NEWARK" value="14M2447" x="22.86" y="73.66" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MPN" value="TL7660CP" x="22.86" y="73.66" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="MF" value="" x="22.86" y="73.66" size="1.778" layer="28" rot="MR180" display="off"/>
+<attribute name="NAME" x="15.367" y="74.93" size="1.27" layer="25" ratio="10"/>
+<attribute name="VALUE" x="25.146" y="72.263" size="1.27" layer="27" ratio="10" rot="R180"/>
 </element>
 </elements>
 <signals>
 <signal name="N$2">
 <contactref element="C2" pad="2"/>
-<contactref element="U$1" pad="3"/>
+<contactref element="U4" pad="3"/>
 <wire x1="2.41" y1="74.93" x2="2.41" y2="73.66" width="0.4064" layer="1"/>
 <wire x1="2.41" y1="73.66" x2="2.54" y2="73.66" width="0.4064" layer="1"/>
 <wire x1="2.54" y1="73.66" x2="2.54" y2="72.39" width="0.4064" layer="1"/>
@@ -1777,10 +1980,10 @@ These are design rules for the Advanced Circuits barebones PCBs (4pcb.com).</des
 <wire x1="7.62" y1="73.9902" x2="7.5946" y2="73.9902" width="0.4064" layer="1"/>
 </signal>
 <signal name="VDD">
-<contactref element="VOLTAGECONVERTER" pad="8"/>
+<contactref element="U5" pad="8"/>
 <contactref element="D1" pad="C"/>
 <contactref element="C1" pad="2"/>
-<contactref element="U$1" pad="5"/>
+<contactref element="U4" pad="5"/>
 <contactref element="U1" pad="4"/>
 <contactref element="U2" pad="4"/>
 <contactref element="U3" pad="4"/>
@@ -1812,10 +2015,10 @@ These are design rules for the Advanced Circuits barebones PCBs (4pcb.com).</des
 </signal>
 <signal name="GND">
 <contactref element="C1" pad="1"/>
-<contactref element="U$1" pad="4"/>
-<contactref element="U$1" pad="2"/>
+<contactref element="U4" pad="4"/>
+<contactref element="U4" pad="2"/>
 <contactref element="GND" pad="1"/>
-<contactref element="VOLTAGECONVERTER" pad="3"/>
+<contactref element="U5" pad="3"/>
 <contactref element="C4" pad="1"/>
 <contactref element="U1" pad="3"/>
 <contactref element="U1" pad="5"/>
@@ -1885,19 +2088,19 @@ These are design rules for the Advanced Circuits barebones PCBs (4pcb.com).</des
 <wire x1="39.37" y1="59.69" x2="39.37" y2="53.34" width="0.4064" layer="1"/>
 </signal>
 <signal name="N$3">
-<contactref element="VOLTAGECONVERTER" pad="2"/>
+<contactref element="U5" pad="2"/>
 <contactref element="C3" pad="2"/>
 <wire x1="22.73" y1="73.66" x2="22.73" y2="76.33" width="0.4064" layer="16"/>
 <wire x1="22.73" y1="76.33" x2="21.59" y2="77.47" width="0.4064" layer="16"/>
 </signal>
 <signal name="N$4">
-<contactref element="VOLTAGECONVERTER" pad="4"/>
+<contactref element="U5" pad="4"/>
 <contactref element="C3" pad="1"/>
 <wire x1="25.53" y1="73.66" x2="25.53" y2="76.33" width="0.4064" layer="16"/>
 <wire x1="25.53" y1="76.33" x2="26.67" y2="77.47" width="0.4064" layer="16"/>
 </signal>
 <signal name="VDD-">
-<contactref element="VOLTAGECONVERTER" pad="5"/>
+<contactref element="U5" pad="5"/>
 <contactref element="C4" pad="2"/>
 <contactref element="U1" pad="11"/>
 <contactref element="U2" pad="11"/>
@@ -1929,7 +2132,7 @@ These are design rules for the Advanced Circuits barebones PCBs (4pcb.com).</des
 </signal>
 <signal name="VDD_3.3">
 <contactref element="D1" pad="A"/>
-<contactref element="U$1" pad="1"/>
+<contactref element="U4" pad="1"/>
 <contactref element="VDD" pad="1"/>
 <wire x1="2.54" y1="77.47" x2="6.35" y2="77.47" width="0.4064" layer="16"/>
 <wire x1="7.5946" y1="75.8698" x2="7.5946" y2="77.47" width="0.4064" layer="1"/>
@@ -2007,7 +2210,7 @@ These are design rules for the Advanced Circuits barebones PCBs (4pcb.com).</des
 <signal name="N$18">
 <contactref element="U1" pad="7"/>
 <contactref element="R11" pad="1"/>
-<contactref element="OUT1" pad="1"/>
+<contactref element="OUTA" pad="1"/>
 <wire x1="26.67" y1="58.29" x2="37.0078" y2="57.15" width="0.4064" layer="1"/>
 <wire x1="37.0078" y1="57.15" x2="37.0078" y2="56.0578" width="0.4064" layer="1"/>
 <wire x1="37.0078" y1="56.0578" x2="36.83" y2="55.88" width="0.4064" layer="1"/>
@@ -2070,7 +2273,7 @@ These are design rules for the Advanced Circuits barebones PCBs (4pcb.com).</des
 <wire x1="44.45" y1="62.1" x2="46.99" y2="59.56" width="0.4064" layer="1"/>
 </signal>
 <signal name="N$15">
-<contactref element="OUT2" pad="1"/>
+<contactref element="OUTB" pad="1"/>
 <contactref element="U1" pad="14"/>
 <contactref element="R12" pad="2"/>
 <wire x1="46.99" y1="62.36" x2="49.4" y2="63.63" width="0.4064" layer="1"/>
@@ -2085,7 +2288,7 @@ These are design rules for the Advanced Circuits barebones PCBs (4pcb.com).</des
 </signal>
 <signal name="N$20">
 <contactref element="C2" pad="1"/>
-<contactref element="U$1" pad="6"/>
+<contactref element="U4" pad="6"/>
 <wire x1="10.1854" y1="75.8698" x2="10.1854" y2="78.74" width="0.4064" layer="1"/>
 <wire x1="5.08" y1="78.74" x2="5.08" y2="74.93" width="0.4064" layer="1"/>
 <wire x1="5.08" y1="74.93" x2="5.21" y2="74.93" width="0.4064" layer="1"/>
@@ -2164,7 +2367,7 @@ These are design rules for the Advanced Circuits barebones PCBs (4pcb.com).</des
 <signal name="N$31">
 <contactref element="U2" pad="7"/>
 <contactref element="R20" pad="1"/>
-<contactref element="OUT3" pad="1"/>
+<contactref element="OUTC" pad="1"/>
 <wire x1="17.78" y1="62.1" x2="16.51" y2="60.83" width="0.4064" layer="1"/>
 <wire x1="16.51" y1="60.83" x2="16.51" y2="59.69" width="0.4064" layer="1"/>
 <via x="16.51" y="59.69" extent="1-16" drill="0.6" shape="octagon"/>
@@ -2238,7 +2441,7 @@ These are design rules for the Advanced Circuits barebones PCBs (4pcb.com).</des
 <wire x1="22.73" y1="57.15" x2="18.8722" y2="57.15" width="0.4064" layer="1"/>
 </signal>
 <signal name="N$36">
-<contactref element="OUT4" pad="1"/>
+<contactref element="OUTD" pad="1"/>
 <contactref element="U2" pad="14"/>
 <contactref element="R28" pad="2"/>
 <wire x1="18.8722" y1="58.42" x2="20.2722" y2="59.82" width="0.4064" layer="1"/>
@@ -2359,7 +2562,7 @@ These are design rules for the Advanced Circuits barebones PCBs (4pcb.com).</des
 <signal name="N$47">
 <contactref element="U3" pad="7"/>
 <contactref element="R34" pad="1"/>
-<contactref element="OUT5" pad="1"/>
+<contactref element="OUTE" pad="1"/>
 <wire x1="21.5422" y1="44.2722" x2="19.18" y2="41.91" width="0.4064" layer="1"/>
 <wire x1="21.5422" y1="44.2722" x2="26.67" y2="44.2722" width="0.4064" layer="1"/>
 <wire x1="19.18" y1="41.91" x2="19.18" y2="44.32" width="0.4064" layer="1"/>
@@ -2434,7 +2637,7 @@ These are design rules for the Advanced Circuits barebones PCBs (4pcb.com).</des
 <wire x1="33.02" y1="39.5478" x2="33.02" y2="35.56" width="0.4064" layer="1"/>
 </signal>
 <signal name="N$52">
-<contactref element="OUT6" pad="1"/>
+<contactref element="OUTF" pad="1"/>
 <contactref element="U3" pad="14"/>
 <contactref element="R42" pad="2"/>
 <wire x1="34.29" y1="39.5478" x2="34.29" y2="34.29" width="0.4064" layer="1"/>
