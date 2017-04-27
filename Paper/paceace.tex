@@ -438,15 +438,15 @@ detail our approach in the following sections.
 Let $f[n]$ be a 10 second ECG signal sampled at 1 kHz.
 We begin by computing the weighted time
 derivative of $f[n]$, denoted $w[n]$.
-\begin{equation}
+\begin{equation*}
 	w[n]=(f[n]-f[n-1]) * \left|f[n] - f[n-1]\right| * \left|f[n]\right|
-\end{equation}
+\end{equation*}
 
 % TODO: Give some intuition for why this is good.
 Next, the algorithm searches for when the local
 maxima and minima of $w[n]$ occur, within a window of
 200 ms. Thus, we compute:
-\begin{equation}
+\begin{equation*}
 	r[n] = \left \{
 		\begin{array}{lr}
 			1 & \text{if } w[n] = \max\limits_{-100 \le i \le 100} (w[n+i]) \\
@@ -454,7 +454,7 @@ maxima and minima of $w[n]$ occur, within a window of
 			0 & \text{otherwise}
 		\end{array}
 	\right.
-\end{equation}
+\end{equation*}
 Note, that a value of 1 in $r[n]$ corresponds to the
 steepest rising edge of peaks in $f[n]$, while a value of -1
 in $r[n]$ corresponds to the steepest falling edge of a peak
@@ -486,9 +486,9 @@ followed in less than 75ms by a falling edge. Let the
 rising edge and falling edges of $P_i$ occur at time $m$ and $n$
 respectively. The peak is then featurized by its width and
 height as follows:
-\begin{equation}
+\begin{equation*}
 	P_i = \left\{n-m, \left( \max\limits_{m\le j\le n} f[j] \right) - \frac{f[n]+f[m]}{2} \right\}
-\end{equation}
+\end{equation*}
 Thus a two-dimensional data point characterizes each
 peak. We then construct $\mathbf{P} = [P_1, P_2, \dots P_n]$ and then
 cluster the peaks in $\mathbf{P}$ using a standard two cluster k-means
@@ -499,9 +499,9 @@ be the centers of the ventricular and atrial clusters
 respectively. The algorithm then stores the ventricular
 peak width (\VPW) and atrial peak width (\APW) as the
 rounded width term of the centers as follows:
-\begin{equation}
+\begin{equation*}
 	VPW=C_V\{1\} \text{ and } APW=V_A\{1\}
-\end{equation}
+\end{equation*}
 
 A visual illustration of how k-means clusters the
 featurized peaks $\mathbf{P}$ into atrial and ventricular peaks and
@@ -630,9 +630,9 @@ If no flat intervals exist, set $i=\argmin_{i} |beats(th_i) - beats(th_{i-1})|$.
 Then choose $th_{max} = th_i$, $th_{min} = th_{i-1}$.
 
 After 3 recursive refinement iterations, define the ventricular peak height (\VPH{}) to be the midpoint of the flat interval, i.e.
-\begin{equation}
+\begin{equation*}
 	VPH=\frac{th_{min}+th_{max}}{2}
-\end{equation}
+\end{equation*}
 
 Finally, after computing the ventricular thresholds,
 data near the detected ventricular peaks is replaced with
@@ -651,46 +651,46 @@ In the remaining portion of this section, we describe
 the beat detection algorithm that we use to compute
 $beats(threshold)$.
 First define Peak Width, PW, to be the following:
-\begin{equation}
+\begin{equation*}
 	PW=\left\{ 
 		\begin{array}{lr}
 			VPW & \text{if computing } VPH \\
 			APW & \text{if computing } APH \\
 		\end{array} \right.
-\end{equation}
+\end{equation*}
 Notice how our algorithm utilized a nonparametric
 approach to compute VPW and APW previously. Next,
 define:
 
-\begin{equation}
+\begin{equation*}
 	potentialPeaks[n]=\left\{ 
 		\begin{array}{lr}
 			1 & \text{if } f[n] > threshold \\
 			APW & \text{otherwise}\\
 		\end{array}
 		\right.
-\end{equation}
+\end{equation*}
 $potentialPeaks[n]$ indicates where in $f[n]$ a beat could
 have occurred. We then use the intuition that for a beat
 to occur, it must have been about as long as $PW$ in time.
 Thus, to compute $beats(threshold)$, i.e. the number of
 beats that occur in $f[n]$, we utilize the following
 procedure.
-\begin{equation}
+\begin{equation*}
 	beats[n]=\left\{ 
-		\begin{array}{lr}
+		\begin{array}{lc}
 			1 & \text{if } \left(\sum_{i=0}^{PW} potentialPeaks[n-i] \right) > PW/2 \\
 			0 & \text{otherwise}
 		\end{array}
 		\right.
-\end{equation}
+\end{equation*}
 Essentially, $beats[n]$ indicates where in time beats
 occur in $f[n]$ according to $threshold$. In accordance
 with biological feasibility, we do not allow beats to
 occur within .27 seconds of each other. Finally, we
-precisely define \begin{equation}
+precisely define \begin{equation*}
 	beats(threshold) = \sum_n beats[n]
-\end{equation}
+\end{equation*}
 To detect ventricular beats using this algorithm,
 simply utilize \VPW{} and \VPH{} for $threshold$ and $PW$
 respectively. Similarly, to detect atrial beats, utilize
@@ -717,9 +717,9 @@ showcase how it could be shrunk down to an application
 specific integrated circuit (ASIC) that could work with
 pacemakers in the future. An illustration of our ASIC
 lay out can be found in \figurename~\ref{fig:fpga}.
-\begin{figure}
+\begin{figure}[h]
 	\centering
-	\includegraphics{fpga.png}
+	\includegraphics[width=.7\columnwidth]{fpga.png}
 	\caption{ASIC Hardware Design of the algorithm implementation on the FPGA}
 	\label{fig:fpga}
 \end{figure}
@@ -736,9 +736,9 @@ on the FPGA. A design drawing of our board, which
 utilizes many of the circuit design ideas used in~\cite{analog-adcs}
 can be seen in \figurename~\ref{fig:schematic}.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
-	\includegraphics{schematic.pdf}
+	\includegraphics[width=.9\columnwidth]{schematic.pdf}
 	\caption{Schematic for preprocessor circuit that senses and cleans analog data from the heart}
 	\label{fig:schematic}
 \end{figure}
