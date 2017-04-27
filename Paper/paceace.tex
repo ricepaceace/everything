@@ -301,25 +301,6 @@ Benhaam Aazhang\IEEEauthorrefmark{1}, and Joseph Cavallaro\IEEEauthorrefmark{1}}
 % the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
 % after \documentclass
 
-% for over three affiliations, or if they all won't fit within the width
-% of the page, use this alternative format:
-% 
-%\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
-%Homer Simpson\IEEEauthorrefmark{2},
-%James Kirk\IEEEauthorrefmark{3}, 
-%Montgomery Scott\IEEEauthorrefmark{3} and
-%Eldon Tyrell\IEEEauthorrefmark{4}}
-%\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Computer Engineering\\
-%Georgia Institute of Technology,
-%Atlanta, Georgia 30332--0250\\ Email: see http://www.michaelshell.org/contact.html}
-%\IEEEauthorblockA{\IEEEauthorrefmark{2}Twentieth Century Fox, Springfield, USA\\
-%Email: homer@thesimpsons.com}
-%\IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
-%Telephone: (800) 555--1212, Fax: (888) 555--1212}
-%\IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
-
-
-
 
 % use for special paper notices
 %\IEEEspecialpapernotice{(Invited Paper)}
@@ -333,18 +314,18 @@ Benhaam Aazhang\IEEEauthorrefmark{1}, and Joseph Cavallaro\IEEEauthorrefmark{1}}
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
-While beat detection in an Electrocardiogram
-(ECG) signal is a well-studied problem, we propose a novel
+While beat detection in a Cardiac Electrical 
+Signal (CES) is a well-studied problem, we propose a novel
 algorithm, within the context of pacemakers, that learns the
 heights and widths of atrial and ventricular peaks from simply
-processing 10 seconds of ECG data sampled at 1 kHz. Utilizing
+processing 10 seconds of cardiac data sampled at 1 kHz. Utilizing
 a purely data-driven solution to learn the parameters of atrial
 and ventricular peaks will allow pacemakers to set their own
 detection parameters for a specific patient and adaptively tune
-their detection parameters, for that specific patient, over time.
-We have validated these results on 51 separate channels of ECG
+their detection parameters over time for that specific patient.
+We have validated these results on 51 separate channels of CES
 data. Additionally, we have implemented the algorithm on a
-Field Programmable Gate Array and tested it on a Langdendorff
+Field Programmable Gate Array and tested it on an ex-vivo rat
 heart to illustrate that our algorithm can be implemented on
 hardware and run in real time.
 \end{abstract}
@@ -368,32 +349,35 @@ hardware and run in real time.
 
 \section{Introduction}
 % no \IEEEPARstart
-Cardiac diseases are the number one cause of death in
+Cardiac diseases are the most common cause of death in
 the United States. More than 600,000 people each year
 die due to some failure in the heart~\cite{death-stats}. A healthy heart
-functions through a regular cardiac cycle, where the pace
-making neurons in the sinoatrial (SA) node of the heart
+functions through a regular cardiac cycle, where the pacemaking cells
+in the sinoatrial (SA) node of the heart
 generate an electrical signal, which travels from the atria
 down to the ventricles, to stimulate heart contraction.
 Many heart failures result from the heart's inability to
 generate or conduct these electrical signals and stimulate
-muscle contraction properly. To combat this, a
-combination of researchers and doctors developed a
-device called the pacemaker that can stimulate the heart
+muscle contraction properly.
+
+To combat this, doctors implant artificial electronic pacemakers
+that can stimulate the heart
 to contract artificially through externally supplied
 electrical pulses.
-Current pacemakers utilize the state of the art
+Current pacemakers use the state of the art
 algorithm called DDDR in order to determine whether
-the heart requires stimulation~\cite{basic-pacing}. The devices utilize
-ECG beat detection algorithms to determine whether a
-heartbeat has occurred. If it does not see a heartbeat
+the heart requires stimulation~\cite{basic-pacing}.
+The devices implement
+CES beat detection algorithms to determine whether a
+heartbeat has occurred. If the pacemaker does not detect a heartbeat
 within a certain period of time, it will deliver an
 electrical stimulation to the heart.
-ECG beat detection itself is a well-studied problem, as
+
+CES beat detection itself is a well-studied problem, as
 several algorithms have been proposed to identify the
-beats within an ECG signal~\cite{realtime-qrs, ecg-filter}. However, current
+beats within an CES ~\cite{realtime-qrs, ecg-filter}. However, current
 algorithms perform beat detection without distinguishing
-which part of the ECG signal corresponds to the atrial
+which part of the CES corresponds to the atrial
 portion of the heartbeat and which part corresponds to
 the ventricular portion of the heartbeat. As a result,
 current pacemakers often times struggle to distinguish
@@ -401,19 +385,21 @@ between atrial and ventricular beats: information that is
 crucial for Cardiac Resynchronization Therapy (CRT)~\cite{multisite-crt}.
 In fact, up to 30\% of patients with pacemakers do
 not respond to CRT implemented by current pacemakers~\cite{multisite-crt}.
-To make ECG beat detection more suitable for CRT,
-we propose a nonparametric algorithm that learns the
+
+To make CES beat detection more suitable for CRT,
+we propose a learning algorithm that learns the
 height of an atrial peak (\APH), the height of a ventricular
 peak (\VPH), the width of an atrial peak (\APW), and the
-width of a ventricular peak (\VPW) within an ECG signal
-by simply processing 10 seconds of ECG data sampled
+width of a ventricular peak (\VPW) within an CES
+by simply processing 10 seconds of CES data sampled
 at 1 kHz. With these parameters, we then implement
 atrial and ventricular beat detection to illustrate that our
 learned parameters can be used to distinguish between
-atrial and ventricular beats within an ECG signal.
+atrial and ventricular beats in an CES.
 Additionally, we implement the algorithm on a Field
 Programmable Gate Array to demonstrate that the
 algorithm can be run on a real-time system.
+
 Sections II and III thoroughly explain our approach
 for learning \APH{}, \VPH{}, \APW{}, and \VPW{}. Section IV
 details the hardware implementation of the algorithm.
@@ -424,31 +410,31 @@ validates our algorithmic results and hardware system.
 Our algorithm begins by learning \APW{} and \VPW{}. We
 detail our approach in the following sections.
 
-\subsection{Finding Peak Shaped Patterns in the ECG Signal}
-Let $f[n]$ be a 10 second ECG signal sampled at 1 kHz.
+\subsection{Finding Peak Shaped Patterns in the CES}
+Let $f[n]$ be a 10 second CES sampled at 1 kHz.
 We begin by computing the weighted time
 derivative of $f[n]$, denoted $w[n]$.
 \begin{equation*}
 	w[n]=(f[n]-f[n-1]) * \left|f[n] - f[n-1]\right| * \left|f[n]\right|
 \end{equation*}
 
-% TODO: Give some intuition for why this is good.
 Next, the algorithm searches for when the local
 maxima and minima of $w[n]$ occur, within a window of
 200 ms. Thus, we compute:
 \begin{equation*}
 	r[n] = \left \{
-		\begin{array}{lr}
-			1 & \text{if } w[n] = \max\limits_{-100 \le i \le 100} (w[n+i]) \\
-			-1 & \text{if } w[n] = \min\limits_{-100 \le i \le 100} (w[n+i]) \\
+		\begin{array}{lc}
+			1 & \text{if } f[n]>0 \text{ and } w[n] = \max\limits_{-100 \le i \le 100} (w[n+i]) \\
+			-1 & \text{if } f[n]>0 \text{ and }  w[n] = \min\limits_{-100 \le i \le 100} (w[n+i]) \\
 			0 & \text{otherwise}
 		\end{array}
 	\right.
 \end{equation*}
 Note, that a value of 1 in $r[n]$ corresponds to the
 steepest rising edge of peaks in $f[n]$, while a value of -1
-in $r[n]$ corresponds to the steepest falling edge of a peak
-in $f[n]$. Thus, $r[n]$ identifies all peak like structures in
+in $r[n]$ roughly corresponds to the steepest falling edge of a peak
+in $f[n]$. Using a weighted derivative instead of a simple time derivative pushes these edges closer to the tip of a peak, which allows for more appropriate featurization.
+Thus, $r[n]$ identifies all peak like structures in
 $f[n]$.  \figurename~\ref{fig:fwr} illustrates this concept.
 \begin{figure}
 	\centering
@@ -522,7 +508,7 @@ found in  \figurename~\ref{fig:kmeans}.
 
 Note, that the height that we use to featurize a peak in
 this portion of the algorithm does not correspond to the
-actual values of \APH{} and \VPH{} in the original ECG
+actual values of \APH{} and \VPH{} in the original CES
 signal $f[n]$. The `height' value used for peak
 featurization simply characterizes the height of the peak
 with respect to the portions of the peak during which its
@@ -533,14 +519,14 @@ value of 0.
 
 \section{Atrial and Ventricular Peak Height (\VPH{} and \APH{}) Learning}
 After learning \APW{} and \VPW{}, we proceed on the
-same segment of ECG signal to learn \VPH{} and \APH{}. In
+same segment of CES to learn \VPH{} and \APH{}. In
 the following section, we give the intuition behind the
 algorithm and detail our approach.
 
 \subsection{Overarching Intuition for Learning \VPH{} and \APH{}}
 Again, consider $f[n]$. The basic strategy of the peak
 height threshold learning is to look for a large range of
-thresholds that detects the same number of QRS beats in
+thresholds that detects the same number of ventricular beats in
 $f[n]$. This idea follows from the observation that there
 is typically a wide range of thresholds that are high
 enough to exclude the lower (typically atrial) beats but
@@ -561,7 +547,7 @@ interval of the function $beats(threshold)$. An example of
 $beats(threshold)$ is illustrated in \figurename~\ref{fig:beats}.
 However, computing the number of beats we detect with a given
 threshold, takes a substantial amount of computation,
-thus we utilize a semi-recursive iterative approach in our
+thus we utilize a bounded recursive iterative approach in our
 algorithm. We name our algorithm ``Flat-Finding
 Ventricular and Atrial Heights.''
 
@@ -635,7 +621,7 @@ VPH relies entirely on $beats(threshold)$, which we
 defined as the number of beats that occur in $f[n]$ using
 threshold to identify the beats. In order to calculate the
 number of beats that occur based on threshold, we utilize
-an algorithm that draws heavily from the ECG beat
+an algorithm that draws heavily from the CES beat
 detection algorithm described in Alfonso and Tompkins~\cite{realtime-qrs}.
 In the remaining portion of this section, we describe
 the beat detection algorithm that we use to compute
@@ -676,8 +662,8 @@ procedure.
 \end{equation*}
 Essentially, $beats[n]$ indicates where in time beats
 occur in $f[n]$ according to $threshold$. In accordance
-with biological feasibility, we do not allow beats to
-occur within .27 seconds of each other. Finally, we
+with standard pacemaking practice, we do not detect atrial beats within a fixed amount of time (usually around 250 ms) after
+a ventricular beat. Finally, we
 precisely define \begin{equation*}
 	beats(threshold) = \sum_n beats[n]
 \end{equation*}
@@ -695,7 +681,7 @@ the size of an integrated circuit, we fully implemented
 our algorithm on a Field Programmable Gate Array
 (FPGA). In addition, to test on analog signals, we
 designed a preprocessing circuit board that filters and
-cleans analog ECG data before it is digitized and used
+cleans analog CES data before it is digitized and used
 for the algorithm implemented on the FPGA.
 
 \subsection{FPGA Algorithm Implementation}
@@ -758,7 +744,7 @@ will describe both tests separately.
 \subsection{Ventricular and Atrial Parameter Learning Validation}
 In Sections II and III of this paper, we presented an
 algorithm that learns \APW{}, \VPW{}, \APH{}, and \VPH{} by
-simply processing 10 seconds of ECG data sampled at 1
+simply processing 10 seconds of CES data sampled at 1
 kHz. To validate our solution, we implemented our algorithms in
 Matlab and performed atrial and ventricular beat
 detection using algorithmically learned parameters on
@@ -773,7 +759,7 @@ a .csv file. This was done for 3 animals, giving us a total
 of 51 channels that directly resembles the kind of analog
 signals a real pacemaker would be sensing.
 
-We then applied our algorithm on 10 seconds of data
+We then applied our algorithm to data
 from each of the 51 channels separately in order to learn
 \APW{}, \VPW{}, \APH{}, and \VPH{} specifically for each
 channel. Next, using the peak detection algorithm
@@ -790,11 +776,15 @@ Table~\ref{tab:errors} illustrates our results.
 	\caption{Detection Error Rates using Learned Parameters}
 	\label{tab:errors}
 	\centering
-	\begin{tabular}{|c|c|}
+	\begin{tabular}{|c|c|c|}
 		\hline
-		False Positive Error Rate & False Negative Error Rate \\
+		Type & False Positive Error Rate & False Negative Error Rate \\
+		\hline 
+		Ventricles & 0.16\% &4.77\% \\
 		\hline
-		0.5\% & 4.7 \% \\
+		Atria & 0.89\% & 4.59\% \\
+		\hline
+		Total & 0.50\% & 4.70 \% \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -839,7 +829,7 @@ We have demonstrated a working algorithm
 implemented on hardware that correctly learns \APH{},
 \VPH{}, \APW{}, and \VPW{}. Additionally, these parameters
 can be reliably used to distinguish between atrial and
-ventricular beats in an ECG signal in real time. Future
+ventricular beats in an CES in real time. Future
 work will involve utilizing the FPGA implementation of
 the algorithm to tape out an application specific
 integrated circuit that could be physically placed inside
