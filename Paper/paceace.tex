@@ -289,22 +289,12 @@ Parameters for Pacemaker Beat Detection}
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
-\author{\IEEEauthorblockN{Michael Shell}
-\IEEEauthorblockA{School of Electrical and\\Computer Engineering\\
-	Georgia\cite{Nobody06} Institute of Technology\\
-Atlanta, Georgia 30332--0250\\
-Email: http://www.michaelshell.org/contact.html}
-\and
-\IEEEauthorblockN{Homer Simpson}
-\IEEEauthorblockA{Twentieth Century Fox\\
-Springfield, USA\\
-Email: homer@thesimpsons.com}
-\and
-\IEEEauthorblockN{James Kirk\\ and Montgomery Scott}
-\IEEEauthorblockA{Starfleet Academy\\
-San Francisco, California 96678--2391\\
-Telephone: (800) 555--1212\\
-Fax: (888) 555--1212}}
+\author{\IEEEauthorblockN{Yamin Arefeen\IEEEauthorrefmark{1}, Daniel Zdeblick\IEEEauthorrefmark{1}, Philip Taffet\IEEEauthorrefmark{2}, Jorge Quintero\IEEEauthorrefmark{1}, Greg Harper\IEEEauthorrefmark{1},\\
+Benhaam Aazhang\IEEEauthorrefmark{1}, and Joseph Cavallaro\IEEEauthorrefmark{1}}
+\IEEEauthorblockA{\IEEEauthorrefmark{1}Department of Electrical and Computer Engineering, \IEEEauthorrefmark{2}Department of Computer Science\\
+	Rice University, Houston, TX 77005}
+	\IEEEauthorblockA{yarefeen@mit.edu, zdeblick@uw.edu, ptaffet@rice.edu, aaz@rice.edu, cavallar@rice.edu}
+}
 
 % conference papers do not typically use \thanks and this command
 % is locked out in conference mode. If really needed, such as for
@@ -639,7 +629,7 @@ data near the detected ventricular peaks is replaced with
 zeros, and the entire algorithm in re-run to detect the
 atrial threshold, \APH{}.
 
-\subsubsection{Precise Specification of $beats(threshold)$ using our Proposed Beat Detection Algorithm}
+\subsection{Precise Specification of $beats(threshold)$ using our Proposed Beat Detection Algorithm}
 Our `flat-finding' algorithm to determine \APH{} and
 VPH relies entirely on $beats(threshold)$, which we
 defined as the number of beats that occur in $f[n]$ using
