@@ -469,9 +469,9 @@ $f[n]$.  \figurename~\ref{fig:fwr} illustrates this concept.
 				ylabel     = Voltage (mV),
 				legend pos = north east,
 			]
-			\addplot+[mark=none, color=red, smooth] table[x = t, y = f, col sep=comma]{example1.csv} ;
-			\addplot+[mark=none, color=blue, smooth] table[x = t, y = w, col sep=comma]{example1.csv} ;
-			\addplot+[only marks, mark=o, mark size = 2pt,color=black] table[x = t, y = r, col sep=comma]{example1.csv} ;
+			\addplot+[mark=none, color=red, smooth] table[x = t, y = f, col sep=comma]{fwr.csv} ;
+			\addplot+[mark=none, color=blue, smooth] table[x = t, y = w, col sep=comma]{fwr.csv} ;
+			\addplot+[only marks, mark=o, mark size = 2pt,color=black] table[x = t, y = r, col sep=comma]{fwr.csv} ;
 			\legend{$f[n]$, $w[n]$, $r[n]$}
 		\end{axis}
 	\end{tikzpicture}
@@ -518,9 +518,11 @@ found in  \figurename~\ref{fig:kmeans}.
 				ylabel     = Peak Height (mV),
 				legend pos = north east,
 			]
-			\addplot+[only marks, mark=*] table[x = x, y = y, col sep=comma]{kmeans-ventricles.csv} ;
-			\addplot+[only marks, mark=*] table[x = x, y = y, col sep=comma]{kmeans-atria.csv} ;
-			\legend{Ventricles, Atria}
+			\addplot+[only marks, mark=*, mark size=1pt] table[x = x, y = y, col sep=comma]{kmeans-ventricles.csv} ;
+			\addplot+[only marks, mark=*, mark size=1pt] table[x = x, y = y, col sep=comma]{kmeans-atria.csv} ;
+			\addplot+[only marks, mark=x, color=blue, mark size=5pt] coordinates {(8.5,659.86)};
+			\addplot+[only marks, mark=x, color=red, mark size=5pt] coordinates {(15.341,298.31)};
+			\legend{Ventricles, Atria, $C_V$, $C_A$}
 		\end{axis}
 	\end{tikzpicture}
 	\caption{
@@ -585,6 +587,7 @@ A key property of $beats(threshold)$ is its monotonicity.
 				xlabel     = Threshold (mV),
 				ylabel     = Number of beats,
 				legend pos = north east,
+				restrict y to domain* = 0:300
 			]
 			\addplot+[mark=none] table[x = th, y = beats, col sep=comma]{beats.csv} ;
 		\end{axis}
@@ -636,9 +639,221 @@ data near the detected ventricular peaks is replaced with
 zeros, and the entire algorithm in re-run to detect the
 atrial threshold, \APH{}.
 
-\subsubsection{Subsubsection Heading Here}
-Subsubsection text here.
+\subsubsection{Precise Specification of $beats(threshold)$ using our Proposed Beat Detection Algorithm}
+Our `flat-finding' algorithm to determine \APH{} and
+VPH relies entirely on $beats(threshold)$, which we
+defined as the number of beats that occur in $f[n]$ using
+threshold to identify the beats. In order to calculate the
+number of beats that occur based on threshold, we utilize
+an algorithm that draws heavily from the ECG beat
+detection algorithm described in Alfonso and Tompkins~\cite{realtime-qrs}.
+In the remaining portion of this section, we describe
+the beat detection algorithm that we use to compute
+$beats(threshold)$.
+First define Peak Width, PW, to be the following:
+\begin{equation}
+	PW=\left\{ 
+		\begin{array}{lr}
+			VPW & \text{if computing } VPH \\
+			APW & \text{if computing } APH \\
+		\end{array} \right.
+\end{equation}
+Notice how our algorithm utilized a nonparametric
+approach to compute VPW and APW previously. Next,
+define:
 
+\begin{equation}
+	potentialPeaks[n]=\left\{ 
+		\begin{array}{lr}
+			1 & \text{if } f[n] > threshold \\
+			APW & \text{otherwise}\\
+		\end{array}
+		\right.
+\end{equation}
+$potentialPeaks[n]$ indicates where in $f[n]$ a beat could
+have occurred. We then use the intuition that for a beat
+to occur, it must have been about as long as $PW$ in time.
+Thus, to compute $beats(threshold)$, i.e. the number of
+beats that occur in $f[n]$, we utilize the following
+procedure.
+\begin{equation}
+	beats[n]=\left\{ 
+		\begin{array}{lr}
+			1 & \text{if } \left(\sum_{i=0}^{PW} potentialPeaks[n-i] \right) > PW/2 \\
+			0 & \text{otherwise}
+		\end{array}
+		\right.
+\end{equation}
+Essentially, $beats[n]$ indicates where in time beats
+occur in $f[n]$ according to $threshold$. In accordance
+with biological feasibility, we do not allow beats to
+occur within .27 seconds of each other. Finally, we
+precisely define \begin{equation}
+	beats(threshold) = \sum_n beats[n]
+\end{equation}
+To detect ventricular beats using this algorithm,
+simply utilize \VPW{} and \VPH{} for $threshold$ and $PW$
+respectively. Similarly, to detect atrial beats, utilize
+\APW{} and \APH{} for $threshold$ and $PW$.
+
+\section{Hardware Implementation}
+In the future, we envision that our algorithm will be
+implemented on real pacemakers. In order to
+demonstrate that our proposed solution can be run in
+real-time through hardware that can be shrunk down to
+the size of an integrated circuit, we fully implemented
+our algorithm on a Field Programmable Gate Array
+(FPGA). In addition, to test on analog signals, we
+designed a preprocessing circuit board that filters and
+cleans analog ECG data before it is digitized and used
+for the algorithm implemented on the FPGA.
+
+\subsection{FPGA Algorithm Implementation}
+Though the FPGA chip is large, and far too power
+hungry for a finalized pacemaker, it suffices as a
+demonstrable proof of concept for our algorithm. In
+fact, we implemented our algorithm on FPGA fabric to
+showcase how it could be shrunk down to an application
+specific integrated circuit (ASIC) that could work with
+pacemakers in the future. An illustration of our ASIC
+lay out can be found in \figurename~\ref{fig:fpga}.
+\begin{figure}
+	\centering
+	\includegraphics{fpga.png}
+	\caption{ASIC Hardware Design of the algorithm implementation on the FPGA}
+	\label{fig:fpga}
+\end{figure}
+
+\subsection{Pre-processor Circuit Board Design}
+Since we aim to utilize our algorithm for pacemakers,
+we wanted to make sure that our implementation on the
+FPGA could interface with real analog signals. In order
+to do this, we designed a preprocessor board that is
+capable of sensing electrical activity directly from a
+heart and cleaning the signal so that it can properly be
+digitized and utilized by the algorithm implementation
+on the FPGA. A design drawing of our board, which
+utilizes many of the circuit design ideas used in~\cite{analog-adcs}
+can be seen in \figurename~\ref{fig:schematic}.
+
+\begin{figure}
+	\centering
+	\includegraphics{schematic.pdf}
+	\caption{Schematic for preprocessor circuit that senses and cleans analog data from the heart}
+	\label{fig:schematic}
+\end{figure}
+
+The preprocessor consists of an instrumentation
+amplifier, followed by a DC offset removal op-amp, a
+non-inverting amplifier, and a 3 stage low pass filter
+before going into the logic controller for algorithm
+processing. The TI INA827 chip is an instrumentation
+amplifier that can take a differential signal as input,
+combines it to a single output, and amplifies the signal
+by 5. The op amp that feeds back to pin 6 is used to
+remove any DC offset or wandering baseline that exists
+in the signal. After this stage, the non-inverting amplifier
+amplifies the output of the instrumentation amplifier by
+16. Finally, there is a 3 stage low pass filter that has a
+cutoff frequency at 150 Hz and a gain smaller than -40dB 
+starting at 300 Hz. All the chips and op amps are
+powered with a +/- 3.3 rail voltage.
+
+\section{Testing and Results}
+We validate our ventricular and atrial parameter
+learning algorithm and our overarching hardware system
+with two separate experiments. The following sections
+will describe both tests separately.
+
+\subsection{Ventricular and Atrial Parameter Learning Validation}
+In Sections II and III of this paper, we presented an
+algorithm that learns \APW{}, \VPW{}, \APH{}, and \VPH{} by
+simply processing 10 seconds of ECG data sampled at 1
+kHz. To validate our solution, we implemented our algorithms in
+Matlab and performed atrial and ventricular beat
+detection using algorithmically learned parameters on
+data provided by the Electrophysiology lab at the Texas Heart Institute.
+In order to record the data, an in vivo,
+live animal study procedure was performed. For a single
+animal, 17 bipolar electrodes populated the left ventricle
+of the heart. Each electrode sensed electrical activity
+directly from the heart for one minute, digitized the
+signal at a 1 kHz sampling rate, and stored the signal as
+a .csv file. This was done for 3 animals, giving us a total
+of 51 channels that directly resembles the kind of analog
+signals a real pacemaker would be sensing.
+
+We then applied our algorithm on 10 seconds of data
+from each of the 51 channels separately in order to learn
+\APW{}, \VPW{}, \APH{}, and \VPH{} specifically for each
+channel. Next, using the peak detection algorithm
+described in Section III: C, we performed atrial and
+ventricular peak detection on each of the 51 channels
+using the aforementioned parameters that we computed
+for each specific channel. Finally, we computed the
+atrial and ventricular beat detection error rate through
+tracking false positives (a beat is detected when none
+exist) and false negatives (no beat is detected when one
+exists) across all 51 channels.
+Table~\ref{tab:errors} illustrates our results.
+\begin{table}[h]
+	\caption{Detection Error Rates using Learned Parameters}
+	\label{tab:errors}
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline
+		False Positive Error Rate & False Negative Error Rate \\
+		\hline
+		0.5\% & 4.7 \% \\
+		\hline
+	\end{tabular}
+\end{table}
+
+Our detection error rates are appropriately low across
+all 51 channels. Since we performed atrial and
+ventricular beat detection based on the parameters that
+our algorithm learned, the algorithm clearly learned
+\APW{}, \VPW{}, \APH{}, and \VPH{} correctly for the vast
+majority of channels. In fact, most of the false negative
+error rate results from our algorithm learning incorrect
+atrial parameters for one channel. When we manually
+looked at the values of \APW{}, \VPW{}, \APH{}, and \VPH{}, we
+found that the algorithm learned \VPW{} and \VPH{} correctly
+for all 51 channels and \APW{} and \APH{} correctly for 50 of
+the channels.
+
+\subsection{Hardware Implementation Validation through a Langendorff Heart}
+In order to validate the hardware implementation of
+our algorithm described in Section IV, we interfaced our
+system to a Langendorff Heart as described by~\cite{langendorff}.
+Essentially, in a Langendorff Heart experiment, a live
+heart is extracted from a mammal, which in our case was
+a rat, and is kept beating. This externally beating heart
+will behave as if it was beating internally, so the
+Langendroff Heart will retain all of the appropriate
+electrical characteristics.
+We connected our preprocessor through simple wires
+sutured to the Langendroff heart, and then used our
+FPGA to digitize the analog signal sensed through the
+preprocessor. Our system correctly sensed signals using
+the preprocessor, learned pacing parameters (\VPW{} and
+\VPH{}), and detected ventricular beats using the learned
+values of \VPW{} and \VPH{} in real time. Due to the
+relatively small size of a rat's heart in comparison to a
+human's, the atrial part of the signal was not
+distinguishable on the sensed signal itself, so our
+algorithm did not learn any parameters for it.
+
+\section{Conclusions and Future Direction}
+We have demonstrated a working algorithm
+implemented on hardware that correctly learns \APH{},
+\VPH{}, \APW{}, and \VPW{}. Additionally, these parameters
+can be reliably used to distinguish between atrial and
+ventricular beats in an ECG signal in real time. Future
+work will involve utilizing the FPGA implementation of
+the algorithm to tape out an application specific
+integrated circuit that could be physically placed inside
+of a pacemaker.
 
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
@@ -737,25 +952,6 @@ Subsubsection text here.
 
 
 
-\section{Conclusion}
-The conclusion goes here.
-
-
-
-
-% conference papers do not normally have an appendix
-
-
-% use section* for acknowledgment
-\section*{Acknowledgment}
-
-
-The authors would like to thank...
-
-
-
-
-
 % trigger a \newpage just before the given reference
 % number - used to balance the columns on the last page
 % adjust value as needed - may need to be readjusted if
@@ -774,18 +970,6 @@ The authors would like to thank...
 \bibliographystyle{IEEEtran}
 % argument is your BibTeX string definitions and bibliography database(s)
 \bibliography{IEEEabrv,sources}
-%
-% <OR> manually copy in the resultant .bbl file
-% set second argument of \begin to the number of references
-% (used to reserve space for the reference number labels box)
-%\begin{thebibliography}{1}
-%
-%\bibitem{IEEEhowto:kopka}
-%H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-%  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
-
-% \end{thebibliography}
-
 
 
 
