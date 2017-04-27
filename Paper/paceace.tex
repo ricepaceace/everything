@@ -272,6 +272,7 @@
 \newcommand{\APH}{\textit{APH}}
 \newcommand{\VPH}{\textit{VPH}}
 \DeclareMathOperator{\sgn}{sign}
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 \begin{document}
 %
@@ -537,9 +538,103 @@ value is most rapidly increasing or decreasing. It does
 not give any useful information about the height of an
 atrial or ventricular peak with respect to the baseline
 value of 0.
-\subsection{Subsection Heading Here}
-Subsection text here.
 
+\section{Atrial and Ventricular Peak Height (\VPH{} and \APH{}) Learning}
+After learning \APW{} and \VPW{}, we proceed on the
+same segment of ECG signal to learn \VPH{} and \APH{}. In
+the following section, we give the intuition behind the
+algorithm and detail our approach.
+
+\subsection{Overarching Intuition for Learning \VPH{} and \APH{}}
+Again, consider $f[n]$. The basic strategy of the peak
+height threshold learning is to look for a large range of
+thresholds that detects the same number of QRS beats in
+$f[n]$. This idea follows from the observation that there
+is typically a wide range of thresholds that are high
+enough to exclude the lower (typically atrial) beats but
+low enough to detect each of the higher (typically
+ventricular) beats. As the algorithm tries thresholds
+lower than that range, it starts to detect lower beats, and
+as it tries thresholds higher than that range, it stops
+detecting some of the higher beats, so the number of
+detected beats begins to change. In the range, however,
+the number of detected beats is constant.
+
+\begin{multline}
+	beats(threshold) = \\\text{Number of beats detected in } f[n] \text{ using } threshold
+\end{multline}
+
+The algorithm looks for the longest and flattest
+interval of the function $beats(threshold)$. An example of
+$beats(threshold)$ is illustrated in \figurename~\ref{fig:beats}.
+However, computing the number of beats we detect with a given
+threshold, takes a substantial amount of computation,
+thus we utilize a semi-recursive iterative approach in our
+algorithm. We name our algorithm ``Flat-Finding
+Ventricular and Atrial Heights.''
+
+% Move to next subsection?
+A key property of $beats(threshold)$ is its monotonicity. 
+% explain why this is merited, why this is useful
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[
+				title      = $beats(threshold)$,
+				xlabel     = Threshold (mV),
+				ylabel     = Number of beats,
+				legend pos = north east,
+			]
+			\addplot+[mark=none] table[x = th, y = beats, col sep=comma]{beats.csv} ;
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Graph of the function $beats(threshold)$ on a sample $f[n]$}
+	\label{fig:beats}
+\end{figure}
+
+\subsection{Flat Finding Algorithm to determine \VPH{} and \APH{}}
+As mentioned in the previous section, computing $beats(threshold)$ for a given value of $threshold$
+requires a great deal of
+computation. Instead, we run several iterations in which
+we pick thresholds $th_i$ for $i = 1, 2, \dots, 20$ evenly spaced
+between a minimum and maximum threshold, compute
+$beats(th_i)$ for each $i$, and adjust the minimum and
+maximum thresholds for the next iteration based on the
+results. 
+For the first iteration, we set
+$th_{max} = \max f[n]$ and $th_{min} = 0$. 
+To choose the minimum and maximum thresholds in
+the next round, we first eliminate any thresholds $th_i$
+such that $beats(th_i)$ is biologically infeasible.
+For a human, we require that $10 \text{bpm} \le beats(th_i) \le 200 \text{bpm}$.
+Note that $beats(th_i)$ is not natively computed in the unit of beats per minute, so a simple unit conversion is required.
+
+Then we define a maximal flat interval $[i,j]$ with $i<j$ to be one that satisfies the following conditions:
+\begin{multline}
+	beats(th_i) = beats(th_j),\\ beats(th_{i-1}) \ne beats(th_i), beats(th_j) \ne beats(th_{j+1})
+\end{multline}
+Because of the monotonicity of $beats(threshold)$, the first condition is necessary and sufficient for the flatness property.
+The second and third conidtions ensure that $[i,j]$ is maximal.
+
+If one or more flat intervals exist, choose $th_{max} = th_{j+1}$ and $th_{min}=th_{i-1}$ using the longest interval (i.e. the one that maximizes $j-i$).
+Because of the maximality of the flat interval $[i,j]$ and the monotonicity of $th(threshold)$, 
+we know that the true end of the flat interval is somewhere between $th_{i-1}$ and $th_i$. 
+Choosing $th_{min} = th_{i-1}$ instead of $th_{i}$, gives the next recursive refinement iteration a chance to identify more closely the end of the flat interval.
+Similar logic applies to our choise of $th_{max}$.
+
+If no flat intervals exist, set $i=\argmin_{i} |beats(th_i) - beats(th_{i-1})|$.
+Then choose $th_{max} = th_i$, $th_{min} = th_{i-1}$.
+
+After 3 recursive refinement iterations, define the ventricular peak height (\VPH{}) to be the midpoint of the flat interval, i.e.
+\begin{equation}
+	VPH=\frac{th_{min}+th_{max}}{2}
+\end{equation}
+
+Finally, after computing the ventricular thresholds,
+data near the detected ventricular peaks is replaced with
+zeros, and the entire algorithm in re-run to detect the
+atrial threshold, \APH{}.
 
 \subsubsection{Subsubsection Heading Here}
 Subsubsection text here.
