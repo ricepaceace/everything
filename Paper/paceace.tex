@@ -357,7 +357,7 @@ generate an electrical signal, which travels from the atria
 down to the ventricles, to stimulate heart contraction.
 Many heart failures result from the heart's inability to
 generate or to conduct these electrical signals
-and stimulate muscle contraction properly. % TODO: The parallelism of this sentence is not right, but I don't see a good way to fix it
+that stimulate muscle contraction. 
 
 To combat these forms of heart failure, doctors implant artificial electronic pacemakers
 that stimulate the heart
@@ -378,20 +378,20 @@ several algorithms have been proposed to identify the
 beats within a CES~\cite{realtime-qrs, ecg-filter}. However, current
 algorithms perform beat detection without distinguishing
 which part of the CES corresponds to the atrial
-phase of the heartbeat and which part corresponds to % ???: Is phase the right word?
-the ventricular phase of the heartbeat. As a result,
+portion of the heartbeat and which part corresponds to 
+the ventricular portion of the heartbeat. As a result,
 current pacemakers are often unable to distinguish
 between atrial and ventricular beats.
-Accurate distinction between the two phases allows for a more effective form of pacing known as
+Accurate distinction between the two portions allows for a more effective form of pacing known as
 Cardiac Resynchronization Therapy (CRT)~\cite{multisite-crt}.
-However, up to 30\% of patients with pacemakers do % TODO: up to?
-not respond to CRT implemented by current pacemakers~\cite{multisite-crt}. %TODO: Do we know why this happens?
+However,  30\% of patients with pacemakers do 
+not respond to CRT implemented by current pacemakers ~\cite{multisite-crt}. %TODO: (Yamin: I dont think we know, but I also dont think its too big of a deal)
 
 To make CES beat detection more suitable for CRT,
 we propose a learning algorithm that learns the
 height of an atrial peak (\APH), the height of a ventricular
 peak (\VPH), the width of an atrial peak (\APW), and the
-width of a ventricular peak (\VPW) within a CES % TODO: Do we want a figure here showing these parameters
+width of a ventricular peak (\VPW) within a CES % TODO: (Yamin: I think we do want a figure).
 by simply processing 10 seconds of CES data sampled
 at 1 kHz. With these parameters, we then implement
 atrial and ventricular beat detection to illustrate that our
@@ -474,7 +474,7 @@ algorithm~\cite{k-means}.
 We identify the ventricular cluster by choosing the corresponding mean 
 with a greater height to width ratio, since
 ventriclar peaks are generally taller and thinner than atrial peaks. Let $C_V$ and $C_A$
-be the centers of the ventricular and atrial clusters % TODO: replace center with mean?
+be the centers of the ventricular and atrial clusters %TODO: (Yamin:I like centers here, as I think it is more intuitive for the reader)
 respectively. The algorithm then stores the ventricular
 peak width (\VPW) and atrial peak width (\APW) as the
 rounded width term of the centers as follows:
@@ -579,16 +579,16 @@ As mentioned in the previous section, computing $beats(threshold)$ for a given v
 is computationally expensive because it requires computation proportional to the length of the CES data.
 Instead of computing $beats(threshold)$ for each possible value of $threshold$, we run several iterations in which
 we pick thresholds $th_i$ for $i = 1, 2, \dots, N$ evenly spaced
-between a minimum and maximum threshold ($th_{min}, th_{max}$), compute
-$beats(th_i)$ for each $i$, and adjust the minimum and
+between a minimum and maximum threshold ($th_{min}, th_{max}$).  The algorithm then computes
+$beats(th_i)$ for each $i$, and adjusts the minimum and
 maximum thresholds for the next iteration based on the
-results. %???: THis is a long sentence.
+results.
 We normally take $N=20$.
 For the first iteration, we set
 $th_{min} = 0$ and $th_{max} = \max f[n]$. 
 To choose the minimum and maximum thresholds in
 the next round, we first eliminate any thresholds $th_i$
-such that $beats(th_i)$ is biologically infeasible. %TODO: We had a better word than infeasible
+such that $beats(th_i)$ is biologically infeasible. %TODO: (Yamin: We used infeasible in the documentation we turned in, and I think its fine)
 For a human, we require that $10 \text{bpm} \le beats(th_i) \le 200 \text{bpm}$.
 Note that $beats(th_i)$ is not natively computed in the unit of beats per minute, so a simple unit conversion is required.
 
@@ -630,8 +630,7 @@ In the remaining portion of this section, we describe
 the beat detection algorithm that we use to compute
 $beats(threshold)$.
 Since we independently learn \VPH{} and \APH{}, as a notational convenience, define $PW$, the peak width, to be \VPW{} when computing \VPH{} and \APW{} when computing \APH{}.
-Notice how our algorithm utilized a nonparametric
-approach to compute \VPW{} and \APW{} previously. % ???: Seems a little out of place
+Notice how this portion of the algorithm uses parameters computed previously in the algorithm, \VPW{} and \APW{}.
 Next, define:
 
 \begin{equation*}
