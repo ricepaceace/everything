@@ -21,7 +21,7 @@ const byte ch1[] PROGMEM =  {
 const byte ch2[] PROGMEM =  {
 #include "NormalSinusRhythm_struct2.h"
 };
-const byte* data[N_CH] = {ch1, ch2, ch2};
+const byte* data[N_CH] = {ch1, ch1, ch1};
 const int ch_len[N_CH] = {14317, 14317, 14317}; 
 int cindex[N_CH] = {0, 0, 0};
 boolean zeroed[N_CH] = {false, false, false};

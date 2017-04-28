@@ -28,7 +28,7 @@ b2 = fir1(1000,150/Fs);
 %%% run on each channel individually
 ainds = zeros(numChannels, 1);
 vinds = zeros(numChannels, 1);
-for i=9%1:numChannels
+for i=1%1:numChannels
     data(:,i) = filter(b,1,data(:,i));
     data(:,i) = filter(b2,1,data(:,i));
 %     detection.a_length = 30;

@@ -17,12 +17,16 @@ for s = [+1 -1]
         end
     end
     
-    if (false)
+    if (true)
         figure
-        plot(data)
+        plot(data,'r')
         hold on
-        stem(wall_times, wall_steeps)
-        plot(ddatadt)
+        stem(wall_times, wall_steeps,'LineWidth',2,'MarkerSize',12)
+        plot(ddatadt,'b')
+        xlabel('Time (ms)','FontSize',20)
+        ylabel('mV','FontSize',20)
+        glegend = legend('f[n]','r[n]','w[n]')
+        set(glegend,'FontSize',20)     
     end
 
     peak_lengths = [];
@@ -87,9 +91,12 @@ for s = [+1 -1]
     %     plot3(C(:,1)*mean(peak_lengths),C(:,2)*mean(peak_heights), C(:,3)*mean(peak_steeps),'kx','MarkerSize',15,'LineWidth',3)
         plot(peak_lengths(idx==vind),peak_heights(idx==vind),'r.','MarkerSize',12)
         plot(peak_lengths(idx==3-vind),peak_heights(idx==3-vind),'b.','MarkerSize',12)
-        legend('ventricles','atria')
-        plot(C(:,1)*mean(peak_lengths),C(:,2)*mean(peak_heights),'kx','MarkerSize',15,'LineWidth',3)
-        ylabel('peak heights'); xlabel('peak lengths')
+        plot(C(1,1)*mean(peak_lengths),C(1,2)*mean(peak_heights),'rx','MarkerSize',15,'LineWidth',3)
+        plot(C(2,1)*mean(peak_lengths),C(2,2)*mean(peak_heights),'bx','MarkerSize',15,'LineWidth',3)
+        hlegend = legend('ventricles','atria','Cv','Ca','FontSize',20);
+        set(hlegend,'FontSize',20)
+        ylabel('peak heights (mV)','FontSize',20); xlabel('peak lengths (ms)','FontSize',20)
+        
         grid
     end
 end

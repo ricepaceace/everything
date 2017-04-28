@@ -37,14 +37,17 @@ function [ v_length, a_length, vc, ac, vflip, aflip, v_first ] = LearnParameters
                 ys(i) = beats;
             end
             plot(flip(f)*xs, ys,'k');
-            
+            axis([0 3000 0 200])
+            xlabel('Threshold (mV)','FontSize',18)
+            ylabel('Number of Beats','FontSize',18)
+            title('Beats(threshold)','Fontsize',18)
             xs = linspace(0, max(flip(f)*ndata), 200);
             ys=zeros(200,1);
             for i = 1:200
                 [beats, ~, ~] = CountPeaks(flip(f)*ndata > xs(i), lengths(3-first(f),f));
                 ys(i) = beats;
             end
-            plot(flip(f)*xs, ys, 'k');
+            %plot(flip(f)*xs, ys, 'k');
         end
     end
     
@@ -61,7 +64,7 @@ function [ v_length, a_length, vc, ac, vflip, aflip, v_first ] = LearnParameters
     if visualize_bs
         heartbeats = FindHeartRate(data);
         plot(vflip*reshape(cutoffs(1,vf,:),[1,2]), [heartbeats, heartbeats], 'ro');
-        plot(aflip*reshape(cutoffs(2,af,:),[1,2]), [heartbeats, heartbeats], 'bx');
+        %plot(aflip*reshape(cutoffs(2,af,:),[1,2]), [heartbeats, heartbeats], 'bx');
     end
     
     a=1;
