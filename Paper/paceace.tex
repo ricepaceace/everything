@@ -453,8 +453,9 @@ Let $f[n]$ be 10 seconds of CES sampled at 1 kHz.
 We begin by computing the weighted time
 derivative of $f[n]$, denoted $w[n]$.
 \begin{equation*}
-	w[n]=(f[n]-f[n-1]) * \left|f[n] - f[n-1]\right| * \left|f[n]\right|
+	w[n]=(f[n]-f[n-1])\left|f[n] - f[n-1]\right| * \left|f[n]\right|
 \end{equation*}
+Note that $w[n]$ is essentially $f'[n]^2  f[n]$, but with the sign adjusted to match the sign of $f'[n]$. %???: Does using the derivative notation make this more clear?
 
 The following paragraph will explain our rational for constructing $w[n]$. Next, the algorithm 
 searches for when the local
@@ -683,8 +684,7 @@ $potentialPeaks[n]$ indicates where in $f[n]$ a beat could
 have occurred. We then use the intuition that for a beat
 to occur, it must have been about as long as $PW$ in time.
 Thus, to compute $beats(threshold)$, i.e. the number of
-beats that occur in $f[n]$, we utilize the following
-procedure.
+beats that occur in $f[n]$, we first compute
 \begin{equation*}
 	beats[n]=\left\{ 
 		\begin{array}{lc}
@@ -693,38 +693,37 @@ procedure.
 		\end{array}
 		\right.
 \end{equation*}
-Essentially, $beats[n]$ indicates where in time beats
-occur in $f[n]$ according to $threshold$. In accordance
-with standard pacemaking practice, we do not detect atrial beats within a fixed amount of time (usually around 250 ms) after
-a ventricular beat. Finally, we
-precisely define \begin{equation*}
-	beats(threshold) = \sum_n beats[n]
-\end{equation*}
-To detect ventricular beats using this algorithm,
-simply utilize \VPW{} and \VPH{} for $threshold$ and $PW$
-respectively. Similarly, to detect atrial beats, utilize
-\APW{} and \APH{} for $threshold$ and $PW$.
+Essentially, $beats[n]$ indicates which samples of $f[n]$ are part of a beat, according to $threshold$.
+Finally, we define $beats(threshold)$ to be the number of rising edges in the sequence $beats[n]$, 
+i.e. the number of $n$ such that $beats[n] = 1, beats[n-1] = 0$. % ???: Discuss the adjustment for extra long beats?
+
+After learning parameters, we also use essentially this same algorithm to detect beats in real-time.
+To detect ventricular beats, set $PW$ and $threshold$ to \VPW{} and \VPH{} respectively.
+Similarly, to detect atrial beats, set $PW$ and $threshold$ to \APW{} and \APH{} respectively.
+In addition, in accordance with standard pacemaking practice, we ignore any atrial beats within a fixed amount of time (usually around 250 ms) after
+a ventricular beat.
 
 \section{Hardware Implementation}
 In the future, we envision that our algorithm will be
-implemented on real pacemakers. In order to
-demonstrate that our proposed solution can be run in
-real-time through hardware that can be shrunk down to
+implemented in real pacemakers. In order to
+demonstrate that our proposed solution can run in
+real-time on hardware that can be shrunk down to
 the size of an integrated circuit, we fully implemented
 our algorithm on a Field Programmable Gate Array
-(FPGA). In addition, to test on analog signals, we
-designed a preprocessing circuit board that filters and
-cleans analog signal from the heart before it is digitized and used
-for the algorithm implemented on the FPGA.
+(FPGA).
+In addition, to test on analog signals, we
+designed an analog preprocessing circuit board that filters and
+cleans the signal from the heart before it is digitized and processed
+by the algorithm running on the FPGA.
 
 \subsection{FPGA Algorithm Implementation}
-Though the FPGA chip is large, and far too power
-hungry for a finalized pacemaker, it suffices as a
-demonstrable proof of concept for our algorithm. In
-fact, we implemented our algorithm on FPGA fabric to
-showcase how it could be shrunk down to an application
-specific integrated circuit (ASIC) that could work with
-pacemakers in the future. An illustration of our ASIC
+In order to meet power and size constraints, 
+current pacemakers contain an application-specific integrated circuit (ASIC) for running a beat detection algorithm.
+Although the FPGA chip that we used is large, and far too power-hungry for an implantable pacemaker,
+it serves as a first step towards an ASIC that runs our algorithm.
+In fact, we implemented our beat detection algorithm in Verilog on FPGA fabric to
+showcase how it could be shrunk down to an ASIC for future pacemakers.
+An illustration of our ASIC
 lay out can be found in \figurename~\ref{fig:fpga}.
 \begin{figure}[h]
 	\centering
@@ -734,15 +733,15 @@ lay out can be found in \figurename~\ref{fig:fpga}.
 \end{figure}
 
 \subsection{Pre-processor Circuit Board Design}
-Since we aim to utilize our algorithm for pacemakers,
-we wanted to make sure that our implementation on the
-FPGA could interface with real analog signals. In order
-to do this, we designed a preprocessor board that is
-capable of sensing electrical activity directly from a
-heart and cleaning the signal so that it can properly be
-digitized and utilized by the algorithm implementation
+Since pacemakers take analog signals as input,
+we also wanted to make sure that our implementation on the
+FPGA could interface with real analog signals.
+In order to do this, we designed a preprocessor board that is
+capable of amplifying and cleaning electrical activity directly from a heat.
+The cleaned signal can then be properly 
+digitized and used as input to the algorithm implementation
 on the FPGA. A design drawing of our board, which
-utilizes many of the circuit design ideas used in~\cite{analog-adcs}
+draws heavily from ideas in~\cite{analog-adcs}, 
 can be seen in \figurename~\ref{fig:schematic}.
 
 \begin{figure}[h]
@@ -753,23 +752,23 @@ can be seen in \figurename~\ref{fig:schematic}.
 \end{figure}
 
 The preprocessor consists of an instrumentation
-amplifier, followed by a DC offset removal op-amp, a
-non-inverting amplifier, and a 3 stage low pass filter
+amplifier, followed by a DC offset removal op-amp (U2), a
+non-inverting amplifier (U1), and a 3 stage low pass filter (U4-6)
 before going into the logic controller for algorithm
 processing. The TI INA827 chip is an instrumentation
-amplifier that can take a differential signal as input,
+amplifier that takes a differential signal as input,
 combines it to a single output, and amplifies the signal
-by 5. The op amp that feeds back to pin 6 is used to
+by 5x. The op amp that feeds back to the REF pin is used to
 remove any DC offset or wandering baseline that exists
 in the signal. After this stage, the non-inverting amplifier
 amplifies the output of the instrumentation amplifier by
-16. Finally, there is a 3 stage low pass filter that has a
+16x. Finally, there is a 3 stage low pass filter that has a
 cutoff frequency at 150 Hz and a gain smaller than -40dB 
 starting at 300 Hz. All the chips and op amps are
 powered with a +/- 3.3 rail voltage.
 
 \section{Testing and Results}
-We validate our ventricular and atrial parameter
+We validated our ventricular and atrial parameter
 learning algorithm and our overarching hardware system
 with two separate experiments. The following sections
 will describe both tests separately.
@@ -781,16 +780,16 @@ simply processing 10 seconds of CES data sampled at 1
 kHz. To validate our solution, we implemented our algorithms in
 Matlab and performed atrial and ventricular beat
 detection using algorithmically learned parameters on
-data provided by the Electrophysiology lab at the Texas Heart Institute.
+data provided by collegues at the Texas Heart Institute.
 In order to record the data, an in vivo,
 live animal study procedure was performed. For a single
-animal, 17 bipolar electrodes populated the left ventricle
+animal, 17 bipolar electrodes were placed on the left ventricle
 of the heart. Each electrode sensed electrical activity
 directly from the heart for one minute, digitized the
 signal at a 1 kHz sampling rate, and stored the signal as
 a .csv file. This was done for 3 animals, giving us a total
-of 51 channels that directly resembles the kind of analog
-signals a real pacemaker would be sensing.
+of 51 channels.
+Each channel resembles the signal a real pacemaker uses as input.
 
 We then applied our algorithm to data
 from each of the 51 channels separately in order to learn
@@ -798,12 +797,13 @@ from each of the 51 channels separately in order to learn
 channel. Next, using the peak detection algorithm
 described in Section III: C, we performed atrial and
 ventricular peak detection on each of the 51 channels
-using the aforementioned parameters that we computed
-for each specific channel. Finally, we computed the
-atrial and ventricular beat detection error rate through
-tracking false positives (a beat is detected when none
-exist) and false negatives (no beat is detected when one
-exists) across all 51 channels.
+using the learned channel-specific parameters.
+Finally, we manually identified all of the atrial and ventricular beats to establish a ground truth. 
+Comparing the output of the algorithm to this ground truth, we computed the
+atrial and ventricular beat detection 
+false positive (a beat is detected when none
+exist) and false negative (no beat is detected when one
+exists) error rates across all 51 channels.
 Table~\ref{tab:errors} illustrates our results.
 \begin{table}[h]
 	\caption{Detection Error Rates using Learned Parameters}
@@ -822,40 +822,38 @@ Table~\ref{tab:errors} illustrates our results.
 	\end{tabular}
 \end{table}
 
-Our detection error rates are appropriately low across
+Our detection error rates are appropriately low across % ???: What does appropriately low mean?
 all 51 channels. Since we performed atrial and
 ventricular beat detection based on the parameters that
 our algorithm learned, the algorithm clearly learned
 \APW{}, \VPW{}, \APH{}, and \VPH{} correctly for the vast
 majority of channels. In fact, most of the false negative
-error rate results from our algorithm learning incorrect
+errors are from our algorithm learning incorrect
 atrial parameters for one channel. When we manually
 looked at the values of \APW{}, \VPW{}, \APH{}, and \VPH{}, we
 found that the algorithm learned \VPW{} and \VPH{} correctly
-for all 51 channels and \APW{} and \APH{} correctly for 50 of
+for all 51 channels and \APW{} and \APH{} correctly for 50 of % ???: If most of the FN error is from ventricular, what about the atrial FN?
 the channels.
 
 \subsection{Hardware Implementation Validation through a Langendorff Heart}
 In order to validate the hardware implementation of
-our algorithm described in Section IV, we interfaced our
-system to a Langendorff Heart as described by~\cite{langendorff}.
-Essentially, in a Langendorff Heart experiment, a live
-heart is extracted from a mammal, which in our case was
-a rat, and is kept beating. This externally beating heart
-will behave as if it was beating internally, so the
-Langendroff Heart will retain all of the appropriate
-electrical characteristics.
-We connected our preprocessor through simple wires
+our algorithm described in Section IV, we interfaced our % connected instead of interfaced?
+system to a Langendorff heart as described by~\cite{langendorff}.
+Essentially, in a Langendorff heart experiment, a live
+heart is extracted from an animal, which in our case was
+a rat, and is kept beating by perfusing it with a special solution. % ??? Does special solution sound too dumb?
+At an electrophysiological level, the externnally beating heart behaves almost identically to a normal internal beating heart.
+We connected our preprocessor to ordinary wires
 sutured to the Langendroff heart, and then used our
-FPGA to digitize the analog signal sensed through the
-preprocessor. Our system correctly sensed signals using
+FPGA to run our algorithm on the cardiac signal.
+Our system correctly sensed signals using
 the preprocessor, learned pacing parameters (\VPW{} and
 \VPH{}), and detected ventricular beats using the learned
 values of \VPW{} and \VPH{} in real time. Due to the
 relatively small size of a rat's heart in comparison to a
 human's, the atrial part of the signal was not
-distinguishable on the sensed signal itself, so our
-algorithm did not learn any parameters for it.
+distinguishable on the sensed signal itself, even by experts,
+so our algorithm failed to learn valid parameters for it.
 
 \section{Conclusions and Future Direction}
 We have demonstrated a working algorithm
