@@ -263,6 +263,8 @@
 \hyphenation{op-tical net-works semi-conduc-tor}
 
 
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.7}
 \usepackage{pgfplotstable}
@@ -385,15 +387,49 @@ between atrial and ventricular beats.
 Accurate distinction between the two portions allows for a more effective form of pacing known as
 Cardiac Resynchronization Therapy (CRT)~\cite{multisite-crt}.
 However,  30\% of patients with pacemakers do 
-not respond to CRT implemented by current pacemakers ~\cite{multisite-crt}. %TODO: (Yamin: I dont think we know, but I also dont think its too big of a deal)
+not respond to CRT implemented by current pacemakers~\cite{multisite-crt}. 
 
+\begin{figure}
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[
+				%title      =,
+				xlabel     = Time (ms),
+				ylabel     = Voltage (mV),
+				legend pos = south west,
+			]
+			\addplot+[mark=none,smooth, black] table[x = t, y = v, col sep=comma]{singlebeat.csv} ;
+			% \draw[densely dotted] (axis cs:78, 796) -- (axis cs:95, 461) ;
+			\draw[red] (axis cs:78, 1100) -- ++(0, 2pt) -- ++(0, -4pt) -- ++(0, 2pt) -- (axis cs:95, 1100) node(m1) [midway] {} -- ++(0, 2pt) -- ++(0, -4pt);
+			\draw[red] (axis cs:50, 590) -- ++(2pt, 0) -- ++(-4pt, 0) -- ++(2pt, 0) -- (axis cs: 50, 0) node(m2) [midway] {} -- ++(2pt, 0) -- ++(-4pt, 0) ;
+			\node[pin=75:{\APW}] at (m1) {};
+			\node[pin={[pin distance=8pt]120:{\APH}}] at (m2) {};
+			% \draw (axis cs:78, 580) -- (axis cs:78, 680) -- (axis cs: 78, 630) -- (axis cs:95, 630) -- (axis cs:95, 580) -- (axis cs:95, 680);
+
+			\draw[blue] (axis cs:408, 2000) -- ++(0, 2pt) -- ++(0, -4pt) -- ++(0, 2pt) -- (axis cs:416, 2000) node(m3)[midway] {} -- ++(0, 2pt) -- ++(0, -4pt);
+			%\draw[densely dotted] (axis cs:408, 1460) -- (axis cs:416, 1085) ;
+			%\draw (axis cs:408, 1220) -- (axis cs:408, 1320) -- (axis cs: 408, 1270) -- (axis cs:416, 1270) -- (axis cs:416, 1220) -- (axis cs:416, 1320);
+
+
+			\draw[blue] (axis cs:430, 1160) -- ++(2pt, 0) -- ++(-4pt, 0) -- ++(2pt, 0) -- (axis cs: 430, 0) node(m4)[midway] {} -- ++(2pt, 0) -- ++(-4pt, 0) ;
+			\node[pin={[pin distance=8pt]200:{\VPW}}] at (m3) {};
+			\node[pin={[pin distance=3pt]320:{\VPH}}] at (m4) {};
+			\legend{$f[n]$}
+		\end{axis}
+	\end{tikzpicture}
+	\caption{
+	A segment of CES containing a single atrial and ventricular beat, labeled with the parameters \APH, \VPH, \APW, and \VPW. 
+	Notice that the atrial beat is wider but smaller than the ventricular beat.}
+	\label{fig:singlebeat}
+\end{figure}
 To make CES beat detection more suitable for CRT,
 we propose a learning algorithm that learns the
 height of an atrial peak (\APH), the height of a ventricular
 peak (\VPH), the width of an atrial peak (\APW), and the
-width of a ventricular peak (\VPW) within a CES % TODO: (Yamin: I think we do want a figure).
+width of a ventricular peak (\VPW) within a CES 
 by simply processing 10 seconds of CES data sampled
-at 1 kHz. With these parameters, we then implement
+at 1 kHz. \figurename~\ref{fig:singlebeat} shows how these parameters correspond to portions of the CES.  %TODO: Not really sure what to say here.
+With these parameters, we then implement
 atrial and ventricular beat detection to illustrate that our
 learned parameters can be used to distinguish between
 atrial and ventricular beats in a CES.
