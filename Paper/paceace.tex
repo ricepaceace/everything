@@ -318,13 +318,13 @@ Behnaam Aazhang\IEEEauthorrefmark{1}, and Joseph Cavallaro\IEEEauthorrefmark{1}}
 \begin{abstract}
 While beat detection in a Cardiac Electrical 
 Signal (CES) is a well-studied problem, we propose a novel
-algorithm, for implementation in pacemakers, that learns the
-heights and widths of atrial and ventricular peaks without human input from simply
+algorithm for implementation in pacemakers that learns the
+heights and widths of atrial and ventricular peaks without manual parameter setting from simply
 processing 10 seconds of cardiac data sampled at 1 kHz. 
 This purely data-driven solution to learn the parameters of atrial
 and ventricular peaks will allow pacemakers to set their own 
-detection parameters for a specific patient and adaptively tune
-their detection parameters over time for that specific patient.
+detection parameters and adaptively tune
+the parameters over time for that specific patient.
 We have validated our algorithm on 51 separate channels of
 data. Additionally, we have implemented the algorithm on a
 Field Programmable Gate Array and tested it on an ex-vivo rat
@@ -356,20 +356,20 @@ due to some form of heart disease~\cite{death-stats}. A healthy heart
 functions through a regular cardiac cycle, where the pacemaking cells
 in the sinoatrial (SA) node of the heart
 generate an electrical signal, which travels from the atria
-down to the ventricles, to stimulate heart contraction.
+down to the ventricles to stimulate heart contraction.
 Many heart failures result from the heart's inability to
 generate or to conduct these electrical signals
 that stimulate muscle contraction. 
 
 To combat these forms of heart failure, doctors implant artificial electronic pacemakers
 that stimulate the heart
-to contract artificially through externally supplied
+to contract artificially through 
 electrical pulses.
-To minimize long-term damage to heart tissue and to maximize battery life, it is important that these pacemakers only stimulate when necessary.
+To minimize long-term damage to heart tissue and to maximize battery life, it is important that these pacemakers stimulate when and only when necessary.
 Current pacemakers use the 
 DDDR algorithm to determine whether
 the heart requires stimulation~\cite{basic-pacing}.
-Additionally, a doctor must manually specify parameters for each individual patient in order to tune the detection algorithm to the patient's physiology.
+In the current approach, a doctor must manually specify parameters for each individual patient in order to tune the detection algorithm to the patient's physiology.
 Essentially, the pacemaker then applies the tuned beat detection algorithm to the signal it senses
 to determine whether a
 heartbeat has occurred. If the pacemaker does not detect a heartbeat
@@ -381,14 +381,14 @@ several algorithms have been proposed to identify the
 beats within a cardiac signal~\cite{realtime-qrs, ecg-filter, patient-adaptable}. However, current
 algorithms perform beat detection without distinguishing
 which part of the signal corresponds to the atrial
-portion of the heartbeat and which part corresponds to 
-the ventricular portion of the heartbeat. As a result,
+contraction of the heartbeat and which part corresponds to 
+the ventricular contraction of the heartbeat. As a result,
 current pacemakers are often unable to distinguish
 between atrial and ventricular beats.
-Accurate distinction between the two portions allows for a more effective form of pacing known as
+Accurate distinction between the two contractions allows for a more effective form of pacing known as
 Cardiac Resynchronization Therapy (CRT)~\cite{multisite-crt}.
 However,  30\% of patients with pacemakers do 
-not respond to CRT implemented by current pacemakers~\cite{multisite-crt}. 
+not respond to CRT implemented by current pacemakers~\cite{multisite-crt}, leading to some of the 600,000 deaths. 
 
 \begin{figure}
 	\centering
@@ -428,7 +428,7 @@ we propose a learning algorithm that learns the
 height of an atrial peak (\APH), the height of a ventricular
 peak (\VPH), the width of an atrial peak (\APW), and the
 width of a ventricular peak (\VPW) within a signal 
-by simply processing 10 seconds of data sampled
+by processing 10 seconds of data sampled
 at 1 kHz. 
 \figurename~\ref{fig:singlebeat} shows how these parameters correspond to portions of the cardiac electrical signal.
 We use these parameters in atrial and ventricular beat detection to illustrate that our learned parameters can be used to distinguish between atrial and ventricular beats in a signal. 
@@ -443,26 +443,26 @@ Finally, Section V documents our testing procedure and
 validates our algorithmic results and hardware system.
 
 \section{Atrial and Ventricular Peak Width Learning}
-Our algorithm begins by learning \APW{} and \VPW{}. We
+Our algorithm begins by learning the atrial and ventricular widths: \APW{} and \VPW{}. We
 detail our approach in the following sections.
 
 \subsection{Finding Peak Shaped Patterns in the Signal}
 Let $f[n]$ be 10 seconds of CES sampled at 1 kHz.
 We begin by computing the weighted time
-derivative of $f[n]$, denoted $w[n]$.
+derivative of $f[n]$, denoted $d[n]$.
 \begin{equation*}
-	w[n]=(f[n]-f[n-1])\left|f[n] - f[n-1]\right| \left|f[n]\right|
+	d[n]=(f[n]-f[n-1])\left|f[n] - f[n-1]\right| \left|f[n]\right|
 \end{equation*}
-Note that $w[n]$ is essentially $f'[n]^2  f[n]$, but with the sign adjusted to match the sign of $f'[n]$.
-The following paragraph will explain our rational for constructing $w[n]$. Next, the algorithm 
+Note that $d[n]$ is essentially $f'[n]^2  f[n]$, but with the sign adjusted to match the sign of $f'[n]$.
+The following paragraph will explain our rational for constructing $d[n]$. Next, the algorithm 
 searches for when the local
-maxima and minima of $w[n]$ occur, within a window of
+maxima and minima of $d[n]$ occur, within a window of
 200 ms. Thus, we compute:
 \begin{equation*}
 	r[n] = \left \{
 		\begin{array}{lc}
-			1 & \text{if } f[n]>0 \text{ and } w[n] = \max\limits_{-100 \le i \le 100} (w[n+i]) \\
-			-1 & \text{if } f[n]>0 \text{ and }  w[n] = \min\limits_{-100 \le i \le 100} (w[n+i]) \\
+			1 & \text{if } f[n]>0 \text{ and } d[n] = \max\limits_{-100 \le i \le 100} (d[n+i]) \\
+			-1 & \text{if } f[n]>0 \text{ and }  d[n] = \min\limits_{-100 \le i \le 100} (d[n+i]) \\
 			0 & \text{otherwise}
 		\end{array}
 	\right.
@@ -471,11 +471,12 @@ Note, that a value of $1$ in $r[n]$ corresponds to the
 steepest rising edge of a positive peak in $f[n]$, while a value of $-1$
 in $r[n]$ roughly corresponds to the steepest falling edge of a positive peak
 in $f[n]$. 
-The interval between where $r[m]=1$ and $r[n]=-1$ then corresponds to a 
-peak like structures in $f[n]$, where a rising edge is followed by a falling edge.
-Using a weighted derivative, $w[n]$, instead of a simple time derivative pushes these edges closer to the tip of a peak,
+The interval between a $1$ and a $-1$ in $r[n]$ then corresponds to a
+% The interval between where $r[m]=1$ and $r[n]=-1$ then corresponds to a 
+peak-like structure in $f[n]$, where a rising edge is followed by a falling edge.
+Using a weighted derivative, $d[n]$, instead of a simple time derivative pushes these edges closer to the tip of a peak,
  which allows for more appropriate feature extraction later on in the algorithm.
-\figurename~\ref{fig:fwr} illustrates the relationship between $f[n], w[n], $ and $r[n]$ for a single peak.
+\figurename~\ref{fig:fwr} illustrates the relationship between $f[n], d[n], $ and $r[n]$ for a single peak.
 \begin{figure}
 	\centering
 	\begin{tikzpicture}
@@ -488,18 +489,18 @@ Using a weighted derivative, $w[n]$, instead of a simple time derivative pushes 
 			\addplot+[mark=none, color=red, smooth] table[x = t, y = f, col sep=comma]{fwr.csv} ;
 			\addplot+[mark=none, color=blue, smooth] table[x = t, y = w, col sep=comma]{fwr.csv} ;
 			\addplot+[only marks, mark=o, mark size = 2pt,color=black] table[x = t, y = r, col sep=comma]{fwr.csv} ;
-			\legend{$f[n]$, $w[n]$, $r[n]$}
+			\legend{$f[n]$, $d[n]$, $r[n]$}
 		\end{axis}
 	\end{tikzpicture}
 	\caption{
-	Illustration of the relationship between $f[n]$, $w[n]$ and $r[n]$}
+	Illustration of the relationship between $f[n]$, $d[n]$ and $r[n]$}
 	\label{fig:fwr}
 \end{figure}
 
 \subsection{Peak Feature Extraction and Clustering to Determine \APW{} and \VPW}
 We restrict our attention to peaks that consist of a rising edge
-followed in less than 75ms by a falling edge since 
-both atrial and ventricular peaks cannot be greater than 75 ms in length.
+followed in less than 75 ms by a falling edge since 
+neither atrial nor ventricular peaks can be greater than 75 ms in length.
 More precisely, let $m_i$ and $n_i$ be integers such that $m_i < n_i, r[m_i]=1, r[n_i] = -1, n_i-m_i < 75 \text{ms},$ and $r[x]=0 $ for $m_i < x < n_i$.
 We then use the width and height of the peak as features.
 \begin{equation*}
@@ -552,11 +553,11 @@ $f[n]$. This `height' is the maximum height of the peak
 above the portions of the peak during which its
 value is most rapidly increasing or decreasing. 
 In contrast, \APH{} and \VPH{} are the median height above the baseline value of 0.
-The correlation between these two is not straightforward. 
+There is no simple relationship between the two.
 
 \section{Ventricular and Atrial Peak Height (\VPH{} and \APH{}) Learning}
 After learning \VPW{} and \APW{}, we proceed on the
-same segment of CES to learn \VPH{} and \APH{}. In
+same segment of CES to learn the ventricular and atrial peak heights: \VPH{} and \APH{}. In
 the following section, we give the intuition behind the
 algorithm and detail our approach.
 
@@ -641,8 +642,8 @@ we know that the true end of the flat interval is somewhere between $\tau_{i-1}$
 Choosing $\tau_{min} = \tau_{i-1}$ instead of $\tau_{i}$, gives the next recursive refinement iteration a chance to identify more closely the end of the flat interval.
 Similar logic applies to our choice of $\tau_{max}$.
 
-If no flat intervals exist, set $i=\argmin_{i} |\beta(\tau_i) - \beta(\tau_{i-1})|$.
-Then choose $\tau_{max} = \tau_i$, $\tau_{min} = \tau_{i-1}$.
+If no flat intervals exist, choose the interval with the lowest derivative.
+Set $i=\argmin_{i} |\beta(\tau_i) - \beta(\tau_{i-1})|$, and  $\tau_{max} = \tau_i$, $\tau_{min} = \tau_{i-1}$.
 
 After 3 recursive refinement iterations, define the ventricular peak height (\VPH{}) to be the midpoint of the flat interval, i.e.
 \begin{equation*}
@@ -709,8 +710,8 @@ the size of an integrated circuit, we fully implemented
 our algorithm on a Field Programmable Gate Array
 (FPGA).
 In addition, to test on analog signals, we
-designed an analog preprocessing circuit board that filters and
-cleans the signal from the heart before it is digitized and processed
+designed an analog preprocessing circuit board that cleans and
+amplifies the signal from the heart before it is digitized and processed
 by the algorithm running on the FPGA.
 
 \subsection{FPGA Algorithm Implementation}
@@ -721,7 +722,7 @@ it serves as a first step towards an ASIC that runs our algorithm.
 In fact, we implemented our beat detection algorithm in Verilog on FPGA fabric to
 showcase how it could be shrunk down to an ASIC for future pacemakers.
 An illustration of our ASIC
-lay out can be found in \figurename~\ref{fig:fpga}.
+layout can be found in \figurename~\ref{fig:fpga}.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.7\columnwidth]{fpga.png}
@@ -734,7 +735,7 @@ Since pacemakers take analog signals as input,
 we also wanted to make sure that our implementation on the
 FPGA could interface with real analog signals.
 In order to do this, we designed a preprocessor board that is
-capable of amplifying and cleaning electrical activity directly from a heat.
+capable of amplifying and cleaning electrical activity directly from a heart.
 The cleaned signal can then be properly 
 digitized and used as input to the algorithm implementation
 on the FPGA. A design drawing of our board, which
@@ -751,8 +752,8 @@ can be seen in \figurename~\ref{fig:schematic}.
 The preprocessor consists of an instrumentation
 amplifier, followed by a DC offset removal op-amp (U2), a
 non-inverting amplifier (U1), and a 3 stage low pass filter (U4-6)
-before going into the logic controller for algorithm
-processing. The TI INA827 chip is an instrumentation
+before going into the ADC.
+The TI INA827 chip is an instrumentation
 amplifier that takes a differential signal as input,
 combines it to a single output, and amplifies the signal
 by 5x. The op amp that feeds back to the REF pin is used to
@@ -786,7 +787,7 @@ directly from the heart for one minute, digitized the
 signal at a 1 kHz sampling rate, and stored the signal as
 a .csv file. This was done for 3 animals, giving us a total
 of 51 channels.
-Each channel resembles the signal a real pacemaker uses as input.
+Each channel resembles the signal that a real pacemaker uses as input.
 
 We then applied our algorithm to data
 from each of the 51 channels separately in order to learn
@@ -824,7 +825,7 @@ all 51 channels. Since we performed atrial and
 ventricular beat detection based on the parameters that
 our algorithm learned, the algorithm clearly learned
 \APW{}, \VPW{}, \APH{}, and \VPH{} correctly for the vast
-majority of channels. In fact, most of the false negative
+majority of channels. In fact, most of the atrial false negative
 errors are from our algorithm learning incorrect
 atrial parameters for one channel. When we manually
 looked at the values of \APW{}, \VPW{}, \APH{}, and \VPH{}, we
@@ -840,7 +841,7 @@ Essentially, in a Langendorff heart experiment, a live
 heart is extracted from an animal, which in our case was
 a rat, and is kept beating by perfusing it with a solution. 
 At an electrophysiological level, the externally beating heart behaves almost identically to a normal internal beating heart.
-We connected our preprocessor to ordinary wires
+We connected our preprocessor to wires
 sutured to the Langendroff heart, and then used our
 FPGA to run our algorithm on the cardiac signal.
 Our system correctly sensed signals using
@@ -849,7 +850,7 @@ the preprocessor, learned pacing parameters (\VPW{} and
 values of \VPW{} and \VPH{} in real time. Due to the
 relatively small size of a rat's heart in comparison to a
 human's, the atrial part of the signal was not
-distinguishable on the sensed signal itself, even by experts,
+distinguishable within the sensed signal itself, even by experts,
 so our algorithm failed to learn valid parameters for it.
 
 \section{Conclusions and Future Direction}
@@ -860,8 +861,8 @@ can be reliably used to distinguish between atrial and
 ventricular beats in a cardiac electrical signal in real time.
 
 Future work on the algorithm will include
-	incorporating knowledge of the physical location of the sensor (e.g. which chamber) when learning parameters.
-We would also like to validate further our algorithm by testing the algorithm on data that responds to pacing decisions (e.g. testing during a live animal cardiac study).
+	incorporating knowledge of the physical location of the sensor (e.g. which chamber) into our parameter learning algorithm.
+We would also like to validate further our algorithm by testing it on data that responds to pacing decisions (e.g. testing during a live animal cardiac study).
 Additionally, we plan to utilize the FPGA implementation of
 the algorithm to tape out an application specific
 integrated circuit that could be physically placed inside
