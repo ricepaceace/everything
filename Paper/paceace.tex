@@ -269,10 +269,10 @@
 \pgfplotsset{compat=1.7}
 \usepackage{pgfplotstable}
 \pgfplotstableset{col sep=comma}
-\newcommand{\APW}{\textit{APW}}
-\newcommand{\VPW}{\textit{VPW}}
-\newcommand{\APH}{\textit{APH}}
-\newcommand{\VPH}{\textit{VPH}}
+\newcommand{\APW}{\ensuremath{w_A}}
+\newcommand{\VPW}{\ensuremath{w_V}}
+\newcommand{\APH}{\ensuremath{h_A}}
+\newcommand{\VPH}{\ensuremath{h_V}}
 \DeclareMathOperator{\sgn}{sign}
 \DeclareMathOperator*{\argmin}{arg\,min}
 
@@ -378,7 +378,7 @@ electrical stimulation to the heart.
 
 Beat detection itself is a well-studied problem, as
 several algorithms have been proposed to identify the
-beats within a cardiac signal~\cite{realtime-qrs, ecg-filter}. However, current
+beats within a cardiac signal~\cite{realtime-qrs, ecg-filter, patient-adaptable}. However, current
 algorithms perform beat detection without distinguishing
 which part of the signal corresponds to the atrial
 portion of the heartbeat and which part corresponds to 
@@ -429,8 +429,8 @@ height of an atrial peak (\APH), the height of a ventricular
 peak (\VPH), the width of an atrial peak (\APW), and the
 width of a ventricular peak (\VPW) within a signal 
 by simply processing 10 seconds of data sampled
-at 1 kHz. With these parameters, we then implement
-\figurename~\ref{fig:singlebeat} shows how these parameters correspond to portions of the CES.  %TODO: Not really sure what to say here.
+at 1 kHz. 
+\figurename~\ref{fig:singlebeat} shows how these parameters correspond to portions of the cardiac electrical signal.
 With these parameters, we then implement
 atrial and ventricular beat detection to illustrate that our
 learned parameters can be used to distinguish between
@@ -456,8 +456,7 @@ derivative of $f[n]$, denoted $w[n]$.
 \begin{equation*}
 	w[n]=(f[n]-f[n-1])\left|f[n] - f[n-1]\right| \left|f[n]\right|
 \end{equation*}
-Note that $w[n]$ is essentially $f'[n]^2  f[n]$, but with the sign adjusted to match the sign of $f'[n]$. %???: Does using the derivative notation make this more clear?
-
+Note that $w[n]$ is essentially $f'[n]^2  f[n]$, but with the sign adjusted to match the sign of $f'[n]$.
 The following paragraph will explain our rational for constructing $w[n]$. Next, the algorithm 
 searches for when the local
 maxima and minima of $w[n]$ occur, within a window of
@@ -520,7 +519,7 @@ respectively. The algorithm then stores the ventricular
 peak width (\VPW) and atrial peak width (\APW) as the
 rounded width term of the centers as follows:
 \begin{equation*}
-	VPW=C_V\{1\} \text{ and } APW=V_A\{1\}
+	\VPW{}=C_V\{1\} \text{ and } \APW{}=V_A\{1\}
 \end{equation*}
 An illustration of how k-means clusters the
 peaks $\mathbf{P}$ into atrial and ventricular peaks and
@@ -581,18 +580,18 @@ the number of detected beats is constant.
 
 Define the function 
 \begin{multline*}
-	beats(threshold) = \\\text{Number of beats detected in } f[n] \text{ using } threshold
+	\beta(\tau) = \\\text{Number of beats detected in } f[n] \text{ using } \tau \text{ as a threshold}
 \end{multline*}
-and observe the key property that $beats(threshold)$ is monotonically non-increasing for reasonable values of $threshold$. 
+and observe the key property that $\beta(\tau)$ is monotonically non-increasing for reasonable values of $\tau$. 
 The only way that increasing the required threshold can increase the number of beats is if the threshold were so low that two adjacent beats were counted as one, but this only occurs at thresholds that are ignored by the algorithm.
-An example of $beats(threshold)$ is illustrated in \figurename~\ref{fig:beats}.
+An example of $\beta(\tau)$ is illustrated in \figurename~\ref{fig:beats}.
 
 The height threshold learning algorithm is effectively a search algorithm for the longest and flattest
-interval of the function $beats(threshold)$.
-However, computing $beats(threshold)$ for even a single value of $threshold$ 
+interval of the function $\beta(\tau)$.
+However, computing $\beta(\tau)$ for even a single value of $\tau$ 
 is somewhat computationally expensive,
 so we try to minimize the number of thresholds for which we compute it.
-Our algorithm uses bounded recursive refinement, and it essentially samples the function $beats(threshold)$.
+Our algorithm uses bounded recursive refinement, and it essentially samples the function $\beta(\tau)$.
 We call this the ``Flat-Finding'' algorithm for
 ventricular and atrial heights.
 
@@ -601,7 +600,7 @@ ventricular and atrial heights.
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[
-				title      = $beats(threshold)$,
+				title      = $\beta(\tau)$,
 				xlabel     = Threshold (mV),
 				ylabel     = Number of beats,
 				legend pos = north east,
@@ -610,47 +609,47 @@ ventricular and atrial heights.
 			\addplot+[mark=none] table[x = th, y = beats, col sep=comma]{beats.csv} ;
 		\end{axis}
 	\end{tikzpicture}
-	\caption{Graph of the function $beats(threshold)$ on example CES data}
+	\caption{Graph of the function $\beta(\tau)$ on example CES data}
 	\label{fig:beats}
 \end{figure}
 
 \subsection{Flat Finding Algorithm to determine \VPH{} and \APH{}}
-As mentioned in the previous section, computing $beats(threshold)$ for a given value of $threshold$
+As mentioned in the previous section, computing $\beta(\tau)$ for a given value of $\tau$
 is computationally expensive because it requires computation proportional to the length of the data.
-Instead of computing $beats(threshold)$ for each possible value of $threshold$, we run several iterations in which
-we pick thresholds $th_i$ for $i = 1, 2, \dots, N$ evenly spaced
-between a minimum and maximum threshold ($th_{min}, th_{max}$).  The algorithm then computes
-$beats(th_i)$ for each $i$, and adjusts the minimum and
+Instead of computing $\beta(\tau)$ for each possible value of $\tau$, we run several iterations in which
+we pick thresholds $\tau_i$ for $i = 1, 2, \dots, N$ evenly spaced
+between a minimum and maximum threshold ($\tau_{min}, \tau_{max}$).  The algorithm then computes
+$\beta(\tau_i)$ for each $i$, and adjusts the minimum and
 maximum thresholds for the next iteration based on the
 results.
 We normally take $N=20$.
 For the first iteration, we set
-$th_{min} = 0$ and $th_{max} = \max f[n]$. 
+$\tau_{min} = 0$ and $\tau_{max} = \max f[n]$. 
 To choose the minimum and maximum thresholds in
-the next round, we first eliminate any thresholds $th_i$
-such that $beats(th_i)$ is biologically infeasible. 
-For a human, we require that $10 \text{bpm} \le beats(th_i) \le 200 \text{bpm}$.
-Note that $beats(th_i)$ is not natively computed in the unit of beats per minute, so a simple unit conversion is required.
+the next round, we first eliminate any thresholds $\tau_i$
+such that $\beta(\tau_i)$ is biologically infeasible. 
+For a human, we require that $10 \text{bpm} \le \beta(\tau_i) \le 200 \text{bpm}$.
+Note that $\beta(\tau_i)$ is not natively computed in the unit of beats per minute, so a simple unit conversion is required.
 
 Then we define a maximal flat interval $[i,j]$ with $i<j$ to be a pair of indices that satisfies the following conditions:
-\begin{multline*}
-	beats(th_i) = beats(th_j),\\ beats(th_{i-1}) \ne beats(th_i), beats(th_j) \ne beats(th_{j+1})
-\end{multline*}
-Because of the monotonicity of $beats(threshold)$, the first condition is necessary and sufficient for the flatness property.
+\begin{equation*}
+	\beta(\tau_i) = \beta(\tau_j),\quad \beta(\tau_{i-1}) \ne \beta(\tau_i),\quad \beta(\tau_j) \ne \beta(\tau_{j+1})
+\end{equation*}
+Because of the monotonicity of $\beta(\tau)$, the first condition is necessary and sufficient for the flatness property.
 The second and third conditions ensure that $[i,j]$ is maximal.
 
-If one or more flat intervals exist, choose $th_{max} = th_{j+1}$ and $th_{min}=th_{i-1}$ using the longest interval (i.e. the one that maximizes $j-i$).
-Because of the maximality of the flat interval $[i,j]$ and the monotonicity of $th(threshold)$, 
-we know that the true end of the flat interval is somewhere between $th_{i-1}$ and $th_i$. 
-Choosing $th_{min} = th_{i-1}$ instead of $th_{i}$, gives the next recursive refinement iteration a chance to identify more closely the end of the flat interval.
-Similar logic applies to our choise of $th_{max}$.
+If one or more flat intervals exist, choose $\tau_{max} = \tau_{j+1}$ and $\tau_{min}=\tau_{i-1}$ using the longest interval (i.e. the one that maximizes $j-i$).
+Because of the maximality of the flat interval $[i,j]$ and the monotonicity of $\beta(\tau)$, 
+we know that the true end of the flat interval is somewhere between $\tau_{i-1}$ and $\tau_i$. 
+Choosing $\tau_{min} = \tau_{i-1}$ instead of $\tau_{i}$, gives the next recursive refinement iteration a chance to identify more closely the end of the flat interval.
+Similar logic applies to our choise of $\tau_{max}$.
 
-If no flat intervals exist, set $i=\argmin_{i} |beats(th_i) - beats(th_{i-1})|$.
-Then choose $th_{max} = th_i$, $th_{min} = th_{i-1}$.
+If no flat intervals exist, set $i=\argmin_{i} |\beta(\tau_i) - \beta(\tau_{i-1})|$.
+Then choose $\tau_{max} = \tau_i$, $\tau_{min} = \tau_{i-1}$.
 
 After 3 recursive refinement iterations, define the ventricular peak height (\VPH{}) to be the midpoint of the flat interval, i.e.
 \begin{equation*}
-	VPH=\frac{th_{min}+th_{max}}{2}
+	\VPH{}=\frac{\tau_{min}+\tau_{max}}{2}
 \end{equation*}
 
 Finally, after computing the ventricular thresholds,
@@ -658,49 +657,49 @@ data near the detected ventricular peaks is replaced with
 zeros, and the entire algorithm in re-run to detect the
 atrial threshold, \APH{}.
 
-\subsection{Precise Specification of $beats(threshold)$ using our Proposed Beat Detection Algorithm}
+\subsection{Precise Specification of $\beta(\tau)$ using our Proposed Beat Detection Algorithm}
 Our `flat-finding' algorithm to determine \APH{} and
-VPH relies entirely on $beats(threshold)$, 
+\VPH{} relies entirely on $\beta(\tau)$, 
 the number of beats that occur in $f[n]$ using
-$threshold$ to identify the beats. In order to calculate the
+$\tau$ to identify the beats. In order to calculate the
 number of beats that occur based on threshold, we use
 an algorithm that draws heavily from the beat
 detection algorithm described in Alfonso and Tompkins~\cite{realtime-qrs}.
 In the remaining portion of this section, we describe
 the beat detection algorithm that we use to compute
-$beats(threshold)$.
-Since we independently learn \VPH{} and \APH{}, as a notational convenience, define $PW$, the peak width, to be \VPW{} when computing \VPH{} and \APW{} when computing \APH{}.
+$\beta(\tau)$.
+Since we independently learn \VPH{} and \APH{}, as a notational convenience, define $w$, the peak width, to be \VPW{} when computing \VPH{} and \APW{} when computing \APH{}.
 Notice how this portion of the algorithm uses parameters computed previously in the algorithm, \VPW{} and \APW{}.
-Next, define:
+Next, define the sequence:
 
 \begin{equation*}
-	potentialPeaks[n]=\left\{ 
+	q_{\tau}[n]=\left\{ 
 		\begin{array}{lr}
-			1 & \text{if } f[n] > threshold \\
+			1 & \text{if } f[n] > \tau \\
 			0 & \text{otherwise}\\
 		\end{array}
 		\right.
 \end{equation*}
-$potentialPeaks[n]$ indicates where in $f[n]$ a beat could
+$q_{\tau}[n]$ indicates where in $f[n]$ a beat could
 have occurred. We then use the intuition that for a beat
-to occur, it must have been about as long as $PW$ in time.
-Thus, to compute $beats(threshold)$, i.e. the number of
+to occur, it must have been about as long as $w$ in time.
+Thus, to compute $\beta(\tau)$, i.e. the number of
 beats that occur in $f[n]$, we first compute
 \begin{equation*}
-	beats[n]=\left\{ 
+	b_{\tau}[n]=\left\{ 
 		\begin{array}{lc}
-			1 & \text{if } \left(\sum_{i=0}^{PW} potentialPeaks[n-i] \right) > PW/2 \\
+			1 & \text{if } \left(\sum_{i=0}^{w} q_{\tau}[n-i] \right) > w/2 \\
 			0 & \text{otherwise}
 		\end{array}
 		\right.
 \end{equation*}
-Essentially, $beats[n]$ indicates which samples of $f[n]$ are part of a beat, according to $threshold$.
-Finally, we define $beats(threshold)$ to be the number of rising edges in the sequence $beats[n]$, 
-i.e. the number of $n$ such that $beats[n] = 1, beats[n-1] = 0$. % ???: Discuss the adjustment for extra long beats?
+Essentially, $b[n]$ indicates which samples of $f[n]$ are part of a beat, according to $\tau$.
+Finally, we define $\beta(\tau)$ to be the number of rising edges in the sequence $beats[n]$, 
+i.e. the number of $n$ such that $b[n] = 1, b[n-1] = 0$. % ???: Discuss the adjustment for extra long beats?
 
 After learning parameters, we also use essentially this same algorithm to detect beats in real-time.
-To detect ventricular beats, set $PW$ and $threshold$ to \VPW{} and \VPH{} respectively.
-Similarly, to detect atrial beats, set $PW$ and $threshold$ to \APW{} and \APH{} respectively.
+To detect ventricular beats, set $w$ and $\tau$ to \VPW{} and \VPH{} respectively.
+Similarly, to detect atrial beats, set $w$ and $\tau$ to \APW{} and \APH{} respectively.
 In addition, in accordance with standard pacemaking practice, we ignore any atrial beats within a fixed amount of time (usually around 250 ms) after
 a ventricular beat.
 
