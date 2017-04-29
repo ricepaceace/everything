@@ -2,6 +2,7 @@
 close all
 addpath('test_data/sept29_2016_test/')
 addpath('test_data/PhisioBank_iaf/')
+addpath('test_data/FebruaryData/')
 
 % each .mat file contains a struct for data from a test
 % currently, each struct has two fields:
@@ -10,16 +11,17 @@ addpath('test_data/PhisioBank_iaf/')
 %       represents a time point
 
 
-s = load('NormalSinusRhythm_struct.mat');
-%s = load('Pacingfromchipapprox120bpmxmA_struct.mat');
+%s = load('NormalSinusRhythm_struct.mat');
+s = load('Pacingfromchipapprox120bpmxmA_struct.mat');
 %s = load('PacingfromMedtronic120bpm2mA_struct.mat');
 %s = load('iaf1_struct.mat'); %number ranges from 1-8 for different patients
+%s = load('SinusRhythmHRAHBCSRVpluspaced_struct.mat');
 
 Fs = s.Fs; %sampling rate
 data = s.data;
 numChannels = size(data,2);
 begin_time = 0.0;
-end_time = 25; %second
+end_time = 7; %second
 data = data(begin_time*Fs+1:end_time*Fs+1,:);
 
 b = fir1(1000,2.5/Fs,'high'); %filter to remove DC bias
@@ -31,13 +33,13 @@ vinds = zeros(numChannels, 1);
 for i=1:numChannels
     data(:,i) = filter(b,1,data(:,i));
     data(:,i) = filter(b2,1,data(:,i));
-    [d.v_thresh, d.a_thresh, d.vflip, d.aflip, d.v_length, d.a_length d.v_first] = LearnParameters(data(:,i));
+    [d.v_thresh, d.a_thresh, d.vflip, d.aflip, d.v_length, d.a_length, d.v_first] = LearnParameters(data(:,i));
     [vind, aind] = one_chamber_peak_finder(d, data(:,i));
         
     figure; hold on;
     plot(data(:,i),'b');
-    plot(vind, d.v_thresh*d.vflip, 'or');
-    plot(aind, d.a_thresh*d.aflip, 'xk');
+    plot([0; vind], d.v_thresh*d.vflip, 'or');
+    plot([0; aind], d.a_thresh*d.aflip, 'xk');
     title(['Channel' num2str(i)],'Fontsize',18)
     %legend({'input waveform','detected ventricles','detected atria'},'Fontsize',18)
     xlabel('time (samples)','Fontsize',14)

@@ -23,7 +23,7 @@ function [ vc, ac, vflip, aflip, v_length, a_length, v_first ] = LearnParameters
         thresh = sum(reshape(cutoffs(first(f),f,:),[1,2]).*mid_finders(first(f),:));
         [~, rising_edges, falling_edges] = CountPeaks(flip(f)*data > thresh, lengths(first(f),f));
         for i = 1:length(rising_edges)
-            ndata((rising_edges(i)-t_blank):(falling_edges(i)+l_blank)) = 0;
+            ndata(max(1,(rising_edges(i)-t_blank)):min(end,(falling_edges(i)+l_blank))) = 0;
         end
         
         cutoffs(3-first(f),f,:) = BinarySearch(flip(f)*ndata, lengths(3-first(f),f));
