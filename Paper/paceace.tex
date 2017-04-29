@@ -322,7 +322,7 @@ algorithm, for implementation in pacemakers, that learns the
 heights and widths of atrial and ventricular peaks without human input from simply
 processing 10 seconds of cardiac data sampled at 1 kHz. 
 This purely data-driven solution to learn the parameters of atrial
-and ventricular peaks will allow pacemakers to set their own % Anthropormophisizing pacemakers 
+and ventricular peaks will allow pacemakers to set their own 
 detection parameters for a specific patient and adaptively tune
 their detection parameters over time for that specific patient.
 We have validated our algorithm on 51 separate channels of
@@ -414,7 +414,7 @@ not respond to CRT implemented by current pacemakers~\cite{multisite-crt}.
 
 			\draw[blue] (axis cs:430, 1160) -- ++(2pt, 0) -- ++(-4pt, 0) -- ++(2pt, 0) -- (axis cs: 430, 0) node(m4)[midway] {} -- ++(2pt, 0) -- ++(-4pt, 0) ;
 			\node[pin={[pin distance=8pt]200:{\VPW}}] at (m3) {};
-			\node[pin={[pin distance=3pt]320:{\VPH}}] at (m4) {};
+			\node[pin={[pin distance=3pt]350:{\VPH}}] at (m4) {};
 			\legend{$f[n]$}
 		\end{axis}
 	\end{tikzpicture}
@@ -513,7 +513,7 @@ cluster the peaks in $\mathbf{P}$ using a standard two cluster k-means
 algorithm~\cite{k-means}. 
 We identify the ventricular cluster by choosing the corresponding mean 
 with a greater height to width ratio, since
-ventriclar peaks are generally taller and thinner than atrial peaks. Let $C_V$ and $C_A$
+ventricular peaks are generally taller and thinner than atrial peaks. Let $C_V$ and $C_A$
 be the centers of the ventricular and atrial clusters 
 respectively. The algorithm then stores the ventricular
 peak width (\VPW) and atrial peak width (\APW) as the
@@ -639,10 +639,10 @@ Because of the monotonicity of $\beta(\tau)$, the first condition is necessary a
 The second and third conditions ensure that $[i,j]$ is maximal.
 
 If one or more flat intervals exist, choose $\tau_{max} = \tau_{j+1}$ and $\tau_{min}=\tau_{i-1}$ using the longest interval (i.e. the one that maximizes $j-i$).
-Because of the maximality of the flat interval $[i,j]$ and the monotonicity of $\beta(\tau)$, 
+Because the flat interval $[i,j]$ is maximal and $\beta(\tau)$ is monotonic,
 we know that the true end of the flat interval is somewhere between $\tau_{i-1}$ and $\tau_i$. 
 Choosing $\tau_{min} = \tau_{i-1}$ instead of $\tau_{i}$, gives the next recursive refinement iteration a chance to identify more closely the end of the flat interval.
-Similar logic applies to our choise of $\tau_{max}$.
+Similar logic applies to our choice of $\tau_{max}$.
 
 If no flat intervals exist, set $i=\argmin_{i} |\beta(\tau_i) - \beta(\tau_{i-1})|$.
 Then choose $\tau_{max} = \tau_i$, $\tau_{min} = \tau_{i-1}$.
@@ -780,7 +780,7 @@ simply processing 10 seconds of CES data sampled at 1
 kHz. To validate our solution, we implemented our algorithms in
 Matlab and performed atrial and ventricular beat
 detection using algorithmically learned parameters on
-data provided by collegues at the Texas Heart Institute.
+data provided by colleagues at the Texas Heart Institute.
 In order to record the data, an in vivo,
 live animal study procedure was performed. For a single
 animal, 17 bipolar electrodes were placed on the left ventricle
@@ -822,7 +822,7 @@ Table~\ref{tab:errors} illustrates our results.
 	\end{tabular}
 \end{table}
 
-Our detection error rates are appropriately low across % ???: What does appropriately low mean?
+Our detection error rates are sufficiently low across 
 all 51 channels. Since we performed atrial and
 ventricular beat detection based on the parameters that
 our algorithm learned, the algorithm clearly learned
@@ -832,17 +832,17 @@ errors are from our algorithm learning incorrect
 atrial parameters for one channel. When we manually
 looked at the values of \APW{}, \VPW{}, \APH{}, and \VPH{}, we
 found that the algorithm learned \VPW{} and \VPH{} correctly
-for all 51 channels and \APW{} and \APH{} correctly for 50 of % ???: If most of the FN error is from ventricular, what about the atrial FN?
+for all 51 channels and \APW{} and \APH{} correctly for 50 of 
 the channels.
 
 \subsection{Hardware Implementation Validation through a Langendorff Heart}
 In order to validate the hardware implementation of
-our algorithm described in Section IV, we interfaced our % connected instead of interfaced?
+our algorithm described in Section IV, we connected our 
 system to a Langendorff heart as described by~\cite{langendorff}.
 Essentially, in a Langendorff heart experiment, a live
 heart is extracted from an animal, which in our case was
-a rat, and is kept beating by perfusing it with a special solution. % ??? Does special solution sound too dumb?
-At an electrophysiological level, the externnally beating heart behaves almost identically to a normal internal beating heart.
+a rat, and is kept beating by perfusing it with a solution. 
+At an electrophysiological level, the externally beating heart behaves almost identically to a normal internal beating heart.
 We connected our preprocessor to ordinary wires
 sutured to the Langendroff heart, and then used our
 FPGA to run our algorithm on the cardiac signal.
@@ -860,8 +860,12 @@ We have demonstrated a working algorithm
 implemented on hardware that correctly learns \APH{},
 \VPH{}, \APW{}, and \VPW{}. Additionally, these parameters
 can be reliably used to distinguish between atrial and
-ventricular beats in a cardiac electrical signal in real time. Future
-work will involve utilizing the FPGA implementation of
+ventricular beats in a cardiac electrical signal in real time.
+
+Future work on the algorithm will include
+	incorporating knowledge of the physical location of the sensor (e.g. which chamber) when learning parameters.
+We would also like to validate further our algorithm by testing the algorithm on data that responds to pacing decisions (e.g. testing during a live animal cardiac study).
+Additionally, we plan to utilize the FPGA implementation of
 the algorithm to tape out an application specific
 integrated circuit that could be physically placed inside
 of a pacemaker.
