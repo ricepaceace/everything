@@ -1,7 +1,7 @@
 function [v_length, a_length, first] = LearnLengths(data)
 
 extreme_over = 100;
-ddatadt = [0; diff(data)].^5.*data.*sign(data);
+ddatadt = [0; diff(data)].^2.*sign([0; diff(data)]).*data.*sign(data);
 ddatadt = ddatadt * max(data)/max(ddatadt);
 a_length = [];
 v_length = [];
@@ -45,7 +45,11 @@ for s = [+1 -1]
     end
     
     %remove outliers
-    outliers = abs(zscore([peak_lengths peak_heights peak_steeps]))>3;
+	% simpler version:
+    % outliers = abs(zscore([peak_lengths peak_heights peak_steeps]))>3;
+    zscores = zscore([peak_lengths peak_heights peak_steeps]);
+    zscorenorms = sqrt(sum(zscores.^2,2));
+    outliers = zscorenorms > 2.5;
     to_removes = [];
     for i=1:length(peak_lengths)
         if any(outliers(i,:))
@@ -88,10 +92,14 @@ for s = [+1 -1]
     %     plot3(C(:,1)*mean(peak_lengths),C(:,2)*mean(peak_heights), C(:,3)*mean(peak_steeps),'kx','MarkerSize',15,'LineWidth',3)
         plot(peak_lengths(idx==vind),peak_heights(idx==vind),'r.','MarkerSize',12)
         plot(peak_lengths(idx==3-vind),peak_heights(idx==3-vind),'b.','MarkerSize',12)
-        plot(C(:,1)*mean(peak_lengths),C(:,2)*mean(peak_heights),'kx','MarkerSize',15,'LineWidth',3)
-        legend({'ventricles','atria','centers of clumps'},'Fontsize',14)
-        ylabel('peak heights','Fontsize',14); xlabel('peak lengths','Fontsize',14)
+
+        plot(C(1,1)*mean(peak_lengths),C(1,2)*mean(peak_heights),'rx','MarkerSize',15,'LineWidth',3)
+        plot(C(2,1)*mean(peak_lengths),C(2,2)*mean(peak_heights),'bx','MarkerSize',15,'LineWidth',3)
+        hlegend = legend('ventricles','atria','Cv','Ca','FontSize',20);
         title('K-means discrimination between peak types','Fontsize',18)
+        set(hlegend,'FontSize',20)
+        ylabel('peak heights','FontSize',20); xlabel('peak lengths (ms)','FontSize',20)
+        
         grid
     end
 end

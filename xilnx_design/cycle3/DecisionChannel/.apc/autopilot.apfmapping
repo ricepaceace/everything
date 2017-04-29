@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<autopilotfilemapping:AutoPilotFileMapping xmlns:autopilotfilemapping="www.autoesl.com/autopilotfilemapping">
+  <source>
+    <originFiles name="channel.cpp" path="/home/greg/everything/xilnx_design/cycle3/src/hls/channel.cpp"/>
+    <originFiles name="channel.h" path="/home/greg/everything/xilnx_design/cycle3/src/hls/channel.h"/>
+    <originFiles name="circularBuffer.h" path="/home/greg/everything/xilnx_design/cycle3/src/hls/circularBuffer.h"/>
+    <originFiles name="constants.h" path="/home/greg/everything/xilnx_design/cycle3/src/hls/constants.h"/>
+  </source>
+  <testbench>
+    <originFiles name="channel_tb.cpp" path="/home/greg/everything/xilnx_design/cycle3/src/hls/channel_tb.cpp"/>
+    <originFiles name="good-ch2.h" path="/home/greg/everything/xilnx_design/cycle3/src/hls/good-ch2.h"/>
+  </testbench>
+</autopilotfilemapping:AutoPilotFileMapping>

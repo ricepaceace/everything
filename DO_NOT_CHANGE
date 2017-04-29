@@ -1,0 +1,6 @@
+alen 0: = 15 
+vlen 0: = 8 
+athresh 0: = 3224 
+vthresh 0: = 6444 
+aflip 0: = 1 
+vflip 0: = -1 

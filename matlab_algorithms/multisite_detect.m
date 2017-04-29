@@ -11,8 +11,8 @@ addpath('test_data/FebruaryData/')
 %       represents a time point
 
 
-%s = load('NormalSinusRhythm_struct.mat');
-s = load('Pacingfromchipapprox120bpmxmA_struct.mat');
+s = load('NormalSinusRhythm_struct.mat');
+%s = load('Pacingfromchipapprox120bpmxmA_struct.mat');
 %s = load('PacingfromMedtronic120bpm2mA_struct.mat');
 %s = load('iaf1_struct.mat'); %number ranges from 1-8 for different patients
 %s = load('SinusRhythmHRAHBCSRVpluspaced_struct.mat');
@@ -30,7 +30,7 @@ b2 = fir1(1000,150/Fs);
 %%% run on each channel individually
 ainds = zeros(numChannels, 1);
 vinds = zeros(numChannels, 1);
-for i=1:numChannels
+for i=1%1:numChannels
     data(:,i) = filter(b,1,data(:,i));
     data(:,i) = filter(b2,1,data(:,i));
     [d.v_thresh, d.a_thresh, d.vflip, d.aflip, d.v_length, d.a_length, d.v_first] = LearnParameters(data(:,i));

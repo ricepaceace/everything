@@ -2,7 +2,6 @@
 #include "constants.h"
 #include "guessparameters.h"
 #include "yamPeakFinder.h"
-#define NUM_CHANNELS 3
 
 #include "data.h"
 

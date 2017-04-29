@@ -49,6 +49,10 @@ function [ vc, ac, vflip, aflip, v_length, a_length, v_first ] = LearnParameters
             end
             h(1) = plot(flip(f)*xs, ys,color1);
             
+            % axis([0 3000 0 200])
+            xlabel('Threshold (mV)','FontSize',18)
+            ylabel('Number of Beats','FontSize',18)
+            title('Beats(threshold)','Fontsize',18)
             xs = linspace(0, max(flip(f)*ndata), 200);
             ys=zeros(200,1);
             for i = 1:200

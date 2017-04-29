@@ -1,0 +1,25 @@
+#-----------------------------------------------------------
+# xsim v2016.2 (64-bit)
+# SW Build 1577090 on Thu Jun  2 16:32:35 MDT 2016
+# IP Build 1577682 on Fri Jun  3 12:00:54 MDT 2016
+# Start of session at: Tue Feb 28 21:37:59 2017
+# Process ID: 26184
+# Current directory: /home/greg/everything/xilnx_design/cycle3/DecisionChannel/solution1/sim/vhdl
+# Command line: xsim -mode tcl -source {xsim.dir/Decision/xsim_script.tcl}
+# Log file: /home/greg/everything/xilnx_design/cycle3/DecisionChannel/solution1/sim/vhdl/xsim.log
+# Journal file: /home/greg/everything/xilnx_design/cycle3/DecisionChannel/solution1/sim/vhdl/xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/Decision/xsim_script.tcl
+# xsim {Decision} -autoloadwcfg -tclbatch {Decision.tcl}
+Vivado Simulator 2016.2
+Time resolution is 1 ps
+source Decision.tcl
+## run all
+Note: simulation done!
+Time: 14401615 ns  Iteration: 1  Process: /apatb_Decision_top/generate_sim_done_proc  File: /home/greg/everything/xilnx_design/cycle3/DecisionChannel/solution1/sim/vhdl/Decision.autotb.vhd
+Failure: NORMAL EXIT (note: failure is to force the simulator to stop)
+Time: 14401615 ns  Iteration: 1  Process: /apatb_Decision_top/generate_sim_done_proc  File: /home/greg/everything/xilnx_design/cycle3/DecisionChannel/solution1/sim/vhdl/Decision.autotb.vhd
+$finish called at time : 14401615 ns
+run: Time (s): cpu = 00:00:00 ; elapsed = 00:00:23 . Memory (MB): peak = 252.156 ; gain = 0.000 ; free physical = 4565 ; free virtual = 35348
+## quit
+INFO: [Common 17-206] Exiting xsim at Tue Feb 28 21:38:24 2017...

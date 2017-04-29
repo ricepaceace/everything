@@ -3,23 +3,24 @@
 	#include <avr/pgmspace.h>
 #endif
 
+#define NUM_CHANNELS 1
 
 /*const short data[] PROGMEM = {
 #include "good-ch1.h"
 };*/
-const short data[4][10000] PROGMEM = {
+const short data[NUM_CHANNELS][10000] PROGMEM = {
   {
-    #include "good-ch2.h"
+    #include "testdata.h.txt"
+  }/*,
+    {
+    #include "testdata.h.txt"
   },
     {
-    #include "good-ch3.h"
+    #include "testdata.h.txt"
   },
     {
-    #include "good-ch4.h"
-  },
-    {
-    #include "good-ch4.h"
-  }
+    #include "testdata.h.txt"
+  }*/
 };
 
 void prepareData(int pin)
