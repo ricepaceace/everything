@@ -284,7 +284,7 @@
 % not capitalized unless they are the first or last word of the title.
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
-\title{Real-Time, Nonparametric Algorithm to Learn
+\title{Real-Time, Data-Driven Algorithm and System to Learn
 Parameters for Pacemaker Beat Detection}
 
 
@@ -325,7 +325,7 @@ This purely data-driven solution to learn the parameters of atrial
 and ventricular peaks will allow pacemakers to set their own % Anthropormophisizing pacemakers 
 detection parameters for a specific patient and adaptively tune
 their detection parameters over time for that specific patient.
-We have validated our algorithm on 51 separate channels of CES
+We have validated our algorithm on 51 separate channels of
 data. Additionally, we have implemented the algorithm on a
 Field Programmable Gate Array and tested it on an ex-vivo rat
 heart to illustrate that our algorithm can run in real-time on commodity hardware.
@@ -369,17 +369,17 @@ To minimize long-term damage to heart tissue and to maximize battery life, it is
 Current pacemakers use the 
 DDDR algorithm to determine whether
 the heart requires stimulation~\cite{basic-pacing}.
-Essentially, the pacemaker applies beat detection algorithms to the CES it senses
+Essentially, the pacemaker applies beat detection algorithms to the signal it senses
 to determine whether a
 heartbeat has occurred. If the pacemaker does not detect a heartbeat
 within a certain period of time, it will deliver an
 electrical stimulation to the heart.
 
-CES beat detection itself is a well-studied problem, as
+Beat detection itself is a well-studied problem, as
 several algorithms have been proposed to identify the
-beats within a CES~\cite{realtime-qrs, ecg-filter}. However, current
+beats within a cardiac signal~\cite{realtime-qrs, ecg-filter}. However, current
 algorithms perform beat detection without distinguishing
-which part of the CES corresponds to the atrial
+which part of the signal corresponds to the atrial
 portion of the heartbeat and which part corresponds to 
 the ventricular portion of the heartbeat. As a result,
 current pacemakers are often unable to distinguish
@@ -422,17 +422,18 @@ not respond to CRT implemented by current pacemakers~\cite{multisite-crt}.
 	Notice that the atrial beat is wider but smaller than the ventricular beat.}
 	\label{fig:singlebeat}
 \end{figure}
-To make CES beat detection more suitable for CRT,
+To make beat detection more suitable for CRT,
 we propose a learning algorithm that learns the
 height of an atrial peak (\APH), the height of a ventricular
 peak (\VPH), the width of an atrial peak (\APW), and the
-width of a ventricular peak (\VPW) within a CES 
-by simply processing 10 seconds of CES data sampled
-at 1 kHz. \figurename~\ref{fig:singlebeat} shows how these parameters correspond to portions of the CES.  %TODO: Not really sure what to say here.
+width of a ventricular peak (\VPW) within a signal 
+by simply processing 10 seconds of data sampled
+at 1 kHz. With these parameters, we then implement
+\figurename~\ref{fig:singlebeat} shows how these parameters correspond to portions of the CES.  %TODO: Not really sure what to say here.
 With these parameters, we then implement
 atrial and ventricular beat detection to illustrate that our
 learned parameters can be used to distinguish between
-atrial and ventricular beats in a CES.
+atrial and ventricular beats in a signal.
 Additionally, we implement the algorithm on a Field
 Programmable Gate Array to demonstrate that the
 algorithm can be run on a real-time system.
@@ -447,15 +448,16 @@ validates our algorithmic results and hardware system.
 Our algorithm begins by learning \APW{} and \VPW{}. We
 detail our approach in the following sections.
 
-\subsection{Finding Peak Shaped Patterns in the CES}
-Let $f[n]$ be a 10 second CES sampled at 1 kHz.
+\subsection{Finding Peak Shaped Patterns in the Signal}
+Let $f[n]$ be 10 seconds of CES sampled at 1 kHz.
 We begin by computing the weighted time
 derivative of $f[n]$, denoted $w[n]$.
 \begin{equation*}
 	w[n]=(f[n]-f[n-1]) * \left|f[n] - f[n-1]\right| * \left|f[n]\right|
 \end{equation*}
 
-Next, the algorithm searches for when the local
+The following paragraph will explain our rational for constructing $w[n]$. Next, the algorithm 
+searches for when the local
 maxima and minima of $w[n]$ occur, within a window of
 200 ms. Thus, we compute:
 \begin{equation*}
@@ -473,7 +475,8 @@ in $r[n]$ roughly corresponds to the steepest falling edge of a positive peak
 in $f[n]$. 
 The interval between where $r[m]=1$ and $r[n]=-1$ then corresponds to a 
 peak like structures in $f[n]$, where a rising edge is followed by a falling edge.
-Using a weighted derivative instead of a simple time derivative pushes these edges closer to the tip of a peak, which allows for more appropriate featurization.
+Using a weighted derivative, $w[n]$, instead of a simple time derivative pushes these edges closer to the tip of a peak,
+ which allows for more appropriate feature extraction later on in the algorithm.
 \figurename~\ref{fig:fwr} illustrates the relationship between $f[n], w[n], $ and $r[n]$ for a single peak.
 \begin{figure}
 	\centering
@@ -495,12 +498,12 @@ Using a weighted derivative instead of a simple time derivative pushes these edg
 	\label{fig:fwr}
 \end{figure}
 
-\subsection{Featurizing Peaks and Clustering to Determine \APW{} and \VPW}
+\subsection{Peak Feature Extraction and Clustering to Determine \APW{} and \VPW}
 We restrict our attention to peaks that consist of a rising edge
-followed in less than 75ms by a falling edge. 
+followed in less than 75ms by a falling edge since 
+both atrial and ventricular peaks cannot be greater than 75 ms in length.
 More precisely, let $m_i$ and $n_i$ be integers such that $m_i < n_i, r[m_i]=1, r[n_i] = -1, n_i-m_i < 75 \text{ms},$ and $r[x]=0 $ for $m_i < x < n_i$.
-The peak is then featurized by its width and
-height as follows:
+We then use the width and height of the peak as features.
 \begin{equation*}
 	P_i = \left\{n_i-m_i, \left( \max\limits_{m_i\le j\le n_i} f[j] \right) - \frac{f[n_i]+f[m_i]}{2} \right\}
 \end{equation*}
@@ -518,7 +521,7 @@ rounded width term of the centers as follows:
 	VPW=C_V\{1\} \text{ and } APW=V_A\{1\}
 \end{equation*}
 An illustration of how k-means clusters the
-featurized peaks $\mathbf{P}$ into atrial and ventricular peaks and
+peaks $\mathbf{P}$ into atrial and ventricular peaks and
 determines the resulting centroids $C_V$ and $C_A$ can be
 found in  \figurename~\ref{fig:kmeans}.
 
@@ -540,15 +543,14 @@ found in  \figurename~\ref{fig:kmeans}.
 		\end{axis}
 	\end{tikzpicture}
 	\caption{
-	K-Means clustering featurized peaks into ventricles and atria.}
+	K-Means clustering $\mathbf{P}$ into ventricles and atria.}
 		\label{fig:kmeans}
 \end{figure}
 
-Note that the height that we use to featurize a peak in
+Note that the height that we use as a peak feature in
 this portion of the algorithm does not correspond to the
-actual values of \APH{} and \VPH{} in the original CES
-$f[n]$. The `height' value used for peak
-featurization is the maximum height of the peak
+actual values of \APH{} and \VPH{} in the original signal
+$f[n]$. This `height' is the maximum height of the peak
 above the portions of the peak during which its
 value is most rapidly increasing or decreasing. 
 In contrast, \APH{} and \VPH{} are the median height above the baseline value of 0.
@@ -612,7 +614,7 @@ ventricular and atrial heights.
 
 \subsection{Flat Finding Algorithm to determine \VPH{} and \APH{}}
 As mentioned in the previous section, computing $beats(threshold)$ for a given value of $threshold$
-is computationally expensive because it requires computation proportional to the length of the CES data.
+is computationally expensive because it requires computation proportional to the length of the data.
 Instead of computing $beats(threshold)$ for each possible value of $threshold$, we run several iterations in which
 we pick thresholds $th_i$ for $i = 1, 2, \dots, N$ evenly spaced
 between a minimum and maximum threshold ($th_{min}, th_{max}$).  The algorithm then computes
@@ -660,7 +662,7 @@ VPH relies entirely on $beats(threshold)$,
 the number of beats that occur in $f[n]$ using
 $threshold$ to identify the beats. In order to calculate the
 number of beats that occur based on threshold, we use
-an algorithm that draws heavily from the CES beat
+an algorithm that draws heavily from the beat
 detection algorithm described in Alfonso and Tompkins~\cite{realtime-qrs}.
 In the remaining portion of this section, we describe
 the beat detection algorithm that we use to compute
@@ -712,7 +714,7 @@ the size of an integrated circuit, we fully implemented
 our algorithm on a Field Programmable Gate Array
 (FPGA). In addition, to test on analog signals, we
 designed a preprocessing circuit board that filters and
-cleans analog CES data before it is digitized and used
+cleans analog signal from the heart before it is digitized and used
 for the algorithm implemented on the FPGA.
 
 \subsection{FPGA Algorithm Implementation}
@@ -860,7 +862,7 @@ We have demonstrated a working algorithm
 implemented on hardware that correctly learns \APH{},
 \VPH{}, \APW{}, and \VPW{}. Additionally, these parameters
 can be reliably used to distinguish between atrial and
-ventricular beats in a CES in real time. Future
+ventricular beats in a cardiac electrical signal in real time. Future
 work will involve utilizing the FPGA implementation of
 the algorithm to tape out an application specific
 integrated circuit that could be physically placed inside
