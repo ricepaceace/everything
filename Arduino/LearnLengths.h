@@ -4,7 +4,7 @@
 #include "constants.h"
 #include <limits.h>
 
-int ddatadt[PARAM_LEARN_SIZE];
+long long int ddatadt[PARAM_LEARN_SIZE];
 #define EXTREME_OVER 100
 CircularBuffer<int, 2*EXTREME_OVER> nearby;
 
@@ -28,7 +28,7 @@ struct peak_lengths LearnLengths(void) // learns from ldata
 	ddatadt[0] = 0;
 	int maxdata = ldata[0], maxddatadt = 0;
 	for (int i = 1; i < PARAM_LEARN_SIZE; i++) {
-		int diff = ldata[i]-ldata[i-1];
+		long long int diff = ldata[i]-ldata[i-1];
 		double _diff = diff;
 		double t = _diff * _diff * ldata[i] *SIGN(ldata[i]) * SIGN(diff);
 		ddatadt[i] = diff*diff * ldata[i] * SIGN(ldata[i]) * SIGN(diff);

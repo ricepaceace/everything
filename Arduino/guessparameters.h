@@ -62,10 +62,6 @@ params GuessParameters2(const short* data)
   	}
 
 	struct peak_lengths lens = LearnLengths();
-	Serial.print("v length: ");
-	Serial.println(lens.v_length);
-	Serial.print("a length: ");
-	Serial.println(lens.a_length);
 
   	int v_flip;
   	struct thresholds v_cutoffs = TryPlusMinus(lens.v_length, &v_flip);
@@ -98,6 +94,16 @@ params GuessParameters2(const short* data)
     Serial.println(a_cutoffs.high_threshold);
   	learned_params.a_thresh = (int)((a_cutoffs.low_threshold * 7 + a_cutoffs.high_threshold * 3)/10);
   	learned_params.a_flip = a_flip;
+
+	Serial.println("Final params: ");
+	Serial.print("v length: ");
+	Serial.println(lens.v_length);
+	Serial.print("a length: ");
+	Serial.println(lens.a_length);
+	Serial.print("v thresh: ");
+	Serial.println(learned_params.v_flip * learned_params.v_thresh);
+	Serial.print("a thresh: ");
+	Serial.println(learned_params.a_flip * learned_params.a_thresh);
 
    return learned_params;
 }
