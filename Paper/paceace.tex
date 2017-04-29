@@ -291,7 +291,7 @@ Parameters for Pacemaker Beat Detection}
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
-\author{\IEEEauthorblockN{Yamin Arefeen\IEEEauthorrefmark{1}, Daniel Zdeblick\IEEEauthorrefmark{1}, Philip Taffet\IEEEauthorrefmark{2}, Jorge Quintero\IEEEauthorrefmark{1}, Greg Harper\IEEEauthorrefmark{1},\\
+\author{\IEEEauthorblockN{Yamin Arefeen\IEEEauthorrefmark{1}, Philip Taffet\IEEEauthorrefmark{2}, Daniel Zdeblick\IEEEauthorrefmark{1}, Jorge Quintero\IEEEauthorrefmark{1}, Greg Harper\IEEEauthorrefmark{1},\\
 Behnaam Aazhang\IEEEauthorrefmark{1}, and Joseph Cavallaro\IEEEauthorrefmark{1}}
 \IEEEauthorblockA{\IEEEauthorrefmark{1}Department of Electrical and Computer Engineering, \IEEEauthorrefmark{2}Department of Computer Science\\
 	Rice University, Houston, TX 77005}
@@ -431,10 +431,7 @@ width of a ventricular peak (\VPW) within a signal
 by simply processing 10 seconds of data sampled
 at 1 kHz. 
 \figurename~\ref{fig:singlebeat} shows how these parameters correspond to portions of the cardiac electrical signal.
-With these parameters, we then implement
-atrial and ventricular beat detection to illustrate that our
-learned parameters can be used to distinguish between
-atrial and ventricular beats in a signal.
+We use these parameters in atrial and ventricular beat detection to illustrate that our learned parameters can be used to distinguish between atrial and ventricular beats in a signal. 
 Additionally, we implement the algorithm on a Field
 Programmable Gate Array to demonstrate that the
 algorithm can be run on a real-time system.
@@ -609,7 +606,7 @@ ventricular and atrial heights.
 			\addplot+[mark=none] table[x = th, y = beats, col sep=comma]{beats.csv} ;
 		\end{axis}
 	\end{tikzpicture}
-	\caption{Graph of the function $\beta(\tau)$ on example CES data}
+	\caption{Graph of the function $\beta(\tau)$ on example CES data. The long flat segments correspond to potentially good threshold choices.}
 	\label{fig:beats}
 \end{figure}
 
