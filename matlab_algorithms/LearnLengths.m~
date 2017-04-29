@@ -1,7 +1,7 @@
 function [v_length, a_length, first] = LearnLengths(data)
 
 extreme_over = 100;
-ddatadt = [0; diff(data)].^2.*sign([0; diff(data)]).*data.*sign(data);
+ddatadt = [0; diff(data)].^5.*data.*sign(data);
 ddatadt = ddatadt * max(data)/max(ddatadt);
 a_length = [];
 v_length = [];
@@ -21,11 +21,8 @@ for s = [+1 -1]
         figure
         plot(data)
         hold on
-        plot(ddatadt)
         stem(wall_times, wall_steeps)
-        xlabel('time (samples)','Fontsize',14)
-        legend({'input waveform', 'weighted derivative of input', 'steepest points'},'Fontsize',14)
-        title('Finding the steepest points','Fontsize',18)
+        plot(ddatadt)
     end
 
     peak_lengths = [];
@@ -45,11 +42,7 @@ for s = [+1 -1]
     end
     
     %remove outliers
-	% simpler version:
-    % outliers = abs(zscore([peak_lengths peak_heights peak_steeps]))>3;
-    zscores = zscore([peak_lengths peak_heights peak_steeps]);
-    zscorenorms = sqrt(sum(zscores.^2,2));
-    outliers = zscorenorms > 2.5;
+    outliers = abs(zscore([peak_lengths peak_heights peak_steeps]))>3;
     to_removes = [];
     for i=1:length(peak_lengths)
         if any(outliers(i,:))
@@ -64,27 +57,14 @@ for s = [+1 -1]
     peak_heights(to_removes) = [];
     peak_highests(to_removes) = [];
     
-    if (length(peak_lengths)<=10)
-        v_length = [v_length 0];
-        a_length = [a_length 0];
-        first = [first 1];
-        continue
-    end
-    
     [idx,C] = kmeans([peak_lengths/mean(peak_lengths) peak_heights/mean(peak_heights)],2);% peak_steeps/mean(peak_steeps)],2);
-    [~,vind] = max(abs(C(:,2))./C(:,1).^2); %figure out which are the ventricles based on height/length^2 ratio
     
-    if (abs(C(1,1)-C(2,1))*mean(peak_lengths)<2.0)
-        v_length = [v_length round(mean(peak_lengths))];
-        a_length = [a_length 0];
-        first = [first 1];
-    else
-        v_length = [v_length round(C(vind,1)*mean(peak_lengths))];
-        a_length = [a_length round(C(3-vind,1)*mean(peak_lengths))];
-        first = [first 1+(abs(mean(peak_highests(idx==vind)))<abs(mean(peak_highests(idx==3-vind))))];
-    end
-        
-    if (true)
+    [~,vind] = max(abs(C(:,2))./C(:,1)); %figure out which is are the ventricles based on height/length ratio
+    v_length = [v_length floor(C(vind,1)*mean(peak_lengths))];
+    a_length = [a_length floor(C(3-vind,1)*mean(peak_lengths))];
+    first = [first 1+(abs(mean(peak_highests(idx==vind)))<abs(mean(peak_highests(idx==3-vind))))];
+    
+     if (true)
         figure
         hold on
     %     plot3(peak_lengths(idx==vind),peak_heights(idx==vind),peak_steeps(idx==vind),'r.','MarkerSize',12)
@@ -92,14 +72,9 @@ for s = [+1 -1]
     %     plot3(C(:,1)*mean(peak_lengths),C(:,2)*mean(peak_heights), C(:,3)*mean(peak_steeps),'kx','MarkerSize',15,'LineWidth',3)
         plot(peak_lengths(idx==vind),peak_heights(idx==vind),'r.','MarkerSize',12)
         plot(peak_lengths(idx==3-vind),peak_heights(idx==3-vind),'b.','MarkerSize',12)
-
-        plot(C(1,1)*mean(peak_lengths),C(1,2)*mean(peak_heights),'rx','MarkerSize',15,'LineWidth',3)
-        plot(C(2,1)*mean(peak_lengths),C(2,2)*mean(peak_heights),'bx','MarkerSize',15,'LineWidth',3)
-        hlegend = legend('ventricles','atria','Cv','Ca','FontSize',20);
-        title('K-means discrimination between peak types','Fontsize',18)
-        set(hlegend,'FontSize',20)
-        ylabel('peak heights','FontSize',20); xlabel('peak lengths (ms)','FontSize',20)
-        
+        legend('ventricles','atria')
+        plot(C(:,1)*mean(peak_lengths),C(:,2)*mean(peak_heights),'kx','MarkerSize',15,'LineWidth',3)
+        ylabel('peak heights'); xlabel('peak lengths')
         grid
     end
 end

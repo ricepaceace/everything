@@ -1,4 +1,6 @@
 function d = yamPeakFinder(i,d)
+old_d = d;
+if d.v_first
     
     %At beginning of function call, assume that no peak has been found.
     datapointV = d.recentdatapoints(end);
@@ -7,7 +9,7 @@ function d = yamPeakFinder(i,d)
     %Only start looking for ventricular beats when the current data point
     %is greater than the threshold and it has been 30 samples since the
     %last ventricle or atrial beat.
-    if(sum(d.recentVBools)>d.v_length/2) 
+    if(sum(d.recentVBools)>d.v_length*2/3 && d.AbeatDelay >= d.AbeatFallDelay && d.AbeatFallDelay > d.PreAVRP+d.PostAVRP) 
         if (~d.last_sample_is_V)
             d.VbeatDelay = 0;
             d.VbeatWeighted = false;
@@ -28,7 +30,7 @@ function d = yamPeakFinder(i,d)
     d.recentABools = [d.recentABools(2:end) (d.aflip*datapointA>d.a_thresh)];
     
     %&& d.VbeatDelay > d.VbeatFallDelay && d.VbeatFallDelay > 2*d.t_blank
-    if(sum(d.recentABools)>d.a_length/2 && d.VbeatDelay > d.VbeatFallDelay && d.VbeatFallDelay > d.PostVARP) 
+    if(sum(d.recentABools)>d.a_length*2/3 && d.VbeatDelay >= d.VbeatFallDelay && d.VbeatFallDelay > d.PreVARP+d.PostVARP) 
         if (~d.last_sample_is_A)
             d.AbeatDelay = 0;
             d.AbeatWeighted = false;
@@ -37,6 +39,53 @@ function d = yamPeakFinder(i,d)
         end
     else
         if (d.last_sample_is_A)
+            d.AbeatFallDelay = 0;
             d.last_sample_is_A = false;
         end
     end
+    
+else
+    
+    %At beginning of function call, assume that no peak has been found.
+    datapointA = d.recentdatapoints(end);
+    d.recentABools = [d.recentABools(2:end) (d.aflip*datapointA>d.a_thresh)];
+    
+    %Only start looking for ventricular beats when the current data point
+    %is greater than the threshold and it has been 30 samples since the
+    %last ventricle or atrial beat.
+    if(sum(d.recentABools)>d.a_length*2/3 && d.VbeatDelay >= d.VbeatFallDelay && d.VbeatFallDelay > d.PreVARP+d.PostVARP) 
+        if (~d.last_sample_is_A)
+            d.AbeatDelay = 0;
+            d.AbeatWeighted = false;
+            d.aPeakInd = [d.aPeakInd, i];
+            d.last_sample_is_A = true;
+        end
+    else
+        if(d.last_sample_is_A)
+            d.AbeatFallDelay = 0;
+            d.last_sample_is_A = false;
+        end
+    end
+    
+    %Only start looking for atrial beats when the current data point
+    %is greater than the threshold and it has been 30 samples since the
+    %last ventricle or atrial beat. 
+    datapointV = d.recentdatapoints(1);
+    d.recentVBools = [d.recentVBools(2:end) (d.vflip*datapointV>d.v_thresh)];
+    
+    %&& d.VbeatDelay > d.VbeatFallDelay && d.VbeatFallDelay > 2*d.t_blank
+    if(sum(d.recentVBools)>d.v_length*2/3 && d.AbeatDelay >= d.AbeatFallDelay && d.AbeatFallDelay > d.PreAVRP+d.PostAVRP) 
+        if (~d.last_sample_is_V)
+            d.VbeatDelay = 0;
+            d.VbeatWeighted = false;
+            d.vPeakInd = [d.vPeakInd, i];
+            d.last_sample_is_V = true;
+        end
+    else
+        if (d.last_sample_is_V)
+            d.VbeatFallDelay = 0;
+            d.last_sample_is_V = false;
+        end
+    end
+    
+end

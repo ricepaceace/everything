@@ -1,4 +1,4 @@
-function [ vc, ac, vflip, aflip, v_length, a_length, v_first ] = LearnParameters(data)
+function [ v_length, a_length, vc, ac, vflip, aflip, v_first ] = LearnParameters(data)
 %GUESSPARAMETERS2 Summary of this function goes here
 %   Detailed explanation goes here
     [v_lengths, a_lengths, first] = LearnLengths(data);
@@ -8,58 +8,42 @@ function [ vc, ac, vflip, aflip, v_length, a_length, v_first ] = LearnParameters
     flip = [+1, -1];
     
     cutoffs = zeros(2,2,2); %chamber, flip, start-end
-    mid_finders = [0.5 0.5; 0.5 0.5]; %chamber, start-end
-    
-    if visualize_bs
-        figure
-        hold on
-    end
+    mid_finders = [0.5 0.5; 0.3 0.7]; %chamber, start-end
     
     for f = 1:2
         cutoffs(first(f),f,:) = BinarySearch(flip(f)*data, lengths(first(f),f));
-        
-        ndata = data;
-        t_blank = 100; l_blank = 100;
-        thresh = sum(reshape(cutoffs(first(f),f,:),[1,2]).*mid_finders(first(f),:));
-        [~, rising_edges, falling_edges] = CountPeaks(flip(f)*data > thresh, lengths(first(f),f));
-        for i = 1:length(rising_edges)
-            ndata(max(1,(rising_edges(i)-t_blank)):min(end,(falling_edges(i)+l_blank))) = 0;
-        end
-        
-        cutoffs(3-first(f),f,:) = BinarySearch(flip(f)*ndata, lengths(3-first(f),f));
-        
         if visualize_bs
-            if first(f)==1
-                color1 = 'r';
-                color2 = 'k';
-                peak1 = 'ventricular';
-                peak2 = 'atrial';
-            else
-                color1 = 'k';
-                color2 = 'r';
-                peak1 = 'atrial';
-                peak2 = 'ventricular';
-            end
-            
+            figure(99)
+            hold on
             xs = linspace(0, max(flip(f)*data), 200);
             ys=zeros(200,1);
             for i = 1:200
                 [beats, ~, ~] = CountPeaks(flip(f)*data > xs(i), lengths(first(f),f));
                 ys(i) = beats;
             end
-            h(1) = plot(flip(f)*xs, ys,color1);
-            
-            % axis([0 3000 0 200])
-            xlabel('Threshold (mV)','FontSize',18)
-            ylabel('Number of Beats','FontSize',18)
-            title('Beats(threshold)','Fontsize',18)
+            plot(flip(f)*xs, ys);
+        end
+        
+        ndata = data;
+        t_blank = 50;
+        l_blank = 50;
+        thresh = sum(reshape(cutoffs(first(f),f,:),[1,2]).*mid_finders(first(f),:));
+        [~, rising_edges, falling_edges] = CountPeaks(flip(f)*data > thresh, lengths(first(f),f));
+        for i = 1:length(rising_edges)
+            ndata((rising_edges(i)-t_blank):(falling_edges(i)+l_blank)) = 0;
+        end
+        
+        cutoffs(3-first(f),f,:) = BinarySearch(flip(f)*ndata, lengths(3-first(f),f));
+        if visualize_bs
+            figure(99)
+            hold on
             xs = linspace(0, max(flip(f)*ndata), 200);
             ys=zeros(200,1);
             for i = 1:200
                 [beats, ~, ~] = CountPeaks(flip(f)*ndata > xs(i), lengths(3-first(f),f));
                 ys(i) = beats;
             end
-            h(2) = plot(flip(f)*xs, ys, color2);
+            plot(flip(f)*xs, ys);
         end
     end
     
@@ -71,28 +55,90 @@ function [ vc, ac, vflip, aflip, v_length, a_length, v_first ] = LearnParameters
     a_length = a_lengths(af);
     vflip = flip(vf);
     aflip = flip(af);
-    v_first = (first(af)==1 && first(vf)==1); 
+    v_first = ~(vf==af && first(af)==2);
+       
     
-    if visualize_bs
-        heartbeats = FindHeartRate(data);
-        h(3) = plot(vflip*reshape(cutoffs(1,vf,:),[1,2]), [heartbeats, heartbeats], 'ro');
-        h(4) = plot(aflip*reshape(cutoffs(2,af,:),[1,2]), [heartbeats, heartbeats], 'kx');
-        xlabel('Threshold used','Fontsize',14)
-        ylabel('Number of peaks detected','Fontsize',14)
-        legend(h,{[peak1 ' # peaks found vs threshold curve'],[peak2 ' # peaks found vs threshold curve'],...
-            'range of good ventricular thresholds found', 'range of good atrial thresholds found'},'Fontsize',14)
-        title('Full # peaks vs thresholds curves and the algorithm''s solutions','Fontsize',18)
-    end
     
     a=1;
-  
+    
+    
+    
+    
+%     
+%     if visualize_bs
+%         for f = 1:2
+%             figure(99)
+%             hold on
+%             xs = linspace(0, max(flip(f)*data), 200);
+%             ys=zeros(200,1);
+%             for i = 1:200
+%                 [beats, ~, ~] = CountPeaks(vflip*data > xs(i), v_lengths(f);
+%                 ys(i) = beats;
+%             end
+%             plot(flip(f)*xs, ys);
+%         end
+%     end
+%     
+%     v_cutoffs = BinarySearch(data, v_lengths(1));
+%     v_cutoffs_neg = BinarySearch(-data, v_lengths(2));
+%     if (v_cutoffs_neg(2)-v_cutoffs_neg(1)<v_cutoffs(2)-v_cutoffs(1))
+%         vflip = 1;
+%         v_length = v_lengths(1);
+%     else
+%         vflip = -1;
+%         v_length = v_lengths(2);
+%         v_cutoffs = v_cutoffs_neg;
+%     end
+%     vc = sum([.5, .5] .* v_cutoffs);
+%     
+%     
+%     if visualize_bs
+%         heartbeats = FindHeartRate(data);
+%         plot(vflip*v_cutoffs, [heartbeats, heartbeats], 'bx');
+%     end
+% 
+%     ndata = data;
+%     
+%     t_blank = 50;
+%     l_blank = 50;
+%     [~, rising_edges, falling_edges] = CountPeaks(vflip*data > vc, v_length);
+%     for i = 1:length(rising_edges)
+%         ndata((rising_edges(i)-t_blank):(falling_edges(i)+l_blank)) = 0;
+%     end
+% %     ndata = abs(ndata);
+% %     figure
+% %     plot(ndata)
+%     
+%     if visualize_bs
+%         for f = 1:2
+%             xs = linspace(0, max(flip(f)*ndata), 200);
+%             ys=zeros(200,1);
+%             for i = 1:200
+%                 [beats, ~, ~] = CountPeaks(aflip*ndata > xs(i), a_lengths(f);
+%                 ys(i) = beats;
+%             end
+%             plot(flip(f)*xs, ys, 'k');
+%         end
+%     end
+% 
+%     a_cutoffs =  BinarySearch(ndata, a_lengths(1));
+%     a_cutoffs_neg =  BinarySearch(-ndata, a_lengths(2));
+%     if (a_cutoffs_neg(2)-a_cutoffs_neg(1)<a_cutoffs(2)-a_cutoffs(1))
+%         aflip = 1;
+%         a_length = a_lengths(1);
+%     else
+%         a_cutoffs = a_cutoffs_neg;
+%         a_length = a_lengths(2);
+%         aflip = -1;
+%     end
+%     ac = sum([.7, .3] .* a_cutoffs);
+%     
+%     if visualize_bs
+%         plot(aflip*a_cutoffs, [heartbeats, heartbeats], 'ro');
+%     end
 end
 
 function [flatcutoffs] = BinarySearch(data, minlength)
-    if (minlength==0)
-        flatcutoffs = [0 0];
-        return
-    end
     npts = 20;
     sample_rate = 1000;
     minbeats = length(data) / sample_rate * 10 / 60; %10 bpm
@@ -125,7 +171,7 @@ function [flatcutoffs] = BinarySearch(data, minlength)
         end
         last_valid = find(beats > minbeats, 1, 'last');
         first_valid = find(beats < maxbeats, 1, 'first');
-        if ( isempty(last_valid) || isempty(first_valid) ||(last_valid<=first_valid))
+        if (last_valid<=first_valid)
             flatcutoffs = [0 0];
             return
         end

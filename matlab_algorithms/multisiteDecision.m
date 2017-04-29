@@ -4,6 +4,7 @@ function multisiteDecision
 close all
 addpath('test_data/sept29_2016_test/')
 addpath('test_data/PhisioBank_iaf/')
+%addpath('test_data/FebruaryData/')
 
 % each .mat file contains a struct for data from a test
 % currently, each struct has two fields:
@@ -12,15 +13,16 @@ addpath('test_data/PhisioBank_iaf/')
 %       represents a time point
 
 
-s = load('NormalSinusRhythm_struct.mat');
+%s = load('NormalSinusRhythm_struct.mat');
 %s = load('Pacingfromchipapprox120bpmxmA_struct.mat');
-%s = load('PacingfromMedtronic120bpm2mA_struct.mat');
-%s = load('iaf1_struct.mat'); %number ranges from 1-8 for different patients
+s = load('PacingfromMedtronic120bpm2mA_struct.mat');
+%s = load('iaf1_struct.mat'); %number ranges from 1-8 for different
+%s = load('SinusRhythmHRAHBCSRVpluspaced_struct.mat');
 
 Fs = s.Fs; %sampling rate
 data = s.data;
 begin_time = 0.0;
-end_time = 25; %second
+end_time = 7; %second
 data = data(begin_time*Fs+1:end_time*Fs+1,:);
 [numSamples, numChannels] = size(data);
 
@@ -38,13 +40,13 @@ b2 = fir1(500,150/Fs);
 %~~~~~~~~~~~~~~~~~~~~~
 %Channel Parameters
 %~~~~~~~~~~~~~~~~~~~~~
-numChannels = 4;
+%numChannels = 3;
 ds = repmat(struct(), numChannels, 1);
 aSumofVote = [];
 vSumofVote = [];
 
 
-AVDelayThresh = 300;
+AVDelayThresh = 350;
 AADelayThresh = 1000;
 AdjustWeightsLag = 100;
 aVoteThresh = 0.4;
@@ -54,23 +56,30 @@ maxWeight = 2/numChannels;
 for k = 1:numChannels
     data(:,k) = filter(b,1,data(:,k));
     data(:,k) = filter(b2,1,data(:,k));
-    [ds(k).v_thresh,ds(k).a_thresh,ds(k).vflip,ds(k).aflip,ds(k).v_length,ds(k).a_length]=LearnParameters(data(:,k));
+    [ds(k).v_thresh,ds(k).a_thresh,ds(k).vflip,ds(k).aflip,ds(k).v_length,ds(k).a_length,ds(k).v_first]=LearnParameters(data(:,k));
     ds(k).AbeatDelay = 0;
     ds(k).VbeatDelay = 0;
     ds(k).VbeatFallDelay = 0;
+    ds(k).AbeatFallDelay = 0;
     ds(k).AstimDelay = 0;
     ds(k).VstimDelay = 0;
     ds(k).ACaptureThresh = ds(k).a_length;
     ds(k).VCaptureThresh = ds(k).v_length;
     ds(k).PostVARP = 250;
     ds(k).PreVARP = 20;
+    ds(k).PostAVRP = 100;
+    ds(k).PreAVRP = 20;
     
     %these are used for doing real time detection
     ds(k).recentVBools = zeros(1,ds(k).v_length); %all the recent samples needed to do real time filtering
     ds(k).recentABools = zeros(1,ds(k).a_length); %all the recent samples needed to do real time filtering
     ds(k).last_sample_is_V = false;
     ds(k).last_sample_is_A = false;
-    ds(k).recentdatapoints = zeros(1,ds(k).PreVARP);
+    if ds(k).v_first
+        ds(k).recentdatapoints = zeros(1,ds(k).PreVARP);
+    else
+        ds(k).recentdatapoints = zeros(1,ds(k).PreAVRP);
+    end
     ds(k).aWeight = 1/numChannels;
     ds(k).vWeight = 1/numChannels;
     ds(k).AbeatWeighted = false;
@@ -89,7 +98,7 @@ for k = 1:numChannels
     ds(k).vPacingNeeded = 0;
 end
 
-%data(floor(numSamples/10):floor(numSamples/3),1) = 0;
+%data(floor(numSamples/10):floor(numSamples/3),1:2) = 0;
 %data(:,1) = data(:,1)+[normrnd(0,max(data(:,1))/2,[floor(numSamples/3),1]); zeros(numSamples-floor(numSamples/3),1)];%.*exp(-(1:numSamples)'/numSamples);
 
 %This loop models real time data acquisition in the arduino.
@@ -105,6 +114,7 @@ for i = 1:numSamples
         
         ds(k).AbeatDelay = ds(k).AbeatDelay + 1;
         ds(k).VbeatDelay = ds(k).VbeatDelay + 1;
+        ds(k).AbeatFallDelay = ds(k).AbeatFallDelay + 1;
         ds(k).VbeatFallDelay = ds(k).VbeatFallDelay + 1;
         ds(k).AstimDelay = ds(k).AstimDelay + 1;
         ds(k).VstimDelay = ds(k).VstimDelay + 1;
@@ -288,10 +298,14 @@ for i = 1:numSamples
     
 end
 
+figure
 for i = 1:numChannels
     d = ds(i);
-    subplot(numChannels,1,i)
-    %figure
+    if numChannels<4
+        subplot(numChannels,1,i)
+    else
+        figure
+    end
     scale = numChannels*10^floor(log10(max(data(:,i))));
     hold on;
     h=plot(data(:,i),'k');
@@ -305,8 +319,8 @@ for i = 1:numChannels
     a=plot(d.aWeightTrace.*scale*d.aflip, 'b'); h=[h a(1)];
     title(['Channel ' num2str(i)],'Fontsize',14)
 end
-legend(h,'data','ventricular peaks','atrial peaks','ventricular stimulation','atrial stimulation',...%'ventricular polling sum','atrial polling sum',...
-    'ventricular polling weight','atrial polling weight')
+legend(h,{'data','ventricular peaks','atrial peaks','ventricular stimulation','atrial stimulation',...%'ventricular polling sum','atrial polling sum',...
+    'ventricular polling weight','atrial polling weight'},'Fontsize',14)
 
 end
 
@@ -320,6 +334,6 @@ function newW = adjustWeightFn(oldW,correct,numChannels)
         newW = oldW*0.9;
     else
         %newW = sig(oldW-1/numChannels+1)*2/numChannels;
-        newW = oldW+0.001;
+        newW = oldW+0.01;
     end
 end
