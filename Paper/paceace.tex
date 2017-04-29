@@ -369,7 +369,8 @@ To minimize long-term damage to heart tissue and to maximize battery life, it is
 Current pacemakers use the 
 DDDR algorithm to determine whether
 the heart requires stimulation~\cite{basic-pacing}.
-Essentially, the pacemaker applies beat detection algorithms to the signal it senses
+Additionally, a doctor must manually specify parameters for each individual patient in order to tune the detection algorithm to the patient's physiology.
+Essentially, the pacemaker then applies the tuned beat detection algorithm to the signal it senses
 to determine whether a
 heartbeat has occurred. If the pacemaker does not detect a heartbeat
 within a certain period of time, it will deliver an
@@ -453,7 +454,7 @@ Let $f[n]$ be 10 seconds of CES sampled at 1 kHz.
 We begin by computing the weighted time
 derivative of $f[n]$, denoted $w[n]$.
 \begin{equation*}
-	w[n]=(f[n]-f[n-1])\left|f[n] - f[n-1]\right| * \left|f[n]\right|
+	w[n]=(f[n]-f[n-1])\left|f[n] - f[n-1]\right| \left|f[n]\right|
 \end{equation*}
 Note that $w[n]$ is essentially $f'[n]^2  f[n]$, but with the sign adjusted to match the sign of $f'[n]$. %???: Does using the derivative notation make this more clear?
 
@@ -514,7 +515,7 @@ algorithm~\cite{k-means}.
 We identify the ventricular cluster by choosing the corresponding mean 
 with a greater height to width ratio, since
 ventriclar peaks are generally taller and thinner than atrial peaks. Let $C_V$ and $C_A$
-be the centers of the ventricular and atrial clusters %TODO: (Yamin:I like centers here, as I think it is more intuitive for the reader)
+be the centers of the ventricular and atrial clusters 
 respectively. The algorithm then stores the ventricular
 peak width (\VPW) and atrial peak width (\APW) as the
 rounded width term of the centers as follows:
@@ -627,7 +628,7 @@ For the first iteration, we set
 $th_{min} = 0$ and $th_{max} = \max f[n]$. 
 To choose the minimum and maximum thresholds in
 the next round, we first eliminate any thresholds $th_i$
-such that $beats(th_i)$ is biologically infeasible. %TODO: (Yamin: We used infeasible in the documentation we turned in, and I think its fine)
+such that $beats(th_i)$ is biologically infeasible. 
 For a human, we require that $10 \text{bpm} \le beats(th_i) \le 200 \text{bpm}$.
 Note that $beats(th_i)$ is not natively computed in the unit of beats per minute, so a simple unit conversion is required.
 
