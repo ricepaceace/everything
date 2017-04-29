@@ -1,32 +1,61 @@
-function [ vc, ac, vflip, aflip, v_length, a_length, v_first ] = LearnParameters(data)
-%GUESSPARAMETERS2 Summary of this function goes here
-%   Detailed explanation goes here
+% This function takes a single channel of data and learns appropriate
+% detection parameters for it individually.
+
+%Inputs:
+% data - a vector containing prerecorded data
+
+%Outputs:
+% v_height - the appropriate magnitude threshold for detecting ventricular peaks
+% a_height - the appropriate magnitude threshold for detecting atrial peaks
+% v_flip - sign of data that should be examined for ventricuar peaks (+1 or -1)
+% a_flip - sign of data that should be examined for atrial peaks (+1 or -1)
+% v_length - the duration (in samples) a ventricular peak must occur in (see yamPeakFinder)
+% a_length - the duration (in samples) an atrial peak must occur in (see yamPeakFinder)
+% v_first - boolean value that is true if we should detect ventricles first
+%           before looking for atria, false otherwise
+
+function [ v_height, a_height, v_flip, a_flip, v_length, a_length, v_first ] = LearnParameters(data)
+    VENT = 1;
+    ATRIA = 2;
+
+    %learn the appropriate lengths of atria and ventricles, as well as
+    %which should be detected first, for + and - data
     [v_lengths, a_lengths, first] = LearnLengths(data);
-    lengths = [v_lengths; a_lengths]; %2x2 array: chamber, flip
-    %samplesHB = floor(length(data)/heartbeats);
-    visualize_bs = true;% BINARY SEARCH VISUALIZATION
-    flip = [+1, -1];
     
-    cutoffs = zeros(2,2,2); %chamber, flip, start-end
-    mid_finders = [0.5 0.5; 0.5 0.5]; %chamber, start-end
+    lengths = [v_lengths; a_lengths]; %2x2 array, dimensions: chamber, flip
+    visualize_bs = true; % Visualize the function that LearnHeightRange uses and the algorithm's performance
+    flip = [+1, -1]; % signs corresponding to the two flip indices
+    
+    %The ranges of magnitudes returned by LearnHeightRange for each chamber and sign
+    cutoffs = zeros(2,2,2); % Dimensions: chamber, flip, start-end
+    
+    %Where in the middle of each range we should pick the magnitude
+    %threshold; each row should sum to 1
+    mid_finders = [0.5 0.5; 0.5 0.5]; % Dimensions: chamber, start-end
     
     if visualize_bs
         figure
         hold on
     end
     
+    % + and - data
     for f = 1:2
-        cutoffs(first(f),f,:) = BinarySearch(flip(f)*data, lengths(first(f),f));
+        %Learn the cutoffs for whichever chamber we should do first for this sign of the data
+        cutoffs(first(f),f,:) = LearnHeightRange(flip(f)*data, lengths(first(f),f));
         
+        %Find peak times and zero out the region around them
         ndata = data;
-        t_blank = 100; l_blank = 100;
-        thresh = sum(reshape(cutoffs(first(f),f,:),[1,2]).*mid_finders(first(f),:));
-        [~, rising_edges, falling_edges] = CountPeaks(flip(f)*data > thresh, lengths(first(f),f));
+        t_blank = 100; l_blank = 100; %how many samples to zero out on either side
+        %pick exact threshold from the middle of the range according to mid_finders
+        thresh = sum(squeeze(cutoffs(first(f),f,:)).*mid_finders(first(f),:));
+        [~, rising_edges, falling_edges] = CountPeaks(flip(f)*data > thresh, lengths(first(f),f)); %find peak times
+        %zero out surrounding region
         for i = 1:length(rising_edges)
             ndata(max(1,(rising_edges(i)-t_blank)):min(end,(falling_edges(i)+l_blank))) = 0;
         end
         
-        cutoffs(3-first(f),f,:) = BinarySearch(flip(f)*ndata, lengths(3-first(f),f));
+        %Learn the cutoffs for whichever chamber we should do second for this sign of the data
+        cutoffs(3-first(f),f,:) = LearnHeightRange(flip(f)*ndata, lengths(3-first(f),f));
         
         if visualize_bs
             if first(f)==1
@@ -63,32 +92,35 @@ function [ vc, ac, vflip, aflip, v_length, a_length, v_first ] = LearnParameters
         end
     end
     
-    [~,vf] = max(cutoffs(1,:,2)-cutoffs(1,:,1));
-    vc = sum(cutoffs(1,vf,:).*mid_finders(1,vf));
-    [~,af] = max(cutoffs(2,:,2)-cutoffs(2,:,1));
-    ac = sum(cutoffs(2,af,:).*mid_finders(2,af));
+    %pick which signs to use according to which one returned a wider range in LearnHeightRange
+    [~,vf] = max(cutoffs(VENT,:,2)-cutoffs(VENT,:,1)); 
+    [~,af] = max(cutoffs(ATRIA,:,2)-cutoffs(ATRIA,:,1));
+    %pick exact thresholds from the middle of the ranges according to mid_finders
+    v_height = sum(cutoffs(VENT,vf,:).*mid_finders(VENT,vf));
+    a_height = sum(cutoffs(ATRIA,af,:).*mid_finders(ATRIA,af));
     v_length = v_lengths(vf);
     a_length = a_lengths(af);
-    vflip = flip(vf);
-    aflip = flip(af);
-    v_first = (first(af)==1 && first(vf)==1); 
+    v_flip = flip(vf);
+    a_flip = flip(af);
+    %detect ventricles first if we should on the sign(s) of the data we use,
+    %otherwise detect atria first
+    v_first = (first(af)==VENT && first(vf)==VENT); 
     
     if visualize_bs
         heartbeats = FindHeartRate(data);
-        h(3) = plot(vflip*reshape(cutoffs(1,vf,:),[1,2]), [heartbeats, heartbeats], 'ro');
-        h(4) = plot(aflip*reshape(cutoffs(2,af,:),[1,2]), [heartbeats, heartbeats], 'kx');
+        h(3) = plot(v_flip*reshape(cutoffs(VENT,vf,:),[1,2]), [heartbeats, heartbeats], 'ro');
+        h(4) = plot(a_flip*reshape(cutoffs(ATRIA,af,:),[1,2]), [heartbeats, heartbeats], 'kx');
         xlabel('Threshold used','Fontsize',14)
         ylabel('Number of peaks detected','Fontsize',14)
         legend(h,{[peak1 ' # peaks found vs threshold curve'],[peak2 ' # peaks found vs threshold curve'],...
             'range of good ventricular thresholds found', 'range of good atrial thresholds found'},'Fontsize',14)
         title('Full # peaks vs thresholds curves and the algorithm''s solutions','Fontsize',18)
     end
-    
-    a=1;
-  
+      
 end
 
-function [flatcutoffs] = BinarySearch(data, minlength)
+
+function [flatcutoffs] = LearnHeightRange(data, minlength)
     if (minlength==0)
         flatcutoffs = [0 0];
         return

@@ -8,10 +8,12 @@
 %   monotonically
 %rising_indices: a vector containing the indices of the beginnings of each peak (used as time of detection)
 %falling_indices: a vector containing the indices of the ends of each peak
+
 function [count, rising_indices, falling_indices] = CountPeaks(bools,min_length)
+
     % Denoise boolean vector with LPF and threshold in order to only count
-    % (smoothed) peaks longer than min_length
-    
+    % a peak when the data exceeds the threshold for at least 2/3 of a
+    % min_length samples window
     filt = ones(1,min_length)/min_length;
     filtBool = filter(filt, 1, bools);
     above=[0; filtBool > 2/3; 0];
@@ -24,7 +26,8 @@ function [count, rising_indices, falling_indices] = CountPeaks(bools,min_length)
     falling_indices = find(falling_edges);
     
     %calculate count as the number of peaks + number of chunks from
-    %splitting long peaks
+    %splitting long peaks (which is done to ensure that the function
+    %LearnHeightRange is searching through is monotonically decreasing)
     peakLengths = falling_indices-rising_indices;
     count = length(rising_indices) + sum(floor(peakLengths/150));
 end

@@ -56,7 +56,7 @@ maxWeight = 2/numChannels;
 for k = 1:numChannels
     data(:,k) = filter(b,1,data(:,k));
     data(:,k) = filter(b2,1,data(:,k));
-    [ds(k).v_thresh,ds(k).a_thresh,ds(k).vflip,ds(k).aflip,ds(k).v_length,ds(k).a_length,ds(k).v_first]=LearnParameters(data(:,k));
+    [ds(k).v_thresh,ds(k).a_thresh,ds(k).v_flip,ds(k).a_flip,ds(k).v_length,ds(k).a_length,ds(k).v_first]=LearnParameters(data(:,k));
     ds(k).AbeatDelay = 0;
     ds(k).VbeatDelay = 0;
     ds(k).VbeatFallDelay = 0;
@@ -309,14 +309,14 @@ for i = 1:numChannels
     scale = numChannels*10^floor(log10(max(data(:,i))));
     hold on;
     h=plot(data(:,i),'k');
-    a=plot([0 d.vPeakInd], d.v_thresh*d.vflip, 'or'); h=[h a(1)];
-    a=plot([0 d.aPeakInd], d.a_thresh*d.aflip, 'ob'); h=[h a(1)];
-    a=plot([0 d.vStimInd], d.v_thresh*d.vflip*vVoteThresh, 'xr'); h=[h a(1)];
-    a=plot([0 d.aStimInd], d.a_thresh*d.aflip*aVoteThresh, 'xb'); h=[h a(1)];
-    %a=plot(vSumofVote.*d.v_thresh*d.vflip, '--r'); h=[h a(1)];
-    %a=plot(aSumofVote.*d.a_thresh*d.aflip, '--b'); h=[h a(1)];
-    a=plot(d.vWeightTrace.*scale*d.vflip, 'r'); h=[h a(1)];
-    a=plot(d.aWeightTrace.*scale*d.aflip, 'b'); h=[h a(1)];
+    a=plot([0 d.vPeakInd], d.v_thresh*d.v_flip, 'or'); h=[h a(1)];
+    a=plot([0 d.aPeakInd], d.a_thresh*d.a_flip, 'ob'); h=[h a(1)];
+    a=plot([0 d.vStimInd], d.v_thresh*d.v_flip*vVoteThresh, 'xr'); h=[h a(1)];
+    a=plot([0 d.aStimInd], d.a_thresh*d.a_flip*aVoteThresh, 'xb'); h=[h a(1)];
+    %a=plot(vSumofVote.*d.v_thresh*d.v_flip, '--r'); h=[h a(1)];
+    %a=plot(aSumofVote.*d.a_thresh*d.a_flip, '--b'); h=[h a(1)];
+    a=plot(d.vWeightTrace.*scale*d.v_flip, 'r'); h=[h a(1)];
+    a=plot(d.aWeightTrace.*scale*d.a_flip, 'b'); h=[h a(1)];
     title(['Channel ' num2str(i)],'Fontsize',14)
 end
 legend(h,{'data','ventricular peaks','atrial peaks','ventricular stimulation','atrial stimulation',...%'ventricular polling sum','atrial polling sum',...

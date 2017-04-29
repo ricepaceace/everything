@@ -1,10 +1,9 @@
 function d = yamPeakFinder(i,d)
-old_d = d;
+% if we should detect ventricles first
 if d.v_first
-    
     %At beginning of function call, assume that no peak has been found.
     datapointV = d.recentdatapoints(end);
-    d.recentVBools = [d.recentVBools(2:end) (d.vflip*datapointV>d.v_thresh)];
+    d.recentVBools = [d.recentVBools(2:end) (d.v_flip*datapointV>d.v_thresh)];
     
     %Only start looking for ventricular beats when the current data point
     %is greater than the threshold and it has been 30 samples since the
@@ -27,7 +26,7 @@ if d.v_first
     %is greater than the threshold and it has been 30 samples since the
     %last ventricle or atrial beat. 
     datapointA = d.recentdatapoints(1);
-    d.recentABools = [d.recentABools(2:end) (d.aflip*datapointA>d.a_thresh)];
+    d.recentABools = [d.recentABools(2:end) (d.a_flip*datapointA>d.a_thresh)];
     
     %&& d.VbeatDelay > d.VbeatFallDelay && d.VbeatFallDelay > 2*d.t_blank
     if(sum(d.recentABools)>d.a_length*2/3 && d.VbeatDelay >= d.VbeatFallDelay && d.VbeatFallDelay > d.PreVARP+d.PostVARP) 
@@ -43,12 +42,13 @@ if d.v_first
             d.last_sample_is_A = false;
         end
     end
-    
+
+% if we should detect the atria first
 else
     
     %At beginning of function call, assume that no peak has been found.
     datapointA = d.recentdatapoints(end);
-    d.recentABools = [d.recentABools(2:end) (d.aflip*datapointA>d.a_thresh)];
+    d.recentABools = [d.recentABools(2:end) (d.a_flip*datapointA>d.a_thresh)];
     
     %Only start looking for ventricular beats when the current data point
     %is greater than the threshold and it has been 30 samples since the
@@ -71,7 +71,7 @@ else
     %is greater than the threshold and it has been 30 samples since the
     %last ventricle or atrial beat. 
     datapointV = d.recentdatapoints(1);
-    d.recentVBools = [d.recentVBools(2:end) (d.vflip*datapointV>d.v_thresh)];
+    d.recentVBools = [d.recentVBools(2:end) (d.v_flip*datapointV>d.v_thresh)];
     
     %&& d.VbeatDelay > d.VbeatFallDelay && d.VbeatFallDelay > 2*d.t_blank
     if(sum(d.recentVBools)>d.v_length*2/3 && d.AbeatDelay >= d.AbeatFallDelay && d.AbeatFallDelay > d.PreAVRP+d.PostAVRP) 
