@@ -1,11 +1,24 @@
 function multisiteDecision
 
-% main script for running d algorithms on test data
+%This script simulates our algorithm in real time.  It performs parameter
+%learning on each channel of data.  In addition, it will perform beat
+%detection on each of the channels and will utilize knowledge from multiple
+%channnels to determine whether stimulation needs to be delivered.
+%Additionally, it will weight channels based on how correct the channels
+%seem to be in their pacing decisions.  
+%
+%Input:
+%s - Structure that will contain the data, with multiple channels, and
+%appropriate sampling rate.
+%
+%Output:
+%Plots that will showcase ventricular beat detection, atrial beat detection
+%and stimulation if necessary based on multisite information. 
+
 close all
 addpath('test_data/sept29_2016_test/')
 addpath('test_data/PhisioBank_iaf/')
 %addpath('test_data/FebruaryData/')
-
 % each .mat file contains a struct for data from a test
 % currently, each struct has two fields:
 % sampling_rate: the sampling rate of the data in Hz
@@ -19,8 +32,12 @@ s = load('PacingfromMedtronic120bpm2mA_struct.mat');
 %s = load('iaf1_struct.mat'); %number ranges from 1-8 for different
 %s = load('SinusRhythmHRAHBCSRVpluspaced_struct.mat');
 
-Fs = s.Fs; %sampling rate
+%Set the sampling rate and data that we will be working with.
+Fs = s.Fs; 
 data = s.data;
+
+%Define the amount of data that we want to use for parameter learning and
+%detection.
 begin_time = 0.0;
 end_time = 7; %second
 data = data(begin_time*Fs+1:end_time*Fs+1,:);
@@ -32,54 +49,77 @@ ATRIAL = 2;
 b = fir1(1000,2.5/Fs,'high'); %filter to remove DC bias
 b2 = fir1(500,150/Fs);
 
-%Learn parameters for all 4 channels individually
-%In the actual microcontroller code, this will be done on different data,
-%as opposed to the data we are testing on. 
-
-
 %~~~~~~~~~~~~~~~~~~~~~
 %Channel Parameters
 %~~~~~~~~~~~~~~~~~~~~~
-%numChannels = 3;
 ds = repmat(struct(), numChannels, 1);
 aSumofVote = [];
 vSumofVote = [];
 
-
+%AVDelayThresh defines the maximimum amount of time between atrial and ventricular beats
+%before a channel will flag that it needs ventricular stimulation
 AVDelayThresh = 350;
+%AADelayThresh defines the maximimum amount of time between consecutive atrial beats
+%before a channel will flag that it needs an atrial stimulation
 AADelayThresh = 1000;
 AdjustWeightsLag = 100;
+
+%Recquire that aVoteThresh and vVoteThresh percent of channels must flag
+%for atrial and ventricular respectively for an actual stimulation to be
+%delivered.
 aVoteThresh = 0.4;
 vVoteThresh = 0.4;
+
+%Will be used to bound each channel to a maximum weight so no single
+%channel can dominate the voting scheme. 
 maxWeight = 2/numChannels;
 
 for k = 1:numChannels
+    %Filter the data.  In our hardware system, the preprocessor does this
+    %step.
     data(:,k) = filter(b,1,data(:,k));
     data(:,k) = filter(b2,1,data(:,k));
+    
+    %Compute all of the detection parameters for this channel using
+    %LearnParameters (LearnParameters will also call LearnLengths.
     [ds(k).v_thresh,ds(k).a_thresh,ds(k).v_flip,ds(k).a_flip,ds(k).v_length,ds(k).a_length,ds(k).v_first]=LearnParameters(data(:,k));
-    ds(k).AbeatDelay = 0;
-    ds(k).VbeatDelay = 0;
-    ds(k).VbeatFallDelay = 0;
-    ds(k).AbeatFallDelay = 0;
-    ds(k).AstimDelay = 0;
-    ds(k).VstimDelay = 0;
-    ds(k).ACaptureThresh = ds(k).a_length;
-    ds(k).VCaptureThresh = ds(k).v_length;
-    ds(k).PostVARP = 250;
+    
+    %Initialize the structure ds, that will have numChannel fields.  ds(k)
+    %will be used extensively for atrial and ventricular beat detection for
+    %channel k.
+    
+    %Each channel k will have its own set of parameters that are defined
+    %below.
+    ds(k).AbeatDelay = 0; %Tracks amount of time since last atrial beat.
+    ds(k).VbeatDelay = 0;%Tracks amount of time since last ventricular beat.
+    ds(k).VbeatFallDelay = 0;%Tracks amount of time since last falling edge of ventricular beat.
+    ds(k).AbeatFallDelay = 0;%Tracks amount of time since last falling edge of atrial beat.
+    ds(k).AstimDelay = 0;%Tracks amount of time since last atrial stimulation.
+    ds(k).VstimDelay = 0;%Tracks amount of time since last ventricular stimulation.
+    ds(k).ACaptureThresh = ds(k).a_length;%Stimulation voltage for atria
+    ds(k).VCaptureThresh = ds(k).v_length;%Stimulation voltage for ventricles
+    ds(k).PostVARP = 250;%Minimum time between ventricular then atrial beat.
     ds(k).PreVARP = 20;
-    ds(k).PostAVRP = 100;
+    ds(k).PostAVRP = 100;%Minimum time between atrial then ventricular beat.
     ds(k).PreAVRP = 20;
     
     %these are used for doing real time detection
-    ds(k).recentVBools = zeros(1,ds(k).v_length); %all the recent samples needed to do real time filtering
-    ds(k).recentABools = zeros(1,ds(k).a_length); %all the recent samples needed to do real time filtering
-    ds(k).last_sample_is_V = false;
-    ds(k).last_sample_is_A = false;
+    ds(k).recentVBools = zeros(1,ds(k).v_length); %Binary value indicating whether recent values have exceeded v_thresh
+    ds(k).recentABools = zeros(1,ds(k).a_length); %Binary value indicating whether recent values have exceeded a_thresh
+    ds(k).last_sample_is_V = false;%Flag indicating whether last sample was a V beat
+    ds(k).last_sample_is_A = false;%Flag indicating whether last sample was a A beat
+    
+    %Redefines recent data points depending on whether we have determined
+    %if the ventricle or atria are bigger.
+    %if = ventricle bigger
+    %else = atria bigger.
     if ds(k).v_first
         ds(k).recentdatapoints = zeros(1,ds(k).PreVARP);
     else
         ds(k).recentdatapoints = zeros(1,ds(k).PreAVRP);
     end
+    
+    %initialize polling weights for each channel.
     ds(k).aWeight = 1/numChannels;
     ds(k).vWeight = 1/numChannels;
     ds(k).AbeatWeighted = false;
@@ -91,17 +131,22 @@ for k = 1:numChannels
     ds(k).aPeakInd = [];
     ds(k).aStimInd = [];
     ds(k).vStimInd = [];
+    %Tracks location of stimulations and peaks.
     ds(k).aWeightTrace = zeros(1,numSamples);
     ds(k).vWeightTrace = zeros(1,numSamples);
+    %traces weights for each channel.
     
+    %Flag that each channel throws indiciating whether the channel decides
+    %if atrial or ventricular stimulation is necessary.
     ds(k).aPacingNeeded = 0;
     ds(k).vPacingNeeded = 0;
+    
 end
 
 %data(floor(numSamples/10):floor(numSamples/3),1:2) = 0;
 %data(:,1) = data(:,1)+[normrnd(0,max(data(:,1))/2,[floor(numSamples/3),1]); zeros(numSamples-floor(numSamples/3),1)];%.*exp(-(1:numSamples)'/numSamples);
 
-%This loop models real time data acquisition in the arduino.
+%This loop models real time data acquisition in an actual hardware system.
 for i = 1:numSamples
     
     %~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -110,15 +155,18 @@ for i = 1:numSamples
    
     %Increment time since last atrial beat d.
     for k = 1:numChannels
-        ds(k).recentdatapoints = [ds(k).recentdatapoints(2:end) data(i,k)]; %get next datapoint and add to buffer
+        ds(k).recentdatapoints = [ds(k).recentdatapoints(2:end) data(i,k)]; 
+        %get next datapoint and add to buffer
         
+        %increment all delays when considering each sample in real time.
         ds(k).AbeatDelay = ds(k).AbeatDelay + 1;
         ds(k).VbeatDelay = ds(k).VbeatDelay + 1;
         ds(k).AbeatFallDelay = ds(k).AbeatFallDelay + 1;
         ds(k).VbeatFallDelay = ds(k).VbeatFallDelay + 1;
         ds(k).AstimDelay = ds(k).AstimDelay + 1;
         ds(k).VstimDelay = ds(k).VstimDelay + 1;
-
+        
+        %Perform beat detection with the knowledge of the new sample.
         ds(k) = yamPeakFinder(i,ds(k));
     end
     
@@ -128,24 +176,26 @@ for i = 1:numSamples
     %Want to organize code such that one channels need to stimulate will
     %dominate decision to stimulate. 
     
-    %If an atrial beat has not been detected fast enough, deliver a stimulation. 
-    %FIXME?: The code currently does not assume that a atrial beat will
-    %be detected soon after stimulation, so the tracking parameters are
-    %manually adjusted. 
     aPacingVoteCount = 0;
     
     for k = 1:numChannels
         d = ds(k);
+        %If the beatdelay for channel k exceeds the threshold, channel will
+        %decide that pacing is needed.
         if (d.AbeatDelay > AADelayThresh)
             ds(k).aPacingNeeded = 1;
         else
             ds(k).aPacingNeeded = 0;
         end
+        %Sum vote from all channels based on each channels respective
+        %weights.
         aPacingVoteCount = aPacingVoteCount + ds(k).aWeight*ds(k).aPacingNeeded;
     end
     
     aSumofVote = [aSumofVote aPacingVoteCount];
     
+    %If atrial vote exceeds threshold and it has been 1/2 second since the
+    %last atrial stimulation, deliver a stimulation.
     if aPacingVoteCount >= aVoteThresh && ds(1).AstimDelay > 500
         for k = 1:numChannels
             d = ds(k);
@@ -154,23 +204,31 @@ for i = 1:numSamples
             ds(k).AstimDelay = 0;
         end
     end
-
+    
+    %Next for loop handles ventricular stimulation.
     vPacingVoteCount = 0;
     for k = 1:numChannels
         d = ds(k);
-        % if we've seen an A more recently than a V, and it's been long
-        % enough since the last A, and it's been long enough since we last
-        % stimulated
+        
+        %Channel will decide that pacing is necessary for the ventricle if
+        %the following conditions are met.
+        %1. We have seen an atrial beat more recently than a ventricular
+        %beat.
+        %2. It has been long enough since we last have seen an atrial beat
+        %and since we have last stimulated.
         if (min(d.VstimDelay,d.VbeatDelay) > min(d.AstimDelay,d.AbeatDelay) && min(d.AstimDelay,d.AbeatDelay) > AVDelayThresh)
             ds(k).vPacingNeeded = 1;
         else 
             ds(k).vPacingNeeded = 0;
         end
+        %Sum ventricular vote count based on weight of each channel
         vPacingVoteCount = vPacingVoteCount + ds(k).vWeight*ds(k).vPacingNeeded;
     end
     
     vSumofVote = [vSumofVote vPacingVoteCount];
     
+    %Deliver stimulation if enough channels vote and it has been 1/2 second
+    %since we have stimulated the ventricle.
     if vPacingVoteCount >= vVoteThresh && ds(1).VstimDelay > 500
         for k = 1:numChannels
             d = ds(k);
