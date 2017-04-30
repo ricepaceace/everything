@@ -284,8 +284,8 @@
 % not capitalized unless they are the first or last word of the title.
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
-\title{Real-Time, Data-Driven Algorithm and System to Learn
-Parameters for Pacemaker Beat Detection}
+\title{Real-Time, Data-Driven System to Learn
+Parameters for Multisite Pacemaker Beat Detection}
 
 
 % author names and affiliations
@@ -319,14 +319,15 @@ Behnaam Aazhang\IEEEauthorrefmark{1}, and Joseph Cavallaro\IEEEauthorrefmark{1}}
 While beat detection in a Cardiac Electrical 
 Signal (CES) is a well-studied problem, we propose a novel
 algorithm for implementation in pacemakers that learns the
-heights and widths of atrial and ventricular peaks without manual parameter setting from simply
+heights and widths of atrial and ventricular peaks from
 processing 10 seconds of cardiac data sampled at 1 kHz. 
 This purely data-driven solution to learn the parameters of atrial
 and ventricular peaks will allow pacemakers to set their own 
 detection parameters and adaptively tune
 the parameters over time for that specific patient.
 We have validated our algorithm on 51 separate channels of
-data. Additionally, we have implemented the algorithm on a
+data, where each channel is one minute of cardiac electrical signal recorded directly from cardiac tissue.
+Additionally, we have implemented the algorithm on a
 Field Programmable Gate Array and tested it on an ex-vivo rat
 heart to illustrate that our algorithm can run in real-time on commodity hardware.
 \end{abstract}
@@ -415,7 +416,7 @@ not respond to CRT implemented by current pacemakers~\cite{multisite-crt}, leadi
 			\draw[blue] (axis cs:430, 1160) -- ++(2pt, 0) -- ++(-4pt, 0) -- ++(2pt, 0) -- (axis cs: 430, 0) node(m4)[midway] {} -- ++(2pt, 0) -- ++(-4pt, 0) ;
 			\node[pin={[pin distance=8pt]200:{\VPW}}] at (m3) {};
 			\node[pin={[pin distance=3pt]350:{\VPH}}] at (m4) {};
-			\legend{$f[n]$}
+			\legend{$f_n$}
 		\end{axis}
 	\end{tikzpicture}
 	\caption{
@@ -429,7 +430,8 @@ height of an atrial peak (\APH), the height of a ventricular
 peak (\VPH), the width of an atrial peak (\APW), and the
 width of a ventricular peak (\VPW) within a signal 
 by processing 10 seconds of data sampled
-at 1 kHz. 
+at 1 kHz.  We found that 10 seconds of signal was the minimum amount of signal 
+needed to provide enough data for accurate parameter learning.
 \figurename~\ref{fig:singlebeat} shows how these parameters correspond to portions of the cardiac electrical signal.
 We use these parameters in atrial and ventricular beat detection to illustrate that our learned parameters can be used to distinguish between atrial and ventricular beats in a signal. 
 Additionally, we implement the algorithm on a Field
@@ -443,40 +445,41 @@ Finally, Section V documents our testing procedure and
 validates our algorithmic results and hardware system.
 
 \section{Atrial and Ventricular Peak Width Learning}
-Our algorithm begins by learning the atrial and ventricular widths: \APW{} and \VPW{}. We
-detail our approach in the following sections.
+Our algorithm begins by learning the atrial and ventricular widths: \APW{} and \VPW{}.
 
 \subsection{Finding Peak Shaped Patterns in the Signal}
-Let $f[n]$ be 10 seconds of CES sampled at 1 kHz.
+Let $f_n$ be 10 seconds of CES sampled at 1 kHz.
 We begin by computing the weighted time
-derivative of $f[n]$, denoted $d[n]$.
+difference of $f_n$, denoted $d_n$.
 \begin{equation*}
-	d[n]=(f[n]-f[n-1])\left|f[n] - f[n-1]\right| \left|f[n]\right|
+	d_n=(f_n-f_{n-1})\left|f_n - f_{n-1}\right| \left|f_n\right|.
 \end{equation*}
-Note that $d[n]$ is essentially $f'[n]^2  f[n]$, but with the sign adjusted to match the sign of $f'[n]$.
-The following paragraph will explain our rational for constructing $d[n]$. Next, the algorithm 
+Note that $d_n$ is essentially $(f_n-f_{n-1})^2  f_n$, but with the sign adjusted to match the sign of $f_n’$.
+The following paragraph will explain our rational for constructing $d_n$. Next, the algorithm 
 searches for when the local
-maxima and minima of $d[n]$ occur, within a window of
-200 ms. Thus, we compute:
+maxima and minima of $d_n$ occur, within a window of
+200 ms, which we define to be the potential peak detection flag $r_n$.  
+We choose to find the maxima and minima within a 200 ms window since there will be more than 100 ms of separation between a ventricular 
+and atrial beat~\cite{cardiac-cycle}. Thus, we compute:
 \begin{equation*}
-	r[n] = \left \{
+	r_n = \left \{
 		\begin{array}{lc}
-			1 & \text{if } f[n]>0 \text{ and } d[n] = \max\limits_{-100 \le i \le 100} (d[n+i]) \\
-			-1 & \text{if } f[n]>0 \text{ and }  d[n] = \min\limits_{-100 \le i \le 100} (d[n+i]) \\
+			1 & \text{if } f_n>0 \text{ and } d_n = \max\limits_{-100 \le i \le 100} (d_{n+i}) \\
+			-1 & \text{if } f_n>0 \text{ and }  d_n = \min\limits_{-100 \le i \le 100} (d_{n+i}) \\
 			0 & \text{otherwise}
 		\end{array}
 	\right.
 \end{equation*}
-Note, that a value of $1$ in $r[n]$ corresponds to the
-steepest rising edge of a positive peak in $f[n]$, while a value of $-1$
-in $r[n]$ roughly corresponds to the steepest falling edge of a positive peak
-in $f[n]$. 
-The interval between a $1$ and a $-1$ in $r[n]$ then corresponds to a
-% The interval between where $r[m]=1$ and $r[n]=-1$ then corresponds to a 
-peak-like structure in $f[n]$, where a rising edge is followed by a falling edge.
-Using a weighted derivative, $d[n]$, instead of a simple time derivative pushes these edges closer to the tip of a peak,
- which allows for more appropriate feature extraction later on in the algorithm.
-\figurename~\ref{fig:fwr} illustrates the relationship between $f[n], d[n], $ and $r[n]$ for a single peak.
+Note, that a value of $1$ in $r_n$ corresponds to the
+steepest rising edge of a positive peak in $f_n$, while a value of $-1$
+in $r_n$ roughly corresponds to the steepest falling edge of a positive peak
+in $f_n$. 
+The interval between a $1$ and a $-1$ in $r_n$ then corresponds to a
+% The interval between where $r_m=1$ and $r_n=-1$ then corresponds to a 
+peak-like structure in $f_n$, where a rising edge is followed by a falling edge.
+Using a weighted difference, $d_n$, instead of a simple time difference pushes these edges closer to the tip of a peak,
+which allows for more appropriate feature extraction later on in the algorithm.
+\figurename~\ref{fig:fwr} illustrates the relationship between $f_n, d_n, $ and $r_n$ for a single peak.
 \begin{figure}
 	\centering
 	\begin{tikzpicture}
@@ -489,40 +492,43 @@ Using a weighted derivative, $d[n]$, instead of a simple time derivative pushes 
 			\addplot+[mark=none, color=red, smooth] table[x = t, y = f, col sep=comma]{fwr.csv} ;
 			\addplot+[mark=none, color=blue, smooth] table[x = t, y = w, col sep=comma]{fwr.csv} ;
 			\addplot+[only marks, mark=o, mark size = 2pt,color=black] table[x = t, y = r, col sep=comma]{fwr.csv} ;
-			\legend{$f[n]$, $d[n]$, $r[n]$}
+			\legend{$f_n$, $d_n$, $r_n$}
 		\end{axis}
 	\end{tikzpicture}
 	\caption{
-	Illustration of the relationship between $f[n]$, $d[n]$ and $r[n]$}
+	Illustration of the relationship between $f_n$, $d_n$ and $r_n$.}
 	\label{fig:fwr}
 \end{figure}
 
-\subsection{Peak Feature Extraction and Clustering to Determine \APW{} and \VPW}
+\subsection{Peak Feature Extraction and Clustering}
 We restrict our attention to peaks that consist of a rising edge
 followed in less than 75 ms by a falling edge since 
-neither atrial nor ventricular peaks can be greater than 75 ms in length.
-More precisely, let $m_i$ and $n_i$ be integers such that $m_i < n_i, r[m_i]=1, r[n_i] = -1, n_i-m_i < 75 \text{ms},$ and $r[x]=0 $ for $m_i < x < n_i$.
-We then use the width and height of the peak as features.
+neither atrial nor ventricular peaks can be greater than 75 ms in length~\cite{cardiac-cycle}.
+More precisely, let $m_i$ and $n_i$ be integers such that $m_i < n_i, r_{m_i}=1, r_{n_i} = -1, n_i-m_i < 75 \text{ms},$ and $r_x=0 $ for $m_i < x < n_i$.
+The width and height of the peak will then be used as features.  Thus, we define $P_i$, a peak characterized by its width and height, as follows:
 \begin{equation*}
-	P_i = \left\{n_i-m_i, \left( \max\limits_{m_i\le j\le n_i} f[j] \right) - \frac{f[n_i]+f[m_i]}{2} \right\}
+	P_i = \left\{n_i-m_i, \left( \max\limits_{m_i\le j\le n_i} f_j \right) - \frac{f_{n_i}+f_{m_i}}{2} \right\}.
 \end{equation*}
- We then construct $\mathbf{P} = [P_1, P_2, \dots P_s]$ and then
-cluster the peaks in $\mathbf{P}$ using a standard two cluster k-means
-algorithm~\cite{k-means}. 
+Let $\mathbf{P} = [P_1, P_2, \dots P_s]$ be peaks characterized by their widths and heights from 10 seconds of cardiac electrical signal.
+Now consider \figurename~\ref{fig:kmeans} where all of the $P_i$'s are plotted as points, with the x-axis being peak width and the y-axis being peak height.
+With the intuition that ventricular peaks are generally taller and thinner than atrial peaks~\cite{cardiac-cycle},
+$P_i$'s that correspond to ventricles cluster together.  Likewise, $P_i$'s that correspond to atria also cluster.
+Thus, we can determine the average ventricle and atrial peak by finding the centers of these clusters.  To do this,
+we cluster the peaks in $\mathbf{P}$ using a standard two cluster k-means algorithm~\cite{k-means}.  
 We identify the ventricular cluster by choosing the corresponding mean 
 with a greater height to width ratio, since
-ventricular peaks are generally taller and thinner than atrial peaks. Let $C_V$ and $C_A$
+ventricular peaks are generally taller and thinner. Let $C_V$ and $C_A$
 be the centers of the ventricular and atrial clusters 
-respectively. The algorithm then stores the ventricular
+respectively. Since $C_V$ and $C_A$ essentially describe the average ventricular and atrial beat, the x-coordinates of the centers will give the average widths for ventricles and atria. The algorithm then stores the ventricular
 peak width (\VPW) and atrial peak width (\APW) as the
-rounded width term of the centers as follows:
-\begin{equation*}
-	\VPW{}=C_V\{1\} \text{ and } \APW{}=V_A\{1\}
-\end{equation*}
-An illustration of how k-means clusters the
-peaks $\mathbf{P}$ into atrial and ventricular peaks and
-determines the resulting centroids $C_V$ and $C_A$ can be
-found in  \figurename~\ref{fig:kmeans}.
+rounded width term, or x-coordinate, of the centers $C_V$ and $C_A$ respectively.
+%\begin{equation*}
+%	\VPW{}=C_V\{1\} \text{ and } \APW{}=V_A\{1\}.
+%\end{equation*}
+%An illustration of how k-means clusters the
+%peaks $\mathbf{P}$ into atrial and ventricular peaks and
+%determines the resulting centroids $C_V$ and $C_A$ can also be
+%found in  \figurename~\ref{fig:kmeans}.
 
 
 \begin{figure}
@@ -538,7 +544,7 @@ found in  \figurename~\ref{fig:kmeans}.
 			\addplot+[only marks, mark=*, mark size=1pt] table[x = x, y = y, col sep=comma]{kmeans-atria.csv} ;
 			\addplot+[only marks, mark=x, color=blue, mark size=5pt] coordinates {(8.5,659.86)};
 			\addplot+[only marks, mark=x, color=red, mark size=5pt] coordinates {(15.341,298.31)};
-			\legend{Ventricles, Atria, $C_V$, $C_A$}
+			\legend{Ventricular $P_i$, Atrial $P_i$, $C_V$, $C_A$}
 		\end{axis}
 	\end{tikzpicture}
 	\caption{
@@ -549,39 +555,35 @@ found in  \figurename~\ref{fig:kmeans}.
 Note that the height that we use as a peak feature in
 this portion of the algorithm does not correspond to the
 actual values of \APH{} and \VPH{} in the original signal
-$f[n]$. This `height' is the maximum height of the peak
+$f_n$. This `height' is the maximum height of the peak
 above the portions of the peak during which its
 value is most rapidly increasing or decreasing. 
 In contrast, \APH{} and \VPH{} are the median height above the baseline value of 0.
 There is no simple relationship between the two.
 
-\section{Ventricular and Atrial Peak Height (\VPH{} and \APH{}) Learning}
+\section{Ventricular and Atrial Peak Height Learning}
 After learning \VPW{} and \APW{}, we proceed on the
-same segment of CES to learn the ventricular and atrial peak heights: \VPH{} and \APH{}. In
-the following section, we give the intuition behind the
-algorithm and detail our approach.
+same segment of CES to learn the ventricular and atrial peak heights: \VPH{} and \APH{}.
 
 \subsection{Overarching Intuition for Learning \VPH{} and \APH{}}
-Again, consider $f[n]$. The basic strategy of the peak
+Again, consider $f_n$. The basic strategy of the peak
 height threshold learning is to look for a large range of
 thresholds that detects the same number of ventricular beats in
-$f[n]$. This idea follows from the observation that there
+$f_n$. This idea follows from the observation that there
 is typically a wide range of thresholds that are high
 enough to exclude the lower (typically atrial) beats but
 low enough to detect each of the higher (typically
-ventricular) beats. As the algorithm tries thresholds
-lower than that range, it starts to detect lower beats, and
-as it tries thresholds higher than that range, it stops
-detecting some of the higher beats, so the number of
-detected beats begins to change. In the range, however,
+ventricular) beats. Thresholds
+lower than that range will detect more beats, and
+thresholds higher than that range will detect less beats. In the previously described range, however,
 the number of detected beats is constant.
 
-Define the function 
-\begin{multline*}
-	\beta(\tau) = \\\text{Number of beats detected in } f[n] \text{ using } \tau \text{ as a threshold}
-\end{multline*}
-and observe the key property that $\beta(\tau)$ is monotonically non-increasing for reasonable values of $\tau$. 
-The only way that increasing the required threshold can increase the number of beats is if the threshold were so low that two adjacent beats were counted as one, but this only occurs at thresholds that are ignored by the algorithm.
+We define the function $\beta(\tau)$ to be the number of beats detected in $f_n$ using $\tau$ as a threshold.
+%\begin{multline*}
+%	\beta(\tau) = \\\text{Number of beats detected in } f_n \text{ using } \tau \text{ as a threshold}
+%\end{multline*}
+Since $\beta(\tau)$ is a monotonically non-increasing for reasonable values of $\tau$, 
+the only way that increasing the required threshold can increase the number of beats is if the threshold were so low that two adjacent beats were counted as one, but this only occurs at thresholds that are ignored by the algorithm.
 An example of $\beta(\tau)$ is illustrated in \figurename~\ref{fig:beats}.
 
 The height threshold learning algorithm is effectively a search algorithm for the longest and flattest
@@ -620,9 +622,9 @@ between a minimum and maximum threshold ($\tau_{min}, \tau_{max}$).  The algorit
 $\beta(\tau_i)$ for each $i$, and adjusts the minimum and
 maximum thresholds for the next iteration based on the
 results.
-We normally take $N=20$.
+After testing, we found taking $N=20$ yielded the best results.
 For the first iteration, we set
-$\tau_{min} = 0$ and $\tau_{max} = \max f[n]$. 
+$\tau_{min} = 0$ and $\tau_{max} = \max f_n$. 
 To choose the minimum and maximum thresholds in
 the next round, we first eliminate any thresholds $\tau_i$
 such that $\beta(\tau_i)$ is biologically infeasible. 
@@ -631,7 +633,7 @@ Note that $\beta(\tau_i)$ is not natively computed in the unit of beats per minu
 
 Then we define a maximal flat interval $[i,j]$ with $i<j$ to be a pair of indices that satisfies the following conditions:
 \begin{equation*}
-	\beta(\tau_i) = \beta(\tau_j),\quad \beta(\tau_{i-1}) \ne \beta(\tau_i),\quad \beta(\tau_j) \ne \beta(\tau_{j+1})
+	\beta(\tau_i) = \beta(\tau_j),\quad \beta(\tau_{i-1}) \ne \beta(\tau_i),\quad \beta(\tau_j) \ne \beta(\tau_{j+1}).
 \end{equation*}
 Because of the monotonicity of $\beta(\tau)$, the first condition is necessary and sufficient for the flatness property.
 The second and third conditions ensure that $[i,j]$ is maximal.
@@ -647,7 +649,7 @@ Set $i=\argmin_{i} |\beta(\tau_i) - \beta(\tau_{i-1})|$, and  $\tau_{max} = \tau
 
 After 3 recursive refinement iterations, define the ventricular peak height (\VPH{}) to be the midpoint of the flat interval, i.e.
 \begin{equation*}
-	\VPH{}=\frac{\tau_{min}+\tau_{max}}{2}
+	\VPH{}=\frac{\tau_{min}+\tau_{max}}{2}.
 \end{equation*}
 
 Finally, after computing the ventricular thresholds,
@@ -655,10 +657,10 @@ data near the detected ventricular peaks is replaced with
 zeros, and the entire algorithm in re-run to detect the
 atrial threshold, \APH{}.
 
-\subsection{Precise Specification of $\beta(\tau)$ using our Proposed Beat Detection Algorithm}
+\subsection{Precise Specification of $\beta(\tau)$}
 Our `flat-finding' algorithm to determine \APH{} and
 \VPH{} relies entirely on $\beta(\tau)$, 
-the number of beats that occur in $f[n]$ using
+the number of beats that occur in $f_n$ using
 $\tau$ to identify the beats. In order to calculate the
 number of beats that occur based on threshold, we use
 an algorithm that draws heavily from the beat
@@ -671,29 +673,29 @@ Notice how this portion of the algorithm uses parameters computed previously in 
 Next, define the sequence:
 
 \begin{equation*}
-	q_{\tau}[n]=\left\{ 
+	q_n=\left\{ 
 		\begin{array}{lr}
-			1 & \text{if } f[n] > \tau \\
+			1 & \text{if } f_n > \tau \\
 			0 & \text{otherwise}\\
 		\end{array}
 		\right.
 \end{equation*}
-$q_{\tau}[n]$ indicates where in $f[n]$ a beat could
+$q_n$ indicates where in $f_n$ a beat could
 have occurred. We then use the intuition that for a beat
 to occur, it must have been about as long as $w$ in time.
 Thus, to compute $\beta(\tau)$, i.e. the number of
-beats that occur in $f[n]$, we first compute
+beats that occur in $f_n$, we first compute
 \begin{equation*}
-	b_{\tau}[n]=\left\{ 
+	b_n=\left\{ 
 		\begin{array}{lc}
-			1 & \text{if } \left(\sum_{i=0}^{w} q_{\tau}[n-i] \right) > w/2 \\
+			1 & \text{if } \left(\sum_{i=0}^{w} q_{n-i} \right) > w/2 \\
 			0 & \text{otherwise}
 		\end{array}
 		\right.
 \end{equation*}
-Essentially, $b[n]$ indicates which samples of $f[n]$ are part of a beat, according to $\tau$.
-Finally, we define $\beta(\tau)$ to be the number of rising edges in the sequence $beats[n]$, 
-i.e. the number of $n$ such that $b[n] = 1, b[n-1] = 0$. % ???: Discuss the adjustment for extra long beats?
+Essentially, $b_n$ indicates which samples of $f_n$ are part of a beat, according to $\tau$.
+Finally, we define $\beta(\tau)$ to be the number of rising edges in the sequence $b_n$, 
+i.e. the number of $n$ such that $b_n = 1, b_n = 0$. % ???: Discuss the adjustment for extra long beats?
 
 After learning parameters, we also use essentially this same algorithm to detect beats in real-time.
 To detect ventricular beats, set $w$ and $\tau$ to \VPW{} and \VPH{} respectively.
@@ -726,7 +728,7 @@ layout can be found in \figurename~\ref{fig:fpga}.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.7\columnwidth]{fpga.png}
-	\caption{ASIC Hardware Design of the algorithm implementation on the FPGA}
+	\caption{ASIC Hardware Design of the algorithm implementation on the FPGA.}
 	\label{fig:fpga}
 \end{figure}
 
@@ -735,8 +737,8 @@ Since pacemakers take analog signals as input,
 we also wanted to make sure that our implementation on the
 FPGA could interface with real analog signals.
 In order to do this, we designed a preprocessor board that is
-capable of amplifying and cleaning electrical activity directly from a heart.
-The cleaned signal can then be properly 
+capable of amplifying and filtering electrical activity directly from a heart.
+The filtered signal can then be properly 
 digitized and used as input to the algorithm implementation
 on the FPGA. A design drawing of our board, which
 draws heavily from ideas in~\cite{analog-adcs}, 
@@ -745,7 +747,7 @@ can be seen in \figurename~\ref{fig:schematic}.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.9\columnwidth]{schematic.pdf}
-	\caption{Schematic for preprocessor circuit that senses and cleans analog data from the heart}
+	\caption{Schematic for preprocessor circuit that senses and filters analog data from the heart.}
 	\label{fig:schematic}
 \end{figure}
 
@@ -762,14 +764,12 @@ in the signal. After this stage, the non-inverting amplifier
 amplifies the output of the instrumentation amplifier by
 16x. Finally, there is a 3 stage low pass filter that has a
 cutoff frequency at 150 Hz and a gain smaller than -40dB 
-starting at 300 Hz. All the chips and op amps are
-powered with a +/- 3.3 rail voltage.
+starting at 300 Hz. 
 
 \section{Testing and Results}
 We validated our ventricular and atrial parameter
 learning algorithm and our overarching hardware system
-with two separate experiments. The following sections
-will describe both tests separately.
+with two separate experiments.
 
 \subsection{Ventricular and Atrial Parameter Learning Validation}
 In Sections II and III of this paper, we presented an
@@ -786,13 +786,13 @@ of the heart. Each electrode sensed electrical activity
 directly from the heart for one minute, digitized the
 signal at a 1 kHz sampling rate, and stored the signal as
 a .csv file. This was done for 3 animals, giving us a total
-of 51 channels.
+of 51 channels, where each channel is one minute of cardiac electrical signal.
 Each channel resembles the signal that a real pacemaker uses as input.
 
-We then applied our algorithm to data
+We then applied our algorithm to the minute long signal
 from each of the 51 channels separately in order to learn
 \APW{}, \VPW{}, \APH{}, and \VPH{} specifically for each
-channel. Next, using the peak detection algorithm
+signal. Next, using the peak detection algorithm
 described in Section III: C, we performed atrial and
 ventricular peak detection on each of the 51 channels
 using the learned channel-specific parameters.
@@ -833,7 +833,7 @@ found that the algorithm learned \VPW{} and \VPH{} correctly
 for all 51 channels and \APW{} and \APH{} correctly for 50 of 
 the channels.
 
-\subsection{Hardware Implementation Validation through a Langendorff Heart}
+\subsection{System Validation through a Langendorff Heart}
 In order to validate the hardware implementation of
 our algorithm described in Section IV, we connected our 
 system to a Langendorff heart as described by~\cite{langendorff}.
