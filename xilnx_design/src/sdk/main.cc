@@ -28,6 +28,7 @@
 #define TMR_DEVICE_ID			XPAR_TMRCTR_0_DEVICE_ID
 #define INTC_TMR_INTERRUPT_ID 	XPAR_FABRIC_AXI_TIMER_0_INTERRUPT_INTR
 #define TMR_LOAD				0xFFFE7961 // Yields 1ms interrupt
+//Period = ( 2^32-1 – TMR_LOAD + 2) * Clk Period
 
 //----------------------------------------------------
 // PROTOTYPE FUNCTIONS
@@ -40,79 +41,35 @@ static int Timer_btn_setup(void);
 static int channel_init(XDecision * sdc0, XDecision * sdc1, XDecision * sdc2);
 
 static void run_params(char start, char lim);
+static void chan_param(char i);
+static unsigned short read_chan(XDecision *sdc0, short dat);
 
-
+//hardware for btns output gpio and interrupt system
 XGpio   BTNInst;
 XGpio stim;
 XScuGic INTCInst;
+
+//3 channels of sense/stim hardware
 XDecision Xsdc0, Xsdc1, Xsdc2;
+//container for button read
 static int btn_value;
+//hardware for timer system
 XTmrCtr TMRInst;
+//keep track of time
 unsigned int seconds = 0;
 unsigned long long ms = 0;
+
+//results storage and centered results storage
 static unsigned short results[3][PARAM_LEARN_SIZE];
 static short cen[3][PARAM_LEARN_SIZE];
+//parameters from learning
 int alen[3], vlen[3], athresh[3], vthresh[3], aflip[3], vflip[3];
+
+//flag stating that a milisecond has passed
 volatile bool newms = false;
+//offsets to make sure adcs work
 unsigned long offset[3] = {0,0,0};
-char mode = 0;
 
-
-static void chan_param(char i)
-{
-	XDecision * sdc0;
-	if(i == 2)
-			sdc0 = &Xsdc2;
-	else if(i == 1)
-			sdc0 = &Xsdc1;
-	else if(i ==0)
-			sdc0 = &Xsdc0;
-	else
-		return;
-	XDecision_Set_reset_A_V(sdc0, 0);
-	XDecision_Set_reset_V_V(sdc0, 0);
-	XDecision_Set_reset_params_V(sdc0, 1);
-	XDecision_Set_vthresh(sdc0, vthresh[i]);
-	XDecision_Set_athresh(sdc0, athresh[i]);
-	XDecision_Set_v_flip(sdc0, vflip[i]);
-	XDecision_Set_a_flip(sdc0, aflip[i]);
-	XDecision_Set_a_length(sdc0, alen[i]);
-	XDecision_Set_v_length(sdc0, vlen[i]);
-	XDecision_Set_data(sdc0, 0);
-
-	if (XDecision_IsReady(sdc0))
-	{
-		XDecision_Start(sdc0);
-		do
-		{
-
-		}while(!XDecision_IsReady(sdc0));
-	}
-}
-
-static unsigned short read_chan(XDecision *sdc0, short dat)
-{
-	short result;
-	XDecision_Set_reset_A_V(sdc0, 0);
-	XDecision_Set_reset_V_V(sdc0, 0);
-	XDecision_Set_reset_params_V(sdc0, 0);
-	XDecision_Set_vthresh(sdc0, 0);
-	XDecision_Set_athresh(sdc0, 0);
-	XDecision_Set_v_flip(sdc0, 0);
-	XDecision_Set_a_flip(sdc0, 0);
-	XDecision_Set_a_length(sdc0, 0);
-	XDecision_Set_v_length(sdc0, 0);
-	XDecision_Set_data(sdc0, dat);
-	if (XDecision_IsReady(sdc0))
-	{
-		XDecision_Start(sdc0);
-		do
-		{
-			result = XDecision_Get_return(sdc0);
-		}while(!XDecision_IsReady(sdc0));
-	}
-	return (unsigned short)result;
-}
 
 int main()
 {
@@ -156,6 +113,8 @@ int main()
 	xil_printf("Beginning to gather data on 3 channels, after 10s parameter learning will be performed on channels 0, 1, and 2\r\n");
 	newms = false;
 	int i = 0;
+
+	//for 10 s, store data and record it
 	while(i < PARAM_LEARN_SIZE)
 	{
 		if(newms)
@@ -171,10 +130,12 @@ int main()
 		}
 	}
 
+	//calculate the offset for each channel
 	offset[0] = offset[0]/PARAM_LEARN_SIZE;
 	offset[1] = offset[1]/PARAM_LEARN_SIZE;
 	offset[2] = offset[2]/PARAM_LEARN_SIZE;
 
+	//center each channel's data
 	for(i = 0; i < PARAM_LEARN_SIZE;i++)
 	{
 		cen[0][i] = (short)((int)results[0][i] - offset[0]);
@@ -185,6 +146,7 @@ int main()
 
 	xil_printf("-- Data Gathering Complete! --\r\n");
 
+	//run parameter learnign and update hardware
 	run_params(0,3);
 
 	chan_param(0);
@@ -192,14 +154,9 @@ int main()
 	chan_param(2);
 
 	xil_printf("-- Parameter learning complete! Press btn 1 to start pacing--\r\n");
-	XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, 0x003F);
-	unsigned long long led_dur = ms;
-
-	while(ms <  led_dur + 1000 && btn_value != 1);
-
-	XGpio_DiscreteClear(&stim, GPIO_CHANNEL, 0xFFFF);
 	while(btn_value !=1);
 
+	//pacing code
 	unsigned short r[3];
 	unsigned long long on_a_peak = 0, on_v_peak = 0, on_v_stim = 0, on_a_stim = 0, last_a_stim = 0, last_v_stim = 0;
 	u32 led_state = 0;
@@ -307,11 +264,73 @@ int main()
 			XGpio_DiscreteWrite(&stim, GPIO_CHANNEL, led_state);
 		}
 	}
+	//we never reach this point
 	xil_printf("-- End of the Program --\r\n");
 
 	return 0;
 }
 
+
+//reads the channel whose address is passed in
+static unsigned short read_chan(XDecision *sdc0, short dat)
+{
+	short result;
+	XDecision_Set_reset_A_V(sdc0, 0);
+	XDecision_Set_reset_V_V(sdc0, 0);
+	XDecision_Set_reset_params_V(sdc0, 0);
+	XDecision_Set_vthresh(sdc0, 0);
+	XDecision_Set_athresh(sdc0, 0);
+	XDecision_Set_v_flip(sdc0, 0);
+	XDecision_Set_a_flip(sdc0, 0);
+	XDecision_Set_a_length(sdc0, 0);
+	XDecision_Set_v_length(sdc0, 0);
+	XDecision_Set_data(sdc0, dat);
+	if (XDecision_IsReady(sdc0))
+	{
+		XDecision_Start(sdc0);
+		do
+		{
+			result = XDecision_Get_return(sdc0);
+		}while(!XDecision_IsReady(sdc0));
+	}
+	return (unsigned short)result;
+}
+
+// sets the channel parameters for the given  channel number
+static void chan_param(char i)
+{
+	XDecision * sdc0;
+	if(i == 2)
+			sdc0 = &Xsdc2;
+	else if(i == 1)
+			sdc0 = &Xsdc1;
+	else if(i ==0)
+			sdc0 = &Xsdc0;
+	else
+		return;
+	XDecision_Set_reset_A_V(sdc0, 0);
+	XDecision_Set_reset_V_V(sdc0, 0);
+	XDecision_Set_reset_params_V(sdc0, 1);
+	XDecision_Set_vthresh(sdc0, vthresh[i]);
+	XDecision_Set_athresh(sdc0, athresh[i]);
+	XDecision_Set_v_flip(sdc0, vflip[i]);
+	XDecision_Set_a_flip(sdc0, aflip[i]);
+	XDecision_Set_a_length(sdc0, alen[i]);
+	XDecision_Set_v_length(sdc0, vlen[i]);
+	XDecision_Set_data(sdc0, 0);
+
+	if (XDecision_IsReady(sdc0))
+	{
+		XDecision_Start(sdc0);
+		do
+		{
+
+		}while(!XDecision_IsReady(sdc0));
+	}
+}
+
+
+//runs parameter learning  on the channels [start,lim)
 static void run_params(char start, char lim)
 {
 	unsigned int tt, i;
