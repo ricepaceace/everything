@@ -47,7 +47,7 @@ function [ v_height, a_height, v_flip, a_flip, v_length, a_length, v_first ] = L
         ndata = data;
         t_blank = 100; l_blank = 100; %how many samples to zero out on either side
         %pick exact threshold from the middle of the range according to mid_finders
-        thresh = sum(squeeze(cutoffs(first(f),f,:)).*mid_finders(first(f),:));
+        thresh = sum(squeeze(cutoffs(first(f),f,:)).*mid_finders(first(f),:)');
         [~, rising_edges, falling_edges] = CountPeaks(flip(f)*data > thresh, lengths(first(f),f)); %find peak times
         %zero out surrounding region
         for i = 1:length(rising_edges)

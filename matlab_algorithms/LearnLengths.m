@@ -97,7 +97,7 @@ for flip = [+1 -1]
     
     % if the two clusters centers are too close, or there too few in either
     % cluster, then they are probably all ventricles
-    if (abs(C(1,1)-C(2,1))*mean(peak_lengths)<2.0 || numberOfNonZeros(idx==1)<length(idx)/5 || numberOfNonZeros(idx==2)<length(idx)/5)
+    if (abs(C(1,1)-C(2,1))*mean(peak_lengths)<2.0 || sum(idx==1)<length(idx)/5 || sum(idx==2)<length(idx)/5)
         v_lengths = [v_lengths round(mean(peak_lengths))];
         a_lengths = [a_lengths 0];
         first = [first 1];
@@ -116,8 +116,8 @@ for flip = [+1 -1]
         plot(peak_lengths(idx==vind),peak_heights(idx==vind),'r.','MarkerSize',12)
         plot(peak_lengths(idx==3-vind),peak_heights(idx==3-vind),'b.','MarkerSize',12)
 
-        plot(C(1,1)*mean(peak_lengths),C(1,2)*mean(peak_heights),'rx','MarkerSize',15,'LineWidth',3)
-        plot(C(2,1)*mean(peak_lengths),C(2,2)*mean(peak_heights),'bx','MarkerSize',15,'LineWidth',3)
+        plot(C(vind,1)*mean(peak_lengths),C(vind,2)*mean(peak_heights),'rx','MarkerSize',15,'LineWidth',3)
+        plot(C(3-vind,1)*mean(peak_lengths),C(3-vind,2)*mean(peak_heights),'bx','MarkerSize',15,'LineWidth',3)
         hlegend = legend('ventricles','atria','Cv','Ca','FontSize',20);
         title('K-means discrimination between peak types','Fontsize',18)
         set(hlegend,'FontSize',20)
