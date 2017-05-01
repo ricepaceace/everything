@@ -1,0 +1,1 @@
+This folder contains all the source files needed to build our project using the xilinx workflow. The source files for each tool in the toolchain (Vivado HLS, Vivado, , Xilinx SDK) are in the respectively named folders

@@ -1,0 +1,22 @@
+This directory contains all the hardware design files needed to build our pacemaker hardware on the Zedboard FPGA development board. It primarily contains pmod definitions which can be imported into the Vivado IP catalog, and ocntraint files defining the FPGA pin connections that expose the necessary IO pins for our pacemaker. In general, here is the vivado design flow process for our design.
+
+1.	Import the pcore xml/zip files from all of the subdirectories in the relevent 3 folders. Import the legacy pcore xml files first
+
+2.	Add the following ip blocks to a vivado block design (where N is the number of channels you wish to implement)
+	N Decision channel pcores
+	N axi_max_11100 adc pcores
+	1 5bit gpio using the default configuration for the buttons
+	1 (4*N) bit gpio output set to a custom configuration
+	1 axi timer
+	1 zynq processor core
+	1axi concat block for all the interrupt signals
+
+3.	Add the relevent constraint files for the number of channel you are using
+
+4.	Set the zynq processor settings as desired for your project.
+
+5.	Run connection automation
+
+6.	Run synthesis and implementation, thenn generate bitstream
+
+7.	Export the hardware (including bitstream) and launch SDK from the file menu

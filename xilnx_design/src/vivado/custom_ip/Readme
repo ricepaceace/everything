@@ -1,0 +1,1 @@
+In this directory is the zip file that must be imported into the vivado ip catalog in order to use our custom sening and stimulation hardware. After the pcore is imported, the hardware must be added for each channel in the pacemaker. At this point ,the connection automation of vivado should connect the axi bus as needed

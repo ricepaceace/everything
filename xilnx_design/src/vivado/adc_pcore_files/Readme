@@ -1,0 +1,1 @@
+This subdirectory contains a pcore for the adc hardware that must be included for each channel, in order to successfully communicate with the CAMBELL adc pmod voards. The mappings for the external pins are included in the constraint files soruce code

@@ -1,8 +1,0 @@
-19:57:43 **** Incremental Build of configuration Debug for project heart_demo ****
-make pre-build main-build 
-a9-linaro-pre-build-step
- 
-make: Nothing to be done for 'main-build'.
-
-19:57:44 Build Finished (took 74ms)
-

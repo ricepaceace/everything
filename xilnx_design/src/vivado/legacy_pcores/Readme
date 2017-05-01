@@ -1,0 +1,1 @@
+The 2 subdirectories here contain pre-compiled library cores needed for the legacy portions of the ADC p ocres to work correctly. Simply import these cores into vivado upon initially creating your project in order to get the adc cores to work correctly. You never have to add them to your block design in any manner.

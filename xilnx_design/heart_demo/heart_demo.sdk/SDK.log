@@ -1,0 +1,28 @@
+03:17:07 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle4/heart_demo/heart_demo.sdk/temp_xsdb_launch_script.tcl
+03:17:11 INFO  : XSDB server has started successfully.
+03:17:11 INFO  : Processing command line option -hwspec /home/greg/everything/xilnx_design/cycle4/heart_demo/heart_demo.sdk/design_1_wrapper.hdf.
+03:17:59 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+03:17:59 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent Zed 210248571381" && level==0} -index 1' command is executed.
+03:18:01 INFO  : FPGA configured successfully with bitstream "/home/greg/everything/xilnx_design/cycle4/heart_demo/heart_demo.sdk/design_1_wrapper_hw_platform_0/design_1_wrapper.bit"
+03:18:22 INFO  : ps7_init is completed.
+03:18:22 INFO  : ps7_post_config is completed.
+03:18:22 INFO  : Processor reset is completed for ps7_cortexa9_0
+03:24:43 INFO  : Processor reset is completed for ps7_cortexa9_0
+03:25:25 ERROR : (XSDB Server)/opt/Xilinx/SDK/2016.2/bin/loader: line 164: 22893 Segmentation fault      (core dumped) "$RDI_PROG" "$@"
+
+03:25:25 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle4/heart_demo/heart_demo.sdk/temp_xsdb_launch_script.tcl
+03:25:26 INFO  : XSDB server has started successfully.
+03:26:02 INFO  : Inferring section assignments and sizes from elf file: /home/greg/everything/xilnx_design/cycle4/heart_demo/heart_demo.sdk/heart/Debug/heart.elf
+03:26:11 INFO  : Successfully generated /home/greg/everything/xilnx_design/cycle4/heart_demo/heart_demo.sdk/heart/src/lscript.ld.
+03:26:11 INFO  : Applying linker script to all configurations of project heart.
+03:26:11 INFO  : Setting rebuild state to true for all configurations of project heart.
+03:26:31 INFO  : Invoking Bootgen: bootgen -image heart.bif -arch zynq -o /home/greg/everything/xilnx_design/cycle4/heart_demo/heart_demo.sdk/heart/bootimage/BOOT.mcs
+03:26:31 INFO  : Creating new bif file /home/greg/everything/xilnx_design/cycle4/heart_demo/heart_demo.sdk/heart/bootimage/heart.bif
+03:26:32 INFO  : Bootgen command execution is done.
+03:50:21 ERROR : Unexpected error while parsing XMD response ￿: com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: invalid number or unquoted string near 
+08:50:45 INFO  : Launching XSDB server: xsdb -n -interactive /home/greg/everything/xilnx_design/cycle4/heart_demo/heart_demo.sdk/temp_xsdb_launch_script.tcl
+08:50:46 INFO  : XSDB server has started successfully.
+08:50:50 INFO  : Processing command line option -hwspec /home/greg/everything/xilnx_design/cycle4/heart_demo/heart_demo.sdk/design_1_wrapper.hdf.
+08:50:51 INFO  : Checking for hwspec changes in the project design_1_wrapper_hw_platform_0.
+09:48:17 INFO  : Invoking Bootgen: bootgen -image heart.bif -arch zynq -o /home/greg/everything/xilnx_design/cycle4/heart_demo/heart_demo.sdk/heart/bootimage/BOOT.mcs -w on
+09:48:18 INFO  : Bootgen command execution is done.
