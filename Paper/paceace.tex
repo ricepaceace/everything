@@ -512,7 +512,8 @@ The width and height of the peak will then be used as features.  Thus, we define
 	P_i = \left\{n_i-m_i, \left( \max\limits_{m_i\le j\le n_i} f_j \right) - \frac{f_{n_i}+f_{m_i}}{2} \right\}.
 \end{equation*}
 Let $\mathbf{P} = [P_1, P_2, \dots P_s]$ be peaks characterized by their widths and heights from 10 seconds of cardiac electrical signal.
-Now consider \figurename~\ref{fig:kmeans} where all of the $P_i$'s are plotted as points, with the $x$-axis as peak width and the $y$-axis as peak height.
+Now consider \figurename~\ref{fig:kmeans} where all of the $P_i$'s are plotted as points, with the $x$-axis as peak width, related to $w_v$ and $w_a$, and the $y$-axis as height, unrelated to 
+$h_v$ and $h_a$ (We explain the difference in the following paragraph).
 With the intuition that ventricular peaks are generally taller and thinner than atrial peaks~\cite{cardiac-cycle},
 $P_i$'s that correspond to ventricles cluster together.  Likewise, $P_i$'s that correspond to atria also cluster.
 Thus, we can determine the average ventricle and atrial peak by finding the centers of these clusters.  To do this,
@@ -769,9 +770,6 @@ cutoff frequency at 150 Hz and a gain smaller than -40dB
 starting at 300 Hz. 
 
 \section{Testing and Results}
-We validated our ventricular and atrial parameter
-learning algorithm and our overarching hardware system
-with two separate experiments.
 
 \subsection{Ventricular and Atrial Parameter Learning Validation}
 In Sections II and III of this paper, we presented an
@@ -831,8 +829,8 @@ majority of channels. In fact, most of the atrial false negative
 errors are from our algorithm learning incorrect
 atrial parameters for one channel. When we manually
 looked at the values of \APW{}, \VPW{}, \APH{}, and \VPH{}, we
-found that the algorithm learned \VPW{} and \VPH{} correctly
-for all 51 channels and \APW{} and \APH{} correctly for 50 of 
+found that the algorithm learned \VPW{} and \VPH{} to correctly detect ventricular beats
+for all 51 channels and learned \APW{} and \APH{} to correctly detect atrial beats for 50 of 
 the channels.
 
 \subsection{System Validation through a Langendorff Heart}

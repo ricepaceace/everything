@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  30 APR 2017 08:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  30 APR 2017 21:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -800,10 +800,10 @@ e
 Package pgfplots notification 'compat/show suggested version=true': you might b
 enefit from \pgfplotsset{compat=1.13} (current compat level: 1.7).
 
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 314.
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 316.
 PGFPlots: reading {singlebeat.csv}
 
-Overfull \hbox (1.22261pt too wide) in paragraph at lines 421--424
+Overfull \hbox (1.22261pt too wide) in paragraph at lines 423--426
  [][] 
  []
 
@@ -811,9 +811,6 @@ Overfull \hbox (1.22261pt too wide) in paragraph at lines 421--424
 
 
 ]
-Missing character: There is no â in font cmr10!
-Missing character: There is no € in font cmr10!
-Missing character: There is no ™ in font cmr10!
 PGFPlots: reading {fwr.csv}
 PGFPlots: reading {fwr.csv}
 PGFPlots: reading {fwr.csv}
@@ -1023,20 +1020,14 @@ PGFPlots: reading {beats.csv}
  [3] <fpga.png, id=33, 498.36188pt x 497.60907pt>
 File: fpga.png Graphic file (type png)
  <use fpga.png>
-Package pdftex.def Info: fpga.png used on input line 730.
+Package pdftex.def Info: fpga.png used on input line 733.
 (pdftex.def)             Requested size: 176.39923pt x 176.13234pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
 
 <schematic.pdf, id=35, 456.52448pt x 214.28818pt>
 File: schematic.pdf Graphic file (type pdf)
  <use schematic.pdf>
-Package pdftex.def Info: schematic.pdf used on input line 749.
+Package pdftex.def Info: schematic.pdf used on input line 752.
 (pdftex.def)             Requested size: 226.79846pt x 106.45717pt.
-
-Underfull \vbox (badness 2245) has occurred while \output is active []
-
  [4 <./fpga.png> <./schematic.pdf>] (./paceace.bbl)
 
 ** Conference Paper **
@@ -1053,7 +1044,7 @@ Before submitting the final camera ready copy, remember to:
 Here is how much of TeX's memory you used:
  25815 strings out of 493014
  677666 string characters out of 6133351
- 1055978 words of memory out of 5000000
+ 1058243 words of memory out of 5000000
  28906 multiletter control sequences out of 15000+600000
  42243 words of font info for 87 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
@@ -1077,7 +1068,7 @@ e/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/
 -dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2016/texmf-dist/fon
 ts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/u
 rw/times/utmri8a.pfb>
-Output written on paceace.pdf (5 pages, 1108141 bytes).
+Output written on paceace.pdf (5 pages, 1109253 bytes).
 PDF statistics:
  110 PDF objects out of 1000 (max. 8388607)
  79 compressed objects within 1 object stream
