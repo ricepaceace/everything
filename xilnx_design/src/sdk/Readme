@@ -1,0 +1,1 @@
+This folder contains all the source files for the software portion of our design that will run on the arm core. Any correctly set up project including these files should behave as desired. However, this version is set up for 3 channels, and that is hard coded in some places, so undestanding of the system is required in order to change that in the soure code.

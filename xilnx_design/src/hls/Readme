@@ -1,0 +1,1 @@
+In this directory are the source files needed to synthesize and implement a single channel of the deetection and decision code for both a human  or a rat. The files must be included as soure files and run through vivado HLS to generate a xilinx p core ip block which can then be included in a vivado project.

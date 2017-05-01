@@ -1,0 +1,7 @@
+//arch = zynq; split = false; format = MCS
+the_ROM_image:
+{
+	[bootloader]/home/greg/everything/xilnx_design/cycle4/heart_demo/heart_demo.sdk/heart_fsbl/Debug/heart_fsbl.elf
+	/home/greg/everything/xilnx_design/cycle4/heart_demo/heart_demo.sdk/design_1_wrapper_hw_platform_0/design_1_wrapper.bit
+	/home/greg/everything/xilnx_design/cycle4/heart_demo/heart_demo.sdk/heart/Debug/heart.elf
+}
