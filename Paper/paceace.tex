@@ -297,7 +297,7 @@ Behnaam Aazhang\IEEEauthorrefmark{1}, Joseph Cavallaro\IEEEauthorrefmark{1}, and
 	Rice University, Houston, TX}
 	\IEEEauthorblockA{\IEEEauthorrefmark{3}Department of Cardiology\\
 Texas Heart Institute, Houston, TX}
-	\IEEEauthorblockA{yarefeen@mit.edu, zdeblick@uw.edu, ptaffet@rice.edu, aaz@rice.edu, cavallar@rice.edu}
+	\IEEEauthorblockA{yarefeen@mit.edu, zdeblick@uw.edu, ptaffet@rice.edu, aaz@rice.edu, cavallar@rice.edu, razavi@bcm.edu}
 }
 
 % conference papers do not typically use \thanks and this command
@@ -322,7 +322,7 @@ While beat detection in a Cardiac Electrical
 Signal (CES) is a well-studied problem, we propose a novel
 algorithm for implementation in pacemakers that learns the
 heights and widths of atrial and ventricular peaks from
-processing 10 seconds of cardiac data sampled at 1 kHz. 
+processing a few seconds of cardiac data sampled at 1 kHz. 
 This purely data-driven solution to learn the parameters of atrial
 and ventricular peaks will allow pacemakers to set their own 
 detection parameters and adaptively tune
@@ -355,11 +355,7 @@ heart to illustrate that our algorithm can run in real-time on commodity hardwar
 % no \IEEEPARstart
 Cardiac diseases are the most common cause of death in
 the United States. More than 600,000 people die each year
-due to some form of heart disease~\cite{death-stats}. A healthy heart
-functions through a regular cardiac cycle, where the pacemaking cells
-in the sinoatrial (SA) node of the heart
-generate an electrical signal, which travels from the atria
-down to the ventricles to stimulate heart contraction.
+due to some form of heart disease~\cite{death-stats}.
 Many heart failures result from the heart's inability to
 generate or to conduct these electrical signals
 that stimulate muscle contraction. 
@@ -368,7 +364,6 @@ To combat these forms of heart failure, doctors implant artificial electronic pa
 that stimulate the heart
 to contract artificially through 
 electrical pulses.
-To minimize long-term damage to heart tissue and to maximize battery life, it is important that these pacemakers stimulate when and only when necessary.
 Current pacemakers use the 
 DDDR algorithm to determine whether
 the heart requires stimulation~\cite{basic-pacing}.
@@ -382,20 +377,29 @@ electrical stimulation to the heart.
 Beat detection itself is a well-studied problem, as
 several algorithms have been proposed to identify the
 beats within a cardiac signal~\cite{realtime-qrs, ecg-filter, patient-adaptable}. However, current
-algorithms perform beat detection without distinguishing
-which part of the signal corresponds to the atrial
+algorithms perform beat detection based on sensing from two to three electrical leads on the heart without high resolution
+information distinguishing which part of the signal corresponds to the atrial
 contraction of the heartbeat and which part corresponds to 
-the ventricular contraction of the heartbeat. As a result,
-current pacemakers are often unable to distinguish
-between atrial and ventricular beats.
-Accurate distinction between the two contractions allows for a more effective form of pacing known as
+the ventricular contraction of the heartbeat~\cite{basic-pacing}. 
+Our paper serves as the first iteration of a multiple year long research project that aims to combat this issue by designing
+a pacemaker that utilizes multiple wireless sensors on the heart to both sense and stimulate with unprecedented resolution~\cite{rahmani2016fully}.
+\figurename~\ref{fig:wireless} showcases the ultimate vision of the multiyear research project.
+Additionally, accurate distinction between the two contractions allows for a more effective form of pacing known as
 Cardiac Resynchronization Therapy (CRT)~\cite{multisite-crt}.
 However,  30\% of patients with pacemakers do 
 not respond to CRT implemented by current pacemakers~\cite{multisite-crt}, leading to some of the 600,000 deaths. 
 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.8\columnwidth]{wireless.png}
+	\caption{Wireless micro-devices sensing the heart and communicating with the control unit that will house our algorithm.  Our algorithm will learn beat detection parameters for each wireless micro device.}
+	\label{fig:wireless}
+\end{figure}
+
 \begin{figure}
 	\centering
-	\begin{tikzpicture}
+	\begin{tikzpicture}[thick,scale=0.9, every node/.style={scale=0.6}]
 		\begin{axis}[
 				%title      =,
 				xlabel     = Time (ms),
@@ -426,15 +430,13 @@ not respond to CRT implemented by current pacemakers~\cite{multisite-crt}, leadi
 	Notice that the atrial beat is wider but smaller than the ventricular beat.}
 	\label{fig:singlebeat}
 \end{figure}
-To make beat detection more suitable for CRT,
+To efficiently learn parameters for the multiple wireless sensors and make beat detection more suitable for CRT,
 we propose a learning algorithm that learns the
 height of an atrial peak (\APH), the height of a ventricular
 peak (\VPH), the width of an atrial peak (\APW), and the
 width of a ventricular peak (\VPW) within a signal 
-by processing 10 seconds of data sampled
-at 1 kHz.  We found that 10 seconds of signal was the minimum amount of signal 
-needed to provide enough data for accurate parameter learning.
-\figurename~\ref{fig:singlebeat} shows how these parameters correspond to portions of the cardiac electrical signal.
+by processing a few seconds of data sampled
+at 1 kHz. \figurename~\ref{fig:singlebeat} shows how these parameters correspond to portions of the cardiac electrical signal.
 We use these parameters in atrial and ventricular beat detection to illustrate that our learned parameters can be used to distinguish between atrial and ventricular beats in a signal. 
 Additionally, we implement the algorithm on a Field
 Programmable Gate Array to demonstrate that the
@@ -450,7 +452,8 @@ validates our algorithmic results and hardware system.
 Our algorithm begins by learning the atrial and ventricular widths: \APW{} and \VPW{}.
 
 \subsection{Finding Peak Shaped Patterns in the Signal}
-Let $f_1, f_2, \dots, f_{10000}$ be 10 seconds of CES sampled at 1 kHz.
+Let $f_1, f_2, \dots, f_{N}$ be CES sampled at 1 kHz.
+We choose N = 10000, as we found 10 seconds of CES data provided enough information for parameter learning.
 We begin by computing the weighted time
 difference of $f_n$, denoted $d_n$.
 \begin{equation*}
@@ -484,7 +487,7 @@ which allows for more appropriate feature extraction later on in the algorithm.
 \figurename~\ref{fig:fwr} illustrates the relationship between $f_n, d_n, $ and $r_n$ for a single peak.
 \begin{figure}
 	\centering
-	\begin{tikzpicture}
+	\begin{tikzpicture}[thick,scale=0.9, every node/.style={scale=0.6}]
 		\begin{axis}[
 				%title      =,
 				xlabel     = Time (ms),
@@ -511,7 +514,7 @@ The width and height of the peak will then be used as features.  Thus, we define
 \begin{equation*}
 	P_i = \left\{n_i-m_i, \left( \max\limits_{m_i\le j\le n_i} f_j \right) - \frac{f_{n_i}+f_{m_i}}{2} \right\}.
 \end{equation*}
-Let $\mathbf{P} = [P_1, P_2, \dots P_s]$ be peaks characterized by their widths and heights from 10 seconds of cardiac electrical signal.
+Let $\mathbf{P} = [P_1, P_2, \dots P_s]$ be peaks characterized by their widths and heights from $f_n$.
 Now consider \figurename~\ref{fig:kmeans} where all of the $P_i$'s are plotted as points, with the $x$-axis as peak width, related to $w_v$ and $w_a$, and the $y$-axis as height, unrelated to 
 $h_v$ and $h_a$ (We explain the difference in the following paragraph).
 With the intuition that ventricular peaks are generally taller and thinner than atrial peaks~\cite{cardiac-cycle},
@@ -536,7 +539,7 @@ rounded width term, or x-coordinate, of the centers $C_V$ and $C_A$ respectively
 
 \begin{figure}
 	\centering
-	\begin{tikzpicture}
+	\begin{tikzpicture}[thick,scale=0.9, every node/.style={scale=0.6}]
 		\begin{axis}[
 				%title      =,
 				xlabel     = Peak Length (ms),
@@ -601,7 +604,7 @@ ventricular and atrial heights.
 
 \begin{figure}
 	\centering
-	\begin{tikzpicture}
+	\begin{tikzpicture}[thick,scale=0.8, every node/.style={scale=0.6}]
 		\begin{axis}[
 				title      = $\beta(\tau)$,
 				xlabel     = Threshold (mV),
@@ -620,12 +623,12 @@ ventricular and atrial heights.
 As mentioned in the previous section, computing $\beta(\tau)$ for a given value of $\tau$
 is computationally expensive because it requires computation proportional to the length of the data.
 Instead of computing $\beta(\tau)$ for each possible value of $\tau$, we run several iterations in which
-we pick thresholds $\tau_i$ for $i = 1, 2, \dots, N$ evenly spaced
+we pick thresholds $\tau_i$ for $i = 1, 2, \dots, M$ evenly spaced
 between a minimum and maximum threshold ($\tau_{min}, \tau_{max}$).  The algorithm then computes
 $\beta(\tau_i)$ for each $i$, and adjusts the minimum and
 maximum thresholds for the next iteration based on the
 results.
-After testing, we found taking $N=20$ yielded the best results.
+We found that $M=20$ sampled enough points from $\beta(\tau)$.
 For the first iteration, we set
 $\tau_{min} = 0$ and $\tau_{max} = \max f_n$. 
 To choose the minimum and maximum thresholds in
@@ -730,7 +733,7 @@ An illustration of our ASIC
 layout can be found in \figurename~\ref{fig:fpga}.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=.7\columnwidth]{fpga.png}
+	\includegraphics[width=.3\columnwidth]{fpga.png}
 	\caption{ASIC Hardware Design of the algorithm implementation on the FPGA.}
 	\label{fig:fpga}
 \end{figure}
@@ -749,7 +752,7 @@ can be seen in \figurename~\ref{fig:schematic}.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=.9\columnwidth]{schematic.pdf}
+	\includegraphics[width=1.0\columnwidth]{schematic.pdf}
 	\caption{Schematic for preprocessor circuit that senses and filters analog data from the heart.}
 	\label{fig:schematic}
 \end{figure}
@@ -765,9 +768,8 @@ by 5x. The op amp that feeds back to the REF pin is used to
 remove any DC offset or wandering baseline that exists
 in the signal. After this stage, the non-inverting amplifier
 amplifies the output of the instrumentation amplifier by
-16x. Finally, there is a 3 stage low pass filter that has a
-cutoff frequency at 150 Hz and a gain smaller than -40dB 
-starting at 300 Hz. 
+16x. Finally, we utilize a lowpass filter with
+cutoff frequency at 150 Hz, not related to the 1 kHz sampling rate.
 
 \section{Testing and Results}
 
@@ -820,8 +822,7 @@ Table~\ref{tab:errors} illustrates our results.
 	\end{tabular}
 \end{table}
 
-Our detection error rates are sufficiently low across 
-all 51 channels. Since we performed atrial and
+Since we performed atrial and
 ventricular beat detection based on the parameters that
 our algorithm learned, the algorithm clearly learned
 \APW{}, \VPW{}, \APH{}, and \VPH{} correctly for the vast
@@ -860,8 +861,7 @@ implemented on hardware that correctly learns \APH{},
 can be reliably used to distinguish between atrial and
 ventricular beats in a cardiac electrical signal in real time.
 
-Future work on the algorithm will include
-	incorporating knowledge of the physical location of the sensor (e.g. which chamber) into our parameter learning algorithm.
+Future work on the algorithm will include incorporating knowledge of the physical location of the sensor (e.g. which chamber) into our parameter learning algorithm.
 We would also like to validate further our algorithm by testing it on data that responds to pacing decisions (e.g. testing during a live animal cardiac study).
 Additionally, we plan to utilize the FPGA implementation of
 the algorithm to tape out an application specific

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  30 APR 2017 21:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  1 MAY 2017 11:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -801,16 +801,16 @@ Package pgfplots notification 'compat/show suggested version=true': you might b
 enefit from \pgfplotsset{compat=1.13} (current compat level: 1.7).
 
 LaTeX Font Info:    Calculating math sizes for size <11> on input line 316.
+<wireless.png, id=4, 446.66875pt x 312.16624pt>
+File: wireless.png Graphic file (type png)
+ <use wireless.png>
+Package pdftex.def Info: wireless.png used on input line 395.
+(pdftex.def)             Requested size: 201.60077pt x 140.89743pt.
 PGFPlots: reading {singlebeat.csv}
-
-Overfull \hbox (1.22261pt too wide) in paragraph at lines 423--426
- [][] 
- []
-
-[1{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+ [1{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
-]
+ <./wireless.png>]
 PGFPlots: reading {fwr.csv}
 PGFPlots: reading {fwr.csv}
 PGFPlots: reading {fwr.csv}
@@ -1017,17 +1017,17 @@ PGFPlots: reading {kmeans-ventricles.csv}
 PGFPlots: reading {kmeans-atria.csv}
 [2]
 PGFPlots: reading {beats.csv}
- [3] <fpga.png, id=33, 498.36188pt x 497.60907pt>
+ [3] <fpga.png, id=36, 498.36188pt x 497.60907pt>
 File: fpga.png Graphic file (type png)
  <use fpga.png>
-Package pdftex.def Info: fpga.png used on input line 733.
-(pdftex.def)             Requested size: 176.39923pt x 176.13234pt.
+Package pdftex.def Info: fpga.png used on input line 736.
+(pdftex.def)             Requested size: 75.60077pt x 75.48094pt.
 
-<schematic.pdf, id=35, 456.52448pt x 214.28818pt>
+<schematic.pdf, id=37, 456.52448pt x 214.28818pt>
 File: schematic.pdf Graphic file (type pdf)
  <use schematic.pdf>
-Package pdftex.def Info: schematic.pdf used on input line 752.
-(pdftex.def)             Requested size: 226.79846pt x 106.45717pt.
+Package pdftex.def Info: schematic.pdf used on input line 755.
+(pdftex.def)             Requested size: 252.0pt x 118.28719pt.
  [4 <./fpga.png> <./schematic.pdf>] (./paceace.bbl)
 
 ** Conference Paper **
@@ -1042,13 +1042,13 @@ Before submitting the final camera ready copy, remember to:
 
 [5] (./paceace.aux) ) 
 Here is how much of TeX's memory you used:
- 25815 strings out of 493014
- 677666 string characters out of 6133351
- 1058243 words of memory out of 5000000
- 28906 multiletter control sequences out of 15000+600000
+ 25822 strings out of 493014
+ 677777 string characters out of 6133351
+ 1064919 words of memory out of 5000000
+ 28912 multiletter control sequences out of 15000+600000
  42243 words of font info for 87 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
- 57i,20n,103p,727b,2232s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 57i,20n,103p,727b,2286s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8
 r.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10
 .pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.p
@@ -1068,10 +1068,10 @@ e/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/
 -dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2016/texmf-dist/fon
 ts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/u
 rw/times/utmri8a.pfb>
-Output written on paceace.pdf (5 pages, 1109253 bytes).
+Output written on paceace.pdf (5 pages, 1149786 bytes).
 PDF statistics:
- 110 PDF objects out of 1000 (max. 8388607)
+ 112 PDF objects out of 1000 (max. 8388607)
  79 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 23 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 28 words of extra memory for PDF output out of 10000 (max. 10000000)
 
