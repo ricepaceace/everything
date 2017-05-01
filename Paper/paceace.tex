@@ -292,9 +292,11 @@ Parameters for Multisite Pacemaker Beat Detection}
 % use a multiple column layout for up to three different
 % affiliations
 \author{\IEEEauthorblockN{Yamin Arefeen\IEEEauthorrefmark{1}, Philip Taffet\IEEEauthorrefmark{2}, Daniel Zdeblick\IEEEauthorrefmark{1}, Jorge Quintero\IEEEauthorrefmark{1}, Greg Harper\IEEEauthorrefmark{1},\\
-Behnaam Aazhang\IEEEauthorrefmark{1}, and Joseph Cavallaro\IEEEauthorrefmark{1}}
+Behnaam Aazhang\IEEEauthorrefmark{1}, Joseph Cavallaro\IEEEauthorrefmark{1}, and Mehdi Razavi\IEEEauthorrefmark{3}}
 \IEEEauthorblockA{\IEEEauthorrefmark{1}Department of Electrical and Computer Engineering, \IEEEauthorrefmark{2}Department of Computer Science\\
-	Rice University, Houston, TX 77005}
+	Rice University, Houston, TX}
+	\IEEEauthorblockA{\IEEEauthorrefmark{3}Department of Cardiology\\
+Texas Heart Institute, Houston, TX}
 	\IEEEauthorblockA{yarefeen@mit.edu, zdeblick@uw.edu, ptaffet@rice.edu, aaz@rice.edu, cavallar@rice.edu}
 }
 
@@ -325,8 +327,8 @@ This purely data-driven solution to learn the parameters of atrial
 and ventricular peaks will allow pacemakers to set their own 
 detection parameters and adaptively tune
 the parameters over time for that specific patient.
-We have validated our algorithm on 51 separate channels of
-data, where each channel is one minute of cardiac electrical signal recorded directly from cardiac tissue.
+We have validated our algorithm on one minute of cardiac electrical signal data from 51 separate channels,
+coming from 17 electrodes connected directly to cardiac tissue on each of three separate animals.
 Additionally, we have implemented the algorithm on a
 Field Programmable Gate Array and tested it on an ex-vivo rat
 heart to illustrate that our algorithm can run in real-time on commodity hardware.
@@ -448,13 +450,13 @@ validates our algorithmic results and hardware system.
 Our algorithm begins by learning the atrial and ventricular widths: \APW{} and \VPW{}.
 
 \subsection{Finding Peak Shaped Patterns in the Signal}
-Let $f_n$ be 10 seconds of CES sampled at 1 kHz.
+Let $f_1, f_2, \dots, f_{10000}$ be 10 seconds of CES sampled at 1 kHz.
 We begin by computing the weighted time
 difference of $f_n$, denoted $d_n$.
 \begin{equation*}
 	d_n=(f_n-f_{n-1})\left|f_n - f_{n-1}\right| \left|f_n\right|.
 \end{equation*}
-Note that $d_n$ is essentially $(f_n-f_{n-1})^2  f_n$, but with the sign adjusted to match the sign of $f_n’$.
+Note that $d_n$ is essentially $(f_n-f_{n-1})^2  f_n$, but with the sign adjusted to match the sign of $f_n-f_{n-1}$.
 The following paragraph will explain our rational for constructing $d_n$. Next, the algorithm 
 searches for when the local
 maxima and minima of $d_n$ occur, within a window of
@@ -510,7 +512,7 @@ The width and height of the peak will then be used as features.  Thus, we define
 	P_i = \left\{n_i-m_i, \left( \max\limits_{m_i\le j\le n_i} f_j \right) - \frac{f_{n_i}+f_{m_i}}{2} \right\}.
 \end{equation*}
 Let $\mathbf{P} = [P_1, P_2, \dots P_s]$ be peaks characterized by their widths and heights from 10 seconds of cardiac electrical signal.
-Now consider \figurename~\ref{fig:kmeans} where all of the $P_i$'s are plotted as points, with the x-axis being peak width and the y-axis being peak height.
+Now consider \figurename~\ref{fig:kmeans} where all of the $P_i$'s are plotted as points, with the $x$-axis as peak width and the $y$-axis as peak height.
 With the intuition that ventricular peaks are generally taller and thinner than atrial peaks~\cite{cardiac-cycle},
 $P_i$'s that correspond to ventricles cluster together.  Likewise, $P_i$'s that correspond to atria also cluster.
 Thus, we can determine the average ventricle and atrial peak by finding the centers of these clusters.  To do this,
@@ -682,7 +684,7 @@ Next, define the sequence:
 \end{equation*}
 $q_n$ indicates where in $f_n$ a beat could
 have occurred. We then use the intuition that for a beat
-to occur, it must have been about as long as $w$ in time.
+to occur, it must have been about as long as $w$ (either \APW or \VPW) in time.
 Thus, to compute $\beta(\tau)$, i.e. the number of
 beats that occur in $f_n$, we first compute
 \begin{equation*}
@@ -720,7 +722,7 @@ by the algorithm running on the FPGA.
 In order to meet power and size constraints, 
 current pacemakers contain an application-specific integrated circuit (ASIC) for running a beat detection algorithm.
 Although the FPGA chip that we used is large, and far too power-hungry for an implantable pacemaker,
-it serves as a first step towards an ASIC that runs our algorithm.
+it serves as a first step towards an ASIC that could run our algorithm.
 In fact, we implemented our beat detection algorithm in Verilog on FPGA fabric to
 showcase how it could be shrunk down to an ASIC for future pacemakers.
 An illustration of our ASIC
@@ -777,17 +779,17 @@ algorithm that learns \APW{}, \VPW{}, \APH{}, and \VPH{} by
 simply processing 10 seconds of CES data sampled at 1
 kHz. To validate our solution, we implemented our algorithms in
 Matlab and performed atrial and ventricular beat
-detection using algorithmically learned parameters on
+detection using learned parameters on
 data provided by colleagues at the Texas Heart Institute.
 In order to record the data, an in vivo,
 live animal study procedure was performed. For a single
 animal, 17 bipolar electrodes were placed on the left ventricle
 of the heart. Each electrode sensed electrical activity
-directly from the heart for one minute, digitized the
-signal at a 1 kHz sampling rate, and stored the signal as
-a .csv file. This was done for 3 animals, giving us a total
+directly from the heart for one minute and digitized the
+signal at a 1 kHz sampling rate.
+This was done for 3 animals, giving us a total
 of 51 channels, where each channel is one minute of cardiac electrical signal.
-Each channel resembles the signal that a real pacemaker uses as input.
+% Each channel resembles the signal that a real pacemaker uses as input.
 
 We then applied our algorithm to the minute long signal
 from each of the 51 channels separately in order to learn
@@ -815,7 +817,7 @@ Table~\ref{tab:errors} illustrates our results.
 		\hline
 		Atria & 0.89\% & 4.59\% \\
 		\hline
-		Total & 0.50\% & 4.70 \% \\
+		Combined & 0.50\% & 4.70 \% \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -839,7 +841,7 @@ our algorithm described in Section IV, we connected our
 system to a Langendorff heart as described by~\cite{langendorff}.
 Essentially, in a Langendorff heart experiment, a live
 heart is extracted from an animal, which in our case was
-a rat, and is kept beating by perfusing it with a solution. 
+a rat, and is kept beating by perfusing it with a solution containing oxygen and nutrients~\cite{langendorff}. 
 At an electrophysiological level, the externally beating heart behaves almost identically to a normal internal beating heart.
 We connected our preprocessor to wires
 sutured to the Langendroff heart, and then used our
@@ -850,7 +852,7 @@ the preprocessor, learned pacing parameters (\VPW{} and
 values of \VPW{} and \VPH{} in real time. Due to the
 relatively small size of a rat's heart in comparison to a
 human's, the atrial part of the signal was not
-distinguishable within the sensed signal itself, even by experts,
+distinguishable within the sensed signal itself,% even by experts,
 so our algorithm failed to learn valid parameters for it.
 
 \section{Conclusions and Future Direction}
