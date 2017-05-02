@@ -120,55 +120,61 @@ function [ v_height, a_height, v_flip, a_flip, v_length, a_length, v_first ] = L
 end
 
 
+% Learn an appropriate threshold for beat detection 
+% by searching (the function that maps threshold to # of beats detected in data)
+% for a maximal-length flat segment. This corresponds to a large range of thresholds 
+% that give the same number of beats, and we've found that those thresholds are good.
 function [flatcutoffs] = LearnHeightRange(data, minlength)
-    if (minlength==0)
+    if (minlength==0) % length learning failed, so threshold learning doesn't make sense
         flatcutoffs = [0 0];
         return
     end
-    npts = 20;
+    npts = 20; % How many samples to take in each iteration of our recursive search
     sample_rate = 1000;
     minbeats = length(data) / sample_rate * 10 / 60; %10 bpm
     maxbeats = length(data) / sample_rate * 150 / 60; %200bpm
 
-    max_th = max(data);
-    for th = [max(data)/4 max(data)/2]
-         beat = CountPeaks(data > th, minlength);
-         if beat<minbeats
-             max_th = th;
-         end
-    end
+    max_th = max(data); % upper bound for this iteration of the search
+	% but try two other uppper bounds. Having a better upper bound makes the search better
+	if CountPeaks(data > max(data) / 4, minlength) < minbeats
+		max_th = max(data)/4 % We already know this is too big, so no need to check anything larger
+	elseif CountPeaks(data > max(data) / 2, minlength) < minbeats
+		max_th = max(data)/2 
+	end
     
-    ths = linspace(0, max_th, npts);
+    ths = linspace(0, max_th, npts); % thresholds to try in this iteration
     beats = zeros(1,npts);
-    beats(1) = length(data)/150;
-    beats(end) = 0;
     
    
-    for i=1:3
+    for i=1:3 % refinement round
         beats = zeros(1,npts);
         for j = 1:length(ths)
-            % We can assume the function is monotonic, so if beats(j) =
+            % Potential optimization: We can assume the function is monotonic, so if beats(j) =
             % beats(k), we don't need to compute anything else between j
             % and k.
             beats(j) = CountPeaks(data > ths(j), minlength);
+			% as j increases, ths(j) increases, so beats(j) decreases. 
+			% This means if beats(j) < minbeats, then beats(j+1) < minbeats, etc. 
             if beats(j)<minbeats
+				% don't touch the rest. They'll be 0, which we treat the same as any value < minbeats
                 break
             end
         end
         last_valid = find(beats > minbeats, 1, 'last');
         first_valid = find(beats < maxbeats, 1, 'first');
+		% Could we find any thresholds that were reasonable?
         if ( isempty(last_valid) || isempty(first_valid) ||(last_valid<=first_valid))
             flatcutoffs = [0 0];
             return
         end
         
-        beats = beats(first_valid:last_valid);
+        beats = beats(first_valid:last_valid); % just take the valid ones
         ths = ths(first_valid:last_valid);
-        derivs = abs(beats(2:end)-beats(1:(end-1)));
+        derivs = abs(beats(2:end)-beats(1:(end-1))); % consecutive differences
         %derivs = abs(beats(2:last_valid)-beats(1:(last_valid-1)));
-        [minder, idx] = min(derivs);
+        [minder, idx] = min(derivs); % which segment (between points we sampled) is the flattest?
         if minder == 0
-            % longest strech of zeros
+            % was it actually flat? If so, find the longest strech of zeros
             flats = derivs == 0;
             iidx = -1;
             currentBest = -1;
@@ -190,33 +196,26 @@ function [flatcutoffs] = LearnHeightRange(data, minlength)
             idx = cbStart;
             endidx = cbEnd+1;
         else
+			% otherwise, take the flattest segment
             endidx = idx+1;
         end
+		% compute the thresholds for the next round
         nmin = min(ths(idx),ths(endidx));
         nmax = max(ths(idx),ths(endidx));
         ths = linspace(nmin, nmax, npts);
         
         beats1 = beats(idx);
         beats2 = beats(endidx);
+		% if we have already reached a flat interval, that's good enough. We're done.
         if beats1 == beats2
             break
         end
-        beats(1) = beats1;
-        beats(end) = beats2;
+		% we know these values, so we actually don't need to recompute them.
+        % beats(1) = beats1;
+        % beats(end) = beats2;
     end
-    % TODO? expand the region more
+    % Technically, this might not be the full extent of the interval because of how we sampled.
+	% We could try to expand it, but that's not particularly necessary as far as I can tell.
     flatcutoffs = [ths(1), ths(end)];
 end
 
-function [heartbeats] = FindHeartRate(data)
-    min_heartrate = 50; % bpm
-    max_heartrate = 150; % bpm
-    sample_rate = 1000;
-    Y = abs(fft(data));
-    rescale =  length(data)/(sample_rate * 60); % TODO: check this
-    min_idx = round(min_heartrate * rescale);
-    max_idx = round(max_heartrate * rescale);
-    [~, hr_idx] = max(Y(min_idx:max_idx));
-    hr_idx = hr_idx - 1 + min_idx;
-    heartbeats = hr_idx;
-end
